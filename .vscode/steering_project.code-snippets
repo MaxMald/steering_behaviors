@@ -1,0 +1,37 @@
+{
+	"Print page signature": {
+		"scope": "javascript,typescript",
+		"prefix": "/signature",
+		"body": [
+      "/**",
+      " * Universidad de Artes Digitales, Guadalajara - $CURRENT_YEAR",
+      " *",
+      " * @summary $3",
+      " *",
+      " * @file $TM_FILENAME",
+      " * @author $1",
+      " * @since $CURRENT_MONTH_NAME-$CURRENT_DATE-$CURRENT_YEAR",
+      " */",
+      "",
+      "$2"
+		]
+  },
+
+  "Print page signature (Max)": {
+		"scope": "javascript,typescript",
+		"prefix": "/max_signature",
+		"body": [
+      "/**",
+      " * Universidad de Artes Digitales, Guadalajara - $CURRENT_YEAR",
+      " *",
+      " * @summary ",
+      " *",
+      " * @file $TM_FILENAME",
+      " * @author Max Alberto Solano Maldonado <nuup20@gmail.com>",
+      " * @since $CURRENT_MONTH_NAME-$CURRENT_DATE-$CURRENT_YEAR",
+      " */",
+      "",
+      "$1"
+		]
+	}
+}

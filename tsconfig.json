@@ -1,0 +1,45 @@
+{
+	"compilerOptions": 
+	{
+		"rootDir": "./game/ts_src/",
+
+		"outDir": "../lib",		
+		
+    "outFile": "./lib/steeringApp.js",  
+		
+		"declaration": false,
+
+		"declarationMap": false,
+		
+		"target": "es5",
+		
+		"module": "amd",
+		
+		"noImplicitReturns": true,
+		
+		"noFallthroughCasesInSwitch": true,
+		
+		"removeComments": true,		
+		
+		"sourceMap": true,
+		
+		"lib" : [
+			"es5", 
+			"DOM", 
+			"ES2015.Collection", 
+			"scripthost"
+		]		
+	},
+	
+	"files" : [
+		"./dependencies/phaser/ts_definitions/phaser.d.ts",
+		"./dependencies/phaser/ts_definitions/matter.d.ts",
+		"./dependencies/phaser/ts_definitions/nineslice.d.ts",
+		"./dependencies/phaser/ts_definitions/spine-webgl.d.ts",
+		"./dependencies/mxUtilities/mxUtilities.d.ts"
+	],
+
+	"include": [
+		"./game/ts_src/**/*"
+	]
+}

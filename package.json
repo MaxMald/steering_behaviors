@@ -1,0 +1,28 @@
+{
+  "name": "steering_behaviours",
+  "version": "0.0.1",
+  "description": "Aplicación de introducción a los steering behaviors.",
+  "main": "index.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MaxMald/steering_behaviours.git"
+  },
+  "author": "Universidad de Artes Digitales",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/MaxMald/steering_behaviours/issues"
+  },
+  "homepage": "https://github.com/MaxMald/steering_behaviours#readme",
+  "devDependencies": {
+    "typescript": "^4.0.2"
+  },
+  "dependencies": {
+    "http-server": "^0.12.3"
+  }
+}

@@ -1,0 +1,23 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <title>Steering Behaviors</title>
+        <link property="stylesheet" rel='stylesheet' href='./css/style.css' type='text/css' media='all' />
+        
+        <!--Portrait Mode.-->
+        <script src="./js/gameBoxLandscape.js"></script>
+    </head>
+
+    <!-- Game Box -->
+    <body onload="init_gamebox()">
+        <div id="game_box">
+            <div class="game_app" id="phaser-game">
+            </div>                  
+        </div>
+    </body>
+
+    <!-- Scripts -->
+    <script src="./dependencies/phaser/build/phaser.min.js"></script>
+    <script data-main="game/main" src="./dependencies/requireJs/require.js"></script>
+</html>
