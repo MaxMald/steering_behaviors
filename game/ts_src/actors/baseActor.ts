@@ -205,6 +205,33 @@ implements IActor
   }
 
   /**
+   * Called when the simulation had just started.
+   */
+  onSimulationStart()
+  : void
+  {
+    return;
+  }
+
+  /**
+   * Called when the simulation had just paused.
+   */
+  onSimulationPause()
+  : void
+  {
+    return;
+  }
+
+  /**
+   * Called when the simualtion had just resumed.
+   */
+  onSimulationResume()
+  : void
+  {
+    return;
+  }
+
+  /**
    * Get the actor's name.
    * 
    * @returns the actor's name.

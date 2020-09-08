@@ -33,5 +33,76 @@
       "",
       "$1"
 		]
+   },
+   
+   "Title": {
+		"prefix": "/t",
+		"scope": "javascript,typescript",
+		"body": [
+		  "/****************************************************/",
+		  "/* $0                                               */",
+		  "/****************************************************/"
+		],
+		"description": "Title Header"
+	},
+
+	"SubTitle": {
+		"prefix": "/h1",
+		"scope": "javascript,typescript",
+		"body": [
+		  "///////////////////////////////////",
+		  "// $0"
+		],
+		"description": "SubTitle Header"
+	},
+
+	"Static Header":
+	{
+		"prefix": "/stat",
+		"scope": "javascript,typescript",
+		"body": [
+			"/********** Static ************/",
+			"$0"
+		],
+		"description": "Static Header"
+	},
+
+	"Public Header":
+	{
+		"prefix": "/pub",
+		"scope": "javascript,typescript",
+		"body": [
+			"/****************************************************/",
+    		"/* Public                                           */",
+    		"/****************************************************/",
+			"$0"
+		],
+		"description": "Public  Header"
+	},
+
+	"Private Header":
+	{
+		"prefix": "/pri",
+		"scope": "javascript,typescript",
+		"body": [
+			"/****************************************************/",
+    		"/* Private                                          */",
+    		"/****************************************************/",
+			"$0"
+		],
+		"description": "Private  Header"
+	},
+
+	"Protected Header":
+	{
+		"prefix": "/pro",
+		"scope": "javascript,typescript",
+		"body": [
+			"/****************************************************/",
+    		"/* Protected                                        */",
+    		"/****************************************************/",
+			"$0"
+		],
+		"description": "Protected  Header"
 	}
 }
