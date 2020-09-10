@@ -90,6 +90,8 @@ implements IForce
 
     // Desire Force    
 
+    let forceMagnitude = this._m_force;
+
     let v2_B = this._m_v2_B;
 
     v2_B.set
@@ -99,7 +101,7 @@ implements IForce
     );
 
     v2_B.normalize();
-    v2_B.set(v2_B.x * maxSpeed, v2_B.y * maxSpeed);
+    v2_B.set(v2_B.x * forceMagnitude, v2_B.y * forceMagnitude);
 
     // Steer Force
 
@@ -111,9 +113,7 @@ implements IForce
       v2_B.y - v2_A.y
     );    
 
-    // Truncate force
-
-    let forceMagnitude = this._m_force;
+    // Truncate force    
 
     if(steerForce.length() > forceMagnitude)
     {
