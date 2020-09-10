@@ -8,6 +8,7 @@
  * @since September-07-2020
  */
 
+import { Master } from "../master/master";
 import { IManager } from "./iManager";
 
 /**
@@ -16,6 +17,15 @@ import { IManager } from "./iManager";
 export class NullManager 
 implements IManager
 {
+  setMasterManager(_master: Master): void {
+    throw new Error("Method not implemented.");
+  }
+  getID(): number {
+    throw new Error("Method not implemented.");
+  }
+  onPrepare(): void {
+    throw new Error("Method not implemented.");
+  }
   init()
   : void 
   {

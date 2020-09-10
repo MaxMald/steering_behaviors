@@ -9,7 +9,7 @@
  */
 
 import { Ty_Sprite, V2 } from "../commons/stTypes";
-import { CmpForceController } from "../components/cmpforceController";
+import { CmpForceController } from "../components/cmpForceController";
 import { IForce } from "./iForce";
 
 /**
@@ -80,6 +80,8 @@ implements IForce
 
     let speed = controller.getSpeed();
 
+    let maxSpeed = controller.getMaxSpeed();
+
     let v2_A = this._m_v2_A;
 
     // Current Force
@@ -87,6 +89,8 @@ implements IForce
     v2_A.setTo(direction.x * speed, direction.y * speed);
 
     // Desire Force    
+
+    let forceMagnitude = this._m_force;
 
     let v2_B = this._m_v2_B;
 
@@ -96,11 +100,8 @@ implements IForce
       target.y - self.y
     );
 
-    if(v2_B.length() > speed)
-    {
-      v2_B.normalize();
-      v2_B.set(v2_B.x * speed, v2_B.y * speed);
-    }
+    v2_B.normalize();
+    v2_B.set(v2_B.x * forceMagnitude, v2_B.y * forceMagnitude);
 
     // Steer Force
 
@@ -112,39 +113,7 @@ implements IForce
       v2_B.y - v2_A.y
     );    
 
-    // Truncate force
-
-    let forceMagnitude = this._m_force;
-
-    if(steerForce.length() > forceMagnitude)
-    {
-      steerForce.normalize();
-      steerForce.set
-      (
-        steerForce.x * forceMagnitude, 
-        steerForce.y * forceMagnitude
-      );
-    }
-    
-    // Apply mass.
-
-    let mass = controller.getMass();
-
-    steerForce.set
-    (
-      steerForce.x / mass,
-      steerForce.y / mass 
-    );
-
-    // Calculate the resulting force
-
-    steerForce.set
-    (
-      v2_A.x + steerForce.x, 
-      v2_A.y + steerForce.y
-    );
-
-    // Truncate the resulting force
+    // Truncate force    
 
     if(steerForce.length() > forceMagnitude)
     {

@@ -18,7 +18,7 @@
    /****************************************************/
 
    /**
-    * Initilize the actor.
+    * Initialize the actor.
     */
    init()
    : void;
@@ -43,6 +43,24 @@
    */
   getName()
   : string;
+
+  /**
+   * Called when the simulation had just started.
+   */
+  onSimulationStart()
+  : void;
+
+  /**
+   * Called when the simulation had just paused.
+   */
+  onSimulationPause()
+  : void;
+
+  /**
+   * Called when the simulation had just resumed.
+   */
+  onSimulationResume()
+  : void;
 
   /**
    * Destroy actor.

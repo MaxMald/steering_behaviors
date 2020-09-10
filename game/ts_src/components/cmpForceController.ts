@@ -11,12 +11,12 @@
 import { BaseActor } from "../actors/baseActor";
 import { ST_COMPONENT_ID, ST_MESSAGE_ID } from "../commons/stEnums";
 import { Ty_Sprite, V2 } from "../commons/stTypes";
-import { IForce } from "../steeringBehaviour/iForce";
+import { IForce } from "../steeringBehavior/iForce";
 import { IBaseComponent } from "./iBaseComponent";
 
 /**
  * This component controls all the forces applied in one actor. Saves each force
- * with a string id, wich can be used to get the force with the getForce method.
+ * with a string id, which can be used to get the force with the getForce method.
  */
 export class CmpForceController 
 implements IBaseComponent<Ty_Sprite>
@@ -72,7 +72,7 @@ implements IBaseComponent<Ty_Sprite>
   update(_actor: BaseActor<Ty_Sprite>)
   : void 
   {
-    // Reset the sum of all forces.
+    // Reset the Sum of all forces.
 
     let force = this._m_force;
 
@@ -86,32 +86,54 @@ implements IBaseComponent<Ty_Sprite>
       this
     );
 
-    // Truncate the resulting force
-
-    let speed = this._m_speed;    
-
-    if(force.length() > speed)
-    {
-      force.normalize();
-
-      force.setTo
-      (
-        force.x * speed,
-        force.y * speed
-      );
-    }
-
     // apply delta time.
 
     let dt = 0.001;
 
+    // Apply the Agent Mass.
+
+    let mass = this._m_mass;
+
     force.setTo
     (
-      force.x * dt,
-      force.y * dt
+      force.x / mass,
+      force.y / mass
     );
 
-    // Move Agent.
+    let v2_A = new Phaser.Math.Vector2(0.0, 0.0);
+
+    // Get the current force.
+
+    let speed = this._m_speed;
+
+    v2_A.setTo(this._m_direction.x * speed, this._m_direction.y * speed);
+
+    force.add(v2_A);
+
+    // Truncate the resulting force to the maximum force allowed.
+
+    let maxSpeed = this._m_maxSpeed;   
+
+    if(force.length() > maxSpeed)
+    {
+      force.normalize();
+    
+      force.setTo
+      (
+        force.x * maxSpeed,
+        force.y * maxSpeed
+      );
+    }
+
+    // Get the new agent actual speed.
+    
+    this._m_speed = force.length();
+    
+    // Apply delta time.
+
+    force.scale(dt);
+
+    // Move Agent by the force.
 
     this._m_actor.sendMessage
     (
@@ -119,11 +141,18 @@ implements IBaseComponent<Ty_Sprite>
       force
     );
 
-    // Calculate new direction
+    // Recalculate the new direction.
 
-    this._m_direction = force.normalize();
+    force.normalize();
+    
+    this._m_direction.setTo
+    (
+      force.x,
+      force.y
+    ); 
 
-    // Rotate Agent
+
+    // Agent rotation towards direction.
 
     this._m_actor.sendMessage
     (
@@ -147,6 +176,10 @@ implements IBaseComponent<Ty_Sprite>
       case ST_MESSAGE_ID.kSetSpeed:
 
       this._m_speed = _obj as number;
+      return;
+
+      case ST_MESSAGE_ID.kSetMaxSpeed:
+      this._m_maxSpeed = _obj as number;
       return;
     }
     return;
@@ -234,6 +267,15 @@ implements IBaseComponent<Ty_Sprite>
   : number
   {
     return this._m_speed;
+  }
+
+  /**
+   * Get the actor's max speed (pixels per second).
+   */
+  getMaxSpeed()
+  : number
+  {
+    return this._m_maxSpeed;
   }
 
   /**
@@ -349,6 +391,11 @@ implements IBaseComponent<Ty_Sprite>
    * The actor speed (pixels per second).
    */
   private _m_speed : number;
+
+  /**
+   * The actor max speed (pixels per second).
+   */
+  private _m_maxSpeed : number;
 
   /**
    * The actor mass (units).
