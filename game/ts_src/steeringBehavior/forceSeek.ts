@@ -80,6 +80,8 @@ implements IForce
 
     let speed = controller.getSpeed();
 
+    let maxSpeed = controller.getMaxSpeed();
+
     let v2_A = this._m_v2_A;
 
     // Current Force
@@ -96,11 +98,8 @@ implements IForce
       target.y - self.y
     );
 
-    if(v2_B.length() > speed)
-    {
-      v2_B.normalize();
-      v2_B.set(v2_B.x * speed, v2_B.y * speed);
-    }
+    v2_B.normalize();
+    v2_B.set(v2_B.x * maxSpeed, v2_B.y * maxSpeed);
 
     // Steer Force
 
@@ -115,36 +114,6 @@ implements IForce
     // Truncate force
 
     let forceMagnitude = this._m_force;
-
-    if(steerForce.length() > forceMagnitude)
-    {
-      steerForce.normalize();
-      steerForce.set
-      (
-        steerForce.x * forceMagnitude, 
-        steerForce.y * forceMagnitude
-      );
-    }
-    
-    // Apply mass.
-
-    let mass = controller.getMass();
-
-    steerForce.set
-    (
-      steerForce.x / mass,
-      steerForce.y / mass 
-    );
-
-    // Calculate the resulting force
-
-    steerForce.set
-    (
-      v2_A.x + steerForce.x, 
-      v2_A.y + steerForce.y
-    );
-
-    // Truncate the resulting force
 
     if(steerForce.length() > forceMagnitude)
     {

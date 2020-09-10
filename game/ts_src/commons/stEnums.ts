@@ -72,35 +72,12 @@ export const ST_MESSAGE_ID = Object.freeze
    * 
    * msg : number
    */
-  kSetMass : 6 as 6
-});
-
-/**
- * Managers IDs
- * 
- * Managers identifiers.
- */
-
-export type ST_MANAGER_ID = EnumLiteralsOf<typeof ST_MANAGER_ID>;
-
-export const ST_MANAGER_ID = Object.freeze
-({
-  
-  kUndefined : -1 as -1,
+  kSetMass : 6 as 6,
 
   /**
-   * UI Manager.
+   * Set the agent max speed (pixels per second).
+   * 
+   * msg : number
    */
-  kUIManager : 1 as 1,
-
-  /**
-   * Simulation manager.
-   */
-  kSimManager : 2 as 2,
-
-  /**
-   * control.
-   */
-  kControl : 3 as 3
-
+  kSetMaxSpeed : 7 as 7
 });

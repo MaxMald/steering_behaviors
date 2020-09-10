@@ -11,9 +11,9 @@
 import { BaseActor } from "../actors/baseActor";
 import { ST_COMPONENT_ID, ST_MESSAGE_ID } from "../commons/stEnums";
 import { Ty_Sprite } from "../commons/stTypes";
-import { CmpForceController } from "../components/cmpForceController";
+import { CmpForceController } from "../components/cmpforceController";
 import { CmpSpriteController } from "../components/cmpSpriteController";
-import { SeekForce } from "../steeringBehavior/forceSeek";
+import { SeekForce } from "../steeringBehaviour/forceSeek";
 
  
 export class MainMenu 
@@ -33,7 +33,7 @@ extends Phaser.Scene
 
     let shipSprite : Ty_Sprite = this.add.sprite( 0, 0,'space_ship');
 
-    // Step II : create Actor.
+    // Set II : create Actor.
 
     let shipActor = BaseActor.Create<Ty_Sprite>(shipSprite, 'SpaceShip');
     
@@ -48,8 +48,14 @@ extends Phaser.Scene
 
     shipActor.sendMessage
     (
-      ST_MESSAGE_ID.kSetSpeed,
+      ST_MESSAGE_ID.kSetMaxSpeed,
       1000
+    );
+
+    shipActor.sendMessage
+    (
+      ST_MESSAGE_ID.kSetSpeed,
+      0
     );
 
     shipActor.sendMessage
@@ -67,6 +73,12 @@ extends Phaser.Scene
     (
       ST_MESSAGE_ID.kSetPosition,
       new Phaser.Math.Vector2(width * 0.5, height * 0.5)
+    );
+    
+    shipActor.sendMessage
+    (
+      ST_MESSAGE_ID.kSetMass,
+      10
     );
 
     ///////////////////////////////////
@@ -90,6 +102,12 @@ extends Phaser.Scene
       new Phaser.Math.Vector2(0.1, 0.1)
     );
 
+    targetActor.sendMessage
+    (
+      ST_MESSAGE_ID.kSetPosition,
+      new Phaser.Math.Vector2(width * 0.5, height * 0.25)
+    );
+
     ///////////////////////////////////
     // Create a Force
 
@@ -101,7 +119,7 @@ extends Phaser.Scene
     (
       shipSprite,
       targetSprite,
-      1000
+      0
     );
 
     // Step II : Get Component
