@@ -8,7 +8,6 @@
  * @since September-09-2020
  */
 
-import { BaseActor } from "../../actors/baseActor";
 import { IActor } from "../../actors/iActor";
 import { ST_MANAGER_ID } from "../../commons/stEnums";
 import { Master } from "../../master/master";

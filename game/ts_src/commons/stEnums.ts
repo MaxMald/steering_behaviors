@@ -6,6 +6,25 @@ import { EnumLiteralsOf } from "commons/mxEnums";
  * Component identifiers.
  */
 
+export type ST_MANAGER_ID = EnumLiteralsOf<typeof ST_MANAGER_ID>;
+
+export const ST_MANAGER_ID = Object.freeze
+({
+  
+  kUndefined : -1 as -1,
+
+  kSimManager : 1 as 1,
+
+  kUIManager : 2 as 2
+
+});
+
+/**
+ * Components IDs
+ * 
+ * Component identifiers.
+ */
+
 export type ST_COMPONENT_ID = EnumLiteralsOf<typeof ST_COMPONENT_ID>;
 
 export const ST_COMPONENT_ID = Object.freeze

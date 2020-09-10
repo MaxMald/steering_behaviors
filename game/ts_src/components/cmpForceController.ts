@@ -72,7 +72,7 @@ implements IBaseComponent<Ty_Sprite>
   update(_actor: BaseActor<Ty_Sprite>)
   : void 
   {
-    // Reset the sum of all forces.
+    // Reset the Sum of all forces.
 
     let force = this._m_force;
 
@@ -90,6 +90,8 @@ implements IBaseComponent<Ty_Sprite>
 
     let dt = 0.001;
 
+    // Apply the Agent Mass.
+
     let mass = this._m_mass;
 
     force.setTo
@@ -100,7 +102,7 @@ implements IBaseComponent<Ty_Sprite>
 
     let v2_A = new Phaser.Math.Vector2(0.0, 0.0);
 
-    // Current Force
+    // Get the current force.
 
     let speed = this._m_speed;
 
@@ -108,7 +110,7 @@ implements IBaseComponent<Ty_Sprite>
 
     force.add(v2_A);
 
-    // Truncate the resulting force
+    // Truncate the resulting force to the maximum force allowed.
 
     let maxSpeed = this._m_maxSpeed;   
 
@@ -122,11 +124,16 @@ implements IBaseComponent<Ty_Sprite>
         force.y * maxSpeed
       );
     }
+
+    // Get the new agent actual speed.
     
     this._m_speed = force.length();
     
+    // Apply delta time.
+
     force.scale(dt);
-    // Move Agent.
+
+    // Move Agent by the force.
 
     this._m_actor.sendMessage
     (
@@ -134,7 +141,8 @@ implements IBaseComponent<Ty_Sprite>
       force
     );
 
-    // Calculate new direction
+    // Recalculate the new direction.
+
     force.normalize();
     
     this._m_direction.setTo
@@ -144,7 +152,7 @@ implements IBaseComponent<Ty_Sprite>
     ); 
 
 
-    // Rotate Agent
+    // Agent rotation towards direction.
 
     this._m_actor.sendMessage
     (
