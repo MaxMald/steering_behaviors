@@ -13,7 +13,7 @@ import { ST_COMPONENT_ID, ST_MESSAGE_ID } from "../commons/stEnums";
 import { Ty_Sprite } from "../commons/stTypes";
 import { CmpForceController } from "../components/cmpforceController";
 import { CmpSpriteController } from "../components/cmpSpriteController";
-import { SeekForce } from "../steeringBehaviour/forceSeek";
+import { SeekForce } from "../steeringBehavior/forceSeek";
 
  
 export class MainMenu 
@@ -49,7 +49,7 @@ extends Phaser.Scene
     shipActor.sendMessage
     (
       ST_MESSAGE_ID.kSetSpeed,
-      100
+      1000
     );
 
     shipActor.sendMessage
@@ -101,7 +101,7 @@ extends Phaser.Scene
     (
       shipSprite,
       targetSprite,
-      200
+      1000
     );
 
     // Step II : Get Component

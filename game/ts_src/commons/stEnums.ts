@@ -74,3 +74,33 @@ export const ST_MESSAGE_ID = Object.freeze
    */
   kSetMass : 6 as 6
 });
+
+/**
+ * Managers IDs
+ * 
+ * Managers identifiers.
+ */
+
+export type ST_MANAGER_ID = EnumLiteralsOf<typeof ST_MANAGER_ID>;
+
+export const ST_MANAGER_ID = Object.freeze
+({
+  
+  kUndefined : -1 as -1,
+
+  /**
+   * UI Manager.
+   */
+  kUIManager : 1 as 1,
+
+  /**
+   * Simulation manager.
+   */
+  kSimManager : 2 as 2,
+
+  /**
+   * control.
+   */
+  kControl : 3 as 3
+
+});

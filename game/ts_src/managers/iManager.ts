@@ -8,13 +8,15 @@
  * @since September-07-2020
  */
 
+import { Master } from "../master/master";
+
 /**
  * Provides a common interface for each manager.
  */
 export interface IManager
 {
   /**
-   * Initiliaze the Manager. Called by Master when the App before the aplication
+   * Initialize the Manager. Called by Master when the App before the application
    * was created
    */
   init() 
@@ -35,6 +37,26 @@ export interface IManager
    * @param _msg message.
    */
   receive(_id : number, _msg : any)
+  : void;
+
+  /**
+   * Set the Master Manager
+   * 
+   * @param _master Master Manager. 
+   */
+  setMasterManager(_master : Master)
+  : void;
+
+  /**
+   * Get this Manager ID.
+   */
+  getID()
+  : number;
+
+  /**
+   * Called by Master when all managers had been created.
+   */
+  onPrepare()
   : void;
 
   /**

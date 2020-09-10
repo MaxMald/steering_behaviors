@@ -9,7 +9,7 @@
  */
 
 import { Ty_Sprite, V2 } from "../commons/stTypes";
-import { CmpForceController } from "../components/cmpforceController";
+import { CmpForceController } from "../components/cmpForceController";
 import { IForce } from "./iForce";
 
 /**

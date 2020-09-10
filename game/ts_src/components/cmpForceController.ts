@@ -11,12 +11,12 @@
 import { BaseActor } from "../actors/baseActor";
 import { ST_COMPONENT_ID, ST_MESSAGE_ID } from "../commons/stEnums";
 import { Ty_Sprite, V2 } from "../commons/stTypes";
-import { IForce } from "../steeringBehaviour/iForce";
+import { IForce } from "../steeringBehavior/iForce";
 import { IBaseComponent } from "./iBaseComponent";
 
 /**
  * This component controls all the forces applied in one actor. Saves each force
- * with a string id, wich can be used to get the force with the getForce method.
+ * with a string id, which can be used to get the force with the getForce method.
  */
 export class CmpForceController 
 implements IBaseComponent<Ty_Sprite>
