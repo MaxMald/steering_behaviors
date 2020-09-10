@@ -11,7 +11,7 @@
 import { BaseActor } from "../actors/baseActor";
 import { ST_COMPONENT_ID, ST_MESSAGE_ID } from "../commons/stEnums";
 import { Ty_Sprite } from "../commons/stTypes";
-import { CmpForceController } from "../components/cmpforceController";
+import { CmpForceController } from "../components/cmpForceController";
 import { CmpSpriteController } from "../components/cmpSpriteController";
 import { SeekForce } from "../steeringBehavior/forceSeek";
 
@@ -33,7 +33,7 @@ extends Phaser.Scene
 
     let shipSprite : Ty_Sprite = this.add.sprite( 0, 0,'space_ship');
 
-    // Set II : create Actor.
+    // Step II : create Actor.
 
     let shipActor = BaseActor.Create<Ty_Sprite>(shipSprite, 'SpaceShip');
     
