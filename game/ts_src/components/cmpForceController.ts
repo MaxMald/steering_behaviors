@@ -88,16 +88,16 @@ implements IBaseComponent<Ty_Sprite>
 
     // Truncate the resulting force
 
-    let speed = this._m_speed;    
+    let maxSpeed = this._m_maxSpeed;   
 
-    if(force.length() > speed)
+    if(force.length() > maxSpeed)
     {
       force.normalize();
 
       force.setTo
       (
-        force.x * speed,
-        force.y * speed
+        force.x * maxSpeed,
+        force.y * maxSpeed
       );
     }
 
@@ -105,12 +105,27 @@ implements IBaseComponent<Ty_Sprite>
 
     let dt = 0.001;
 
+    let mass = this._m_mass;
+
     force.setTo
     (
-      force.x * dt,
-      force.y * dt
+      force.x / mass,
+      force.y / mass
     );
 
+    let v2_A = new Phaser.Math.Vector2(0.0, 0.0);
+
+    // Current Force
+
+    let speed = this._m_speed;
+
+    v2_A.setTo(this._m_direction.x * speed, this._m_direction.y * speed);
+
+    force.add(v2_A);
+    
+    this._m_speed = force.length();
+    
+    force.scale(dt);
     // Move Agent.
 
     this._m_actor.sendMessage
@@ -120,8 +135,14 @@ implements IBaseComponent<Ty_Sprite>
     );
 
     // Calculate new direction
+    force.normalize();
+    
+    this._m_direction.setTo
+    (
+      force.x,
+      force.y
+    ); 
 
-    this._m_direction = force.normalize();
 
     // Rotate Agent
 
@@ -147,6 +168,10 @@ implements IBaseComponent<Ty_Sprite>
       case ST_MESSAGE_ID.kSetSpeed:
 
       this._m_speed = _obj as number;
+      return;
+
+      case ST_MESSAGE_ID.kSetMaxSpeed:
+      this._m_maxSpeed = _obj as number;
       return;
     }
     return;
@@ -234,6 +259,15 @@ implements IBaseComponent<Ty_Sprite>
   : number
   {
     return this._m_speed;
+  }
+
+  /**
+   * Get the actor's max speed (pixels per second).
+   */
+  getMaxSpeed()
+  : number
+  {
+    return this._m_maxSpeed;
   }
 
   /**
@@ -349,6 +383,11 @@ implements IBaseComponent<Ty_Sprite>
    * The actor speed (pixels per second).
    */
   private _m_speed : number;
+
+  /**
+   * The actor max speed (pixels per second).
+   */
+  private _m_maxSpeed : number;
 
   /**
    * The actor mass (units).

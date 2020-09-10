@@ -72,5 +72,12 @@ export const ST_MESSAGE_ID = Object.freeze
    * 
    * msg : number
    */
-  kSetMass : 6 as 6
+  kSetMass : 6 as 6,
+
+  /**
+   * Set the agent max speed (pixels per second).
+   * 
+   * msg : number
+   */
+  kSetMaxSpeed : 7 as 7
 });

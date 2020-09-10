@@ -48,8 +48,8 @@ extends Phaser.Scene
 
     shipActor.sendMessage
     (
-      ST_MESSAGE_ID.kSetSpeed,
-      100
+      ST_MESSAGE_ID.kSetMaxSpeed,
+      10000
     );
 
     shipActor.sendMessage
@@ -67,6 +67,12 @@ extends Phaser.Scene
     (
       ST_MESSAGE_ID.kSetPosition,
       new Phaser.Math.Vector2(width * 0.5, height * 0.5)
+    );
+    
+    shipActor.sendMessage
+    (
+      ST_MESSAGE_ID.kSetMass,
+      100
     );
 
     ///////////////////////////////////
@@ -90,6 +96,12 @@ extends Phaser.Scene
       new Phaser.Math.Vector2(0.1, 0.1)
     );
 
+    targetActor.sendMessage
+    (
+      ST_MESSAGE_ID.kSetPosition,
+      new Phaser.Math.Vector2(width * 0.5, height * 0.25)
+    );
+
     ///////////////////////////////////
     // Create a Force
 
@@ -101,7 +113,7 @@ extends Phaser.Scene
     (
       shipSprite,
       targetSprite,
-      200
+      100
     );
 
     // Step II : Get Component
