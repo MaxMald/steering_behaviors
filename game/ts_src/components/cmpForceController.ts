@@ -86,21 +86,6 @@ implements IBaseComponent<Ty_Sprite>
       this
     );
 
-    // Truncate the resulting force
-
-    let maxSpeed = this._m_maxSpeed;   
-
-    if(force.length() > maxSpeed)
-    {
-      force.normalize();
-
-      force.setTo
-      (
-        force.x * maxSpeed,
-        force.y * maxSpeed
-      );
-    }
-
     // apply delta time.
 
     let dt = 0.001;
@@ -122,6 +107,21 @@ implements IBaseComponent<Ty_Sprite>
     v2_A.setTo(this._m_direction.x * speed, this._m_direction.y * speed);
 
     force.add(v2_A);
+
+    // Truncate the resulting force
+
+    let maxSpeed = this._m_maxSpeed;   
+
+    if(force.length() > maxSpeed)
+    {
+      force.normalize();
+    
+      force.setTo
+      (
+        force.x * maxSpeed,
+        force.y * maxSpeed
+      );
+    }
     
     this._m_speed = force.length();
     

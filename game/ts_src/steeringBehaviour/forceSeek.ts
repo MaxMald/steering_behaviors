@@ -98,11 +98,8 @@ implements IForce
       target.y - self.y
     );
 
-    if(v2_B.length() > maxSpeed)
-    {
-      v2_B.normalize();
-      v2_B.set(v2_B.x * maxSpeed, v2_B.y * maxSpeed);
-    }
+    v2_B.normalize();
+    v2_B.set(v2_B.x * maxSpeed, v2_B.y * maxSpeed);
 
     // Steer Force
 
@@ -127,33 +124,6 @@ implements IForce
         steerForce.y * forceMagnitude
       );
     }
-    
-    // Apply mass.
-
-    // let mass = controller.getMass();
-
-    // steerForce.set
-    // (
-    //   steerForce.x / mass,
-    //   steerForce.y / mass 
-    // );
-
-    // Calculate the resulting force
-
-    // steerForce.set
-    // (
-    //   v2_A.x + steerForce.x, 
-    //   v2_A.y + steerForce.y
-    // );
-
-    // Truncate the resulting force
-
-      steerForce.normalize();
-      steerForce.set
-      (
-        steerForce.x * forceMagnitude, 
-        steerForce.y * forceMagnitude
-      );
 
     // Add force to the controller.
 

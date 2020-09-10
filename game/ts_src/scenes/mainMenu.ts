@@ -49,7 +49,13 @@ extends Phaser.Scene
     shipActor.sendMessage
     (
       ST_MESSAGE_ID.kSetMaxSpeed,
-      10000
+      1000
+    );
+
+    shipActor.sendMessage
+    (
+      ST_MESSAGE_ID.kSetSpeed,
+      0
     );
 
     shipActor.sendMessage
@@ -72,7 +78,7 @@ extends Phaser.Scene
     shipActor.sendMessage
     (
       ST_MESSAGE_ID.kSetMass,
-      100
+      10
     );
 
     ///////////////////////////////////
@@ -113,7 +119,7 @@ extends Phaser.Scene
     (
       shipSprite,
       targetSprite,
-      100
+      0
     );
 
     // Step II : Get Component
