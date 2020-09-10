@@ -15,7 +15,7 @@ import { IForce } from "./iForce";
 /**
  * 
  */
-export class SeekForce
+export class WanderForce
 implements IForce
 {
   /****************************************************/
@@ -45,6 +45,7 @@ implements IForce
     this._m_circleRadius = _circleRadius;
     this._m_angleChange = _angleChange;
     this._m_wanderAngle = 0;
+    this._m_currentForce = new Phaser.Math.Vector2(0,0);
     if(this._m_controller !== undefined)
     {
       this._m_controller = _controller;
@@ -75,53 +76,51 @@ implements IForce
     
     let self : Ty_Sprite = this._m_self;
 
+
+    //Generate imaginary circle in front of agent.
     let circleDistance : number = this._m_circleDistance;
 
-    let circlePos : V2 = new Phaser.Math.Vector2(self.x, self.y).
-                        add(direction.scale(circleDistance));
+    let circlePos : V2 = new Phaser.Math.Vector2(self.x, self.y);
+    
+    let tempCircleVector = new Phaser.Math.Vector2(0,0);
+    tempCircleVector.setFromObject(direction);
+    tempCircleVector.scale(circleDistance);
+
+    circlePos.add(tempCircleVector);
 
     circlePos.normalize();
     circlePos.scale(circleDistance);
 
     // Calculate displacement force.
-    let displacement :V2 = new Phaser.Math.Vector2(0,-1);
+    let displacement :V2 = new Phaser.Math.Vector2
+                          (Phaser.Math.RND.integer(),Phaser.Math.RND.integer());
+    displacement.normalize();
+
     displacement.scale(this._m_circleRadius);
 
     // Randomly change direction
     this.setAngle(displacement,this._m_wanderAngle);
     
     // Slightly change the angle.
-    this._m_wanderAngle += Phaser.Math.RND.integer() * this._m_angleChange -
-                           this._m_angleChange * 0.5;
+    this._m_wanderAngle += (Phaser.Math.RND.integer() * this._m_angleChange) -
+                           (this._m_angleChange * 0.5);
 
     // Calculate steer force.
 
-    let steerForce : V2 = circlePos.add(displacement);
+    let steerForce : V2 = new Phaser.Math.Vector2(0,0);
+    let displacementVector : V2 = new Phaser.Math.Vector2
+                                  (circlePos.x + displacement.x,
+                                   circlePos.y + displacement.y)
+    steerForce.add(displacementVector);
 
-    if(steerForce.length() > speed)
-    {
-      steerForce.normalize();
-      steerForce.set
-      (
-        steerForce.x * speed, 
-        steerForce.y * speed
-      );
-    } 
-
-    // Apply mass.
-
-    let mass = controller.getMass();
-
-    steerForce.set
-    (
-      steerForce.x / mass,
-      steerForce.y / mass 
-    );
-
+    
     // Add force to the controller.
-
-    controller.addSteerForce(steerForce.x, steerForce.y);
-
+    let currentForce : V2 = this._m_currentForce;
+    currentForce.add(steerForce);
+    currentForce.normalize();
+    currentForce.scale(circleDistance);
+    controller.addSteerForce(currentForce.x, currentForce.y);
+    
     return;
   }
 
@@ -133,8 +132,12 @@ implements IForce
   {
 
     this._m_controller = null;
-
     this._m_self = null;
+    this._m_angleChange = null;
+    this._m_circleDistance = null;
+    this._m_circleRadius = null;
+    this._m_currentForce = null;
+    this._m_wanderAngle = null;
     return;
   }
   
@@ -147,8 +150,8 @@ implements IForce
   void
   {
     let magnitude : number =_vector.length();
-    _vector.x = Math.cos(_value) * magnitude;
-    _vector.y = Math.sin(_value) * magnitude;
+    _vector.x = Math.cos(Phaser.Math.DegToRad(_value)) * magnitude;
+    _vector.y = Math.sin(Phaser.Math.DegToRad(_value)) * magnitude;
   }
 
   /****************************************************/
@@ -159,6 +162,11 @@ implements IForce
    * Reference to the force controller.
    */
   private _m_controller : CmpForceController;
+
+  /**
+   * Force at end of last frame.
+   */
+  private _m_currentForce : V2;
 
   /**
    * The magnitude of the applied force.

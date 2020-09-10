@@ -14,6 +14,7 @@ import { Ty_Sprite, V2 } from "../commons/stTypes";
 import { CmpForceController } from "../components/cmpforceController";
 import { CmpSpriteController } from "../components/cmpSpriteController";
 import { SeekForce } from "../steeringBehavior/forceSeek";
+import { WanderForce } from "../steeringBehavior/forceWander";
 
  
 export class MainMenu 
@@ -72,7 +73,7 @@ extends Phaser.Scene
     shipActor.sendMessage
     (
       ST_MESSAGE_ID.kSetMass,
-      100
+      10
     );
 
     ///////////////////////////////////
@@ -113,13 +114,14 @@ extends Phaser.Scene
 
     // Step I : Create the force
 
-    let seek : SeekForce = new SeekForce();
+    let seek : WanderForce = new WanderForce();
 
     seek.init
     (
       shipSprite,
-      targetSprite,
-      1000
+      300,
+      1000,
+      10
     );
 
     // Step II : Get Component
