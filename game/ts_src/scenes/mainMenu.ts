@@ -14,6 +14,8 @@ import { Ty_Sprite, V2 } from "../commons/stTypes";
 import { CmpForceController } from "../components/cmpforceController";
 import { CmpSpriteController } from "../components/cmpSpriteController";
 import { SeekForce } from "../steeringBehavior/forceSeek";
+import { ArrivalForce } from "../steeringBehavior/forceArrival";
+
 
  
 export class MainMenu 
@@ -105,7 +107,7 @@ extends Phaser.Scene
     targetActor.sendMessage
     (
       ST_MESSAGE_ID.kSetPosition,
-      new Phaser.Math.Vector2(width * 0.5, height * 0.25)
+      new Phaser.Math.Vector2(width * 0.5, height * 0.15)
     );
 
     ///////////////////////////////////
@@ -115,12 +117,21 @@ extends Phaser.Scene
 
     let seek : SeekForce = new SeekForce();
 
+    let arrival : ArrivalForce = new ArrivalForce();
+
     seek.init
     (
       shipSprite,
       targetSprite,
       1000
     );
+
+    arrival.init(
+      shipSprite,
+      targetSprite,
+      200,
+      1000
+    )
 
     // Step II : Get Component
 
@@ -129,7 +140,7 @@ extends Phaser.Scene
       ST_COMPONENT_ID.kForceController
     );
 
-    forceControl.addForce('seek_1', seek );
+    forceControl.addForce('seek_1', arrival );
 
     return;
   }
@@ -137,21 +148,21 @@ extends Phaser.Scene
   update(_time : number, _delta : number)
   : void
   {
-    // Target Oscillation 
+    // Target Oscillation - Commented for arrival force testing purposes.
 
-    let x = 300 * Math.sin(_time * 0.001);
+    // let x = 300 * Math.sin(_time * 0.001);
 
-    this._m_target_position.setTo
-    (
-      this._m_target_center.x + x,
-      this._m_target_center.y
-    );
+    // this._m_target_position.setTo
+    // (
+    //   this._m_target_center.x + x,
+    //   this._m_target_center.y
+    // );
 
-    this._m_target.sendMessage
-    (
-      ST_MESSAGE_ID.kSetPosition,
-      this._m_target_position
-    );
+    // this._m_target.sendMessage
+    // (
+    //   ST_MESSAGE_ID.kSetPosition,
+    //   this._m_target_position
+    // );
 
     // Ship update
 
