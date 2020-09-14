@@ -20,7 +20,7 @@ export interface IBaseComponent<T>
   /****************************************************/
   
   /**
-   * Initalize this component.
+   * Initialize this component.
    */
   init(_actor : BaseActor<T>) : void;
 

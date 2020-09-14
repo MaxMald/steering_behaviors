@@ -8,6 +8,8 @@
  * @since August-30-2020
  */
 
+import { Master } from "../master/master";
+
 /**
  * This scene should called once in the game. Start the game manager module.
  */
@@ -35,7 +37,11 @@ extends Phaser.Scene
   create()
   : void
   {
-    // TODO
+    // Create Master
+
+    Master.Prepare();
+
+    // Load Preloading.
     
     this.scene.start('preload');
     return;

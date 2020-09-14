@@ -16,7 +16,7 @@
     baseUrl: "/",
 
     paths: {
-      'phaser': pre + '/dependencies/phaser/build/phaser.min',
+      'phaser': pre + '/dependencies/phaser/build/phaser',
       'phaser3-nineslice' : pre + '/dependencies/phaser/plugins/nineSlice/nineslice.min',
       'mxUtilities' : pre + '/dependencies/mxUtilities/mxUtilities',
       'game_init' : pre + '/lib/steeringApp'
