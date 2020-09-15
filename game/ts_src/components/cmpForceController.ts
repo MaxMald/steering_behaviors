@@ -11,6 +11,7 @@
 import { BaseActor } from "../actors/baseActor";
 import { ST_COMPONENT_ID, ST_MESSAGE_ID } from "../commons/stEnums";
 import { Ty_Sprite, V2 } from "../commons/stTypes";
+import { Master } from "../master/master";
 import { IForce } from "../steeringBehavior/iForce";
 import { IBaseComponent } from "./iBaseComponent";
 
@@ -58,6 +59,10 @@ implements IBaseComponent<Ty_Sprite>
 
     this.clear();
 
+    // Get Master.
+
+    this._m_master = Master.GetInstance();
+    
     // Save actor
 
     this._m_actor = _actor;
@@ -96,7 +101,7 @@ implements IBaseComponent<Ty_Sprite>
 
     // apply delta time.
 
-    let dt = 0.001;
+    let dt = this._m_master.getDeltaTime();
 
     // Apply the Agent Mass.
 
@@ -499,6 +504,8 @@ implements IBaseComponent<Ty_Sprite>
     _force.onDebugDisable();
     return;
   }
+
+  private _m_master : Master;
 
   /**
    * The actor direction.
