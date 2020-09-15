@@ -38,6 +38,42 @@ export interface IBaseComponent<T>
   receive(_id : integer, _obj : any) : void;
 
   /**
+   * Called when the simulation had just been started.
+   */
+  onSimulationStart()
+  : void;
+
+  /**
+   * Called when the simulation had paused.
+   */
+  onSimulationPause()
+  : void;
+
+  /**
+   * Called when the simulation had resumed.
+   */
+  onSimulationResume()
+  : void;
+
+  /**
+   * Called when the simulation had stopped.
+   */
+  onSimulationStop()
+  : void;
+
+  /**
+   * Called when the debug feature had been enable.
+   */
+  onDebugEnable()
+  : void;
+
+  /**
+   * Called when the debug feature had been disable.
+   */
+  onDebugDisable()
+  : void;
+
+  /**
    * Get this component identifier.
    */
   getID() : number;

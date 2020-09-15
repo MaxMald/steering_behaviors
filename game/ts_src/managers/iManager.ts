@@ -62,13 +62,13 @@ export interface IManager
   /**
    * Called by Master when the game is been created.
    */
-  onGameSceneCreate()
+  onSimulationSceneCreate(_scene : Phaser.Scene)
   : void;
 
   /**
    * Called by Master when the game is been created.
    */
-  onGameSceneDestroy()
+  onSimulationSceneDestroy(_scene : Phaser.Scene)
   : void;
 
   /**
@@ -92,7 +92,19 @@ export interface IManager
   /**
    * Called by Master when the game is shutdown.
    */
-  onSimulationShutdown()
+  onSimulationStop()
+  : void;
+
+  /**
+   * Called by Master when the debug feature is enabled.
+   */
+  onDebugEnable()
+  : void;
+
+  /**
+   * Called by Master when the debug feature is disable.
+   */
+  onDebugDisable()
   : void;
 
   /**

@@ -32,8 +32,20 @@ export interface IForce
   : void;
 
   /**
+   * Called when the debug feature had been enable.
+   */
+  onDebugEnable()
+  : void;
+
+  /**
+   * Called when the debug feature had been disable.
+   */
+  onDebugDisable()
+  : void;
+
+  /**
    * Safely destroys this force.
    */
   destroy()
-  : void;
+  : void;  
 }

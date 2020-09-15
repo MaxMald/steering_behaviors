@@ -9,10 +9,12 @@
   */
 
 import { BaseActor } from "../actors/baseActor";
-import { ST_COMPONENT_ID, ST_MESSAGE_ID } from "../commons/stEnums";
+import { ST_COMPONENT_ID, ST_MANAGER_ID, ST_MESSAGE_ID } from "../commons/stEnums";
 import { Ty_Sprite, V2 } from "../commons/stTypes";
 import { CmpForceController } from "../components/cmpforceController";
 import { CmpSpriteController } from "../components/cmpSpriteController";
+import { SimulationManager } from "../managers/simulationManager/simulationManager";
+import { Master } from "../master/master";
 import { SeekForce } from "../steeringBehavior/forceSeek";
 import { ArrivalForce } from "../steeringBehavior/forceArrival";
 
@@ -28,8 +30,27 @@ extends Phaser.Scene
   create()
   : void
   {    
+
+    ///////////////////////////////////
+    // Master Manager
+
+    this._m_master = Master.GetInstance();
+
+    let master = this._m_master;
+
+    // on simulation scene create.
+
+    master.onSimulationSceneCreate(this);
+
     ///////////////////////////////////
     // Create SpaceShip Actor
+
+    // Get simulation manager.
+
+    let simManager : SimulationManager = master.getManager<SimulationManager>
+    (
+      ST_MANAGER_ID.kSimManager
+    );
 
     // Step I : Create Phaser GameObject
 
@@ -40,6 +61,10 @@ extends Phaser.Scene
     let shipActor = BaseActor.Create<Ty_Sprite>(shipSprite, 'SpaceShip');
     
     this._m_ship = shipActor;
+
+    // Add ship to simulation manager.
+
+    simManager.addActor(shipActor);
 
     // Create and init components.
 
@@ -93,6 +118,10 @@ extends Phaser.Scene
     );
 
     this._m_target = targetActor;
+
+    // Add target to simulation manager.
+
+    simManager.addActor(targetActor);
 
     targetActor.addComponent(new CmpSpriteController());
 
@@ -148,7 +177,11 @@ extends Phaser.Scene
   update(_time : number, _delta : number)
   : void
   {
-    // Target Oscillation - Commented for arrival force testing purposes.
+    // Update Master
+
+    this._m_master.update(_time, _delta * 0.001);
+
+    // Target Oscillation 
 
     // let x = 300 * Math.sin(_time * 0.001);
 
@@ -164,10 +197,6 @@ extends Phaser.Scene
     //   this._m_target_position
     // );
 
-    // Ship update
-
-    this._m_ship.update();
-
     return;
   }
 
@@ -182,4 +211,6 @@ extends Phaser.Scene
   private _m_target : BaseActor<Ty_Sprite>;
 
   private _m_ship : BaseActor<Ty_Sprite>;
+
+  private _m_master : Master;
 }
