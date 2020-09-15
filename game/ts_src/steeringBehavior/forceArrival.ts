@@ -151,6 +151,26 @@ implements IForce
   }
 
   /**
+   * Called when the debugging feature had been enable.
+   */
+  onDebugEnable()
+  : void 
+  {
+    // TODO
+    return;
+  }
+
+  /**
+   * Called when the debugging feature had been disable.
+   */
+  onDebugDisable()
+  : void 
+  {
+    // TODO
+    return;
+  }
+
+  /**
    * Safely destroys this force.
    */
   destroy()
