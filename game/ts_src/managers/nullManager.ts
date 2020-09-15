@@ -8,24 +8,37 @@
  * @since September-07-2020
  */
 
+import { ST_MANAGER_ID } from "../commons/stEnums";
 import { Master } from "../master/master";
 import { IManager } from "./iManager";
 
 /**
- * Null object pattern.
+ * Null service pattern.
  */
 export class NullManager 
 implements IManager
-{
-  setMasterManager(_master: Master): void {
-    throw new Error("Method not implemented.");
+{  
+  setMasterManager(_master: Master)
+  : void 
+  {
+    console.warn('Null Manager : setMaster');
+    return;
   }
-  getID(): number {
-    throw new Error("Method not implemented.");
+
+  getID()
+  : number 
+  {
+    console.warn('Null Manager : getID');
+    return ST_MANAGER_ID.kUndefined;
   }
-  onPrepare(): void {
-    throw new Error("Method not implemented.");
+  
+  onPrepare()
+  : void 
+  {
+    console.warn('Null Manager : onPrepare');
+    return;
   }
+
   init()
   : void 
   {
@@ -47,14 +60,14 @@ implements IManager
     return;
   }
 
-  onGameSceneCreate()
+  onSimulationSceneCreate(_scene : Phaser.Scene)
   : void 
   {
     console.warn('Null Manager : onGameSceneCreate');
     return;
   }
 
-  onGameSceneDestroy()
+  onSimulationSceneDestroy(_scene : Phaser.Scene)
   : void 
   {
     console.warn('Null Manager : onGameSceneDestroy');
@@ -82,10 +95,22 @@ implements IManager
     return;
   }
 
-  onSimulationShutdown()
+  onSimulationStop()
   : void 
   {
     console.warn('Null Manager : onSimulationShutdown');
+    return;
+  }
+  
+  onDebugEnable()
+  : void 
+  {
+    console.warn('Null Manager : onDebugEnable');
+    return;
+  }
+
+  onDebugDisable(): void {
+    console.warn('Null Manager : onDebugDisable');
     return;
   }
 

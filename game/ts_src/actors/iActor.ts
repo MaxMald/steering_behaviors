@@ -45,21 +45,39 @@
   : string;
 
   /**
-   * Called when the simulation had just started.
+   * Called when the simulation had started.
    */
   onSimulationStart()
   : void;
 
   /**
-   * Called when the simulation had just paused.
+   * Called when the simulation had paused.
    */
   onSimulationPause()
   : void;
 
   /**
-   * Called when the simulation had just resumed.
+   * Called when the simulation had resumed.
    */
   onSimulationResume()
+  : void;
+
+  /**
+   * Called when the simulation had stopped.
+   */
+  onSimulationStop()
+  : void;
+
+  /**
+   * Called when the debug feature had been enable.
+   */
+  onDebugEnable()
+  : void;
+
+  /**
+   * Called when the debug feature had been disable.
+   */
+  onDebugDisable()
   : void;
 
   /**

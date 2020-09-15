@@ -17,7 +17,7 @@ import { IForce } from "./iForce";
  */
 export class SeekForce
 implements IForce
-{
+{  
   /****************************************************/
   /* Public                                           */
   /****************************************************/
@@ -80,8 +80,6 @@ implements IForce
 
     let speed = controller.getSpeed();
 
-    let maxSpeed = controller.getMaxSpeed();
-
     let v2_A = this._m_v2_A;
 
     // Current Force
@@ -129,6 +127,26 @@ implements IForce
 
     controller.addSteerForce(steerForce.x, steerForce.y);
 
+    return;
+  }
+
+  /**
+   * Called when the debugging feature had been enable.
+   */
+  onDebugEnable()
+  : void 
+  {
+    // TODO
+    return;
+  }
+
+  /**
+   * Called when the debugging feature had been disable.
+   */
+  onDebugDisable()
+  : void 
+  {
+    // TODO
     return;
   }
 
