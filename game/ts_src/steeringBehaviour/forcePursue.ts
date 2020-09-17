@@ -109,7 +109,8 @@ implements IForce
       target.y - self.y
     ); 
 
-    this._m_targetForce.scale(this._m_predictionSteps + 1);
+    let ajustedPrediction = v2_B.length() / forceMagnitude;
+    this._m_targetForce.scale(ajustedPrediction * (this._m_predictionSteps + 1));
     v2_B.add(this._m_targetForce);
     v2_B.normalize();
     v2_B.scale(forceMagnitude);
