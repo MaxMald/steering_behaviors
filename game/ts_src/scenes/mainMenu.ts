@@ -17,6 +17,7 @@ import { SimulationManager } from "../managers/simulationManager/simulationManag
 import { Master } from "../master/master";
 import { SeekForce } from "../steeringBehavior/forceSeek";
 import { ArrivalForce } from "../steeringBehavior/forceArrival";
+import { WanderForce } from "../steeringBehavior/forceWander";
 
 
  
@@ -148,6 +149,8 @@ extends Phaser.Scene
 
     let arrival : ArrivalForce = new ArrivalForce();
 
+    let wander : WanderForce = new WanderForce();
+
     seek.init
     (
       shipSprite,
@@ -162,6 +165,15 @@ extends Phaser.Scene
       100
     )
 
+    wander.init(
+      shipSprite,
+      250,
+      10,
+      5,
+      1,
+      100
+    )
+
     // Step II : Get Component
 
     let forceControl = shipActor.getComponent<CmpForceController>
@@ -169,7 +181,7 @@ extends Phaser.Scene
       ST_COMPONENT_ID.kForceController
     );
 
-    forceControl.addForce('seek_1', arrival );
+    forceControl.addForce('seek_1', wander );
 
     return;
   }
