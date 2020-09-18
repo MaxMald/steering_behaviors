@@ -9,7 +9,7 @@
  */
 
 import { Ty_Sprite, V2 } from "../commons/stTypes";
-import { CmpForceController } from "../components/cmpforceController";
+import { CmpForceController } from "../components/cmpForceController";
 import { IForce } from "./iForce";
 
 /**
@@ -17,7 +17,7 @@ import { IForce } from "./iForce";
  */
 export class SeekForce
 implements IForce
-{
+{  
   /****************************************************/
   /* Public                                           */
   /****************************************************/
@@ -80,8 +80,6 @@ implements IForce
 
     let speed = controller.getSpeed();
 
-    let maxSpeed = controller.getMaxSpeed();
-
     let v2_A = this._m_v2_A;
 
     // Current Force
@@ -89,6 +87,8 @@ implements IForce
     v2_A.setTo(direction.x * speed, direction.y * speed);
 
     // Desire Force    
+
+    let forceMagnitude = this._m_force;
 
     let v2_B = this._m_v2_B;
 
@@ -99,7 +99,7 @@ implements IForce
     );
 
     v2_B.normalize();
-    v2_B.set(v2_B.x * maxSpeed, v2_B.y * maxSpeed);
+    v2_B.set(v2_B.x * forceMagnitude, v2_B.y * forceMagnitude);
 
     // Steer Force
 
@@ -111,9 +111,7 @@ implements IForce
       v2_B.y - v2_A.y
     );    
 
-    // Truncate force
-
-    let forceMagnitude = this._m_force;
+    // Truncate force    
 
     if(steerForce.length() > forceMagnitude)
     {
@@ -129,6 +127,39 @@ implements IForce
 
     controller.addSteerForce(steerForce.x, steerForce.y);
 
+    return;
+  }
+
+  /**
+   * Updates the debugging logic. Called only when the debugging feature is 
+   * enable.
+   * 
+   * @param _dt delta time in seconds.
+   */
+  updateDebug(_dt : number)
+  : void
+  {
+    
+    return;
+  }
+
+  /**
+   * Called when the debugging feature had been enable.
+   */
+  onDebugEnable()
+  : void 
+  {
+    // TODO
+    return;
+  }
+
+  /**
+   * Called when the debugging feature had been disable.
+   */
+  onDebugDisable()
+  : void 
+  {
+    // TODO
     return;
   }
 

@@ -6,6 +6,26 @@ import { EnumLiteralsOf } from "commons/mxEnums";
  * Component identifiers.
  */
 
+export type ST_MANAGER_ID = EnumLiteralsOf<typeof ST_MANAGER_ID>;
+
+export const ST_MANAGER_ID = Object.freeze
+({
+  
+  kUndefined : -1 as -1,
+
+  kSimManager : 1 as 1,
+
+  kUIManager : 2 as 2,
+
+  kDebugManager : 3 as 3
+});
+
+/**
+ * Components IDs
+ * 
+ * Component identifiers.
+ */
+
 export type ST_COMPONENT_ID = EnumLiteralsOf<typeof ST_COMPONENT_ID>;
 
 export const ST_COMPONENT_ID = Object.freeze
@@ -80,4 +100,35 @@ export const ST_MESSAGE_ID = Object.freeze
    * msg : number
    */
   kSetMaxSpeed : 7 as 7
+});
+
+/**
+ * Colors  IDs
+ */
+
+export type ST_COLOR_ID = EnumLiteralsOf<typeof ST_COLOR_ID>;
+
+export const ST_COLOR_ID = Object.freeze
+({
+  
+  kBlack : 0x000000 as 0x000000,
+
+  kWhite : 0xFFFFFF as 0xFFFFFF,
+
+  kRed : 0xFF0000 as 0xFF0000,
+
+  kGreen : 0x00FF00 as 0x00FF00,
+
+  kBlue : 0x0000FF as 0x0000FF,
+
+  kYellow : 0xFFFF00 as 0xFFFF00,
+
+  kOrange : 0xFFA500 as 0xFFA500,
+
+  kGray : 0x808080 as 0x808080,
+
+  kPurple : 0x800080 as 0x800080,
+
+  kBrown : 0xA52A2A as 0xA52A2A
+
 });

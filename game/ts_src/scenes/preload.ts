@@ -31,6 +31,12 @@ extends Phaser.Scene
       'images/space_ship.png'
     );
 
+    this.load.image
+    (
+      'button',
+      'images/button.png'
+    )
+
     return;
   }
 

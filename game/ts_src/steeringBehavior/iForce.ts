@@ -32,8 +32,29 @@ export interface IForce
   : void;
 
   /**
+   * Updates the debugging logic. Called only when the debugging feature is 
+   * enable.
+   * 
+   * @param _dt delta time in seconds.
+   */
+  updateDebug(_dt : number)
+  : void;
+
+  /**
+   * Called when the debug feature had been enable.
+   */
+  onDebugEnable()
+  : void;
+
+  /**
+   * Called when the debug feature had been disable.
+   */
+  onDebugDisable()
+  : void;
+
+  /**
    * Safely destroys this force.
    */
   destroy()
-  : void;
+  : void;  
 }

@@ -15,7 +15,7 @@ import { IBaseComponent } from "./iBaseComponent";
 
 export class CmpSpriteController
 implements IBaseComponent<Ty_Sprite>
-{
+{    
   /****************************************************/
   /* Public                                           */
   /****************************************************/
@@ -125,6 +125,42 @@ implements IBaseComponent<Ty_Sprite>
     let go = this._m_sprite;
 
     go.setScale(_x, _y);
+    return;
+  }
+
+  onSimulationStart()
+  : void 
+  {
+    return;
+  }
+
+  onSimulationPause()
+  : void 
+  {
+    return;
+  }
+
+  onSimulationResume()
+  : void 
+  {
+    return;
+  }
+
+  onSimulationStop()
+  : void 
+  {
+    return;
+  }
+
+  onDebugEnable()
+  : void 
+  {
+    return;
+  }
+
+  onDebugDisable()
+  : void 
+  {
     return;
   }
 

@@ -9,14 +9,16 @@
  */
 
 import { BaseActor } from "../actors/baseActor";
-import { ST_COMPONENT_ID, ST_MESSAGE_ID } from "../commons/stEnums";
+import { ST_COLOR_ID, ST_COMPONENT_ID, ST_MANAGER_ID, ST_MESSAGE_ID } from "../commons/stEnums";
 import { Ty_Sprite, V2 } from "../commons/stTypes";
-import { IForce } from "../steeringBehaviour/iForce";
+import { DebugManager } from "../managers/debugManager/debugManager";
+import { Master } from "../master/master";
+import { IForce } from "../steeringBehavior/iForce";
 import { IBaseComponent } from "./iBaseComponent";
 
 /**
  * This component controls all the forces applied in one actor. Saves each force
- * with a string id, wich can be used to get the force with the getForce method.
+ * with a string id, which can be used to get the force with the getForce method.
  */
 export class CmpForceController 
 implements IBaseComponent<Ty_Sprite>
@@ -41,6 +43,8 @@ implements IBaseComponent<Ty_Sprite>
     this._m_direction = new Phaser.Math.Vector2(1.0, 0.0);
     this._m_speed = 0.0;
     this._m_mass = 1.0;
+    this._m_bRunning = true;
+    this._m_debug = false;
     
     return;
   }
@@ -57,6 +61,24 @@ implements IBaseComponent<Ty_Sprite>
 
     this.clear();
 
+    // Get Master.
+
+    this._m_master = Master.GetInstance();
+
+    // Active debug if it is enable.
+
+    if(this._m_master.isDebugEnable())
+    {
+      this._m_debug = true;
+    }
+
+    // Get Debug Manager
+    
+    this._m_debugManager = this._m_master.getManager<DebugManager>
+    (
+      ST_MANAGER_ID.kDebugManager
+    );
+
     // Save actor
 
     this._m_actor = _actor;
@@ -72,13 +94,20 @@ implements IBaseComponent<Ty_Sprite>
   update(_actor: BaseActor<Ty_Sprite>)
   : void 
   {
-    // Reset the sum of all forces.
+    // Reset the Sum of all forces.
 
     let force = this._m_force;
 
     force.setTo(0.0, 0.0);
 
-    // Update forces.
+    // Abort if the force controller is not running.
+
+    if(!this._m_bRunning)
+    {
+      return;
+    }
+
+    // Sum of all forces.
 
     this._m_hForce.forEach
     (
@@ -88,7 +117,9 @@ implements IBaseComponent<Ty_Sprite>
 
     // apply delta time.
 
-    let dt = 0.001;
+    let dt = this._m_master.getDeltaTime();
+
+    // Apply the Agent Mass.
 
     let mass = this._m_mass;
 
@@ -100,56 +131,110 @@ implements IBaseComponent<Ty_Sprite>
 
     let v2_A = new Phaser.Math.Vector2(0.0, 0.0);
 
-    // Current Force
+    // Get the current force.
 
     let speed = this._m_speed;
 
     v2_A.setTo(this._m_direction.x * speed, this._m_direction.y * speed);
 
-    force.add(v2_A);
+    v2_A.add(force);
 
-    // Truncate the resulting force
+    // Truncate the resulting force to the maximum force allowed.
 
     let maxSpeed = this._m_maxSpeed;   
 
-    if(force.length() > maxSpeed)
+    if(v2_A.length() > maxSpeed)
     {
-      force.normalize();
+      v2_A.normalize();
     
-      force.setTo
+      v2_A.setTo
       (
-        force.x * maxSpeed,
-        force.y * maxSpeed
+        v2_A.x * maxSpeed,
+        v2_A.y * maxSpeed
       );
     }
+
+    // Get the new agent actual speed.
     
-    this._m_speed = force.length();
+    this._m_speed = v2_A.length();
     
-    force.scale(dt);
-    // Move Agent.
+    // Apply delta time.
+
+    v2_A.scale(dt);
+
+    // Move Agent by the force.
 
     this._m_actor.sendMessage
     (
       ST_MESSAGE_ID.kMove,
-      force
+      v2_A
     );
 
-    // Calculate new direction
-    force.normalize();
+    // Recalculate the new direction.
+
+    v2_A.normalize();
     
     this._m_direction.setTo
     (
-      force.x,
-      force.y
+      v2_A.x,
+      v2_A.y
     ); 
 
-
-    // Rotate Agent
+    // Agent rotation towards direction.
 
     this._m_actor.sendMessage
     (
       ST_MESSAGE_ID.kSetAngle,
       this._m_direction.angle()
+    );
+
+    // Debug force controller
+
+    if(this._m_debug)
+    {
+      this.updateDebug(dt);
+    }
+
+    return;
+  }
+
+  updateDebug(_dt : number)
+  : void
+  {
+    // Direction
+
+    let debugManager = this._m_debugManager;
+
+    let sprite = this._m_actor.getWrappedInstance();
+
+    let direction = this._m_direction;
+
+    debugManager.drawLine
+    (
+      sprite.x,
+      sprite.y,
+      sprite.x + direction.x * 100,
+      sprite.y + direction.y * 100,
+      3,
+      ST_COLOR_ID.kGreen
+    );
+
+    // Steer Force
+
+    let steerForce = this._m_force;
+
+    // Scale steer force a little
+
+    steerForce.scale(10);
+
+    debugManager.drawLine
+    (
+      sprite.x,
+      sprite.y,
+      sprite.x + steerForce.x,
+      sprite.y + steerForce.y,
+      3,
+      ST_COLOR_ID.kBlue
     );
 
     return;
@@ -162,18 +247,89 @@ implements IBaseComponent<Ty_Sprite>
     {
       case ST_MESSAGE_ID.kSetMass:
 
-      this._m_mass = _obj as number;
+      this.setMass(_obj as number);
       return;
 
       case ST_MESSAGE_ID.kSetSpeed:
 
-      this._m_speed = _obj as number;
+      this.setSpeed(_obj as number);
       return;
 
       case ST_MESSAGE_ID.kSetMaxSpeed:
-      this._m_maxSpeed = _obj as number;
+
+      this.setMaxSpeed(_obj as number);
       return;
     }
+    return;
+  }
+
+  /**
+   * Enable the force controller.
+   */
+  onSimulationStart()
+  : void 
+  {
+    this._m_bRunning = true;
+    return;
+  }
+
+  /**
+   * Disable the force controller.
+   */
+  onSimulationPause()
+  : void 
+  {
+    this._m_bRunning = false;
+    return;
+  }
+
+  /**
+   * Enable the force controller.
+   */
+  onSimulationResume()
+  : void 
+  {
+    this._m_bRunning = true;
+    return;
+  }
+
+  /**
+   * Disable the force controller.
+   */
+  onSimulationStop()
+  : void 
+  {
+    this._m_bRunning = false;
+    return;
+  }
+
+  /**
+   * Called when the debug had been enable.
+   */
+  onDebugEnable()
+  : void 
+  {
+    this._m_debug = true;
+    this._m_hForce.forEach
+    (
+      this._forceDebugEnable,
+      this
+    );    
+    return;
+  }
+
+  /**
+   * Called when the debug had been disable.
+   */
+  onDebugDisable()
+  : void 
+  {
+    this._m_debug = false;
+    this._m_hForce.forEach
+    (
+      this._forceDebugDisable,
+      this
+    );
     return;
   }
 
@@ -185,7 +341,7 @@ implements IBaseComponent<Ty_Sprite>
 
   /**
    * Adds a new force to this controller. If a force with the same id already 
-   * existis, it will be replaced. This will call the init( CmpForceController )
+   * exists, it will be replaced. This will call the init( CmpForceController )
    * method of the given force.
    * 
    * @param _str_id force id. 
@@ -262,6 +418,18 @@ implements IBaseComponent<Ty_Sprite>
   }
 
   /**
+   * Set the actor's maximum speed allowed.
+   * 
+   * @param _maxSpeed 
+   */
+  setMaxSpeed(_maxSpeed : number)
+  : void
+  {
+    this._m_maxSpeed = _maxSpeed;
+    return;
+  }
+
+  /**
    * Get the actor's max speed (pixels per second).
    */
   getMaxSpeed()
@@ -301,6 +469,17 @@ implements IBaseComponent<Ty_Sprite>
   {
     this._m_mass = _mass;
     return;
+  }
+
+  /**
+   * Check if the force controller is running.
+   * 
+   * @returns true if the force controller is running.
+   */
+  isRunning()
+  : boolean
+  {
+    return this._m_bRunning;
   }
 
   /**
@@ -360,14 +539,48 @@ implements IBaseComponent<Ty_Sprite>
   {
     // TODO Get delta time from Master.
 
-    let deltaTime : number = 0.001;
+    let deltaTime : number = this._m_master.getDeltaTime();
     
     // Update force.
     
     _force.update(deltaTime);
 
+    // Debugging
+
+    if(this._m_debug)
+    {
+      _force.updateDebug(deltaTime);
+    }
     return;
   }
+
+  /**
+   * Called whe the force is enable.
+   * 
+   * @param _force force. 
+   */
+  private _forceDebugEnable(_force : IForce)
+  : void
+  {
+    this._m_debug = true;
+    _force.onDebugEnable();
+    return;
+  }
+
+  /**
+   * Called when the force is disable.
+   * 
+   * @param _force force. 
+   */
+  private _forceDebugDisable(_force : IForce)
+  : void
+  {
+    this._m_debug = false;
+    _force.onDebugDisable();
+    return;
+  }
+
+  private _m_master : Master;
 
   /**
    * The actor direction.
@@ -403,4 +616,19 @@ implements IBaseComponent<Ty_Sprite>
    * Table of forces.
    */
   private _m_hForce : Map<string, IForce>;
+
+  /**
+   * Indicates if the force controller is running.
+   */
+  private _m_bRunning : boolean;
+
+  /**
+   * Indicates if the debug feature is enable.
+   */
+  private _m_debug : boolean;
+
+  /**
+   * Reference to the debug manager.
+   */
+  private _m_debugManager : DebugManager;
 }
