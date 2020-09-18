@@ -12,6 +12,9 @@ import { Plugin } from "phaser3-nineslice";
 import { Preload } from "./scenes/preload";
 import { Boot } from "./scenes/boot";
 import { MainMenu } from "./scenes/mainMenu";
+import { ScnDevMax } from "./scenes/sims/devMax";
+import { ScnDevSumano } from "./scenes/sims/devSumano";
+import { ScnDevAlex } from "./scenes/sims/devAlex";
 
 /**
  * Starts Application.
@@ -86,6 +89,10 @@ class GameInit
     this.m_game.scene.add('boot', Boot);
     this.m_game.scene.add('preload', Preload);
     this.m_game.scene.add('main_menu', MainMenu);
+
+    this.m_game.scene.add('devMax', ScnDevMax);
+    this.m_game.scene.add('devSumano', ScnDevSumano);
+    this.m_game.scene.add('devAlex', ScnDevAlex);
 
     ///////////////////////////////////
     // Start BOOT    
