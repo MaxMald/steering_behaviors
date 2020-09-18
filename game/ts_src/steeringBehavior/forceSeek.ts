@@ -131,6 +131,19 @@ implements IForce
   }
 
   /**
+   * Updates the debugging logic. Called only when the debugging feature is 
+   * enable.
+   * 
+   * @param _dt delta time in seconds.
+   */
+  updateDebug(_dt : number)
+  : void
+  {
+    
+    return;
+  }
+
+  /**
    * Called when the debugging feature had been enable.
    */
   onDebugEnable()
