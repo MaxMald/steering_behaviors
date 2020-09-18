@@ -29,7 +29,7 @@ implements IForce
    * @param _self The sprite of the agent.
    * @param _target The sprite of the target.
    * @param _force The magnitude of the force.
-   * @param _predictionSteps How many step ahead to predict.
+   * @param _predictionSteps How many steps/frames ahead to predict.
    * @param _targetForceCtrl The forceControler of the target.
    * @param _controller [optional] The controller of this force.
    */
@@ -76,7 +76,7 @@ implements IForce
   {
     // Get points
 
-    this._m_targetForce = this._m_targetForceCtrl.getDirection();
+    this._m_targetDir = this._m_targetForceCtrl.getDirection();
 
     let target : Ty_Sprite = this._m_target;
     
@@ -88,8 +88,6 @@ implements IForce
     
     let direction = controller.getDirection();
 
-    let maxSpeed = controller.getMaxSpeed();
-
     let speed = controller.getSpeed();
 
     let v2_A = this._m_v2_A; 
@@ -100,25 +98,92 @@ implements IForce
 
     v2_A.setTo(direction.x * speed, direction.y * speed);
 
+    //Pursue force
+    let pursuePos = this._m_targetDir;
+    let predictionSteps = this._m_predictionSteps;
+    pursuePos.set(pursuePos.x * speed, pursuePos.y * speed).scale(predictionSteps);
+    
+
     // Desire Force    
+    
+
 
     let v2_B = this._m_v2_B;
     v2_B.set
     (
-      target.x - self.x, 
-      target.y - self.y
+      pursuePos.x + (target.x - self.x), 
+      pursuePos.y + (target.y - self.y)
     ); 
 
-    let ajustedPrediction = v2_B.length() / forceMagnitude;
-    this._m_targetForce.scale(ajustedPrediction * (this._m_predictionSteps + 1));
-    v2_B.add(this._m_targetForce);
+
+
+    // let ajustedPrediction = v2_B.length() / forceMagnitude;
+
+    // this._m_targetForce.scale(ajustedPrediction * (this._m_predictionSteps + 1));
+
+    // v2_B.add(this._m_targetForce);
+    
+    // v2_B.normalize();
+    // v2_B.scale(forceMagnitude);
+
     v2_B.normalize();
     v2_B.scale(forceMagnitude);
 
-    v2_A.setTo(direction.x * speed, direction.y * speed);
+    // Steer Force
 
-    controller.addSteerForce(v2_B.x, v2_B.y);
+    let steerForce = this._m_force_v2;
+   
+    steerForce.set
+    (
+      v2_B.x - v2_A.x, 
+      v2_B.y - v2_A.y
+    );    
 
+    // Truncate force    
+
+    if(steerForce.length() > forceMagnitude)
+    {
+      steerForce.normalize();
+      steerForce.scale(forceMagnitude);
+    }
+
+    // Add force to the controller.
+
+    controller.addSteerForce(steerForce.x, steerForce.y);
+
+    return;
+  }
+
+  /**
+   * Updates the debugging logic. Called only when the debugging feature is 
+   * enable.
+   * 
+   * @param _dt delta time in seconds.
+   */
+  updateDebug(_dt : number)
+  : void
+  {
+    
+    return;
+  }
+
+  /**
+   * Called when the debugging feature had been enable.
+   */
+  onDebugEnable()
+  : void 
+  {
+    // TODO
+    return;
+  }
+
+  /**
+   * Called when the debugging feature had been disable.
+   */
+  onDebugDisable()
+  : void 
+  {
+    // TODO
     return;
   }
 
@@ -131,7 +196,7 @@ implements IForce
 
     this._m_controller = null;
     this._m_force_v2 = null;
-    this._m_targetForce = null;
+    this._m_targetDir = null;
     this._m_v2_A = null;
     this._m_v2_B = null;
 
@@ -187,7 +252,7 @@ implements IForce
   /**
    * Velocity of the target
    */
-  private _m_targetForce : V2;
+  private _m_targetDir : V2;
 
   /**
    * Velocity of the target
