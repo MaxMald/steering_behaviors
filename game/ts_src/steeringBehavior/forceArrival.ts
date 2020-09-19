@@ -83,6 +83,8 @@ implements IForce
 
     let speed = controller.getSpeed();
 
+    let maxSpeed = controller.getMaxSpeed();
+
     let actualVelocity = this._m_v2_actualVelocity;
 
     // Current Force
@@ -111,13 +113,13 @@ implements IForce
 
     if(distance < slowingRadius) {
         desiredVelocity.set(
-            desiredVelocity.x * forceMagnitude * arrivalMultiplier, 
-            desiredVelocity.y * forceMagnitude * arrivalMultiplier
+            desiredVelocity.x * maxSpeed * arrivalMultiplier, 
+            desiredVelocity.y * maxSpeed * arrivalMultiplier
         );
     } else {
         desiredVelocity.set(
-            desiredVelocity.x * forceMagnitude, 
-            desiredVelocity.y * forceMagnitude
+            desiredVelocity.x * maxSpeed, 
+            desiredVelocity.y * maxSpeed
         );
     }
 
@@ -151,6 +153,19 @@ implements IForce
   }
 
   /**
+   * Updates the debugging logic. Called only when the debugging feature is 
+   * enable.
+   * 
+   * @param _dt delta time in seconds.
+   */
+  updateDebug(_dt : number)
+  : void
+  {
+    
+    return;
+  }
+
+  /**
    * Called when the debugging feature had been enable.
    */
   onDebugEnable()
@@ -179,9 +194,11 @@ implements IForce
 
     this._m_controller = null;
     this._m_v2_forceMagnitude = null;
-    this._m_slowingRadius = null;
     this._m_v2_actualVelocity = null;
     this._m_v2_desiredVelocity = null;
+    
+    this._m_forceMagnitude = null;
+    this._m_slowingRadius = null;
 
     this._m_target = null;
     this._m_self = null;

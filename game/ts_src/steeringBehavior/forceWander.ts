@@ -9,9 +9,12 @@ import { Vector } from "matter";
  * @since September-16-2020
  */
 
+import { DebugManager } from "../managers/debugManager/debugManager";
+import { ST_COLOR_ID, ST_COMPONENT_ID, ST_MANAGER_ID, ST_MESSAGE_ID } from "../commons/stEnums";
 import { Ty_Sprite, V2 } from "../commons/stTypes";
 import { CmpForceController } from "../components/cmpForceController";
 import { IForce } from "./iForce";
+import { Master } from "../master/master";
 
 /**
  * 
@@ -27,6 +30,13 @@ implements IForce
    * Initialize the Arrival Force.
    * 
    * @param _self The sprite of the agent.
+   * @param _targetDistance The target distance from the agent in relation of 
+   * its actual velocity (direction).
+   * @param _circleRadius The radius for target displacement from the wander 
+   * distance value.
+   * @param _displacementAngle The angle of displacement for the displacement 
+   * vector every frame.
+   * @param _angleChange The change factor for the displacement angle.
    * @param _force The magnitude of the force.
    * @param _controller [optional] The controller of this force.
    */
@@ -64,6 +74,20 @@ implements IForce
 
     this._m_v2_forceMagnitude = new Phaser.Math.Vector2(0.0, 0.0);
 
+    this._m_master = Master.GetInstance();
+
+    if(this._m_master.isDebugEnable())
+    {
+      this._m_debug = true;
+    }
+
+    // Get Debug Manager
+    
+    this._m_debugManager = this._m_master.getManager<DebugManager>
+    (
+      ST_MANAGER_ID.kDebugManager
+    );
+
     return;
   }
 
@@ -89,17 +113,18 @@ implements IForce
 
     let speed = controller.getSpeed();
 
+    let maxSpeed = controller.getMaxSpeed();
+
     // Current Force
     
     let actualVelocity = this._m_v2_actualVelocity;
 
     actualVelocity.setTo(direction.x * speed, direction.y * speed);
 
+    //let targetDistance = new Phaser.Math.Vector2(0.0, 0.0);
     let targetDistance = direction;
-
-    // Normalize
-
-    targetDistance.normalize();
+    
+    targetDistance.set(direction.x, direction.y);
 
     // Get position of target before displacement
 
@@ -116,6 +141,8 @@ implements IForce
     let displacementAngle = this._m_displacementAngle;
 
     this.setAngle(displacement, displacementAngle);
+
+    this._m_v2_displacement = displacement;
 
     let changeAngle = this._m_angleChange;
 
@@ -138,8 +165,8 @@ implements IForce
     desiredVelocity.normalize();
     
     desiredVelocity.set(
-        desiredVelocity.x * forceMagnitude, 
-        desiredVelocity.y * forceMagnitude
+        desiredVelocity.x * maxSpeed, 
+        desiredVelocity.y * maxSpeed
     );
 
     // Steer Force
@@ -167,6 +194,68 @@ implements IForce
     // Add force to the controller.
 
     controller.addSteerForce(steerForce.x, steerForce.y);
+
+    if(this._m_debug)
+    {
+      this.updateDebug(_dt);
+    }
+
+    return;
+  }
+
+  /**
+   * Updates the debugging logic. Called only when the debugging feature is 
+   * enable.
+   * 
+   * @param _dt delta time in seconds.
+   */
+  updateDebug(_dt : number)
+  : void
+  {
+    
+    let debugManager = this._m_debugManager;
+
+    let sprite = this._m_self;
+
+    let direction = this._m_controller.getDirection().normalize().scale(this._m_targetDistance);
+
+    let targetDistanceVector = new Phaser.Math.Vector2(0.0, 0.0);
+
+    targetDistanceVector.set(
+      sprite.x + direction.x,
+      sprite.y + direction.y,
+    )
+
+    debugManager.drawLine(
+      sprite.x,
+      sprite.y,
+      targetDistanceVector.x,
+      targetDistanceVector.y,
+      3,
+      ST_COLOR_ID.kPurple
+    );
+
+    debugManager.drawCircle(
+      targetDistanceVector.x,
+      targetDistanceVector.y,
+      this._m_circleRadius,
+      2,
+      ST_COLOR_ID.kBlack
+    );
+
+    let displacementVector = new Phaser.Math.Vector2(targetDistanceVector.x, targetDistanceVector.y);
+
+    displacementVector.add(this._m_v2_displacement);
+
+    debugManager.drawCircle(
+    displacementVector.x,
+    displacementVector.y,
+    1,
+    8,
+    ST_COLOR_ID.kRed  
+    )
+
+
 
     return;
   }
@@ -203,6 +292,12 @@ implements IForce
     this._m_v2_actualVelocity = null;
     this._m_v2_desiredVelocity = null;
 
+    this._m_forceMagnitude = null;
+    this._m_targetDistance = null;
+    this._m_circleRadius = null;
+    this._m_displacementAngle = null;
+    this._m_angleChange = null;
+
     this._m_self = null;
     return;
   }
@@ -220,6 +315,18 @@ implements IForce
   /* Private                                          */
   /****************************************************/
   
+  private _m_master : Master;
+
+  /**
+  * Indicates if the debug feature is enable.
+  */
+  private _m_debug : boolean;
+
+  /**
+  * Reference to the debug manager.
+  */
+  private _m_debugManager : DebugManager;
+
   /**
    * Reference to the force controller.
    */
@@ -261,12 +368,18 @@ implements IForce
   private _m_angleChange : number;
 
   /**
-   * Vector 2 A.
+   * Vector 2 for actual velocity.
    */
   private _m_v2_actualVelocity : V2;
 
   /**
-   * Vector 2 B.
+   * Vector 2 for desired velocity.
    */
   private _m_v2_desiredVelocity : V2;
+
+  /**
+   * Vector 2 for displacement.
+   */
+  private _m_v2_displacement : V2;
+
 }

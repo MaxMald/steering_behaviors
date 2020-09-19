@@ -175,6 +175,8 @@ implements IForce
     this._m_v2_A = null;
     this._m_v2_B = null;
 
+    this._m_force = null;
+
     this._m_target = null;
     this._m_self = null;
     return;
