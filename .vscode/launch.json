@@ -9,7 +9,7 @@
       
       "name": "Test Steering Demo",
       
-      "url": "http://192.168.1.18:8080",
+      "url": "http://192.168.1.15:8081 ",
       
       "webRoot": "${workspaceFolder}",
       
