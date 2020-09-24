@@ -58,20 +58,25 @@ implements IForce
       this._m_controller = _controller;
     }
 
-    this._m_v2_A = new Phaser.Math.Vector2(0.0, 0.0);
+    this._m_v2_actualVelocity = new Phaser.Math.Vector2(0.0, 0.0);
 
-    this._m_v2_B = new Phaser.Math.Vector2(0.0, 0.0);
+    this._m_v2_desiredVelocity = new Phaser.Math.Vector2(0.0, 0.0);
 
-    this._m_force_v2 = new Phaser.Math.Vector2(0.0, 0.0);
+    this._m_v2_forceMagnitude = new Phaser.Math.Vector2(0.0, 0.0);
 
-    if(Master.GetInstance().isDebugEnable()) {
 
-    }
+    this._m_v2_force = new Phaser.Math.Vector2(0.0, 0.0);
 
-    this.m_debugTargetPos = new Phaser.Math.Vector2(0.0, 0.0);
+    this._m_targetDir = new Phaser.Math.Vector2(0,0);
+
+    this._m_debugManager = Master.GetInstance().getManager<DebugManager>
+    (
+      ST_MANAGER_ID.kDebugManager
+    );
 
     return;
   }
+
 
   setController(_controller: CmpForceController)
   : void 
@@ -85,8 +90,6 @@ implements IForce
   {
     // Get points
 
-    this._m_targetDir = this._m_targetForceCtrl.getDirection();
-
     let target : Ty_Sprite = this._m_target;
     
     let self : Ty_Sprite = this._m_self;
@@ -99,56 +102,49 @@ implements IForce
 
     let speed = controller.getSpeed();
 
-    let v2_A = this._m_v2_A; 
+    let maxSpeed = controller.getMaxSpeed();
+
+    let actualVelocity = this._m_v2_actualVelocity; 
 
     let forceMagnitude = this._m_force;
 
     // Current Force
 
-    v2_A.setTo(direction.x * speed, direction.y * speed);
+    actualVelocity.setTo(direction.x * speed, direction.y * speed);
 
     //Pursue force
-    let pursuePos = this._m_targetDir;
+    let targetDir = this._m_targetDir;
+    targetDir.copy(this._m_targetForceCtrl.getDirection());
+    
     let predictionSteps = this._m_predictionSteps;
-    pursuePos.set(pursuePos.x * speed, pursuePos.y * speed).scale(predictionSteps);
-    
+    targetDir.scale(speed * predictionSteps);
 
-    // Desire Force    
-    
-    this.m_debugTargetPos.set(target.x, target.y);
-    this.m_debugTargetPos.add(pursuePos);
-
-    let v2_B = this._m_v2_B;
-    v2_B.set
+    let desiredVelocity = this._m_v2_desiredVelocity;
+    desiredVelocity.set
     (
-      pursuePos.x + (target.x - self.x), 
-      pursuePos.y + (target.y - self.y)
+      targetDir.x + target.x - self.x, 
+      targetDir.y + target.y - self.y
     ); 
 
     // let ajustedPrediction = v2_B.length() / forceMagnitude;
     // this._m_targetForce.scale(ajustedPrediction * (this._m_predictionSteps + 1));
     // v2_B.add(this._m_targetForce);
 
-    v2_B.normalize();
-    v2_B.scale(forceMagnitude);
-
+    
+    desiredVelocity.scale(maxSpeed / desiredVelocity.length());
     // Steer Force
 
-    let steerForce = this._m_force_v2;
+    let steerForce = this._m_v2_forceMagnitude;
    
     steerForce.set
     (
-      v2_B.x - v2_A.x, 
-      v2_B.y - v2_A.y
+      desiredVelocity.x - actualVelocity.x, 
+      desiredVelocity.y - actualVelocity.y
     );    
 
     // Truncate force    
 
-    if(steerForce.length() > forceMagnitude)
-    {
-      steerForce.normalize();
-      steerForce.scale(forceMagnitude);
-    }
+    steerForce.limit(forceMagnitude);
 
     // Add force to the controller.
 
@@ -166,12 +162,34 @@ implements IForce
   updateDebug(_dt : number)
   : void
   {
-    let master = Master.GetInstance();
-    let debugManager = master.getManager<DebugManager>(ST_MANAGER_ID.kDebugManager);
-    let tPos = this.m_debugTargetPos;
+    let debugManager = this._m_debugManager;
+
     let pos = this._m_self;
-    debugManager.drawCircle(tPos.x, tPos.y, this._m_predictionSteps, 3, ST_COLOR_ID.kRed);
-    debugManager.drawLine(pos.x, pos.y, tPos.x, tPos.y, 3, ST_COLOR_ID.kRed);
+
+    // Steering force line
+    debugManager.drawLine(
+      this._m_v2_desiredVelocity.x + pos.x,
+      this._m_v2_desiredVelocity.y + pos.y,
+      this._m_v2_actualVelocity.x + pos.x,
+      this._m_v2_actualVelocity.y + pos.y,
+      3,
+      ST_COLOR_ID.kRed
+    );
+
+    // Desired Velocity line
+    debugManager.drawLine(
+      pos.x,
+      pos.y,
+      this._m_v2_desiredVelocity.x + pos.x,
+      this._m_v2_desiredVelocity.y + pos.y,
+      3,
+      ST_COLOR_ID.kBlack
+    );
+
+    // let tPos = new Phaser.Math.Vector2(0, 0);
+    // tPos.copy(this._m_v2_desiredVelocity);
+    // debugManager.drawCircle(tPos.x, tPos.y, this._m_predictionSteps, 3, ST_COLOR_ID.kRed);
+    // debugManager.drawLine(pos.x, pos.y, tPos.x, tPos.y, 3, ST_COLOR_ID.kRed);
     return;
   }
 
@@ -203,10 +221,10 @@ implements IForce
   {
 
     this._m_controller = null;
-    this._m_force_v2 = null;
+    //this._m_force_v2 = null;
     this._m_targetDir = null;
-    this._m_v2_A = null;
-    this._m_v2_B = null;
+    //this._m_v2_A = null;
+    //this._m_v2_B = null;
 
     this._m_target = null;
     this._m_self = null;
@@ -225,7 +243,7 @@ implements IForce
   /**
    * The force in Vector2.
    */
-  private _m_force_v2 : V2;
+  private _m_v2_force : V2;
 
   /**
    * The magnitude of the applied force.
@@ -243,33 +261,37 @@ implements IForce
   private _m_target : Ty_Sprite;
 
   /**
-   * Vector 2 A.
+   * Actual velocity of the pursue agent.
    */
-  private _m_v2_A : V2;
+  private _m_v2_actualVelocity : V2;
 
   /**
-   * Vector 2 B.
+   * Desired velocity of the pursue agent.
    */
-  private _m_v2_B : V2;
+  private _m_v2_desiredVelocity : V2;
+
+ /**
+   * The force in Vector2.
+   */
+  private _m_v2_forceMagnitude : V2;
 
   /**
-   * ForceControler of the target
+   * ForceControler of the target.
    */
   private _m_targetForceCtrl : CmpForceController;
 
   /**
-   * Velocity of the target
+   * Velocity of the target.
    */
   private _m_targetDir : V2;
 
   /**
-   * Velocity of the target
+   * Prediction steps from the target.
    */
   private _m_predictionSteps : number;
-
-  private m_debugTargetPos : V2;
-
-  private m_debugManager : DebugManager;
-
-  private m_master : Master;
+  
+    /**
+  * Reference to the debug manager.
+  */
+ private _m_debugManager : DebugManager;
 }
