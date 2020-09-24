@@ -3,9 +3,9 @@
  *
  * @summary 
  *
- * @file forceSeek.ts
- * @author Max Alberto Solano Maldonado <nuup20@gmail.com>
- * @since September-07-2020
+ * @file forceArrival.ts
+ * @author Jorge Alexandro Zamudio Arredondo <alexzamudio_11@hotmail.com>
+ * @since September-14-2020
  */
 
 import { Ty_Sprite, V2 } from "../commons/stTypes";
@@ -15,18 +15,19 @@ import { IForce } from "./iForce";
 /**
  * 
  */
-export class SeekForce
+export class ArrivalForce
 implements IForce
-{  
+{
   /****************************************************/
   /* Public                                           */
   /****************************************************/
 
   /**
-   * Initialize the Seek Force.
+   * Initialize the Arrival Force.
    * 
    * @param _self The sprite of the agent.
    * @param _target The sprite of the target.
+   * @param _slowingRadius The limit radius to start slowing down the force.
    * @param _force The magnitude of the force.
    * @param _controller [optional] The controller of this force.
    */
@@ -34,24 +35,26 @@ implements IForce
   (
     _self : Ty_Sprite,
     _target : Ty_Sprite,
+    _slowingRadius : number,
     _force : number,
     _controller ?: CmpForceController
   )
   {
     this._m_self = _self;
     this._m_target = _target;
-    this._m_force = _force;
+    this._m_slowingRadius = _slowingRadius;
+    this._m_forceMagnitude = _force;
 
     if(this._m_controller !== undefined)
     {
       this._m_controller = _controller;
     }
 
-    this._m_v2_A = new Phaser.Math.Vector2(0.0, 0.0);
+    this._m_v2_actualVelocity = new Phaser.Math.Vector2(0.0, 0.0);
 
-    this._m_v2_B = new Phaser.Math.Vector2(0.0, 0.0);
+    this._m_v2_desiredVelocity = new Phaser.Math.Vector2(0.0, 0.0);
 
-    this._m_force_v2 = new Phaser.Math.Vector2(0.0, 0.0);
+    this._m_v2_forceMagnitude = new Phaser.Math.Vector2(0.0, 0.0);
 
     return;
   }
@@ -80,35 +83,54 @@ implements IForce
 
     let speed = controller.getSpeed();
 
-    let v2_A = this._m_v2_A;
+    let maxSpeed = controller.getMaxSpeed();
+
+    let actualVelocity = this._m_v2_actualVelocity;
 
     // Current Force
 
-    v2_A.setTo(direction.x * speed, direction.y * speed);
+    actualVelocity.setTo(direction.x * speed, direction.y * speed);
 
     // Desire Force    
 
-    let forceMagnitude = this._m_force;
+    let forceMagnitude = this._m_forceMagnitude;
 
-    let v2_B = this._m_v2_B;
+    let desiredVelocity = this._m_v2_desiredVelocity;
 
-    v2_B.set
+    desiredVelocity.set
     (
       target.x - self.x, 
       target.y - self.y
     );
 
-    v2_B.normalize();
-    v2_B.set(v2_B.x * forceMagnitude, v2_B.y * forceMagnitude);
+    let distance = desiredVelocity.length();
+
+    desiredVelocity.normalize();
+
+    let slowingRadius = this._m_slowingRadius;
+
+    let arrivalMultiplier = distance / slowingRadius;
+
+    if(distance < slowingRadius) {
+        desiredVelocity.set(
+            desiredVelocity.x * maxSpeed * arrivalMultiplier, 
+            desiredVelocity.y * maxSpeed * arrivalMultiplier
+        );
+    } else {
+        desiredVelocity.set(
+            desiredVelocity.x * maxSpeed, 
+            desiredVelocity.y * maxSpeed
+        );
+    }
 
     // Steer Force
 
-    let steerForce = this._m_force_v2;
+    let steerForce = this._m_v2_forceMagnitude;
    
     steerForce.set
     (
-      v2_B.x - v2_A.x, 
-      v2_B.y - v2_A.y
+      desiredVelocity.x - actualVelocity.x, 
+      desiredVelocity.y - actualVelocity.y
     );    
 
     // Truncate force    
@@ -171,11 +193,12 @@ implements IForce
   {
 
     this._m_controller = null;
-    this._m_force_v2 = null;
-    this._m_v2_A = null;
-    this._m_v2_B = null;
-
-    this._m_force = null;
+    this._m_v2_forceMagnitude = null;
+    this._m_v2_actualVelocity = null;
+    this._m_v2_desiredVelocity = null;
+    
+    this._m_forceMagnitude = null;
+    this._m_slowingRadius = null;
 
     this._m_target = null;
     this._m_self = null;
@@ -194,12 +217,17 @@ implements IForce
   /**
    * The force in Vector2.
    */
-  private _m_force_v2 : V2;
+  private _m_v2_forceMagnitude : V2;
+
+  /**
+   * The limit radius to start slowing down the force.
+   */
+  private _m_slowingRadius : number;
 
   /**
    * The magnitude of the applied force.
    */
-  private _m_force : number;
+  private _m_forceMagnitude : number;
 
   /**
    * The agent sprite.
@@ -214,10 +242,10 @@ implements IForce
   /**
    * Vector 2 A.
    */
-  private _m_v2_A : V2;
+  private _m_v2_actualVelocity : V2;
 
   /**
    * Vector 2 B.
    */
-  private _m_v2_B : V2;
+  private _m_v2_desiredVelocity : V2;
 }
