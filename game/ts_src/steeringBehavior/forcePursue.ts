@@ -9,8 +9,11 @@
  */
 
 import { BaseActor } from "../actors/baseActor";
+import { ST_COLOR_ID, ST_MANAGER_ID } from "../commons/stEnums";
 import { Ty_Sprite, V2 } from "../commons/stTypes";
 import { CmpForceController } from "../components/cmpforceController";
+import { DebugManager } from "../managers/debugManager/debugManager";
+import { Master } from "../master/master";
 import { IForce } from "./iForce";
 
 /**
@@ -61,6 +64,12 @@ implements IForce
 
     this._m_force_v2 = new Phaser.Math.Vector2(0.0, 0.0);
 
+    if(Master.GetInstance().isDebugEnable()) {
+
+    }
+
+    this.m_debugTargetPos = new Phaser.Math.Vector2(0.0, 0.0);
+
     return;
   }
 
@@ -106,7 +115,8 @@ implements IForce
 
     // Desire Force    
     
-
+    this.m_debugTargetPos.set(target.x, target.y);
+    this.m_debugTargetPos.add(pursuePos);
 
     let v2_B = this._m_v2_B;
     v2_B.set
@@ -115,16 +125,9 @@ implements IForce
       pursuePos.y + (target.y - self.y)
     ); 
 
-
-
     // let ajustedPrediction = v2_B.length() / forceMagnitude;
-
     // this._m_targetForce.scale(ajustedPrediction * (this._m_predictionSteps + 1));
-
     // v2_B.add(this._m_targetForce);
-    
-    // v2_B.normalize();
-    // v2_B.scale(forceMagnitude);
 
     v2_B.normalize();
     v2_B.scale(forceMagnitude);
@@ -163,7 +166,12 @@ implements IForce
   updateDebug(_dt : number)
   : void
   {
-    
+    let master = Master.GetInstance();
+    let debugManager = master.getManager<DebugManager>(ST_MANAGER_ID.kDebugManager);
+    let tPos = this.m_debugTargetPos;
+    let pos = this._m_self;
+    debugManager.drawCircle(tPos.x, tPos.y, this._m_predictionSteps, 3, ST_COLOR_ID.kRed);
+    debugManager.drawLine(pos.x, pos.y, tPos.x, tPos.y, 3, ST_COLOR_ID.kRed);
     return;
   }
 
@@ -259,5 +267,9 @@ implements IForce
    */
   private _m_predictionSteps : number;
 
+  private m_debugTargetPos : V2;
 
+  private m_debugManager : DebugManager;
+
+  private m_master : Master;
 }
