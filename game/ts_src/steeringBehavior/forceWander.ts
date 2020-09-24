@@ -74,6 +74,10 @@ implements IForce
 
     this._m_v2_forceMagnitude = new Phaser.Math.Vector2(0.0, 0.0);
 
+    this._m_v2_displacement = new Phaser.Math.Vector2(0.0, -1.0);
+
+    this._m_v2p_circleCenter = new Phaser.Math.Vector2(0.0, 0.0);
+
     this._m_master = Master.GetInstance();
 
     if(this._m_master.isDebugEnable())
@@ -121,32 +125,37 @@ implements IForce
 
     actualVelocity.setTo(direction.x * speed, direction.y * speed);
 
-    //let targetDistance = new Phaser.Math.Vector2(0.0, 0.0);
-    let targetDistance = direction;
+    // Get position of center circle
+    let circleCenter = this._m_v2p_circleCenter;
     
-    targetDistance.set(direction.x, direction.y);
+    circleCenter.copy(direction);
 
-    // Get position of target before displacement
+    circleCenter.scale(this._m_targetDistance);
 
-    targetDistance.scale(this._m_targetDistance);
+    circleCenter.set(
+      circleCenter.x + self.x,
+      circleCenter.y + self.y
+    );
 
     // Get displacement vector
 
-    let displacement = new Phaser.Math.Vector2(0.0, -1.0);
+    let displacement = this._m_v2_displacement;
+
+    displacement.normalize();
 
     let circleRadius = this._m_circleRadius;
 
     displacement.scale(circleRadius);
 
-    let displacementAngle = this._m_displacementAngle;
+    let displacementAngle = this._m_displacementAngle * Phaser.Math.DEG_TO_RAD;
 
-    this.setAngle(displacement, displacementAngle);
+    displacement.setAngle(displacementAngle);
 
-    this._m_v2_displacement = displacement;
+    //this.setAngle(displacement, displacementAngle);
 
     let changeAngle = this._m_angleChange;
 
-    this._m_displacementAngle += Math.random() * changeAngle - changeAngle * .5;
+    displacementAngle += Math.random() * changeAngle - changeAngle * .5;
 
     // Desire Force    
 
@@ -154,12 +163,12 @@ implements IForce
 
     let desiredVelocity = this._m_v2_desiredVelocity;
 
-    targetDistance.add(displacement);
+    circleCenter.add(displacement);
 
     desiredVelocity.set
     (
-        targetDistance.x - self.x, 
-        targetDistance.y - self.y
+        circleCenter.x - self.x, 
+        circleCenter.y - self.y
     );
 
     desiredVelocity.normalize();
@@ -217,13 +226,12 @@ implements IForce
 
     let sprite = this._m_self;
 
-    let direction = this._m_controller.getDirection().normalize().scale(this._m_targetDistance);
-
+    let direction = this._m_controller.getDirection();
     let targetDistanceVector = new Phaser.Math.Vector2(0.0, 0.0);
 
     targetDistanceVector.set(
-      sprite.x + direction.x,
-      sprite.y + direction.y,
+      sprite.x + direction.x * this._m_targetDistance,
+      sprite.y + direction.y * this._m_targetDistance,
     )
 
     debugManager.drawLine(
@@ -233,6 +241,24 @@ implements IForce
       targetDistanceVector.y,
       3,
       ST_COLOR_ID.kPurple
+    );
+
+    debugManager.drawLine(
+      this._m_v2_desiredVelocity.x + sprite.x,
+      this._m_v2_desiredVelocity.y+ sprite.y,
+      this._m_v2_actualVelocity.x + sprite.x,
+      this._m_v2_actualVelocity.y + sprite.y,
+      3,
+      ST_COLOR_ID.kRed
+    );
+
+    debugManager.drawLine(
+      sprite.x,
+      sprite.y,
+      this._m_v2_desiredVelocity.x + sprite.x,
+      this._m_v2_desiredVelocity.y + sprite.y,
+      3,
+      ST_COLOR_ID.kBlack
     );
 
     debugManager.drawCircle(
@@ -247,13 +273,14 @@ implements IForce
 
     displacementVector.add(this._m_v2_displacement);
 
-    debugManager.drawCircle(
-    displacementVector.x,
-    displacementVector.y,
-    1,
-    8,
+    debugManager.drawLine(
+    targetDistanceVector.x,
+    targetDistanceVector.y,
+    targetDistanceVector.x + displacementVector.x,
+    targetDistanceVector.y + displacementVector.y,
+    3,
     ST_COLOR_ID.kRed  
-    )
+    );
 
 
 
@@ -306,8 +333,8 @@ implements IForce
   : void {
       let distance = _vector.length();
       _vector.set(
-          _vector.x = Math.cos(_value) * distance,
-          _vector.y = Math.sin(_value) * distance
+          Math.cos(_value) * distance,
+          Math.sin(_value) * distance
       )
   }
   
@@ -351,6 +378,11 @@ implements IForce
    * The target distance from the agent in relation of its actual velocity (direction).
    */
   private _m_targetDistance : number;
+
+  /**
+   * The position of the target.
+   */
+  private _m_v2p_circleCenter : V2;
 
   /**
    * The radius for target displacement from the wander distance value.
