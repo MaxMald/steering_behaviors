@@ -162,12 +162,7 @@ implements IForce
         circleCenter.y + displacement.y - self.y
     );
 
-    desiredVelocity.normalize();
-    
-    desiredVelocity.set(
-        desiredVelocity.x * maxSpeed, 
-        desiredVelocity.y * maxSpeed
-    );
+    desiredVelocity.scale(maxSpeed / desiredVelocity.length());
 
     // Steer Force
 
@@ -181,15 +176,7 @@ implements IForce
 
     // Truncate force    
 
-    if(steerForce.length() > forceMagnitude)
-    {
-      steerForce.normalize();
-      steerForce.set
-      (
-        steerForce.x * forceMagnitude, 
-        steerForce.y * forceMagnitude
-      );
-    }
+    steerForce.limit(forceMagnitude);
 
     // Add force to the controller.
 
