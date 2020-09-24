@@ -78,16 +78,9 @@ implements IForce
 
     this._m_v2p_circleCenter = new Phaser.Math.Vector2(0.0, 0.0);
 
-    this._m_master = Master.GetInstance();
-
-    if(this._m_master.isDebugEnable())
-    {
-      this._m_debug = true;
-    }
-
     // Get Debug Manager
     
-    this._m_debugManager = this._m_master.getManager<DebugManager>
+    this._m_debugManager = Master.GetInstance().getManager<DebugManager>
     (
       ST_MANAGER_ID.kDebugManager
     );
@@ -147,15 +140,15 @@ implements IForce
 
     displacement.scale(circleRadius);
 
-    let displacementAngle = this._m_displacementAngle * Phaser.Math.DEG_TO_RAD;
+    let displacementAngle = this._m_displacementAngle;
 
-    displacement.setAngle(displacementAngle);
+    displacement.setAngle(displacementAngle * Phaser.Math.DEG_TO_RAD);
 
     //this.setAngle(displacement, displacementAngle);
 
     let changeAngle = this._m_angleChange;
 
-    displacementAngle += Math.random() * changeAngle - changeAngle * .5;
+    this._m_displacementAngle += Math.random() * changeAngle - changeAngle * .5;
 
     // Desire Force    
 
@@ -163,12 +156,10 @@ implements IForce
 
     let desiredVelocity = this._m_v2_desiredVelocity;
 
-    circleCenter.add(displacement);
-
     desiredVelocity.set
     (
-        circleCenter.x - self.x, 
-        circleCenter.y - self.y
+        circleCenter.x + displacement.x - self.x, 
+        circleCenter.y + displacement.y - self.y
     );
 
     desiredVelocity.normalize();
@@ -204,11 +195,6 @@ implements IForce
 
     controller.addSteerForce(steerForce.x, steerForce.y);
 
-    if(this._m_debug)
-    {
-      this.updateDebug(_dt);
-    }
-
     return;
   }
 
@@ -226,32 +212,27 @@ implements IForce
 
     let sprite = this._m_self;
 
-    let direction = this._m_controller.getDirection();
-    let targetDistanceVector = new Phaser.Math.Vector2(0.0, 0.0);
-
-    targetDistanceVector.set(
-      sprite.x + direction.x * this._m_targetDistance,
-      sprite.y + direction.y * this._m_targetDistance,
-    )
-
+    // Line from sprite to circle center
     debugManager.drawLine(
       sprite.x,
       sprite.y,
-      targetDistanceVector.x,
-      targetDistanceVector.y,
+      this._m_v2p_circleCenter.x,
+      this._m_v2p_circleCenter.y,
       3,
       ST_COLOR_ID.kPurple
     );
 
+    // Steering force line
     debugManager.drawLine(
       this._m_v2_desiredVelocity.x + sprite.x,
-      this._m_v2_desiredVelocity.y+ sprite.y,
+      this._m_v2_desiredVelocity.y + sprite.y,
       this._m_v2_actualVelocity.x + sprite.x,
       this._m_v2_actualVelocity.y + sprite.y,
       3,
       ST_COLOR_ID.kRed
     );
 
+    // Desired Velocity line
     debugManager.drawLine(
       sprite.x,
       sprite.y,
@@ -261,28 +242,26 @@ implements IForce
       ST_COLOR_ID.kBlack
     );
 
+    // Circle center circle
     debugManager.drawCircle(
-      targetDistanceVector.x,
-      targetDistanceVector.y,
+      this._m_v2p_circleCenter.x,
+      this._m_v2p_circleCenter.y,
       this._m_circleRadius,
       2,
       ST_COLOR_ID.kBlack
     );
 
-    let displacementVector = new Phaser.Math.Vector2(targetDistanceVector.x, targetDistanceVector.y);
+    let displacementVector = this._m_v2_displacement;
 
-    displacementVector.add(this._m_v2_displacement);
-
+    // Displacement line from circle center
     debugManager.drawLine(
-    targetDistanceVector.x,
-    targetDistanceVector.y,
-    targetDistanceVector.x + displacementVector.x,
-    targetDistanceVector.y + displacementVector.y,
+      this._m_v2p_circleCenter.x,
+      this._m_v2p_circleCenter.y,
+      this._m_v2p_circleCenter.x + displacementVector.x,
+      this._m_v2p_circleCenter.y + displacementVector.y,
     3,
     ST_COLOR_ID.kRed  
     );
-
-
 
     return;
   }
@@ -341,13 +320,6 @@ implements IForce
   /****************************************************/
   /* Private                                          */
   /****************************************************/
-  
-  private _m_master : Master;
-
-  /**
-  * Indicates if the debug feature is enable.
-  */
-  private _m_debug : boolean;
 
   /**
   * Reference to the debug manager.

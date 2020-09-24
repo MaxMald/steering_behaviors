@@ -156,38 +156,18 @@
      // Create a Force
  
      // Step I : Create the force
- 
-     let seek : SeekForce = new SeekForce();
 
      let arrival : ArrivalForce = new ArrivalForce();
  
      let wander_1 : WanderForce = new WanderForce();
 
-     let wander_2 : WanderForce = new WanderForce();
-
-     seek.init
-     (
-       targetSprite,
-       shipSprite,
-       100
-     );
-
      wander_1.init(
        shipSprite,
-       250,
-       10,
+       150,
+       100,
        5,
-       1,
+       90,
        100
-     );
-
-     wander_2.init(
-       targetSprite,
-       250,
-       10,
-       5,
-       1,
-       1
      );
 
      arrival.init(
