@@ -60,7 +60,7 @@ implements IForce
 
     this._m_v2_desiredVelocity = new Phaser.Math.Vector2(0.0, 0.0);
 
-    this._m_v2_forceMagnitude = new Phaser.Math.Vector2(0.0, 0.0);
+    this._m_v2_arrivalForce = new Phaser.Math.Vector2(0.0, 0.0);
 
     // Get debug manager
 
@@ -91,16 +91,10 @@ implements IForce
     // Get controller information.
 
     let controller = this._m_controller;
-    
-    let direction = controller.getDirection();
-
-    let speed = controller.getSpeed();
-
-    let actualVelocity = this._m_v2_actualVelocity;
 
     // Current Force
-
-    actualVelocity.setTo(direction.x * speed, direction.y * speed);
+    
+    let actualVelocity = controller.getVelocity();
 
     // Desire Force    
 
@@ -121,20 +115,16 @@ implements IForce
     let arrivalMultiplier = this._m_distance / slowingRadius;
 
     if(this._m_distance < slowingRadius) {
-      desiredVelocity.scale(forceMagnitude * arrivalMultiplier / desiredVelocity.length());
+      desiredVelocity.setLength(forceMagnitude * arrivalMultiplier);
     } else {
-      desiredVelocity.scale(forceMagnitude / desiredVelocity.length());
+      desiredVelocity.setLength(forceMagnitude);
     }
 
     // Steer Force
 
-    let steerForce = this._m_v2_forceMagnitude;
+    let steerForce = this._m_v2_arrivalForce;
    
-    steerForce.set
-    (
-      desiredVelocity.x - actualVelocity.x, 
-      desiredVelocity.y - actualVelocity.y
-    );    
+    steerForce.copy(desiredVelocity).subtract(actualVelocity);   
 
     // Truncate force    
 
@@ -172,10 +162,10 @@ implements IForce
      // Steering force line
 
      debugManager.drawLine(
+      this._m_controller.getVelocity().x + sprite.x,
+      this._m_controller.getVelocity().y + sprite.y,
       this._m_v2_desiredVelocity.x + sprite.x,
       this._m_v2_desiredVelocity.y + sprite.y,
-      this._m_v2_actualVelocity.x + sprite.x,
-      this._m_v2_actualVelocity.y + sprite.y,
       3,
       ST_COLOR_ID.kRed
     );
@@ -236,12 +226,9 @@ implements IForce
   {
 
     this._m_controller = null;
-    this._m_v2_forceMagnitude = null;
+    this._m_v2_arrivalForce = null;
     this._m_v2_actualVelocity = null;
     this._m_v2_desiredVelocity = null;
-    
-    this._m_forceMagnitude = null;
-    this._m_slowingRadius = null;
 
     this._m_debugManager = null;
 
@@ -267,7 +254,7 @@ implements IForce
   /**
    * The force in Vector2.
    */
-  private _m_v2_forceMagnitude : V2;
+  private _m_v2_arrivalForce : V2;
 
   /**
    * The limit radius to start slowing down the force.

@@ -207,8 +207,6 @@ implements IForce
 
     this._m_desireVelocity = null;
 
-    this._m_force = null;
-
     this._m_target = null;
 
     this._m_self = null;

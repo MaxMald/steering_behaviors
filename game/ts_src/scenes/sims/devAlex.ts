@@ -99,7 +99,7 @@
      shipActor.sendMessage
      (
        ST_MESSAGE_ID.kSetMass,
-       10
+       1
      );
  
      ///////////////////////////////////
@@ -143,7 +143,7 @@
      targetActor.sendMessage
      (
        ST_MESSAGE_ID.kSetMass,
-       10
+       1
      );
  
      targetActor.sendMessage

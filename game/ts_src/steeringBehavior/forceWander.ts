@@ -74,7 +74,7 @@ implements IForce
 
     this._m_v2_desiredVelocity = new Phaser.Math.Vector2(0.0, 0.0);
 
-    this._m_v2_forceMagnitude = new Phaser.Math.Vector2(0.0, 0.0);
+    this._m_v2_wanderForce = new Phaser.Math.Vector2(0.0, 0.0);
 
     this._m_v2_displacement = new Phaser.Math.Vector2(0.0, -1.0);
 
@@ -110,21 +110,15 @@ implements IForce
     
     let direction = controller.getDirection();
 
-    let speed = controller.getSpeed();
-
     // Current Force
     
-    let actualVelocity = this._m_v2_actualVelocity;
-
-    actualVelocity.set(direction.x * speed, direction.y * speed);
+    let actualVelocity = controller.getVelocity();
 
     // Get position of center circle
 
     let circleCenter = this._m_v2p_circleCenter;
     
-    circleCenter.copy(direction);
-
-    circleCenter.scale(this._m_targetDistance);
+    circleCenter.copy(direction).scale(this._m_targetDistance);
 
     circleCenter.set(
       circleCenter.x + self.x,
@@ -137,7 +131,7 @@ implements IForce
 
     let circleRadius = this._m_circleRadius;
 
-    displacement.scale(circleRadius / displacement.length());
+    displacement.setLength(circleRadius);
 
     let displacementAngle = this._m_displacementAngle;
 
@@ -161,17 +155,13 @@ implements IForce
         circleCenter.y + displacement.y - self.y
     );
 
-    desiredVelocity.scale(forceMagnitude / desiredVelocity.length());
+    desiredVelocity.setLength(forceMagnitude);
 
     // Steer Force
 
-    let steerForce = this._m_v2_forceMagnitude;
+    let steerForce = this._m_v2_wanderForce;
    
-    steerForce.set
-    (
-      desiredVelocity.x - actualVelocity.x, 
-      desiredVelocity.y - actualVelocity.y
-    );    
+    steerForce.copy(desiredVelocity).subtract(actualVelocity);    
 
     // Truncate force    
 
@@ -216,10 +206,10 @@ implements IForce
     // Steering force line
 
     debugManager.drawLine(
+      this._m_controller.getVelocity().x + sprite.x,
+      this._m_controller.getVelocity().y + sprite.y,
       this._m_v2_desiredVelocity.x + sprite.x,
       this._m_v2_desiredVelocity.y + sprite.y,
-      this._m_v2_actualVelocity.x + sprite.x,
-      this._m_v2_actualVelocity.y + sprite.y,
       3,
       ST_COLOR_ID.kRed
     );
@@ -289,17 +279,11 @@ implements IForce
   {
 
     this._m_controller = null;
-    this._m_v2_forceMagnitude = null;
+    this._m_v2_wanderForce = null;
     this._m_v2_actualVelocity = null;
     this._m_v2_desiredVelocity = null;
     this._m_v2_displacement = null;
     this._m_v2p_circleCenter = null;
-
-    this._m_forceMagnitude = null;
-    this._m_targetDistance = null;
-    this._m_circleRadius = null;
-    this._m_displacementAngle = null;
-    this._m_angleChange = null;
 
     this._m_debugManager = null;
 
@@ -324,7 +308,7 @@ implements IForce
   /**
    * The force in Vector2.
    */
-  private _m_v2_forceMagnitude : V2;
+  private _m_v2_wanderForce : V2;
 
   /**
    * The magnitude of the applied force.
