@@ -97,7 +97,7 @@
      shipActor.sendMessage
      (
        ST_MESSAGE_ID.kSetMass,
-       50
+       1
      );
  
      ///////////////////////////////////
@@ -148,7 +148,7 @@
      (
        shipSprite,
        targetSprite,
-       250
+       125
      );
  
      // Step II : Get Component

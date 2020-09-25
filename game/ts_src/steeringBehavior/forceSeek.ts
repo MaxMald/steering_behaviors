@@ -8,8 +8,12 @@
  * @since September-07-2020
  */
 
+import { Sleeping } from "matter";
+import { ST_COLOR_ID, ST_MANAGER_ID } from "../commons/stEnums";
 import { Ty_Sprite, V2 } from "../commons/stTypes";
 import { CmpForceController } from "../components/cmpForceController";
+import { DebugManager } from "../managers/debugManager/debugManager";
+import { Master } from "../master/master";
 import { IForce } from "./iForce";
 
 /**
@@ -39,19 +43,30 @@ implements IForce
   )
   {
     this._m_self = _self;
+
     this._m_target = _target;
-    this._m_force = _force;
+    
+    this._m_seekMaxLength = _force;
 
     if(this._m_controller !== undefined)
     {
       this._m_controller = _controller;
     }
 
-    this._m_v2_A = new Phaser.Math.Vector2(0.0, 0.0);
+    this._m_seekForce = new Phaser.Math.Vector2();
 
-    this._m_v2_B = new Phaser.Math.Vector2(0.0, 0.0);
+    this._m_desireVelocity = new Phaser.Math.Vector2();
 
-    this._m_force_v2 = new Phaser.Math.Vector2(0.0, 0.0);
+    // Get Master Manager.
+
+    let master = Master.GetInstance();
+
+    // Get Debug Manager.
+
+    this._m_debugManager = master.getManager<DebugManager>
+    (
+      ST_MANAGER_ID.kDebugManager
+    );
 
     return;
   }
@@ -59,73 +74,59 @@ implements IForce
   setController(_controller: CmpForceController)
   : void 
   {
+    // Save the force controller.
+
     this._m_controller = _controller;
+    
     return;
   }
 
   update(_dt: number)
   : void 
   {
-    // Get points
+    // Get the target object
 
     let target : Ty_Sprite = this._m_target;
     
+    // Get self object
+
     let self : Ty_Sprite = this._m_self;
     
-    // Get controller information.
+    // Get reference to force controller
 
-    let controller = this._m_controller;
+    let forceController = this._m_controller;
     
-    let direction = controller.getDirection();
+    // Get actual velocity
 
-    let speed = controller.getSpeed();
+    let actualVelocity = forceController.getVelocity();
 
-    let v2_A = this._m_v2_A;
+    // Calculate desire velocity 
+    
+    let desireVelocity = this._m_desireVelocity;
 
-    // Current Force
-
-    v2_A.setTo(direction.x * speed, direction.y * speed);
-
-    // Desire Force    
-
-    let forceMagnitude = this._m_force;
-
-    let v2_B = this._m_v2_B;
-
-    v2_B.set
+    desireVelocity.set
     (
-      target.x - self.x, 
-      target.y - self.y
+      target.x - self.x,
+      target.y - self.y 
     );
 
-    v2_B.normalize();
-    v2_B.set(v2_B.x * forceMagnitude, v2_B.y * forceMagnitude);
+    desireVelocity.setLength(this._m_seekMaxLength);
 
-    // Steer Force
+    // Calculate the seek force
 
-    let steerForce = this._m_force_v2;
+    let seekForce = this._m_seekForce;
    
-    steerForce.set
-    (
-      v2_B.x - v2_A.x, 
-      v2_B.y - v2_A.y
-    );    
+    seekForce.copy(desireVelocity);
 
-    // Truncate force    
+    seekForce.subtract(actualVelocity);
 
-    if(steerForce.length() > forceMagnitude)
-    {
-      steerForce.normalize();
-      steerForce.set
-      (
-        steerForce.x * forceMagnitude, 
-        steerForce.y * forceMagnitude
-      );
-    }
+    // Truncate the seek force if it exceeds the maximum length allowed.
+
+    seekForce.limit(this._m_seekMaxLength);
 
     // Add force to the controller.
 
-    controller.addSteerForce(steerForce.x, steerForce.y);
+    forceController.addSteerForce(seekForce.x, seekForce.y);
 
     return;
   }
@@ -139,7 +140,36 @@ implements IForce
   updateDebug(_dt : number)
   : void
   {
-    
+    // Debug desire velocity.
+
+    let self = this._m_self;
+
+    let desireVelocity = this._m_desireVelocity;
+
+    this._m_debugManager.drawLine
+    (
+      self.x,
+      self.y,
+      self.x + desireVelocity.x,
+      self.y + desireVelocity.y,
+      1,
+      ST_COLOR_ID.kBlack
+    );
+
+    // Debug steer force.
+
+    let actualVelocity = this._m_controller.getVelocity();
+
+    this._m_debugManager.drawLine
+    (
+      self.x + actualVelocity.x,
+      self.y + actualVelocity.y,
+      self.x + desireVelocity.x,
+      self.y + desireVelocity.y,
+      1,
+      ST_COLOR_ID.kRed 
+    );
+
     return;
   }
 
@@ -169,16 +199,21 @@ implements IForce
   destroy()
   : void 
   {
+    // Detach objects
 
     this._m_controller = null;
-    this._m_force_v2 = null;
-    this._m_v2_A = null;
-    this._m_v2_B = null;
+    
+    this._m_seekForce = null;
+
+    this._m_desireVelocity = null;
 
     this._m_force = null;
 
     this._m_target = null;
+
     this._m_self = null;
+
+    this._m_debugManager = null;
     return;
   }
   
@@ -192,14 +227,27 @@ implements IForce
   private _m_controller : CmpForceController;
 
   /**
-   * The force in Vector2.
+   * Reference to the debug manager.
    */
-  private _m_force_v2 : V2;
+  private _m_debugManager : DebugManager;
+
+  ///////////////////////////////////
+  // Physics properties
 
   /**
-   * The magnitude of the applied force.
+   * The seek force.
    */
-  private _m_force : number;
+  private _m_seekForce : V2;
+
+  /**
+   * The desire velocity.
+   */
+  private _m_desireVelocity : V2;
+
+  /**
+   * The max magnitude of the seek force.
+   */
+  private _m_seekMaxLength : number;
 
   /**
    * The agent sprite.
@@ -211,13 +259,5 @@ implements IForce
    */
   private _m_target : Ty_Sprite;
 
-  /**
-   * Vector 2 A.
-   */
-  private _m_v2_A : V2;
-
-  /**
-   * Vector 2 B.
-   */
-  private _m_v2_B : V2;
+  
 }

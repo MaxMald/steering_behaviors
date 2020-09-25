@@ -37,13 +37,24 @@ implements IBaseComponent<Ty_Sprite>
     
     this._m_hForce = new Map<string, IForce>();
 
-    // Create 
+    // Create physics properties.
 
-    this._m_force = new Phaser.Math.Vector2(0.0, 0.0);
+    this._m_actualVelocity = new Phaser.Math.Vector2();
+
+    this._m_actualVelocityStepped = new Phaser.Math.Vector2();
+
+    this._m_totalForce = new Phaser.Math.Vector2();
+
+    this._m_totalForceStepped = new Phaser.Math.Vector2();
+
     this._m_direction = new Phaser.Math.Vector2(1.0, 0.0);
+    
     this._m_speed = 0.0;
+    
     this._m_mass = 1.0;
+    
     this._m_bRunning = true;
+    
     this._m_debug = false;
     
     return;
@@ -72,14 +83,14 @@ implements IBaseComponent<Ty_Sprite>
       this._m_debug = true;
     }
 
-    // Get Debug Manager
+    // Save a reference to the Debug Manager.
     
     this._m_debugManager = this._m_master.getManager<DebugManager>
     (
       ST_MANAGER_ID.kDebugManager
     );
 
-    // Save actor
+    // Save a reference to the actor.
 
     this._m_actor = _actor;
 
@@ -94,20 +105,24 @@ implements IBaseComponent<Ty_Sprite>
   update(_actor: BaseActor<Ty_Sprite>)
   : void 
   {
-    // Reset the Sum of all forces.
+    // Reset the sum of all forces.
 
-    let force = this._m_force;
+    let totalForce = this._m_totalForce;
 
-    force.setTo(0.0, 0.0);
+    totalForce.reset();
+
+    let totalForceStepped = this._m_totalForceStepped;
+
+    totalForceStepped.reset();
 
     // Abort if the force controller is not running.
 
     if(!this._m_bRunning)
     {
       return;
-    }
+    }   
 
-    // Sum of all forces.
+    // Sum each force attached to this force controller.
 
     this._m_hForce.forEach
     (
@@ -115,77 +130,71 @@ implements IBaseComponent<Ty_Sprite>
       this
     );
 
-    // apply delta time.
+    // Get delta time.
 
     let dt = this._m_master.getDeltaTime();
 
-    // Apply the Agent Mass.
+    // Apply the mass to the total force.
 
-    let mass = this._m_mass;
+    totalForce.scale(1.0 / this._m_mass);
 
-    force.setTo
-    (
-      force.x / mass,
-      force.y / mass
-    );
+    // Work with the Total force stepped
 
-    let v2_A = new Phaser.Math.Vector2(0.0, 0.0);
+    totalForceStepped.copy(totalForce);
 
-    // Get the current force.
+    totalForceStepped.scale(dt);
 
-    let speed = this._m_speed;
+    // Calculate the actual velocity
 
-    v2_A.setTo(this._m_direction.x * speed, this._m_direction.y * speed);
+    let actualVelocity = this._m_actualVelocity;
 
-    v2_A.add(force);
+    let direction = this._m_direction;
 
-    // Truncate the resulting force to the maximum force allowed.
+    actualVelocity.copy(direction);
 
-    let maxSpeed = this._m_maxSpeed;   
+    actualVelocity.scale(this._m_speed);
 
-    if(v2_A.length() > maxSpeed)
-    {
-      v2_A.normalize();
+    // Apply total force to the actual velocity
+
+    actualVelocity.add(totalForceStepped);
+
+    // Truncate the resulting velocity if it exceeds the maximum speed allowed.
+
+    actualVelocity.limit(this._m_maxSpeed);
+
+    // Recalculate the agent actual speed.
     
-      v2_A.setTo
-      (
-        v2_A.x * maxSpeed,
-        v2_A.y * maxSpeed
-      );
-    }
-
-    // Get the new agent actual speed.
+    this._m_speed = actualVelocity.length();
     
-    this._m_speed = v2_A.length();
-    
-    // Apply delta time.
+    // Apply delta time to the actual velocity, so it can be used to move the
+    // actor sprite.
 
-    v2_A.scale(dt);
+    let actualVelocityStepped = this._m_actualVelocityStepped;
 
-    // Move Agent by the force.
+    actualVelocityStepped.copy(actualVelocity);
+
+    actualVelocityStepped.scale(dt);
+
+    // Move actor sprite with the actual velocity.
 
     this._m_actor.sendMessage
     (
       ST_MESSAGE_ID.kMove,
-      v2_A
+      actualVelocityStepped
     );
 
-    // Recalculate the new direction.
-
-    v2_A.normalize();
+    // Recalculate the agent direction.
     
-    this._m_direction.setTo
-    (
-      v2_A.x,
-      v2_A.y
-    ); 
+    direction.copy(actualVelocity);
 
-    // Agent rotation towards direction.
+    direction.normalize();
+
+    // Rotate agent towards direction.
 
     this._m_actor.sendMessage
     (
       ST_MESSAGE_ID.kSetAngle,
-      this._m_direction.angle()
+      direction.angle()
     );
 
     // Debug force controller
@@ -194,47 +203,28 @@ implements IBaseComponent<Ty_Sprite>
     {
       this.updateDebug(dt);
     }
-
     return;
   }
 
   updateDebug(_dt : number)
   : void
   {
-    // Direction
+    // Debug the actual velocity.
 
     let debugManager = this._m_debugManager;
 
     let sprite = this._m_actor.getWrappedInstance();
 
-    let direction = this._m_direction;
+    let actualVelocity = this._m_actualVelocity;
 
     debugManager.drawLine
     (
       sprite.x,
       sprite.y,
-      sprite.x + direction.x * 100,
-      sprite.y + direction.y * 100,
+      sprite.x + actualVelocity.x,
+      sprite.y + actualVelocity.y,
       3,
       ST_COLOR_ID.kGreen
-    );
-
-    // Steer Force
-
-    let steerForce = this._m_force;
-
-    // Scale steer force a little
-
-    steerForce.scale(10);
-
-    debugManager.drawLine
-    (
-      sprite.x,
-      sprite.y,
-      sprite.x + steerForce.x,
-      sprite.y + steerForce.y,
-      3,
-      ST_COLOR_ID.kBlue
     );
 
     return;
@@ -300,6 +290,21 @@ implements IBaseComponent<Ty_Sprite>
   : void 
   {
     this._m_bRunning = false;
+
+    // reset physics properties
+
+    this._m_speed = 0.0;
+
+    this._m_actualVelocity.reset();
+
+    this._m_actualVelocityStepped.reset();
+
+    this._m_totalForce.reset();
+
+    this._m_totalForceStepped.reset();
+
+    this._m_direction.set(0.0, -1.0);
+
     return;
   }
 
@@ -393,8 +398,9 @@ implements IBaseComponent<Ty_Sprite>
   addSteerForce(_x : number, _y : number)
   : void
   {
-    this._m_force.x += _x;
-    this._m_force.y += _y;
+    this._m_totalForce.x += _x;
+
+    this._m_totalForce.y += _y;
 
     return;
   }
@@ -415,6 +421,15 @@ implements IBaseComponent<Ty_Sprite>
   : number
   {
     return this._m_speed;
+  }
+
+  /**
+   * Get the actual velocity of the actor.
+   */
+  getVelocity()
+  : V2
+  {
+    return this._m_actualVelocity;
   }
 
   /**
@@ -512,11 +527,25 @@ implements IBaseComponent<Ty_Sprite>
   destroy()
   : void 
   {
-    // Set null
+    // Detach objects
+
+    this._m_direction = null;
+
+    this._m_totalForce = null;
+
+    this._m_actualVelocity = null;
+
+    this._m_actualVelocityStepped = null;
+
+    this._m_totalForceStepped = null;
+
+    // Detach references
+
+    this._m_master = null;
 
     this._m_actor = null;
 
-    // Destroy forces
+    // Destroy and detach forces
 
     this.clear();
 
@@ -580,6 +609,9 @@ implements IBaseComponent<Ty_Sprite>
     return;
   }
 
+  /**
+   * Reference to the master.
+   */
   private _m_master : Master;
 
   /**
@@ -588,9 +620,24 @@ implements IBaseComponent<Ty_Sprite>
   private _m_direction : V2;
 
   /**
+   * The actual velocity of the actor.
+   */
+  private _m_actualVelocity : V2;
+
+  /**
+   * The actual velocity of the actor, multiplied by the delta time.
+   */
+  private _m_actualVelocityStepped : V2;
+
+  /**
    * The sum of all forces.
    */
-  private _m_force : V2;
+  private _m_totalForce : V2;
+
+  /**
+   * The sum of all forces, multiplied by the delta time.
+   */
+  private _m_totalForceStepped : V2;
 
   /**
    * The actor speed (pixels per second).
