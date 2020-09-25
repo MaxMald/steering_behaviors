@@ -8,6 +8,9 @@
  * @since September-14-2020
  */
 
+import { Master } from "../master/master";
+import { DebugManager } from "../managers/debugManager/debugManager";
+import { ST_COLOR_ID, ST_COMPONENT_ID, ST_MANAGER_ID, ST_MESSAGE_ID } from "../commons/stEnums";
 import { Ty_Sprite, V2 } from "../commons/stTypes";
 import { CmpForceController } from "../components/cmpForceController";
 import { IForce } from "./iForce";
@@ -40,6 +43,8 @@ implements IForce
     _controller ?: CmpForceController
   )
   {
+    // Get variables
+
     this._m_self = _self;
     this._m_target = _target;
     this._m_slowingRadius = _slowingRadius;
@@ -50,11 +55,19 @@ implements IForce
       this._m_controller = _controller;
     }
 
+    // Initialize vectors and points
     this._m_v2_actualVelocity = new Phaser.Math.Vector2(0.0, 0.0);
 
     this._m_v2_desiredVelocity = new Phaser.Math.Vector2(0.0, 0.0);
 
     this._m_v2_forceMagnitude = new Phaser.Math.Vector2(0.0, 0.0);
+
+    // Get debug manager
+
+    this._m_debugManager = Master.GetInstance().getManager<DebugManager>
+    (
+      ST_MANAGER_ID.kDebugManager
+    );
 
     return;
   }
@@ -83,8 +96,6 @@ implements IForce
 
     let speed = controller.getSpeed();
 
-    let maxSpeed = controller.getMaxSpeed();
-
     let actualVelocity = this._m_v2_actualVelocity;
 
     // Current Force
@@ -103,24 +114,16 @@ implements IForce
       target.y - self.y
     );
 
-    let distance = desiredVelocity.length();
-
-    desiredVelocity.normalize();
+    this._m_distance = desiredVelocity.length();
 
     let slowingRadius = this._m_slowingRadius;
 
-    let arrivalMultiplier = distance / slowingRadius;
+    let arrivalMultiplier = this._m_distance / slowingRadius;
 
-    if(distance < slowingRadius) {
-        desiredVelocity.set(
-            desiredVelocity.x * maxSpeed * arrivalMultiplier, 
-            desiredVelocity.y * maxSpeed * arrivalMultiplier
-        );
+    if(this._m_distance < slowingRadius) {
+      desiredVelocity.scale(forceMagnitude * arrivalMultiplier / desiredVelocity.length());
     } else {
-        desiredVelocity.set(
-            desiredVelocity.x * maxSpeed, 
-            desiredVelocity.y * maxSpeed
-        );
+      desiredVelocity.scale(forceMagnitude / desiredVelocity.length());
     }
 
     // Steer Force
@@ -135,15 +138,7 @@ implements IForce
 
     // Truncate force    
 
-    if(steerForce.length() > forceMagnitude)
-    {
-      steerForce.normalize();
-      steerForce.set
-      (
-        steerForce.x * forceMagnitude, 
-        steerForce.y * forceMagnitude
-      );
-    }
+    steerForce.limit(forceMagnitude);
 
     // Add force to the controller.
 
@@ -162,6 +157,54 @@ implements IForce
   : void
   {
     
+    // Get debug manager
+
+    let debugManager = this._m_debugManager;
+
+    // Get agent
+
+    let sprite = this._m_self;
+
+    // Get target
+
+    let target = this._m_target;
+
+     // Steering force line
+
+     debugManager.drawLine(
+      this._m_v2_desiredVelocity.x + sprite.x,
+      this._m_v2_desiredVelocity.y + sprite.y,
+      this._m_v2_actualVelocity.x + sprite.x,
+      this._m_v2_actualVelocity.y + sprite.y,
+      3,
+      ST_COLOR_ID.kRed
+    );
+
+    // Desired Velocity line
+
+    debugManager.drawLine(
+      sprite.x,
+      sprite.y,
+      this._m_v2_desiredVelocity.x + sprite.x,
+      this._m_v2_desiredVelocity.y + sprite.y,
+      3,
+      ST_COLOR_ID.kBlack
+    );
+
+    // Slowing radius circle
+    debugManager.drawCircle(
+      target.x,
+      target.y,
+      this._m_slowingRadius,
+      2,
+      ST_COLOR_ID.kPurple
+    );
+
+    if(this._m_distance < this._m_slowingRadius) {
+      sprite.setTint(0x3D85C6);
+    } else {
+      sprite.clearTint();
+    }
     return;
   }
 
@@ -200,6 +243,8 @@ implements IForce
     this._m_forceMagnitude = null;
     this._m_slowingRadius = null;
 
+    this._m_debugManager = null;
+
     this._m_target = null;
     this._m_self = null;
     return;
@@ -209,6 +254,11 @@ implements IForce
   /* Private                                          */
   /****************************************************/
   
+  /**
+  * Reference to the debug manager.
+  */
+  private _m_debugManager : DebugManager;
+
   /**
    * Reference to the force controller.
    */
@@ -240,12 +290,17 @@ implements IForce
   private _m_target : Ty_Sprite;
 
   /**
-   * Vector 2 A.
+   * Vector 2 for actual velocity.
    */
   private _m_v2_actualVelocity : V2;
 
   /**
-   * Vector 2 B.
+   * Vector 2 for desired velocity.
    */
   private _m_v2_desiredVelocity : V2;
+
+  /**
+   * Distance to target.
+   */
+  private _m_distance : number;
 }

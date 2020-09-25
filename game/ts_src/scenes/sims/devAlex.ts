@@ -159,9 +159,9 @@
 
      let arrival : ArrivalForce = new ArrivalForce();
  
-     let wander_1 : WanderForce = new WanderForce();
+     let wander : WanderForce = new WanderForce();
 
-     wander_1.init(
+     wander.init(
        shipSprite,
        150,
        100,
@@ -191,7 +191,7 @@
     // targetControl.addForce('seek_1', seek );
     // targetControl.addForce('wander_2', wander_2);
     targetControl.addForce('arrival_1', arrival);
-    shipControl.addForce('wander_1', wander_1);
+    shipControl.addForce('wander_1', wander);
  
      ///////////////////////////////////
      // Active Debugging

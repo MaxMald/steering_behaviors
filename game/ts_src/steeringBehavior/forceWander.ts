@@ -1,20 +1,19 @@
-import { Vector } from "matter";
 /**
  * Universidad de Artes Digitales, Guadalajara - 2020
  *
  * @summary 
  *
- * @file forceArrival.ts
+ * @file forceWander.ts
  * @author Jorge Alexandro Zamudio Arredondo <alexzamudio_11@hotmail.com>
  * @since September-16-2020
  */
 
+import { Master } from "../master/master";
 import { DebugManager } from "../managers/debugManager/debugManager";
 import { ST_COLOR_ID, ST_COMPONENT_ID, ST_MANAGER_ID, ST_MESSAGE_ID } from "../commons/stEnums";
 import { Ty_Sprite, V2 } from "../commons/stTypes";
 import { CmpForceController } from "../components/cmpForceController";
 import { IForce } from "./iForce";
-import { Master } from "../master/master";
 
 /**
  * 
@@ -51,6 +50,8 @@ implements IForce
     _controller ?: CmpForceController
   )
   {
+    // Get variables
+
     this._m_self = _self;
     
     this._m_targetDistance = _targetDistance;
@@ -68,6 +69,7 @@ implements IForce
       this._m_controller = _controller;
     }
 
+    // Initialize vectors and points
     this._m_v2_actualVelocity = new Phaser.Math.Vector2(0.0, 0.0);
 
     this._m_v2_desiredVelocity = new Phaser.Math.Vector2(0.0, 0.0);
@@ -110,15 +112,14 @@ implements IForce
 
     let speed = controller.getSpeed();
 
-    let maxSpeed = controller.getMaxSpeed();
-
     // Current Force
     
     let actualVelocity = this._m_v2_actualVelocity;
 
-    actualVelocity.setTo(direction.x * speed, direction.y * speed);
+    actualVelocity.set(direction.x * speed, direction.y * speed);
 
     // Get position of center circle
+
     let circleCenter = this._m_v2p_circleCenter;
     
     circleCenter.copy(direction);
@@ -134,17 +135,15 @@ implements IForce
 
     let displacement = this._m_v2_displacement;
 
-    displacement.normalize();
-
     let circleRadius = this._m_circleRadius;
 
-    displacement.scale(circleRadius);
+    displacement.scale(circleRadius / displacement.length());
 
     let displacementAngle = this._m_displacementAngle;
 
     displacement.setAngle(displacementAngle * Phaser.Math.DEG_TO_RAD);
 
-    //this.setAngle(displacement, displacementAngle);
+    // Set new angle in relation of the change angle factor
 
     let changeAngle = this._m_angleChange;
 
@@ -162,7 +161,7 @@ implements IForce
         circleCenter.y + displacement.y - self.y
     );
 
-    desiredVelocity.scale(maxSpeed / desiredVelocity.length());
+    desiredVelocity.scale(forceMagnitude / desiredVelocity.length());
 
     // Steer Force
 
@@ -195,11 +194,16 @@ implements IForce
   : void
   {
     
+    // Get debug manager
+
     let debugManager = this._m_debugManager;
+
+    // Get agent
 
     let sprite = this._m_self;
 
-    // Line from sprite to circle center
+    // Sprite to circle center line
+
     debugManager.drawLine(
       sprite.x,
       sprite.y,
@@ -210,6 +214,7 @@ implements IForce
     );
 
     // Steering force line
+
     debugManager.drawLine(
       this._m_v2_desiredVelocity.x + sprite.x,
       this._m_v2_desiredVelocity.y + sprite.y,
@@ -220,6 +225,7 @@ implements IForce
     );
 
     // Desired Velocity line
+
     debugManager.drawLine(
       sprite.x,
       sprite.y,
@@ -230,6 +236,7 @@ implements IForce
     );
 
     // Circle center circle
+
     debugManager.drawCircle(
       this._m_v2p_circleCenter.x,
       this._m_v2p_circleCenter.y,
@@ -240,7 +247,8 @@ implements IForce
 
     let displacementVector = this._m_v2_displacement;
 
-    // Displacement line from circle center
+    // Displacement from circle center line
+
     debugManager.drawLine(
       this._m_v2p_circleCenter.x,
       this._m_v2p_circleCenter.y,
@@ -284,6 +292,8 @@ implements IForce
     this._m_v2_forceMagnitude = null;
     this._m_v2_actualVelocity = null;
     this._m_v2_desiredVelocity = null;
+    this._m_v2_displacement = null;
+    this._m_v2p_circleCenter = null;
 
     this._m_forceMagnitude = null;
     this._m_targetDistance = null;
@@ -291,17 +301,10 @@ implements IForce
     this._m_displacementAngle = null;
     this._m_angleChange = null;
 
+    this._m_debugManager = null;
+
     this._m_self = null;
     return;
-  }
-
-  setAngle(_vector : V2, _value : number)
-  : void {
-      let distance = _vector.length();
-      _vector.set(
-          Math.cos(_value) * distance,
-          Math.sin(_value) * distance
-      )
   }
   
   /****************************************************/
