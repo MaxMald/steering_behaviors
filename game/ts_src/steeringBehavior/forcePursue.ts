@@ -8,6 +8,7 @@
  * @since September-08-2020
  */
 
+//import { Math } from "phaser";
 import { BaseActor } from "../actors/baseActor";
 import { ST_COLOR_ID, ST_MANAGER_ID } from "../commons/stEnums";
 import { Ty_Sprite, V2 } from "../commons/stTypes";
@@ -46,10 +47,10 @@ implements IForce
     _controller ?: CmpForceController
   )
   {
+    // Set the private mambers
     this._m_self = _self;
     this._m_target = _target;
     this._m_force = _force;
-
     this._m_targetForceCtrl = _targetForceCtrl;
     this._m_predictionSteps = _predictionSteps;
 
@@ -58,12 +59,12 @@ implements IForce
       this._m_controller = _controller;
     }
 
+    // Init the member vectors
     this._m_v2_actualVelocity = new Phaser.Math.Vector2(0.0, 0.0);
 
     this._m_v2_desiredVelocity = new Phaser.Math.Vector2(0.0, 0.0);
 
     this._m_v2_forceMagnitude = new Phaser.Math.Vector2(0.0, 0.0);
-
 
     this._m_v2_force = new Phaser.Math.Vector2(0.0, 0.0);
 
@@ -102,6 +103,10 @@ implements IForce
 
     let speed = controller.getSpeed();
 
+    // Get target data
+
+    let targetSpeed = this._m_targetForceCtrl.getSpeed();
+
     let maxSpeed = controller.getMaxSpeed();
 
     let actualVelocity = this._m_v2_actualVelocity; 
@@ -113,25 +118,28 @@ implements IForce
     actualVelocity.setTo(direction.x * speed, direction.y * speed);
 
     //Pursue force
+    // Get target's direction
     let targetDir = this._m_targetDir;
     targetDir.copy(this._m_targetForceCtrl.getDirection());
     
+    // Get more data to work with
     let predictionSteps = this._m_predictionSteps;
-    targetDir.scale(speed * predictionSteps);
-
+    
     let desiredVelocity = this._m_v2_desiredVelocity;
+    
+    // Same as Seek
     desiredVelocity.set
     (
-      targetDir.x + target.x - self.x, 
-      targetDir.y + target.y - self.y
+      target.x - self.x, 
+      target.y - self.y
     ); 
 
-    // let ajustedPrediction = v2_B.length() / forceMagnitude;
-    // this._m_targetForce.scale(ajustedPrediction * (this._m_predictionSteps + 1));
-    // v2_B.add(this._m_targetForce);
+    // Dynamically ajusting how far ahead to predict based on distance to target
+    let ajustedPrediction = desiredVelocity.length() / maxSpeed;
 
-    
-    desiredVelocity.scale(maxSpeed / desiredVelocity.length());
+    // Add the pursue calculations to the seek
+    desiredVelocity.add(targetDir.scale(predictionSteps * ajustedPrediction));
+    desiredVelocity.scale(targetSpeed / desiredVelocity.length());
     // Steer Force
 
     let steerForce = this._m_v2_forceMagnitude;
@@ -168,28 +176,44 @@ implements IForce
 
     // Steering force line
     debugManager.drawLine(
-      this._m_v2_desiredVelocity.x + pos.x,
-      this._m_v2_desiredVelocity.y + pos.y,
+      this._m_targetDir.x + pos.x,
+      this._m_targetDir.y + pos.y,
       this._m_v2_actualVelocity.x + pos.x,
       this._m_v2_actualVelocity.y + pos.y,
       3,
       ST_COLOR_ID.kRed
     );
 
-    // Desired Velocity line
+    // Force line
     debugManager.drawLine(
       pos.x,
       pos.y,
-      this._m_v2_desiredVelocity.x + pos.x,
-      this._m_v2_desiredVelocity.y + pos.y,
+      this._m_v2_forceMagnitude.x + pos.x,
+      this._m_v2_forceMagnitude.y + pos.y,
+      3,
+      ST_COLOR_ID.kBlue
+    );
+
+    // Desired Velocity Line
+    debugManager.drawLine(
+      pos.x,
+      pos.y,
+      this._m_targetDir.x + pos.x,
+      this._m_targetDir.y + pos.y,
       3,
       ST_COLOR_ID.kBlack
     );
 
-    // let tPos = new Phaser.Math.Vector2(0, 0);
-    // tPos.copy(this._m_v2_desiredVelocity);
-    // debugManager.drawCircle(tPos.x, tPos.y, this._m_predictionSteps, 3, ST_COLOR_ID.kRed);
-    // debugManager.drawLine(pos.x, pos.y, tPos.x, tPos.y, 3, ST_COLOR_ID.kRed);
+    // Target dir time steps circle
+    let target = this._m_target;
+
+    debugManager.drawCircle(
+      target.x + this._m_targetDir.x,
+      target.y + this._m_targetDir.y,
+      5,
+      2,
+      ST_COLOR_ID.kYellow
+    );
     return;
   }
 
@@ -221,10 +245,13 @@ implements IForce
   {
 
     this._m_controller = null;
-    //this._m_force_v2 = null;
+    this._m_v2_desiredVelocity = null;
     this._m_targetDir = null;
-    //this._m_v2_A = null;
-    //this._m_v2_B = null;
+    this._m_v2_actualVelocity = null;
+    this._m_targetDir = null;
+    this._m_v2_forceMagnitude = null;
+    this._m_v2_force = null;
+    this._m_debugManager = null;
 
     this._m_target = null;
     this._m_self = null;

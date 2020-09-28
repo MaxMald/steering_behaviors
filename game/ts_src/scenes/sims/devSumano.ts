@@ -17,6 +17,7 @@
  import { Master } from "../../master/master";
 import { PursueForce } from "../../steeringBehavior/forcePursue";
  import { SeekForce } from "../../steeringBehavior/forceSeek";
+import { WanderForce } from "../../steeringBehavior/forceWander";
  
   
  export class ScnDevSumano 
@@ -59,25 +60,17 @@ import { PursueForce } from "../../steeringBehavior/forcePursue";
      // Create Sprites and Actors
  
      let shipSprtP0 : Ty_Sprite = this.add.sprite( 0, 0,'space_ship');
-     let seekSprt0 : Ty_Sprite = this.add.sprite(0, 0, 'space_ship');
      let fleeSprt0 : Ty_Sprite = this.add.sprite(0, 0, 'space_ship');
-
-     shipSprtP0.setTint(5, 5, 5, 5);
-     //shipSprt0.setTint(0, 0, 0, 255);
-     //shipSprt1.setTint(255, 255, 255, 255);
  
-     let seekActor0 = BaseActor.Create<Ty_Sprite>(seekSprt0, 'SpaceShip');
      let fleeActor0 = BaseActor.Create<Ty_Sprite>(fleeSprt0, 'SpaceShip0');
      let pursueActor0 = BaseActor.Create<Ty_Sprite>(shipSprtP0, 'SpaceShipP0');
      
      this._m_shipP0 = pursueActor0;
-     this._m_ship0 = seekActor0;
      this._m_ship1 = fleeActor0;
  
      // Add ship to simulation manager.
  
      simManager.addActor(pursueActor0);
-     simManager.addActor(seekActor0);
      simManager.addActor(fleeActor0);
  
      // Create and init components.
@@ -85,23 +78,18 @@ import { PursueForce } from "../../steeringBehavior/forcePursue";
      pursueActor0.addComponent(new CmpSpriteController());
      pursueActor0.addComponent(new CmpForceController());
 
-     seekActor0.addComponent(new CmpSpriteController());
-     seekActor0.addComponent(new CmpForceController());
-
      fleeActor0.addComponent(new CmpSpriteController());
      fleeActor0.addComponent(new CmpForceController());
 
      // Init Actors
  
-     seekActor0.init();    
      fleeActor0.init();    
      pursueActor0.init();
  
      // Set the max speeds
 
-     pursueActor0.sendMessage(ST_MESSAGE_ID.kSetMaxSpeed, 250);
-     seekActor0.sendMessage(ST_MESSAGE_ID.kSetMaxSpeed, 200);
-     fleeActor0.sendMessage(ST_MESSAGE_ID.kSetMaxSpeed, 200);
+     pursueActor0.sendMessage(ST_MESSAGE_ID.kSetMaxSpeed, 100);
+     fleeActor0.sendMessage(ST_MESSAGE_ID.kSetMaxSpeed, 80);
 
      // Set the scales
 
@@ -111,57 +99,38 @@ import { PursueForce } from "../../steeringBehavior/forcePursue";
        new Phaser.Math.Vector2(0.125, 0.125)
      );
 
-     seekActor0.sendMessage
-     (
-       ST_MESSAGE_ID.kSetScale,
-       new Phaser.Math.Vector2(0.1, 0.1)
-     );
-     
      fleeActor0.sendMessage
      (
        ST_MESSAGE_ID.kSetScale,
        new Phaser.Math.Vector2(0.2, 0.2)
      );
  
-     // Obtain canvas data
+     // Get canvas data
      let canvas = this.game.canvas;
  
      let width : number = canvas.width;
      let height : number = canvas.height;
  
      // Set Positions
-     seekActor0.sendMessage
-     (
-       ST_MESSAGE_ID.kSetPosition,
-       new Phaser.Math.Vector2(width * 0.535, height * 0.75)
-     );
-
      pursueActor0.sendMessage
      (
        ST_MESSAGE_ID.kSetPosition,
-       new Phaser.Math.Vector2(width * 0.825, height * 0.25)
+       new Phaser.Math.Vector2(width * 0.45, height * 0.45)
      );
 
     fleeActor0.sendMessage
      (
        ST_MESSAGE_ID.kSetPosition,
-       new Phaser.Math.Vector2(width * 0.25, height * 0.25)
+       new Phaser.Math.Vector2(width * 0.55, height * 0.55)
      );
 
      // Set masses
-
-     seekActor0.sendMessage(ST_MESSAGE_ID.kSetMass,   50);
-     fleeActor0.sendMessage(ST_MESSAGE_ID.kSetMass,   50);
-     pursueActor0.sendMessage(ST_MESSAGE_ID.kSetMass, 50);
+     fleeActor0.sendMessage(ST_MESSAGE_ID.kSetMass,   35);
+     pursueActor0.sendMessage(ST_MESSAGE_ID.kSetMass, 35);
  
      // Create Force controlers
 
      let forceControlP = pursueActor0.getComponent<CmpForceController>
-     (
-       ST_COMPONENT_ID.kForceController
-     );
-
-     let forceControlS = seekActor0.getComponent<CmpForceController>
      (
        ST_COMPONENT_ID.kForceController
      );
@@ -173,45 +142,27 @@ import { PursueForce } from "../../steeringBehavior/forcePursue";
 
      // Create Forces
 
-     //// Seek-s & Flee-s
-     let flee : SeekForce = new SeekForce();
-     flee.init(fleeSprt0, shipSprtP0, -100);
+     //// Wander
 
-     let seek0 : SeekForce = new SeekForce();
-     seek0.init(seekSprt0, shipSprtP0, 100);
-
-     let seek1 : SeekForce = new SeekForce();
-     seek1.init(fleeSprt0, seekSprt0, 100);
+     let wander : WanderForce = new WanderForce();
+     wander.init(fleeSprt0, 150, 100, 5, 90, 100);
      
-     //// Pursue / Evade
+     //// Pursue 
 
      let pursue : PursueForce = new PursueForce();
-     let evade : PursueForce = new PursueForce();
 
      pursue.init
      (
       shipSprtP0,
       fleeSprt0,
       250,
-      10,
+      15,
       fleeActor0.getComponent<CmpForceController>(ST_COMPONENT_ID.kForceController)
-     );
-
-     evade.init
-     (
-      shipSprtP0,
-      seekSprt0,
-      -100,
-      5,
-      seekActor0.getComponent<CmpForceController>(ST_COMPONENT_ID.kForceController)
      );
  
      // Add forces to controler
      forceControlP.addForce('pursue_0', pursue );
-     forceControlP.addForce('evade_0', evade );
-     forceControlF.addForce('flee_0', flee );
-     forceControlF.addForce('seek_1', seek1 );
-     forceControlS.addForce('seek_0', seek0)
+     forceControlF.addForce('wander_0', wander);
  
      return;
    }
@@ -229,8 +180,6 @@ import { PursueForce } from "../../steeringBehavior/forcePursue";
    /****************************************************/
    /* Private                                          */
    /****************************************************/ 
- 
-   private _m_ship0 : BaseActor<Ty_Sprite>;
  
    private _m_ship1 : BaseActor<Ty_Sprite>;
 
