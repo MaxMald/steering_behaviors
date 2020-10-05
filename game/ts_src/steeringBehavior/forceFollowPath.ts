@@ -67,9 +67,11 @@ implements IForce
       this.m_targetIndex = _targetIndex;
     }
 
+    // Set the looping flag
+    this.m_looping = false;
     if(_looping != null)
     {
-      this.m_looping = false;
+      this.m_looping = _looping;
     }
 
     this._m_controller = _controller;
@@ -123,20 +125,24 @@ implements IForce
 
     if (sqDist < radius * radius){
       ++i;
-      if(i <= size)
+      if(i >= size)
       {
         if (looping)
         {
           i = 0;
-          seek.setTarget(path[i]);
+        }
+        else
+        {
+          i = size - 1;
+          seek.destroy();
+          this.destroy();
         }
       }
       seek.setTarget(path[i]);
       this.m_targetIndex = i;
       //i = (i + 1) % (size - 1);
     }
-
-    seek.update(_dt);
+    //seek.update(_dt);
     return;
   }
 
