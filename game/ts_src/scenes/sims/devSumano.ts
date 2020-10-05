@@ -15,6 +15,7 @@
  import { CmpSpriteController } from "../../components/cmpSpriteController";
  import { SimulationManager } from "../../managers/simulationManager/simulationManager";
  import { Master } from "../../master/master";
+import { FollowPathForce } from "../../steeringBehavior/forceFollowPath";
 import { PursueForce } from "../../steeringBehavior/forcePursue";
  import { SeekForce } from "../../steeringBehavior/forceSeek";
 import { WanderForce } from "../../steeringBehavior/forceWander";
@@ -140,29 +141,83 @@ import { WanderForce } from "../../steeringBehavior/forceWander";
        ST_COMPONENT_ID.kForceController
      );
 
+     // Create path sprites and array to follow
+
+     let pathSprt0 : Ty_Sprite = this.add.sprite( 0, 0,'space_ship');
+     let pathSprt1 : Ty_Sprite = this.add.sprite( 0, 0,'space_ship');
+     let pathSprt2 : Ty_Sprite = this.add.sprite( 0, 0,'space_ship');
+     let pathSprt3 : Ty_Sprite = this.add.sprite( 0, 0,'space_ship');
+     let pathSprt4 : Ty_Sprite = this.add.sprite( 0, 0,'space_ship');
+     let pathSprt5 : Ty_Sprite = this.add.sprite( 0, 0,'space_ship');
+     let pathSprt6 : Ty_Sprite = this.add.sprite( 0, 0,'space_ship');
+     let pathSprt7 : Ty_Sprite = this.add.sprite( 0, 0,'space_ship');
+
+     let pathActor0 = BaseActor.Create(pathSprt0, 'path0');
+     let pathActor1 = BaseActor.Create(pathSprt1, 'path1');
+     let pathActor2 = BaseActor.Create(pathSprt2, 'path2');
+     let pathActor3 = BaseActor.Create(pathSprt3, 'path3');
+     let pathActor4 = BaseActor.Create(pathSprt4, 'path4');
+     let pathActor5 = BaseActor.Create(pathSprt5, 'path5');
+     let pathActor6 = BaseActor.Create(pathSprt6, 'path6');
+     let pathActor7 = BaseActor.Create(pathSprt7, 'path7');
+
+     pathActor0.addComponent(new CmpSpriteController());
+     pathActor1.addComponent(new CmpSpriteController());
+     pathActor2.addComponent(new CmpSpriteController());
+     pathActor3.addComponent(new CmpSpriteController());
+     pathActor4.addComponent(new CmpSpriteController());
+     pathActor5.addComponent(new CmpSpriteController());
+     pathActor6.addComponent(new CmpSpriteController());
+     pathActor7.addComponent(new CmpSpriteController());
+
+     pathActor0.init();
+     pathActor1.init();
+     pathActor2.init();
+     pathActor3.init();
+     pathActor4.init();
+     pathActor5.init();
+     pathActor6.init();
+     pathActor7.init();
+
+     pathActor0.sendMessage(ST_MESSAGE_ID.kSetScale, new Phaser.Math.Vector2(0.08, 0.08));
+     pathActor1.sendMessage(ST_MESSAGE_ID.kSetScale, new Phaser.Math.Vector2(0.08, 0.08));
+     pathActor2.sendMessage(ST_MESSAGE_ID.kSetScale, new Phaser.Math.Vector2(0.08, 0.08));
+     pathActor3.sendMessage(ST_MESSAGE_ID.kSetScale, new Phaser.Math.Vector2(0.08, 0.08));
+     pathActor4.sendMessage(ST_MESSAGE_ID.kSetScale, new Phaser.Math.Vector2(0.08, 0.08));
+     pathActor5.sendMessage(ST_MESSAGE_ID.kSetScale, new Phaser.Math.Vector2(0.08, 0.08));
+     pathActor6.sendMessage(ST_MESSAGE_ID.kSetScale, new Phaser.Math.Vector2(0.08, 0.08));
+     pathActor7.sendMessage(ST_MESSAGE_ID.kSetScale, new Phaser.Math.Vector2(0.08, 0.08));
+
+     pathActor0.sendMessage(ST_MESSAGE_ID.kSetPosition, new Phaser.Math.Vector2(
+                                                        width * 0.1, height * 0.1));
+     pathActor1.sendMessage(ST_MESSAGE_ID.kSetPosition, new Phaser.Math.Vector2(
+                                                        width * 0.33, height * 0.5));
+     pathActor2.sendMessage(ST_MESSAGE_ID.kSetPosition, new Phaser.Math.Vector2(
+                                                        width * 0.1, height * 0.9));
+     pathActor3.sendMessage(ST_MESSAGE_ID.kSetPosition, new Phaser.Math.Vector2(
+                                                        width * 0.75, height * 0.5));
+     pathActor4.sendMessage(ST_MESSAGE_ID.kSetPosition, new Phaser.Math.Vector2(
+                                                        width * 0.5, height * 0.8));
+     pathActor5.sendMessage(ST_MESSAGE_ID.kSetPosition, new Phaser.Math.Vector2(
+                                                        width * 0.9, height * 0.9));
+     pathActor6.sendMessage(ST_MESSAGE_ID.kSetPosition, new Phaser.Math.Vector2(
+                                                        width * 0.9, height * 0.1));
+     pathActor7.sendMessage(ST_MESSAGE_ID.kSetPosition, new Phaser.Math.Vector2(
+                                                        width * 0.5, height * 0.33));
+
+     let pathArray : Ty_Sprite[] = new Array(pathSprt0, pathSprt1, pathSprt2, pathSprt3,
+                                             pathSprt4, pathSprt5, pathSprt6, pathSprt7);
      // Create Forces
 
-     //// Wander
+     let followPath0 : FollowPathForce = new FollowPathForce();
+     let followPath1 : FollowPathForce = new FollowPathForce();
 
-     let wander : WanderForce = new WanderForce();
-     wander.init(fleeSprt0, 150, 100, 5, 90, 100);
-     
-     //// Pursue 
-
-     let pursue : PursueForce = new PursueForce();
-
-     pursue.init
-     (
-      shipSprtP0,
-      fleeSprt0,
-      250,
-      15,
-      fleeActor0.getComponent<CmpForceController>(ST_COMPONENT_ID.kForceController)
-     );
+     followPath0.init(shipSprtP0 , pathArray, 200, 30, forceControlP, 0, true);
+     followPath1.init(fleeSprt0 , pathArray, 150, 15, forceControlF, 2);
  
      // Add forces to controler
-     forceControlP.addForce('pursue_0', pursue );
-     forceControlF.addForce('wander_0', wander);
+     forceControlP.addForce('path_0', followPath0 );
+     forceControlF.addForce('path_1', followPath1);
  
      return;
    }

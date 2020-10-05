@@ -3,7 +3,7 @@
  *
  * @summary 
  *
- * @file forceSeek.ts
+ * @file forcePursue.ts
  * @author Andrés Otoniel Sumano Hernández <andressumano@hotmail.com>
  * @since September-08-2020
  */
