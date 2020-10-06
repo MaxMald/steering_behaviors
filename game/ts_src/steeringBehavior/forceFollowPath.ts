@@ -134,8 +134,8 @@ implements IForce
         else
         {
           i = size - 1;
-          seek.destroy();
-          this.destroy();
+          //seek.destroy();
+          //this.destroy();
         }
       }
       seek.setTarget(path[i]);
@@ -168,9 +168,6 @@ implements IForce
     for (let i = 0; i < size; ++i)
     {
       debugManager.drawCircle(path[i].x, path[i].y, radius, 3, ST_COLOR_ID.kPurple);
-      // debugManager.drawLine(path[i].x, path[i].y, 
-      //                       path[(i + 1) % (size - 1)].x ,path[(i + 1) % (size - 1)].y, 3,
-      //                       ST_COLOR_ID.kPurple);
       if (i < size - 1)
       {
         debugManager.drawLine(path[i].x, path[i].y,

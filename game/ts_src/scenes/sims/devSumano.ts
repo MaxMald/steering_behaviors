@@ -126,8 +126,8 @@ import { WanderForce } from "../../steeringBehavior/forceWander";
      );
 
      // Set masses
-     fleeActor0.sendMessage(ST_MESSAGE_ID.kSetMass,   35);
-     pursueActor0.sendMessage(ST_MESSAGE_ID.kSetMass, 35);
+     fleeActor0.sendMessage(ST_MESSAGE_ID.kSetMass,   75);
+     pursueActor0.sendMessage(ST_MESSAGE_ID.kSetMass, 75);
  
      // Create Force controlers
 
@@ -206,7 +206,7 @@ import { WanderForce } from "../../steeringBehavior/forceWander";
                                                         width * 0.5, height * 0.33));
 
      let pathArray : Ty_Sprite[] = new Array(pathSprt0, pathSprt1, pathSprt2, pathSprt3,
-                                             pathSprt4, pathSprt5, pathSprt6, pathSprt7);
+                                             pathSprt4, pathSprt5, pathSprt7, pathSprt6);
      // Create Forces
 
      let followPath0 : FollowPathForce = new FollowPathForce();
@@ -216,7 +216,7 @@ import { WanderForce } from "../../steeringBehavior/forceWander";
      followPath1.init(fleeSprt0 , pathArray, 150, 15, forceControlF, 2);
  
      // Add forces to controler
-     forceControlP.addForce('path_0', followPath0 );
+     forceControlP.addForce('path_0', followPath0);
      forceControlF.addForce('path_1', followPath1);
  
      return;
