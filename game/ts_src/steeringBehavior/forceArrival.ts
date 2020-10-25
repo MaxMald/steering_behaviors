@@ -214,7 +214,7 @@ implements IForce
   onDebugDisable()
   : void 
   {
-    // TODO
+    this._m_self.clearTint();
     return;
   }
 

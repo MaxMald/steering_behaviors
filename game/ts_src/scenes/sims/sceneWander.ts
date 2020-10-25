@@ -1,9 +1,9 @@
 /**
  * Universidad de Artes Digitales, Guadalajara - 2020
  *
- * @summary Scene for the Arrival force behavior.
+ * @summary Scene for the Wander force behavior.
  *
- * @file sceneArrival.ts
+ * @file sceneWander.ts
  * @author Jorge Alexandro Zamudio Arredondo <alexzamudio_11@hotmail.com>
  * @since October-24-2020
  */
@@ -15,9 +15,9 @@ import { CmpForceController } from "../../components/cmpforceController";
 import { CmpSpriteController } from "../../components/cmpSpriteController";
 import { SimulationManager } from "../../managers/simulationManager/simulationManager";
 import { Master } from "../../master/master";
-import { ArrivalForce } from "../../steeringBehavior/forceArrival";
+import { WanderForce } from "../../steeringBehavior/forceWander";
 
-export class ScnArrival
+export class ScnWander
 extends Phaser.Scene
 {
   /****************************************************/
@@ -68,20 +68,12 @@ extends Phaser.Scene
 
     shipActor.init();
 
-    // Set Actor initial speed.
-
-    shipActor.sendMessage
-    (
-      ST_MESSAGE_ID.kSetSpeed,
-      75
-    );
-
     // Set Actor max speed.
 
     shipActor.sendMessage
     (
       ST_MESSAGE_ID.kSetMaxSpeed,
-      75
+      50
     );
 
     // Set Actor scale.
@@ -112,60 +104,6 @@ extends Phaser.Scene
     shipActor.sendMessage
     (
       ST_MESSAGE_ID.kSetPosition,
-      new Phaser.Math.Vector2(width * 0.5, height * 0.25)
-    );
-
-    ///////////////////////////////////
-    // Create target Actor
-
-    // Create Phaser GameObject.
-
-    let targetSprite : Ty_Sprite = this.add.sprite(0, 0,'space_ship');
-
-    // Create Target.
-
-    let targetActor = BaseActor.Create<Ty_Sprite>(targetSprite, 'target');
-
-    // Add Target to simulation manager.
-
-    simManager.addActor(targetActor);
-
-    // Create and init components.
-
-    targetActor.addComponent(new CmpSpriteController());
-    targetActor.addComponent(new CmpForceController());
-
-    targetActor.init();
-
-    // Set Actor max speed.
-
-    targetActor.sendMessage
-    (
-      ST_MESSAGE_ID.kSetMaxSpeed,
-      50
-    );
-
-    // Set Target scale.
-    
-    targetActor.sendMessage
-    (
-      ST_MESSAGE_ID.kSetScale,
-      new Phaser.Math.Vector2(0.1, 0.1)
-    );
-
-    // Set Target Mass.
-
-    targetActor.sendMessage
-    (
-      ST_MESSAGE_ID.kSetMass,
-      1
-    );
-    
-    // Set Target position.
-  
-    targetActor.sendMessage
-    (
-      ST_MESSAGE_ID.kSetPosition,
       new Phaser.Math.Vector2(width * 0.5, height * 0.5)
     );
 
@@ -174,15 +112,17 @@ extends Phaser.Scene
 
     // Create the force.
 
-    let arrival : ArrivalForce = new ArrivalForce();
+    let wander : WanderForce = new WanderForce();
 
     // Init the force.
 
-    arrival.init
+    wander.init
     (
       shipSprite,
-      targetSprite,
-      100,
+      75,
+      25,
+      5,
+      45,
       100
     );
     
@@ -193,7 +133,7 @@ extends Phaser.Scene
       ST_COMPONENT_ID.kForceController
     );
 
-    shipController.addForce('arrival_1', arrival);
+    shipController.addForce('wander_1', wander);
 
     // Add debugging button
 
