@@ -90,6 +90,11 @@ implements IForce
     return;
   }
 
+  /**
+   * Set the controller of this force.
+   * 
+   * @param _controller Force controller.
+   */
   setController(_controller: CmpForceController)
   : void 
   {
@@ -97,6 +102,11 @@ implements IForce
     return;
   }
 
+  /**
+   * Updates this force.
+   * 
+   * @param _dt delta time in seconds. 
+   */
   update(_dt: number)
   : void 
   {
