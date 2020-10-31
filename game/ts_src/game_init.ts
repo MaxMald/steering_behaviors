@@ -17,7 +17,7 @@ import { ScnDevSumano } from "./scenes/sims/devSumano";
 import { ScnDevAlex } from "./scenes/sims/devAlex";
 import { ScnArrival } from "./scenes/sims/sceneArrival";
 import { ScnWander } from "./scenes/sims/sceneWander";
-//import { ScnObstacleAvoidance } from "./scenes/sims/sceneObstacleAvoidance";
+import { ScnObstacleAvoidance } from "./scenes/sims/sceneObstacleAvoidance";
 /**
  * Starts Application.
  */
@@ -97,7 +97,7 @@ class GameInit
     this.m_game.scene.add('devAlex', ScnDevAlex);
     this.m_game.scene.add('sceneArrival', ScnArrival);
     this.m_game.scene.add('sceneWander', ScnWander);
-    //this.m_game.scene.add('sceneObstacleAvoidance', ScnObstacleAvoidance);
+    this.m_game.scene.add('sceneObstacleAvoidance', ScnObstacleAvoidance);
 
     ///////////////////////////////////
     // Start BOOT    
