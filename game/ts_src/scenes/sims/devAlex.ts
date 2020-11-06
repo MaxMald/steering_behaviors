@@ -16,6 +16,8 @@
  import { SimulationManager } from "../../managers/simulationManager/simulationManager";
  import { Master } from "../../master/master";
  import { SeekForce } from "../../steeringBehavior/forceSeek";
+ import { ArrivalForce } from "../../steeringBehavior/forceArrival";
+ import { WanderForce } from "../../steeringBehavior/forceWander";
  
   
  export class ScnDevAlex 
@@ -74,7 +76,7 @@
      shipActor.sendMessage
      (
        ST_MESSAGE_ID.kSetMaxSpeed,
-       500
+       75
      );
  
      shipActor.sendMessage
@@ -97,7 +99,7 @@
      shipActor.sendMessage
      (
        ST_MESSAGE_ID.kSetMass,
-       50
+       1
      );
  
      ///////////////////////////////////
@@ -122,13 +124,26 @@
      simManager.addActor(targetActor);
  
      targetActor.addComponent(new CmpSpriteController());
+     targetActor.addComponent(new CmpForceController());
  
-     targetActor.init();    
+     targetActor.init(); 
+     
+     targetActor.sendMessage
+     (
+       ST_MESSAGE_ID.kSetMaxSpeed,
+       50
+     );
  
      targetActor.sendMessage
      (
        ST_MESSAGE_ID.kSetScale,
        new Phaser.Math.Vector2(0.1, 0.1)
+     );
+
+     targetActor.sendMessage
+     (
+       ST_MESSAGE_ID.kSetMass,
+       1
      );
  
      targetActor.sendMessage
@@ -141,24 +156,42 @@
      // Create a Force
  
      // Step I : Create the force
+
+     let arrival : ArrivalForce = new ArrivalForce();
  
-     let seek : SeekForce = new SeekForce();
- 
-     seek.init
-     (
+     let wander : WanderForce = new WanderForce();
+
+     wander.init(
        shipSprite,
+       150,
+       100,
+       5,
+       90,
+       100
+     );
+
+     arrival.init(
        targetSprite,
-       250
+       shipSprite,
+       100,
+       100
      );
  
      // Step II : Get Component
  
-     let forceControl = shipActor.getComponent<CmpForceController>
+     let shipControl = shipActor.getComponent<CmpForceController>
      (
        ST_COMPONENT_ID.kForceController
      );
+
+     let targetControl = targetActor.getComponent<CmpForceController>(
+       ST_COMPONENT_ID.kForceController
+     );
  
-     forceControl.addForce('seek_1', seek );
+    // targetControl.addForce('seek_1', seek );
+    // targetControl.addForce('wander_2', wander_2);
+    targetControl.addForce('arrival_1', arrival);
+    shipControl.addForce('wander_1', wander);
  
      ///////////////////////////////////
      // Active Debugging
@@ -177,19 +210,19 @@
  
      // Target Oscillation 
  
-     let x = 300 * Math.sin(_time * 0.001);
+    //  let x = 300 * Math.sin(_time * 0.001);
  
-     this._m_target_position.setTo
-     (
-       this._m_target_center.x + x,
-       this._m_target_center.y
-     );
+    //  this._m_target_position.setTo
+    //  (
+    //    this._m_target_center.x + x,
+    //    this._m_target_center.y
+    //  );
  
-     this._m_target.sendMessage
-     (
-       ST_MESSAGE_ID.kSetPosition,
-       this._m_target_position
-     );
+    //  this._m_target.sendMessage
+    //  (
+    //    ST_MESSAGE_ID.kSetPosition,
+    //    this._m_target_position
+    //  );
  
      return;
    }

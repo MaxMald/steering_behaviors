@@ -70,6 +70,12 @@ implements IForce
     return;
   }
 
+  setTarget(_newTarget: Ty_Sprite)
+  : void 
+  {
+    this._m_target = _newTarget;
+  }
+
   setController(_controller: CmpForceController)
   : void 
   {
