@@ -8,7 +8,6 @@
  * @since September-07-2020
  */
 
-import { Sleeping } from "matter";
 import { ST_COLOR_ID, ST_MANAGER_ID } from "../commons/stEnums";
 import { Ty_Sprite, V2 } from "../commons/stTypes";
 import { CmpForceController } from "../components/cmpForceController";
@@ -256,6 +255,5 @@ implements IForce
    * The target sprite.
    */
   private _m_target : Ty_Sprite;
-
   
 }
