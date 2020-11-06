@@ -263,7 +263,11 @@ extends Phaser.Scene
   private _onMainMenu()
   : void
   {
+    
+    this._m_master.onSimulationSceneDestroy(this);
+
     this.scene.start('main_menu');
+
     return;
   }
 }
