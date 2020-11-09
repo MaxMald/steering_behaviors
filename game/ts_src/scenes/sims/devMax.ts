@@ -15,6 +15,7 @@
  import { CmpSpriteController } from "../../components/cmpSpriteController";
  import { SimulationManager } from "../../managers/simulationManager/simulationManager";
 import { UIObject } from "../../managers/uiManager/uiObject";
+import { UISlider } from "../../managers/uiManager/uiSlider";
 import { UISwitch } from "../../managers/uiManager/uiSwitch";
  import { Master } from "../../master/master";
  import { SeekForce } from "../../steeringBehavior/forceSeek";
@@ -105,11 +106,22 @@ import { UISwitch } from "../../managers/uiManager/uiSwitch";
      ///////////////////////////////////
      // Switch Button
 
-     const toggleButton = new UISwitch( width* 0.5, height * 0.5, this);
+     //const toggleButton = new UISwitch( width* 0.5, height * 0.5, this);
 
-     toggleButton.subscribe("toggleOn", "maxScene", this._onToggleOn, this);
-     toggleButton.subscribe("toggleOff", "maxScene", this._onToggleOff, this);
+     //toggleButton.subscribe("toggleOn", "maxScene", this._onToggleOn, this);
+     //toggleButton.subscribe("toggleOff", "maxScene", this._onToggleOff, this);
  
+     const slider = new UISlider
+     (
+      width * 0.5,
+      height * 0.5,
+      this,
+      10,
+      50
+     );
+
+     slider.subscribe("valueChanged", "maxScene", this._onSliderChanged, this);
+
      ///////////////////////////////////
      // Create Target
  
@@ -223,6 +235,18 @@ import { UISwitch } from "../../managers/uiManager/uiSwitch";
    {
 
     console.log("switch off");
+
+    return;
+
+   }
+
+   private _onSliderChanged(_sender: UIObject, _args: any)
+   : void
+   {
+
+    const slider = _sender as UISlider;
+
+    console.log(slider.getValue());
 
     return;
 
