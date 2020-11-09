@@ -14,6 +14,8 @@
  import { CmpForceController } from "../../components/cmpforceController";
  import { CmpSpriteController } from "../../components/cmpSpriteController";
  import { SimulationManager } from "../../managers/simulationManager/simulationManager";
+import { UIObject } from "../../managers/uiManager/uiObject";
+import { UISwitch } from "../../managers/uiManager/uiSwitch";
  import { Master } from "../../master/master";
  import { SeekForce } from "../../steeringBehavior/forceSeek";
  
@@ -99,6 +101,14 @@
        ST_MESSAGE_ID.kSetMass,
        1
      );
+
+     ///////////////////////////////////
+     // Switch Button
+
+     const toggleButton = new UISwitch( width* 0.5, height * 0.5, this);
+
+     toggleButton.subscribe("toggleOn", "maxScene", this._onToggleOn, this);
+     toggleButton.subscribe("toggleOff", "maxScene", this._onToggleOff, this);
  
      ///////////////////////////////////
      // Create Target
@@ -197,6 +207,26 @@
    /****************************************************/
    /* Private                                          */
    /****************************************************/ 
+
+   private _onToggleOn(_sender: UIObject, _args: any)
+   : void
+   {
+
+    console.log("switch on");
+
+    return;
+
+   }
+
+   private _onToggleOff(_sender: UIObject, _args: any)
+   : void
+   {
+
+    console.log("switch off");
+
+    return;
+
+   }
  
    private _m_target_center : V2;
  
