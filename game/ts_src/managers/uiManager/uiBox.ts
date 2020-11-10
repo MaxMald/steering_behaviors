@@ -26,7 +26,7 @@ export class UIBox
 
     // Set initial size.
 
-    const contentSize = new Phaser.Geom.Point(65, 65);
+    const contentSize = new Phaser.Geom.Point();
 
     this._m_contentSize = contentSize;
 
@@ -64,20 +64,7 @@ export class UIBox
   : void
   {
 
-    this._m_aObjects.push(_object);
-
-    const width = _object.getWidth();
-
-    const contentSize = this._m_contentSize;
-
-    if(width >  contentSize.x)
-    {
-
-      contentSize.x = width;
-
-    }
-
-    contentSize.y += _object.getHeight();
+    this._m_aObjects.push(_object);    
 
     // Check depth
 
@@ -92,7 +79,7 @@ export class UIBox
 
     // Update
 
-    this._updateBoxSize();
+    this.updateBoxSize();
 
     this._resizeBackground();
 
@@ -279,7 +266,7 @@ export class UIBox
 
     }
 
-    this._updateBoxSize();
+    this.updateBoxSize();
 
     this._resizeBackground();
 
@@ -322,7 +309,7 @@ export class UIBox
 
     }
 
-    this._updateBoxSize();
+    this.updateBoxSize();
 
     this._resizeBackground();
 
@@ -357,24 +344,61 @@ export class UIBox
 
   }
 
-  private _updateBoxSize()
+  updateBoxSize()
   : void
   {
 
-    const boxSize = this._m_boxSize;
+    // Update content size.
 
     const contentSize = this._m_contentSize;
+
+    contentSize.setTo(0.0, 0.0);    
+
+    const aObjects = this._m_aObjects;
+
+    const size = aObjects.length;
+
+    let uiObject : UIObject;
+
+    for(let i = 0; i < size; ++i)
+    {
+
+      uiObject = aObjects[i];
+
+      const width = uiObject.getWidth();
+
+      if(width > contentSize.x)
+      {
+
+        contentSize.x = width;
+
+      }      
+
+      contentSize.y += uiObject.getHeight() + this._m_gapTop + this._m_gapBottom;
+
+    }
+
+    // Update Box Size.
+
+    const boxSize = this._m_boxSize;
 
     boxSize.x = contentSize.x + this._m_paddingLeft + this._m_paddingRight;
 
     boxSize.y = contentSize.y + this._m_paddingBottom + this._m_paddingTop;
 
-    const size = this._m_aObjects.length;
+    // Minimum size.
 
-    if(size > 1)
+    if(boxSize.x < UIBox.MIN_WIDTH)
     {
 
-      boxSize.y += (this._m_gapTop + this._m_gapBottom) * ( size - 1); 
+      boxSize.x = UIBox.MIN_WIDTH;
+
+    }
+
+    if(boxSize.y < UIBox.MIN_HEIGHT)
+    {
+
+      boxSize.y = UIBox.MIN_HEIGHT;
 
     }
 
@@ -443,6 +467,10 @@ export class UIBox
     return;
 
   }
+
+  private static MIN_WIDTH : number = 65;
+
+  private static MIN_HEIGHT : number = 65;
 
   // Elements
 
