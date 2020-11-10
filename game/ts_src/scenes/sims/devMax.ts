@@ -9,12 +9,13 @@
   */
 
  import { BaseActor } from "../../actors/baseActor";
- import { ST_COMPONENT_ID, ST_MANAGER_ID, ST_MESSAGE_ID } from "../../commons/stEnums";
+ import { ST_COLOR_ID, ST_COMPONENT_ID, ST_MANAGER_ID, ST_MESSAGE_ID, ST_TEXT_TYPE } from "../../commons/stEnums";
  import { Ty_Sprite, V2 } from "../../commons/stTypes";
  import { CmpForceController } from "../../components/cmpforceController";
  import { CmpSpriteController } from "../../components/cmpSpriteController";
  import { SimulationManager } from "../../managers/simulationManager/simulationManager";
 import { UIBox } from "../../managers/uiManager/uiBox";
+import { UILabel } from "../../managers/uiManager/uiLabel";
 import { UIObject } from "../../managers/uiManager/uiObject";
 import { UISlider } from "../../managers/uiManager/uiSlider";
 import { UISwitch } from "../../managers/uiManager/uiSwitch";
@@ -127,13 +128,55 @@ import { UISwitch } from "../../managers/uiManager/uiSwitch";
 
      slider.subscribe("valueChanged", "maxScene", this._onSliderChanged, this);
 
+     // Create Text: H1
+
+     const h1 = new UILabel
+     (
+       width,
+       height,
+       this,
+       "Text: H1",
+       ST_TEXT_TYPE.H1,
+       ST_COLOR_ID.kBlack
+     );
+
+     // Create Text: H2
+
+     const h2 = new UILabel
+     (
+       width,
+       height,
+       this,
+       "Text: H2",
+       ST_TEXT_TYPE.H2,
+       ST_COLOR_ID.kBlue
+     );
+
+     // Create Text: H1
+
+     const normalText = new UILabel
+     (
+       width,
+       height,
+       this,
+       "Text: Normal",
+       ST_TEXT_TYPE.Normal,
+       ST_COLOR_ID.kRed
+     );
+
      // Create Box Container
 
      const box = new UIBox(width * 0.5, height * 0.5, this);
-
-     box.add(toggleButton);
      
      box.add(slider);
+
+     box.add(toggleButton);
+
+     box.add(h1);
+
+     box.add(h2);
+
+     box.add(normalText);
 
      box.setPadding(35);
 
