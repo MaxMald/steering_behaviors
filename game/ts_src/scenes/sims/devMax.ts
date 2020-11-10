@@ -14,6 +14,7 @@
  import { CmpForceController } from "../../components/cmpforceController";
  import { CmpSpriteController } from "../../components/cmpSpriteController";
  import { SimulationManager } from "../../managers/simulationManager/simulationManager";
+import { UIBox } from "../../managers/uiManager/uiBox";
 import { UIObject } from "../../managers/uiManager/uiObject";
 import { UISlider } from "../../managers/uiManager/uiSlider";
 import { UISwitch } from "../../managers/uiManager/uiSwitch";
@@ -104,12 +105,14 @@ import { UISwitch } from "../../managers/uiManager/uiSwitch";
      );
 
      ///////////////////////////////////
-     // Switch Button
+     // UI
 
-     //const toggleButton = new UISwitch( width* 0.5, height * 0.5, this);
+    // Create switch
 
-     //toggleButton.subscribe("toggleOn", "maxScene", this._onToggleOn, this);
-     //toggleButton.subscribe("toggleOff", "maxScene", this._onToggleOff, this);
+     const toggleButton = new UISwitch( width* 0.5, height * 0.5, this);
+
+     toggleButton.subscribe("toggleOn", "maxScene", this._onToggleOn, this);
+     toggleButton.subscribe("toggleOff", "maxScene", this._onToggleOff, this);
  
      const slider = new UISlider
      (
@@ -120,7 +123,21 @@ import { UISwitch } from "../../managers/uiManager/uiSwitch";
       50
      );
 
+     // Create Slider
+
      slider.subscribe("valueChanged", "maxScene", this._onSliderChanged, this);
+
+     // Create Box Container
+
+     const box = new UIBox(width * 0.5, height * 0.5, this);
+
+     box.add(slider);
+
+     box.add(toggleButton);
+
+     box.setPadding(35);
+
+     box.setElementsGap(10);
 
      ///////////////////////////////////
      // Create Target
