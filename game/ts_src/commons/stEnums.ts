@@ -132,3 +132,20 @@ export const ST_COLOR_ID = Object.freeze
   kBrown : 0xA52A2A as 0xA52A2A
 
 });
+
+/**
+ * Text Type
+ */
+
+export type ST_TEXT_TYPE = EnumLiteralsOf<typeof ST_TEXT_TYPE>;
+
+export const ST_TEXT_TYPE = Object.freeze
+({
+  
+  H1 : 0 as 0,
+
+  H2 : 1 as 1,
+
+  Normal: 2 as 2
+
+});

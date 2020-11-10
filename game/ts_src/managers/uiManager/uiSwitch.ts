@@ -8,7 +8,6 @@
  * @since November-09-2020
  */
 
-import { Tilemaps } from "phaser";
 import { Ty_Image } from "../../commons/stTypes";
 import { UIObject } from "./uiObject";
 

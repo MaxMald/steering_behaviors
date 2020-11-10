@@ -17,7 +17,7 @@ import { UIObject } from "./uiObject";
  * 
  * Events:
  * 
- * * valueChanged: triggered when the numeric value of the slider had changed. *  
+ * * valueChanged: triggered when the numeric value of the slider had changed. 
  */
 export class UISlider
   extends UIObject

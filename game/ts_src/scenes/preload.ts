@@ -50,6 +50,20 @@ extends Phaser.Scene
       "images/game_art.js"
     );
 
+    this.load.bitmapFont
+    (
+      'odin_rounded',
+      'images/odin_rounded_bitmapfont.png',
+      'images/odin_rounded_bitmapfont.xml'
+    );
+
+    this.load.bitmapFont
+    (
+      'supercomputer',
+      'images/supercomputer_bitmapfont.png',
+      'images/supercomputer_bitmapfont.xml'
+    );
+
     ///////////////////////////////////
     // Scene
 

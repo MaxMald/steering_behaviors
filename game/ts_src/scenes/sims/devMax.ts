@@ -131,9 +131,9 @@ import { UISwitch } from "../../managers/uiManager/uiSwitch";
 
      const box = new UIBox(width * 0.5, height * 0.5, this);
 
-     box.add(slider);
-
      box.add(toggleButton);
+     
+     box.add(slider);
 
      box.setPadding(35);
 
