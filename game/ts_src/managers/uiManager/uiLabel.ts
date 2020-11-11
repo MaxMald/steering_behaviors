@@ -63,21 +63,21 @@ export class UILabel
         case ST_TEXT_TYPE.H2:
 
           font_key = "odin_rounded";
-          font_size = 24;
+          font_size = 28;
 
           break;
 
         case ST_TEXT_TYPE.Normal:
 
           font_key = "odin_rounded";
-          font_size = 16;
+          font_size = 20;
 
           break;
 
         default:
 
           font_key = "odin_rounded";
-          font_size = 16;
+          font_size = 20;
 
           break;
       }
@@ -104,9 +104,9 @@ export class UILabel
 
     label.setTint(tint);
 
-    label.setOrigin(0.5, 0.5);
+    label.setOrigin(0.0, 0.5);
 
-    label.setCenterAlign();
+    label.setLeftAlign();
 
     this._m_label = label;
 
@@ -177,6 +177,22 @@ export class UILabel
     this._m_label.setPosition(_x, _y);
 
     return;
+
+  }
+
+  getAnchorX()
+  : number
+  {
+
+    return this._m_label.originX;
+
+  }
+
+  getAnchorY()
+  : number
+  {
+
+    return this._m_label.originY;
 
   }
 

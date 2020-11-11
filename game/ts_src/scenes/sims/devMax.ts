@@ -17,6 +17,7 @@
 import { UIBox } from "../../managers/uiManager/uiBox";
 import { UIForceController } from "../../managers/uiManager/uiControllers/UIForceController";
 import { UILabel } from "../../managers/uiManager/uiLabel";
+import { UIManager } from "../../managers/uiManager/uiManager";
 import { UIObject } from "../../managers/uiManager/uiObject";
 import { UISlider } from "../../managers/uiManager/uiSlider";
 import { UISwitch } from "../../managers/uiManager/uiSwitch";
@@ -113,9 +114,18 @@ import { UISwitch } from "../../managers/uiManager/uiSwitch";
     (
       20,
       20,
-      this,
-      shipActor
+      this
     );
+
+    // Add UI force controller to the UI Manager.
+
+    const uiManager = master.getManager<UIManager>(ST_MANAGER_ID.kUIManager);
+
+    uiManager.addUIController("forceUI", uiForceController);
+
+    // Set the active actor of the UI Manager.
+
+    uiManager.setTarget(shipActor);
 
      ///////////////////////////////////
      // Create Target
@@ -195,11 +205,12 @@ import { UISwitch } from "../../managers/uiManager/uiSwitch";
      // Target Oscillation 
  
      let x = 300 * Math.sin(_time * 0.001);
+     let y = 300 * Math.cos(_time * 0.001);
  
      this._m_target_position.setTo
      (
        this._m_target_center.x + x,
-       this._m_target_center.y
+       this._m_target_center.y + y
      );
  
      this._m_target.sendMessage

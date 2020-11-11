@@ -101,6 +101,31 @@ export class UISlider
 
   }
 
+  setValue(_value: number)
+  : void
+  {
+    
+    if(_value < this._m_min)
+    {
+
+      _value = this._m_min;
+      
+    }
+    else if(_value > this._m_max)
+    {
+
+      _value = this._m_max;
+
+    }
+
+    this._m_value = _value;
+
+    this.updateButton();
+
+    return;
+
+  }
+
   /**
    * Get the numeric value of the slider.
    */

@@ -4,6 +4,7 @@ import { Ty_Sprite } from "../../../commons/stTypes";
 import { CmpForceController } from "../../../components/cmpforceController";
 import { UIBox } from "../uiBox";
 import { UILabel } from "../uiLabel";
+import { UIObject } from "../uiObject";
 import { UISlider } from "../uiSlider";
 import { UIController } from "./UIController";
 
@@ -21,20 +22,6 @@ export class UIForceController
   {
 
     super();
-
-    if(_target !== undefined)
-    {
-
-      this.setActor(_target);
-
-    }
-    else
-    {
-
-      this._m_target = undefined;
-      this._m_forceController = undefined;
-
-    }    
 
     ///////////////////////////////////
     // UI
@@ -54,19 +41,6 @@ export class UIForceController
 
     this._ui_box = box;
 
-    // Box Title
-
-    const title = new UILabel
-    (
-      0, 
-      0, 
-      _scene, 
-      "Force Controller",
-      ST_TEXT_TYPE.H2 
-    );
-
-    box.add(title);
-
     // Actor Name
 
     this._ui_actorName = new UILabel
@@ -74,8 +48,8 @@ export class UIForceController
       0,
       0, 
       _scene, 
-      "Name: ",
-      ST_TEXT_TYPE.Normal
+      "#",
+      ST_TEXT_TYPE.H2
     );
 
     box.add(this._ui_actorName);
@@ -87,7 +61,7 @@ export class UIForceController
       0,
       0,
       _scene,
-      "Speed: 0.0 au/secs.",
+      "#",
       ST_TEXT_TYPE.Normal
     );
 
@@ -100,7 +74,7 @@ export class UIForceController
       0,
       0,
       _scene,
-      "Max. Speed: 0.0 au/secs.",
+      "#",
       ST_TEXT_TYPE.Normal
     );
 
@@ -113,11 +87,37 @@ export class UIForceController
       0,
       0,
       _scene,
-      0,
-      100
+      1,
+      300
     );
 
     box.add(this._ui_maxSpeedSlider);
+
+    this._ui_maxSpeedSlider.subscribe
+    (
+      "valueChanged", 
+      "label",
+      function(_sender : UIObject, _args)
+      {
+
+        const slider = _sender as UISlider;
+
+        const maxSpeed = slider.getValue();
+
+        this.setMaxSpeed(maxSpeed);
+
+        if(this._m_forceController !== undefined)
+        {
+
+          this._m_forceController.setMaxSpeed(maxSpeed);
+
+        }
+
+        return;
+
+      } ,
+      this
+    );
 
     // Mass Label
 
@@ -126,7 +126,7 @@ export class UIForceController
       0,
       0,
       _scene,
-      "Mass: 0.0 tg",
+      "#",
       ST_TEXT_TYPE.Normal
     );
 
@@ -139,17 +139,63 @@ export class UIForceController
       0,
       0,
       _scene,
-      0,
+      1,
       10
     );
 
     box.add(this._ui_massSlider);
 
+    this._ui_massSlider.subscribe
+    (
+      "valueChanged", 
+      "label",
+      function(_sender : UIObject, _args)
+      {
+
+        const slider = _sender as UISlider;
+
+        const mass = slider.getValue();
+
+        this.setMass(mass);
+
+        if(this._m_forceController !== undefined)
+        {
+
+          this._m_forceController.setMass(mass);
+
+        }
+
+        return;
+
+      } ,
+      this
+    );
+
+    ///////////////////////////////////
+    // Actor
+
+    this.setTarget(undefined);
+
     return;
 
   }
 
-  setActor(_actor: BaseActor<Ty_Sprite>)
+  update()
+  : void
+  {
+
+    if(this._m_forceController !== undefined)
+    {
+
+      this.setActualSpeed(this._m_forceController.getSpeed());
+
+    }
+
+    return;
+
+  }
+
+  setTarget(_actor: BaseActor<Ty_Sprite>)
   : void
   {
 
@@ -168,12 +214,28 @@ export class UIForceController
 
     this._m_target = _actor;
 
-    this._m_forceController = _actor.getComponent<CmpForceController>
+    const forceController = _actor.getComponent<CmpForceController>
     (
       ST_COMPONENT_ID.kForceController
     );
 
-    // TODO
+    this._m_forceController = forceController;
+
+    // Actor Name.
+
+    this.setActorName(_actor.getName());
+
+    // Actor Mass.
+
+    this._ui_massSlider.setValue(forceController.getMass());
+
+    // Actor Max Speed.
+
+    this._ui_maxSpeedSlider.setValue(forceController.getMaxSpeed());
+
+    // Update box.
+
+    this._ui_box.updateBox();
 
     return;
 
@@ -183,7 +245,50 @@ export class UIForceController
   : void
   {
 
-    // TODO
+    this.setActorName("");
+    this.setActualSpeed(0);
+    this.setMaxSpeed(0);
+    this.setMass(0);
+
+    return;
+
+  }
+
+  setActorName(_name: string)
+  : void
+  {
+
+    this._ui_actorName.setText(_name);
+
+    return;
+
+  }
+
+  setActualSpeed(_speed: number)
+  : void
+  {
+
+    this._ui_actualSpeed.setText("Speed: " + _speed.toPrecision(3) + " km/secs. ");
+
+    return;
+
+  }
+
+  setMaxSpeed(_speed: number)
+  : void
+  {
+
+    this._ui_maxSpeed.setText("Max. Speed: " + _speed.toPrecision(3) + " km/secs. ");
+
+    return;
+
+  }
+
+  setMass(_mass: number)
+  : void
+  {
+
+    this._ui_mass.setText("Mass: " + _mass.toPrecision(3) + " tg.");
 
     return;
 
@@ -230,7 +335,7 @@ export class UIForceController
 
   private _ui_maxSpeed: UILabel;
 
-  private _ui_maxSpeedSlider;
+  private _ui_maxSpeedSlider: UISlider;
 
   private _ui_actualSpeed: UILabel;
 

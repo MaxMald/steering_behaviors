@@ -79,11 +79,7 @@ export class UIBox
 
     // Update
 
-    this.updateBoxSize();
-
-    this._resizeBackground();
-
-    this._orderVertical();
+    this.updateBox();
 
     return;
 
@@ -266,6 +262,19 @@ export class UIBox
 
     }
 
+    this.updateBox();
+
+    return;
+
+  }
+
+  /**
+   * Update box size, resize background, and order elements.
+   */
+  updateBox()
+  : void
+  {
+
     this.updateBoxSize();
 
     this._resizeBackground();
@@ -309,11 +318,7 @@ export class UIBox
 
     }
 
-    this.updateBoxSize();
-
-    this._resizeBackground();
-
-    this._orderVertical();
+    this.updateBox();
 
     return;
 
@@ -456,8 +461,8 @@ export class UIBox
 
       object.setPosition
       (
-        position.x + objWidth * 0.5, 
-        position.y + objHeight * 0.5
+        position.x + objWidth * object.getAnchorX(), 
+        position.y + objHeight * object.getAnchorY()
       );
 
       position.y += object.getHeight() + gapTop + gapBottom;

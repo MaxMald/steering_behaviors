@@ -176,6 +176,22 @@ export class UIObject
 
   }
 
+  getAnchorX()
+  : number
+  {
+
+    return 0.5;
+
+  }
+
+  getAnchorY()
+  : number
+  {
+
+    return 0.5;
+
+  }
+
   /**
    * Subscribe to an event of this UI Object. 
    * 
