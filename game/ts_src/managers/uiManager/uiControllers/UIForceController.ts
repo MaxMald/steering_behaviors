@@ -2,11 +2,14 @@ import { BaseActor } from "../../../actors/baseActor";
 import { ST_COMPONENT_ID, ST_TEXT_TYPE } from "../../../commons/stEnums";
 import { Ty_Sprite } from "../../../commons/stTypes";
 import { CmpForceController } from "../../../components/cmpforceController";
+import { IForce } from "../../../steeringBehavior/iForce";
 import { UIBox } from "../uiBox";
 import { UILabel } from "../uiLabel";
 import { UIObject } from "../uiObject";
 import { UISlider } from "../uiSlider";
 import { UIController } from "./UIController";
+import { UIForce } from "./UIForce";
+import { UIForceFactory } from "./UIForceFactory";
 
 export class UIForceController
   extends UIController
@@ -21,23 +24,19 @@ export class UIForceController
   )
   {
 
-    super();
+    super();    
 
     ///////////////////////////////////
     // UI
 
     // Create box.
 
-    const box = new UIBox
+    const box = UIBox.CreateBorderBox
     (
       _x, 
       _y,
       _scene
-    );
-
-    box.setPadding(20);
-
-    box.setElementsGap(5);
+    );    
 
     this._ui_box = box;
 
@@ -172,6 +171,17 @@ export class UIForceController
     );
 
     ///////////////////////////////////
+    // UI Force
+
+    // Create UI force factory
+
+    this.uiForceFactory = new UIForceFactory();
+
+    // Create UI force list
+
+    this._m_aUIForce = new Array<UIForce>();
+
+    ///////////////////////////////////
     // Actor
 
     this.setTarget(undefined);
@@ -188,6 +198,12 @@ export class UIForceController
     {
 
       this.setActualSpeed(this._m_forceController.getSpeed());
+
+      this._m_aUIForce.forEach
+      (
+        this._updateUIForce,
+        this
+      );
 
     }
 
@@ -206,11 +222,13 @@ export class UIForceController
 
       this._m_forceController = undefined;
 
-      this.disableUI();
+      this.disableUI();      
 
       return;
 
     }
+
+    this._removeForces();
 
     this._m_target = _actor;
 
@@ -232,6 +250,30 @@ export class UIForceController
     // Actor Max Speed.
 
     this._ui_maxSpeedSlider.setValue(forceController.getMaxSpeed());
+
+    // Forces
+
+    const aForces = forceController.getForces();
+
+    const uiForceFactory = this.uiForceFactory;
+
+    const scene = this.m_master.getSimulationScene();
+
+    aForces.forEach
+    (
+      function(_force: IForce)
+      : void
+      {
+
+        const force =  uiForceFactory.createUIForce(scene, _force);
+
+        this._addUIForce(force);
+
+        return;
+
+      },
+      this
+    );
 
     // Update box.
 
@@ -305,6 +347,8 @@ export class UIForceController
     
     this._m_forceController = undefined;
 
+    this._removeForces();
+
     this._ui_box.destroy();
 
     super.destroy();
@@ -313,15 +357,72 @@ export class UIForceController
 
   }
 
+  uiForceFactory: UIForceFactory;
+
   /****************************************************/
   /* Private                                          */
   /****************************************************/
+
+  private _updateUIForce(_uiForce: UIForce)
+  : void
+  {
+
+    _uiForce.update();
+
+    return;
+
+  }
+
+  private _addUIForce(_uiForce: UIForce)
+  : void
+  {
+
+    this._m_aUIForce.push(_uiForce);
+
+    const box = _uiForce.getBox();
+
+    this._ui_box.add(box);
+
+    return;
+
+  }
+
+  private _removeForces()
+  : void
+  {
+
+    // Remove UI of actor forces.
+
+    const box = this._ui_box;
+
+    const aForces = this._m_aUIForce;
+
+    const size = aForces.length;
+
+    for(let i = 0; i < size; ++i)
+    {
+
+      box.remove(aForces[i].getBox());
+
+      aForces[i].destroy();
+
+    }
+
+    aForces.splice(0,size);
+
+    return;
+
+  }
   
   // Target
   
   private _m_target: BaseActor<Ty_Sprite>;
 
   private _m_forceController: CmpForceController;
+
+  // Steer Force
+
+  private _m_aUIForce : Array<UIForce>;
 
   // UI Objects
 

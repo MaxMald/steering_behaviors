@@ -8,7 +8,7 @@
  * @since September-07-2020
  */
 
-import { ST_COLOR_ID, ST_MANAGER_ID } from "../commons/stEnums";
+import { ST_COLOR_ID, ST_MANAGER_ID, ST_STEER_FORCE } from "../commons/stEnums";
 import { Ty_Sprite, V2 } from "../commons/stTypes";
 import { CmpForceController } from "../components/cmpForceController";
 import { DebugManager } from "../managers/debugManager/debugManager";
@@ -74,6 +74,32 @@ implements IForce
   : void 
   {
     this._m_target = _newTarget;
+  }
+
+  setMaxMagnitude(_magnitude: number)
+  : void
+  {
+
+    this._m_seekMaxLength = _magnitude;
+
+    return;
+
+  }
+
+  getMaxMagnitude()
+  : number
+  {
+
+    return this._m_seekMaxLength;
+
+  }
+
+  getActualForce()
+  : number
+  {
+
+    return this._m_seekForce.length();
+
   }
 
   setController(_controller: CmpForceController)
@@ -196,6 +222,17 @@ implements IForce
   {
     // TODO
     return;
+  }
+
+  /**
+   * Get the type of this force.
+   */
+  getType()
+  : number
+  {
+
+    return ST_STEER_FORCE.kSeek;
+
   }
 
   /**

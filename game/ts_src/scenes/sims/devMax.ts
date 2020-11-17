@@ -9,19 +9,16 @@
   */
 
  import { BaseActor } from "../../actors/baseActor";
- import { ST_COLOR_ID, ST_COMPONENT_ID, ST_MANAGER_ID, ST_MESSAGE_ID, ST_TEXT_TYPE } from "../../commons/stEnums";
+ import { ST_COMPONENT_ID, ST_MANAGER_ID, ST_MESSAGE_ID } from "../../commons/stEnums";
  import { Ty_Sprite, V2 } from "../../commons/stTypes";
  import { CmpForceController } from "../../components/cmpforceController";
  import { CmpSpriteController } from "../../components/cmpSpriteController";
  import { SimulationManager } from "../../managers/simulationManager/simulationManager";
-import { UIBox } from "../../managers/uiManager/uiBox";
 import { UIForceController } from "../../managers/uiManager/uiControllers/UIForceController";
-import { UILabel } from "../../managers/uiManager/uiLabel";
 import { UIManager } from "../../managers/uiManager/uiManager";
 import { UIObject } from "../../managers/uiManager/uiObject";
 import { UISlider } from "../../managers/uiManager/uiSlider";
-import { UISwitch } from "../../managers/uiManager/uiSwitch";
- import { Master } from "../../master/master";
+import { Master } from "../../master/master";
  import { SeekForce } from "../../steeringBehavior/forceSeek";
  
   
@@ -105,27 +102,7 @@ import { UISwitch } from "../../managers/uiManager/uiSwitch";
      (
        ST_MESSAGE_ID.kSetMass,
        1
-     );
-
-     ///////////////////////////////////
-     // UI
-
-    const uiForceController = new UIForceController
-    (
-      20,
-      20,
-      this
-    );
-
-    // Add UI force controller to the UI Manager.
-
-    const uiManager = master.getManager<UIManager>(ST_MANAGER_ID.kUIManager);
-
-    uiManager.addUIController("forceUI", uiForceController);
-
-    // Set the active actor of the UI Manager.
-
-    uiManager.setTarget(shipActor);
+     );     
 
      ///////////////////////////////////
      // Create Target
@@ -186,8 +163,28 @@ import { UISwitch } from "../../managers/uiManager/uiSwitch";
      );
  
      forceControl.addForce('seek_1', seek );
- 
+
      ///////////////////////////////////
+     // UI
+
+    const uiForceController = new UIForceController
+    (
+      20,
+      20,
+      this
+    );
+
+    // Add UI force controller to the UI Manager.
+
+    const uiManager = master.getManager<UIManager>(ST_MANAGER_ID.kUIManager);
+
+    uiManager.addUIController("forceUI", uiForceController);
+
+    // Set the active actor of the UI Manager.
+
+    uiManager.setTarget(shipActor);
+
+    ///////////////////////////////////
      // Active Debugging
  
      this._m_master.enableDebugging();

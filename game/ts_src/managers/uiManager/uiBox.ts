@@ -15,7 +15,13 @@ export class UIBox
   extends UIObject
 {
 
-  constructor(_x: number, _y: number, _scene: Phaser.Scene)
+  constructor
+  (
+    _x: number, 
+    _y: number, 
+    _scene: Phaser.Scene,
+    _frame: string = "box_bg.png"
+  )
   {
 
     super();
@@ -40,7 +46,7 @@ export class UIBox
       contentSize.y,
       {
         key: "game_art",
-        frame: "box_bg.png"
+        frame: _frame
       },
       [ 30 ]
     );
@@ -57,6 +63,34 @@ export class UIBox
     this.setPadding(0);
 
     return;
+
+  }
+
+  static CreateBorderBox(_x: number, _y:number, _scene: Phaser.Scene)
+  : UIBox
+  {
+
+    const box = new UIBox(_x, _y, _scene, "box_bg.png");
+
+    box.setPadding(20);
+
+    box.setElementsGap(5);
+
+    return box;
+
+  }
+
+  static CreateContentBox(_x: number, _y:number, _scene: Phaser.Scene)
+  : UIBox
+  {
+
+    const box = new UIBox(_x, _y, _scene, "box_bg_2.png");
+
+    box.setPadding(10);
+
+    box.setElementsGap(5);
+
+    return box;
 
   }
 
@@ -80,6 +114,29 @@ export class UIBox
     // Update
 
     this.updateBox();
+
+    return;
+
+  }
+
+  remove(_object: UIObject)
+  : void
+  {
+
+    const aObjects = this._m_aObjects;
+
+    const size = aObjects.length;
+
+    for(let i = 0; i < size; ++i)
+    {
+
+      this._m_aObjects[i] === _object;
+
+      this._m_aObjects.splice(i, 1);
+
+      return;
+
+    }
 
     return;
 
@@ -117,6 +174,7 @@ export class UIBox
     return this._m_bg.depth;
 
   }
+  
 
   /**
    * Move the UI Object an amount.
@@ -166,6 +224,22 @@ export class UIBox
     this.move(x, y);
 
     return;
+
+  }
+
+  getAnchorX()
+  : number
+  {
+
+    return 0;
+
+  }
+
+  getAnchorY()
+  : number
+  {
+
+    return 0;
 
   }
 
