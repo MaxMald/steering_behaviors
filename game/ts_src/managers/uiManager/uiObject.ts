@@ -138,6 +138,28 @@ export class UIObject
   }
 
   /**
+   * Get the x position of this UI Object.
+   */
+  getX()
+  : number
+  {
+
+    return 0;
+
+  }
+
+  /**
+   * Get the y position of this UI Object.
+   */
+  getY()
+  : number
+  {
+
+    return 0;
+
+  }
+
+  /**
    * Get the depth value.
    */
   getZ()
@@ -176,6 +198,9 @@ export class UIObject
 
   }
 
+  /**
+   * The horizontal anchor (origin) of this Game Object.
+   */
   getAnchorX()
   : number
   {
@@ -184,11 +209,36 @@ export class UIObject
 
   }
 
+  /**
+   * The vertical anchor (origin) of this Game Object.
+   */
   getAnchorY()
   : number
   {
 
     return 0.5;
+
+  }
+
+  /**
+   * Enable the UI Element.
+   */
+  enable()
+  : void
+  {
+
+    return;
+
+  }
+
+  /**
+   * Disable the UI Element.
+   */
+  disable()
+  : void
+  {
+
+    return;
 
   }
 

@@ -33,40 +33,19 @@ extends UIForce
 
     // Title
 
-    this._m_title = new UILabel
-    (
-      0,
-      0,
-      _scene,
-      "Seek Force",
-      ST_TEXT_TYPE.H2
-    );
+    this._m_title = UILabel.CreateH2(0, 0, _scene, "Seek Force");
 
     box.add(this._m_title);
 
     // Force Magnitude label
 
-    this._m_force = new UILabel
-    (
-      0,
-      0,
-      _scene,
-      "#",
-      ST_TEXT_TYPE.Normal
-    );
+    this._m_force = UILabel.CreateStyleB(0, 0, _scene, "#");
 
     box.add(this._m_force);
 
     // Maximum Force Label.
 
-    this._m_maxMagnitude = new UILabel
-    (
-      0,
-      0,
-      _scene,
-      "#",
-      ST_TEXT_TYPE.Normal
-    );
+    this._m_maxMagnitude = UILabel.CreateStyleB(0, 0, _scene, "#");
 
     box.add(this._m_maxMagnitude);
 
