@@ -143,9 +143,7 @@ export class UIForceController
       this
     );
 
-    box.setCenterAlignment();
     box.setLeftAlignment();
-    box.setRightAlignment();
 
     ///////////////////////////////////
     // UI Force
