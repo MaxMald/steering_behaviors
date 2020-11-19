@@ -207,6 +207,28 @@ export class UISlider
 
   }
 
+   /**
+   * Get the x position of this UI Object.
+   */
+  getX()
+  : number
+  {
+
+    return this._m_bg.x;
+
+  }
+
+  /**
+   * Get the y position of this UI Object.
+   */
+  getY()
+  : number
+  {
+
+    return this._m_bg.y;
+
+  }
+
   /**
    * Get the depth value.
    */
@@ -252,11 +274,93 @@ export class UISlider
 
     this._m_group.incXY(x, y);
 
+    const bar = this._m_bar;
+
+    const bgWidth = bg.frame.width;
+    const bgHeight = bg.frame.height;
+
+    bar.x = bg.x - (bgWidth * bg.originX) + (bgWidth * 0.5);
+    bar.y = bg.y - (bgHeight * bg.originY) + (bgHeight * 0.5);
+
+    this._updateData();
+
+    this.updateButton();
+
+    return;
+
+  }
+
+  /**
+   * Set the horizontal and vertical anchor (origin) of this UI Object.
+   * 
+   * @param _x The horizontal anchor (origin) of this UI Object.
+   * @param _y The vertical anchor (origin) of this UI Object.
+   */
+  setAnchor(_x: number, _y: number)
+  : void
+  {
+
+    this._m_bg.setOrigin(_x, _y);
+
     this._updateData();
 
     return;
 
   }
+
+  /**
+   * The horizontal anchor (origin) of this UI Object.
+   */
+  getAnchorX()
+  : number
+  {
+
+    return this._m_bg.originX;
+
+  }
+
+  /**
+   * The vertical anchor (origin) of this UI Object.
+   */
+  getAnchorY()
+  : number
+  {
+
+    return this._m_bg.originY;
+
+  }
+
+  /**
+   * Enable the UI Element.
+   */
+  enable()
+  : void
+  {
+
+    this._m_group.setVisible(true);
+    this._m_group.setActive(true);
+
+    return;
+
+  }
+
+  /**
+   * Disable the UI Element.
+   */
+  disable()
+  : void
+  {
+
+    this._m_group.setVisible(false);
+    this._m_group.setActive(false);
+
+    return;
+
+  }
+
+  /****************************************************/
+  /* Private                                          */
+  /****************************************************/  
 
   /**
    * Crop the bar according to a value in the range of 0.0 to 1.0.
@@ -320,15 +424,15 @@ export class UISlider
   : void
   {
 
-    const x = this._m_bg.x;
+    const bg = this._m_bg;
+
+    const x = bg.x - (bg.frame.width * bg.originX);
 
     const bar = this._m_bar;
 
-    const barMaxHalfWidth = bar.frame.width * 0.5;
+    this._m_minButtonX = x;
 
-    this._m_minButtonX = x - barMaxHalfWidth;
-
-    this._m_maxButtonX = x + barMaxHalfWidth;
+    this._m_maxButtonX = x + bar.frame.width;
 
     return;
 

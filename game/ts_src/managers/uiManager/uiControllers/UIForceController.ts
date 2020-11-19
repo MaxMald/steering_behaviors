@@ -1,3 +1,4 @@
+import { Bodies } from "matter";
 import { BaseActor } from "../../../actors/baseActor";
 import { ST_COMPONENT_ID, ST_TEXT_TYPE } from "../../../commons/stEnums";
 import { Ty_Sprite } from "../../../commons/stTypes";
@@ -141,6 +142,10 @@ export class UIForceController
       } ,
       this
     );
+
+    box.setCenterAlignment();
+    box.setLeftAlignment();
+    box.setRightAlignment();
 
     ///////////////////////////////////
     // UI Force

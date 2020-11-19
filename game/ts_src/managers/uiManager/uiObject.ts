@@ -199,7 +199,21 @@ export class UIObject
   }
 
   /**
-   * The horizontal anchor (origin) of this Game Object.
+   * Set the horizontal and vertical anchor (origin) of this UI Object.
+   * 
+   * @param _x The horizontal anchor (origin) of this UI Object.
+   * @param _y The vertical anchor (origin) of this UI Object.
+   */
+  setAnchor(_x: number, _y: number)
+  : void
+  {
+
+    return;
+
+  }
+
+  /**
+   * The horizontal anchor (origin) of this UI Object.
    */
   getAnchorX()
   : number
@@ -210,7 +224,7 @@ export class UIObject
   }
 
   /**
-   * The vertical anchor (origin) of this Game Object.
+   * The vertical anchor (origin) of this UI Object.
    */
   getAnchorY()
   : number

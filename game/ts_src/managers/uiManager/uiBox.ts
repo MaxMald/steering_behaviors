@@ -58,6 +58,10 @@ export class UIBox
     this._m_gapTop = 0;
     this._m_gapBottom = 0;
 
+    // Set the alignment function
+
+    this.setLeftAlignment();
+
     // Set padding to 0
 
     this.setPadding(0);
@@ -165,6 +169,28 @@ export class UIBox
   }
 
   /**
+   * Get the x position of this UI Object.
+   */
+  getX()
+  : number
+  {
+
+    return this._m_bg.x;
+
+  }
+
+  /**
+   * Get the y position of this UI Object.
+   */
+  getY()
+  : number
+  {
+
+    return this._m_bg.y;
+
+  }
+
+  /**
    * Get the depth value.
    */
   getZ()
@@ -227,19 +253,91 @@ export class UIBox
 
   }
 
+  /**
+   * Set the horizontal and vertical anchor (origin) of this UI Object.
+   * 
+   * @param _x The horizontal anchor (origin) of this UI Object.
+   * @param _y The vertical anchor (origin) of this UI Object.
+   */
+  setAnchor(_x: number, _y: number)
+  : void
+  {
+
+    this._m_bg.setOrigin(_x, _y);
+
+    this.updateBox();
+
+    return;
+
+  }
+
+  /**
+   * The horizontal anchor (origin) of this Game Object.
+   */
   getAnchorX()
   : number
   {
 
-    return 0;
+    return this._m_bg.originX;
 
   }
 
+  /**
+   * The vertical anchor (origin) of this Game Object.
+   */
   getAnchorY()
   : number
   {
 
-    return 0;
+    return this._m_bg.originY;
+
+  }
+
+  /**
+   * Enable the UI Element.
+   */
+  enable()
+  : void
+  {
+
+    this._m_aObjects.forEach
+    (
+      function(_object: UIObject)
+      : void
+      {
+
+        _object.enable();
+
+        return;
+
+      }
+    );
+
+    return;
+
+  }
+
+  /**
+   * Disable the UI Element.
+   */
+  disable()
+  : void
+  {
+
+    this._m_aObjects.forEach
+    (
+      function(_object: UIObject)
+      : void
+      {
+
+        _object.disable();
+
+        return;
+
+      }
+    );
+
+    return;
 
   }
 
@@ -417,6 +515,8 @@ export class UIBox
 
     this._m_aObjects = null;
 
+    this._m_alignFn = null;
+
     super.destroy();
 
     return;
@@ -485,6 +585,50 @@ export class UIBox
 
   }
 
+   /**
+   * Set the elements of this box to be center-aligned.
+   */
+  setCenterAlignment()
+  : void
+  {  
+
+    this._m_alignFn = this._alignCenter;
+
+    return;
+
+  }
+
+  /**
+   * Set the elements of this box to be left-aligned.
+   */
+  setLeftAlignment()
+  : void
+  {
+
+    this._m_alignFn = this._alignLeft;
+
+    return;
+
+  }
+
+  /**
+   * Set the elements of this box to be right-aligned.
+   */
+  setRightAlignment()
+  : void
+  {
+
+    this._m_alignFn = this._alignRight;
+
+    return;
+
+  }
+
+  
+  /****************************************************/
+  /* Private                                          */
+  /****************************************************/
+  
   private _resizeBackground()
   : void
   {
@@ -520,8 +664,8 @@ export class UIBox
 
     let position = new Phaser.Geom.Point
     (
-      bg.x + this._m_paddingLeft,
-      bg.y + this._m_paddingTop
+      bg.x + this._m_paddingLeft - (bg.width * bg.originX),
+      bg.y + this._m_paddingTop - (bg.height * bg.originY)
     );
 
     for(let i = 0; i < size; ++i)
@@ -529,15 +673,19 @@ export class UIBox
 
       object = aObjects[i];
 
-      const objWidth = object.getWidth();
-
-      const objHeight = object.getHeight();
+      // Set the initial position.
 
       object.setPosition
       (
-        position.x + objWidth * object.getAnchorX(), 
-        position.y + objHeight * object.getAnchorY()
+        position.x, 
+        position.y
       );
+
+      // Align object.
+
+      this._m_alignFn.call(this, object);
+
+      // Set the position of the next element.
 
       position.y += object.getHeight() + gapTop + gapBottom;
 
@@ -547,9 +695,61 @@ export class UIBox
 
   }
 
+  ///////////////////////////////////
+  // Alignments
+
+  private _alignLeft(_element : UIObject)
+  : void
+  {
+    _element.setAnchor(0, _element.getAnchorY());
+
+    return;
+
+  }
+
+  private _alignCenter(_element : UIObject)
+  : void
+  {
+
+    const contentWidth = this._m_contentSize.x;
+
+    _element.setAnchor(0.5, _element.getAnchorY());
+
+    _element.move
+    (
+      contentWidth * 0.5,
+      0
+    );
+
+    return;
+
+  }
+
+  private _alignRight(_element : UIObject)
+  : void
+  {
+
+    const contentWidth = this._m_contentSize.x;
+
+    _element.setAnchor(1.0, _element.getAnchorY());
+
+    _element.move
+    (
+      contentWidth,
+      0
+    );
+
+    return;
+
+  }
+
   private static MIN_WIDTH : number = 65;
 
   private static MIN_HEIGHT : number = 65;
+
+  // Alignment Function
+
+  private _m_alignFn : (_element : UIObject) => void;
 
   // Elements
 

@@ -324,6 +324,22 @@ export class UILabel
   }
 
   /**
+   * Set the horizontal and vertical anchor (origin) of this UI Object.
+   * 
+   * @param _x The horizontal anchor (origin) of this UI Object.
+   * @param _y The vertical anchor (origin) of this UI Object.
+   */
+  setAnchor(_x: number, _y: number)
+  : void
+  {
+
+    this._m_label.setOrigin(_x, _y);
+
+    return;
+
+  }
+
+  /**
    * The horizontal anchor (origin) of this Game Object.
    */
   getAnchorX()
