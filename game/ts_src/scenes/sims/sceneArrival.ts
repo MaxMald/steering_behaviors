@@ -14,6 +14,7 @@ import { Ty_Sprite, V2 } from "../../commons/stTypes";
 import { CmpForceController } from "../../components/cmpforceController";
 import { CmpSpriteController } from "../../components/cmpSpriteController";
 import { SimulationManager } from "../../managers/simulationManager/simulationManager";
+import { UIButton } from "../../managers/uiManager/uiButton";
 import { Master } from "../../master/master";
 import { ArrivalForce } from "../../steeringBehavior/forceArrival";
 
@@ -44,6 +45,39 @@ extends Phaser.Scene
     let simManager : SimulationManager = master.getManager<SimulationManager>
     (
       ST_MANAGER_ID.kSimManager
+    );
+
+    // Get canvas size.
+  
+    let canvas = this.game.canvas;
+  
+    let width : number = canvas.width;
+    let height : number = canvas.height;
+
+    ///////////////////////////////////
+    // Create scene buttons
+
+    let mainMenuButton : UIButton = new UIButton
+    (
+      width * 0.1,
+      height * 0.9,
+      'button',
+      this,
+      'Main menu',
+      this._onMainMenu,
+      0.25,
+      24
+    );
+
+    let debugButton : UIButton = new UIButton
+    (
+      width * 0.9,
+      height * 0.9,
+      'button',
+      this,
+      'Debug',
+      this._onDebug,
+      0.25
     );
     
     ///////////////////////////////////
@@ -99,13 +133,6 @@ extends Phaser.Scene
       ST_MESSAGE_ID.kSetMass,
       1
     );
-    
-    // Get canvas size.
-  
-    let canvas = this.game.canvas;
-  
-    let width : number = canvas.width;
-    let height : number = canvas.height;
     
     // Set Actor position.
   
@@ -193,28 +220,7 @@ extends Phaser.Scene
       ST_COMPONENT_ID.kForceController
     );
 
-    shipController.addForce('arrival_1', arrival);
-
-    // Add debugging button
-
-    this._createButton
-    (
-      width * 0.9,
-      height * 0.9,
-      'Debug',
-      this._onDebug,
-      0.25
-    );
-
-    this._createButton
-    (
-      width * 0.1,
-      height * 0.9,
-      'Main menu',
-      this._onMainMenu,
-      0.25,
-      24
-    );
+    shipController.addForce('arrival_1', arrival);    
 
     return;
 
@@ -235,72 +241,6 @@ extends Phaser.Scene
   /****************************************************/
   
   private _m_master : Master;
-
-  /**
-   * @summary Create a new button.
-   * 
-   * @param _x The x position of the button.
-   * @param _y The y position of the button.
-   * @param _label The text of the button.
-   * @param _callback The callback function of the button.
-   * @param _scaleMultiplier [optional] The scale multiplier for the button size.
-   * @param _fontSize [optional] The font size of the button.
-   */
-  private _createButton
-  (
-    _x : number,
-    _y : number,
-    _label : string,
-    _callback : ()=>void,
-    _scaleMultiplier ?: number,
-    _fontSize ?: number
-  )
-  : void
-  {
-
-    // Create button sprite.
-    let button = this.add.image
-    (
-      _x,
-      _y,
-      'button'
-    );
-
-    // Set button scale.
-    if(_scaleMultiplier !== undefined)
-    {
-      button.setScale(1 * _scaleMultiplier, 1 * _scaleMultiplier);
-    }
-    else
-    {
-      button.setScale(0.5, 0.5);
-    }
-
-    // Set button interactive.
-
-    button.setInteractive();
-
-    // Set button label
-
-    let label = this.add.text
-    (
-      _x,
-      _y,
-      _label,
-      {
-        fontFamily : 'Arial',
-        fontSize : _fontSize !== undefined ? _fontSize : 32
-      }
-    );
-
-    // Set label origin.
-  
-    label.setOrigin(0.5, 0.5)
-
-    button.on('pointerdown', _callback, this);
-
-    return;
-  }
 
   ///////////////////////////////////
   // Callbacks
