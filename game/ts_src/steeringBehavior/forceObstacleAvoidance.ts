@@ -10,7 +10,7 @@
 
 import { Master } from "../master/master";
 import { DebugManager } from "../managers/debugManager/debugManager";
-import { ST_COLOR_ID, ST_COMPONENT_ID, ST_MANAGER_ID, ST_MESSAGE_ID } from "../commons/stEnums";
+import { ST_COLOR_ID, ST_COMPONENT_ID, ST_MANAGER_ID, ST_MESSAGE_ID, ST_STEER_FORCE } from "../commons/stEnums";
 import { Ty_Sprite, V2 } from "../commons/stTypes";
 import { CmpForceController } from "../components/cmpForceController";
 import { IForce } from "./iForce";
@@ -200,6 +200,17 @@ implements IForce
   onDebugDisable()
   : void
   {
+
+  }
+
+  /**
+   * Get the type of this force.
+   */
+  getType()
+  : number
+  {
+
+    return ST_STEER_FORCE.kObstacleAvoidance;
 
   }
 

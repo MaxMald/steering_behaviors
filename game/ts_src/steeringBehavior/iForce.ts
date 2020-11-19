@@ -53,6 +53,12 @@ export interface IForce
   : void;
 
   /**
+   * Get the type of this force.
+   */
+  getType()
+  : number;
+
+  /**
    * Safely destroys this force.
    */
   destroy()

@@ -401,6 +401,17 @@ implements IBaseComponent<Ty_Sprite>
   }
 
   /**
+   * Get map of forces.
+   */
+  getForces()
+  : Map<string, IForce>
+  {
+
+    return this._m_hForce;
+
+  }
+
+  /**
    * Add a steer force to this actor.
    * 
    * @param _x x component. 

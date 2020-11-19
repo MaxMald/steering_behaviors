@@ -10,7 +10,7 @@
 
 //import { Math } from "phaser";
 import { BaseActor } from "../actors/baseActor";
-import { ST_COLOR_ID, ST_MANAGER_ID } from "../commons/stEnums";
+import { ST_COLOR_ID, ST_MANAGER_ID, ST_STEER_FORCE } from "../commons/stEnums";
 import { Ty_Sprite, V2 } from "../commons/stTypes";
 import { CmpForceController } from "../components/cmpforceController";
 import { DebugManager } from "../managers/debugManager/debugManager";
@@ -202,6 +202,17 @@ implements IForce
   {
     // TODO
     return;
+  }
+
+  /**
+   * Get the type of this force.
+   */
+  getType()
+  : number
+  {
+
+    return ST_STEER_FORCE.kFollowPath;
+
   }
 
   /**

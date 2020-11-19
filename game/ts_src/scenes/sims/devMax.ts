@@ -14,7 +14,11 @@
  import { CmpForceController } from "../../components/cmpforceController";
  import { CmpSpriteController } from "../../components/cmpSpriteController";
  import { SimulationManager } from "../../managers/simulationManager/simulationManager";
- import { Master } from "../../master/master";
+import { UIForceController } from "../../managers/uiManager/uiControllers/UIForceController";
+import { UIManager } from "../../managers/uiManager/uiManager";
+import { UIObject } from "../../managers/uiManager/uiObject";
+import { UISlider } from "../../managers/uiManager/uiSlider";
+import { Master } from "../../master/master";
  import { SeekForce } from "../../steeringBehavior/forceSeek";
  
   
@@ -98,8 +102,8 @@
      (
        ST_MESSAGE_ID.kSetMass,
        1
-     );
- 
+     );     
+
      ///////////////////////////////////
      // Create Target
  
@@ -159,8 +163,28 @@
      );
  
      forceControl.addForce('seek_1', seek );
- 
+
      ///////////////////////////////////
+     // UI
+
+    const uiForceController = new UIForceController
+    (
+      20,
+      20,
+      this
+    );
+
+    // Add UI force controller to the UI Manager.
+
+    const uiManager = master.getManager<UIManager>(ST_MANAGER_ID.kUIManager);
+
+    uiManager.addUIController("forceUI", uiForceController);
+
+    // Set the active actor of the UI Manager.
+
+    uiManager.setTarget(shipActor);
+
+    ///////////////////////////////////
      // Active Debugging
  
      this._m_master.enableDebugging();
@@ -178,11 +202,12 @@
      // Target Oscillation 
  
      let x = 300 * Math.sin(_time * 0.001);
+     let y = 300 * Math.cos(_time * 0.001);
  
      this._m_target_position.setTo
      (
        this._m_target_center.x + x,
-       this._m_target_center.y
+       this._m_target_center.y + y
      );
  
      this._m_target.sendMessage
@@ -197,6 +222,38 @@
    /****************************************************/
    /* Private                                          */
    /****************************************************/ 
+
+   private _onToggleOn(_sender: UIObject, _args: any)
+   : void
+   {
+
+    console.log("switch on");
+
+    return;
+
+   }
+
+   private _onToggleOff(_sender: UIObject, _args: any)
+   : void
+   {
+
+    console.log("switch off");
+
+    return;
+
+   }
+
+   private _onSliderChanged(_sender: UIObject, _args: any)
+   : void
+   {
+
+    const slider = _sender as UISlider;
+
+    console.log(slider.getValue());
+
+    return;
+
+   }
  
    private _m_target_center : V2;
  
