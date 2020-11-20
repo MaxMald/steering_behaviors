@@ -1,6 +1,5 @@
-import { Bodies } from "matter";
 import { BaseActor } from "../../../actors/baseActor";
-import { ST_COMPONENT_ID, ST_TEXT_TYPE } from "../../../commons/stEnums";
+import { ST_COMPONENT_ID } from "../../../commons/stEnums";
 import { Ty_Sprite } from "../../../commons/stTypes";
 import { CmpForceController } from "../../../components/cmpforceController";
 import { IForce } from "../../../steeringBehavior/iForce";

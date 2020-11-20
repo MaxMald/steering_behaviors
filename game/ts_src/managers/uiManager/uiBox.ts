@@ -56,15 +56,15 @@ export class UIBox
     // Set gap to 0
 
     this._m_gapTop = 0;
-    this._m_gapBottom = 0;
-
-    // Set the alignment function
-
-    this.setLeftAlignment();
+    this._m_gapBottom = 0;    
 
     // Set padding to 0
 
     this.setPadding(0);
+
+    // Set the alignment function
+
+    this.setLeftAlignment();
 
     return;
 
@@ -84,6 +84,19 @@ export class UIBox
 
   }
 
+  static CreateBorderBoxB(_x: number, _y: number, _scene: Phaser.Scene)
+  : UIBox
+  {
+
+    const box = new UIBox(_x, _y, _scene, "box_bg_3.png");
+
+    box.setPadding(20);
+    box.setElementsGap(5);
+
+    return box;
+
+  }
+
   static CreateContentBox(_x: number, _y:number, _scene: Phaser.Scene)
   : UIBox
   {
@@ -91,7 +104,19 @@ export class UIBox
     const box = new UIBox(_x, _y, _scene, "box_bg_2.png");
 
     box.setPadding(10);
+    box.setElementsGap(5);
 
+    return box;
+
+  }
+
+  static CreateContentBoxB(_x: number, _y:number, _scene: Phaser.Scene)
+  : UIBox
+  {
+
+    const box = new UIBox(_x, _y, _scene, "box_bg_4.png");
+
+    box.setPadding(10);
     box.setElementsGap(5);
 
     return box;
@@ -594,6 +619,8 @@ export class UIBox
 
     this._m_alignFn = this._alignCenter;
 
+    this.updateBox();
+
     return;
 
   }
@@ -607,6 +634,8 @@ export class UIBox
 
     this._m_alignFn = this._alignLeft;
 
+    this.updateBox();
+
     return;
 
   }
@@ -619,6 +648,8 @@ export class UIBox
   {
 
     this._m_alignFn = this._alignRight;
+
+    this.updateBox();
 
     return;
 
@@ -678,7 +709,7 @@ export class UIBox
       object.setPosition
       (
         position.x, 
-        position.y
+        position.y + (object.getHeight() * object.getAnchorY())
       );
 
       // Align object.
