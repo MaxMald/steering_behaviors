@@ -20,6 +20,7 @@ extends Phaser.Scene
   { 
     let midWidth = this.game.canvas.width * 0.5;
 
+    // Max Dev scene button
     this._createButton
     (
       midWidth,
@@ -28,14 +29,34 @@ extends Phaser.Scene
       this._onDevMax
     );
 
+    // Alex Dev scene button
+    this._createButton
+    (
+      midWidth - 300,
+      300,
+      'Arrival',
+      this._onSceneArrival
+    );
+
+    // Force Arrival scene button
     this._createButton
     (
       midWidth,
       300,
-      'Alex',
-      this._onDevAlex
+      'Wander',
+      this._onSceneWander
     );
 
+    // Force Obstacle Avoidance scene button
+    this._createButton
+    (
+      midWidth + 300,
+      300,
+      'Obstacle Avoidance',
+      this._onSceneObstacleAvoidance
+    );
+
+    // Sumano Dev scene button
     this._createButton
     (
       midWidth,
@@ -118,6 +139,27 @@ extends Phaser.Scene
   : void
   {
     this.scene.start('devAlex');
+    return;
+  }
+
+  private _onSceneArrival()
+  : void
+  {
+    this.scene.start('sceneArrival');
+    return;
+  }
+
+  private _onSceneWander()
+  : void
+  {
+    this.scene.start('sceneWander');
+    return;
+  }
+
+  private _onSceneObstacleAvoidance()
+  : void
+  {
+    this.scene.start('sceneObstacleAvoidance');
     return;
   }
 

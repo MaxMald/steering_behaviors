@@ -132,3 +132,41 @@ export const ST_COLOR_ID = Object.freeze
   kBrown : 0xA52A2A as 0xA52A2A
 
 });
+
+/**
+ * Text Type
+ */
+
+export type ST_TEXT_TYPE = EnumLiteralsOf<typeof ST_TEXT_TYPE>;
+
+export const ST_TEXT_TYPE = Object.freeze
+({
+  
+  H1 : 0 as 0,
+
+  H2 : 1 as 1,
+
+  Normal: 2 as 2
+
+});
+
+export type ST_STEER_FORCE = EnumLiteralsOf<typeof ST_STEER_FORCE>;
+
+export const ST_STEER_FORCE = Object.freeze
+({
+  
+  kSeek: 0 as 0,
+
+  kFlee: 1 as 1,
+
+  kArrive: 2 as 2,
+  
+  kWander: 3 as 3,
+
+  kPursue: 4 as 4,
+
+  kObstacleAvoidance: 5 as 5,
+
+  kFollowPath: 6 as 6
+
+});

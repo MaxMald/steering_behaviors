@@ -26,7 +26,21 @@ extends Phaser.Scene
   preload()
   : void
   {
-    // TODO
+
+    this.load.path = "./game/assets/";
+    
+    this.load.atlas
+    (
+      'loading_ui',
+      'images/loading_ui.png',
+      'images/loading_ui.js'
+    );
+
+    this.load.image
+    (
+      'loading_bg',
+      'images/loading_bg.jpg'
+    );
 
     return;
   }
@@ -44,6 +58,7 @@ extends Phaser.Scene
     // Load Preloading.
     
     this.scene.start('preload');
+
     return;
   }
 }

@@ -349,20 +349,31 @@ implements IBaseComponent<Ty_Sprite>
    * exists, it will be replaced. This will call the init( CmpForceController )
    * method of the given force.
    * 
+   * If the force controller is full ( it has the maximum number of forces
+   * allowed ), the given force will be ignored.
+   * 
    * @param _str_id force id. 
    * @param _force force.
    */
   addForce(_str_id : string, _force : IForce)
   : void
   {
-    // Add force to table
+    // check the force controller is not full
 
-    this._m_hForce.set(_str_id, _force);
+    if(this._m_hForce.size < CmpForceController.MAX_FORCE_NUM)
+    {
+      // Add force to table
+
+      this._m_hForce.set(_str_id, _force);
     
-    // Initialize force
+      // Initialize force
 
-    _force.setController(this);
-
+      _force.setController(this);
+    }
+    else
+    {
+      // TODO : display a message.
+    }
     return;
   }
 
@@ -387,6 +398,17 @@ implements IBaseComponent<Ty_Sprite>
     // WARNING
 
     throw new Error('Force does not exists: ' + _str_id);
+  }
+
+  /**
+   * Get map of forces.
+   */
+  getForces()
+  : Map<string, IForce>
+  {
+
+    return this._m_hForce;
+
   }
 
   /**
@@ -433,14 +455,24 @@ implements IBaseComponent<Ty_Sprite>
   }
 
   /**
-   * Set the actor's maximum speed allowed.
+   * Set the actor's maximum speed allowed. If the speed exceed the maximum
+   * speed limit, it will be truncated to the maximum allowed.
    * 
    * @param _maxSpeed 
    */
   setMaxSpeed(_maxSpeed : number)
   : void
   {
-    this._m_maxSpeed = _maxSpeed;
+    if(Math.abs(_maxSpeed) < CmpForceController.MAX_SPEED_LIMIT)
+    {
+      this._m_maxSpeed = _maxSpeed;
+    }
+    else
+    {
+      this._m_maxSpeed = CmpForceController.MAX_SPEED_LIMIT;
+
+      this._m_maxSpeed *= (_maxSpeed > 0 ? 1 : -1);
+    }
     return;
   }
 
@@ -475,14 +507,24 @@ implements IBaseComponent<Ty_Sprite>
   }
 
   /**
-   * Set the actor's mass.
+   * Set the actor's mass. If the given mass is equal to 0, it will be
+   * overwritten by the value of 0.001.
    * 
    * @param _mass mass (units).
    */
   setMass(_mass : number)
   : void
   {
-    this._m_mass = _mass;
+    // Mass can't be 0.
+
+    if(this._m_mass != 0)
+    {
+      this._m_mass = _mass;
+    }
+    else
+    {
+      this._m_mass = 0.001;
+    }
     return;
   }
 
@@ -553,6 +595,16 @@ implements IBaseComponent<Ty_Sprite>
 
     return;
   }
+
+  /**
+   * The maximum maximum speed allowed.
+   */
+  static readonly MAX_SPEED_LIMIT : number = 2000;
+
+  /**
+   * The maximum of forces that a force controller can have.
+   */
+  static readonly MAX_FORCE_NUM : number = 10;
 
   /****************************************************/
   /* Private                                          */

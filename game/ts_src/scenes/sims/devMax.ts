@@ -14,7 +14,12 @@
  import { CmpForceController } from "../../components/cmpforceController";
  import { CmpSpriteController } from "../../components/cmpSpriteController";
  import { SimulationManager } from "../../managers/simulationManager/simulationManager";
- import { Master } from "../../master/master";
+import { UIDialogBox } from "../../managers/uiManager/uiControllers/UIDialogBox";
+import { UIForceController } from "../../managers/uiManager/uiControllers/UIForceController";
+import { UIManager } from "../../managers/uiManager/uiManager";
+import { UIObject } from "../../managers/uiManager/uiObject";
+import { UISlider } from "../../managers/uiManager/uiSlider";
+import { Master } from "../../master/master";
  import { SeekForce } from "../../steeringBehavior/forceSeek";
  
   
@@ -98,8 +103,8 @@
      (
        ST_MESSAGE_ID.kSetMass,
        1
-     );
- 
+     );     
+
      ///////////////////////////////////
      // Create Target
  
@@ -159,8 +164,41 @@
      );
  
      forceControl.addForce('seek_1', seek );
- 
+
      ///////////////////////////////////
+     // UI
+
+    const uiForceController = new UIForceController
+    (
+      20,
+      20,
+      this
+    );
+
+    const uiMessageBox = new UIDialogBox
+    (
+      400,
+      200,
+      this,
+      "Hello World",
+      "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.",
+      "game_art",
+      "img_spaceShip.png"
+    );
+
+    // Add UI force controller to the UI Manager.
+
+    const uiManager = master.getManager<UIManager>(ST_MANAGER_ID.kUIManager);
+
+    uiManager.addUIController("forceUI", uiForceController);
+
+    uiManager.addUIController("messageBox", uiMessageBox);
+
+    // Set the active actor of the UI Manager.
+
+    uiManager.setTarget(shipActor);
+
+    ///////////////////////////////////
      // Active Debugging
  
      this._m_master.enableDebugging();
@@ -178,11 +216,12 @@
      // Target Oscillation 
  
      let x = 300 * Math.sin(_time * 0.001);
+     let y = 300 * Math.cos(_time * 0.001);
  
      this._m_target_position.setTo
      (
        this._m_target_center.x + x,
-       this._m_target_center.y
+       this._m_target_center.y + y
      );
  
      this._m_target.sendMessage
@@ -197,6 +236,38 @@
    /****************************************************/
    /* Private                                          */
    /****************************************************/ 
+
+   private _onToggleOn(_sender: UIObject, _args: any)
+   : void
+   {
+
+    console.log("switch on");
+
+    return;
+
+   }
+
+   private _onToggleOff(_sender: UIObject, _args: any)
+   : void
+   {
+
+    console.log("switch off");
+
+    return;
+
+   }
+
+   private _onSliderChanged(_sender: UIObject, _args: any)
+   : void
+   {
+
+    const slider = _sender as UISlider;
+
+    console.log(slider.getValue());
+
+    return;
+
+   }
  
    private _m_target_center : V2;
  

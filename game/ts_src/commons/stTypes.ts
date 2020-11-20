@@ -5,6 +5,8 @@ export type Ty_Sprite = Phaser.GameObjects.Sprite;
 
 export type Ty_Image = Phaser.GameObjects.Image;
 
+export type Ty_Text = Phaser.GameObjects.Text;
+
 ///////////////////////////////////
 // Math
 
