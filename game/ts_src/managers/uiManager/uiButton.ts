@@ -55,8 +55,8 @@ extends UIObject
     // scale variables.
 
     this._m_originScale = 1;
-    this._m_hoverScale = 1.05;
-    this._m_pressedScale = 0.95;
+    this._m_hoverScale = 1.1;
+    this._m_pressedScale = 0.9;
 
     // Add events.
 
@@ -84,23 +84,23 @@ extends UIObject
       {
         key: _texture
       },
-      [ 32 ]
+      [ 7 ]
     );
 
     // Set label tint
 
-    let buttonTint = 0x000000;
+    this._m_buttonTint = 0xffffff;
 
     if(_buttonTint !== undefined)
     {
 
-      buttonTint = _buttonTint;
+      this._m_buttonTint = _buttonTint;
 
     }
 
     // Set label tint
 
-    button.setTint(_buttonTint);
+    button.setTint(this._m_buttonTint);
 
     // Set button interactive.
 
@@ -135,9 +135,8 @@ extends UIObject
   
     label.setAnchor(0.5, 0.9);
 
-    // Resize the button
-
-    button.resize(label.getWidth(), label.getHeight());
+    this._m_buttonWidth = button.width;
+    this._m_buttonHeight = button.height;
 
     // Button Phaser event listeners
 
@@ -500,6 +499,18 @@ extends UIObject
 
     buttonSize.y = contentSize.y + this._m_paddingBottom + this._m_paddingTop;
 
+    // Minimum size.
+
+    if(buttonSize.x < this._m_buttonWidth)
+    {
+      buttonSize.x = this._m_buttonWidth;
+    }
+
+    if(buttonSize.y < this._m_buttonHeight)
+    {
+      buttonSize.y = this._m_buttonHeight;
+    }
+
     return;
 
   }
@@ -524,8 +535,6 @@ extends UIObject
     
     this._m_label.setScale(this._m_pressedScale);
     
-    this._m_button.resize(this._m_label.getWidth(), this._m_label.getHeight());
-    
     this.updateButton();
 
 
@@ -539,8 +548,6 @@ extends UIObject
   {
 
     this._m_label.setScale(this._m_originScale);
-
-    this._m_button.resize(this._m_label.getWidth(), this._m_label.getHeight());
     
     this.updateButton();
 
@@ -554,8 +561,6 @@ extends UIObject
   {
 
     this._m_label.setScale(this._m_hoverScale);
-
-    this._m_button.resize(this._m_label.getWidth(), this._m_label.getHeight());
     
     this.updateButton();
 
@@ -569,8 +574,6 @@ extends UIObject
   {
 
     this._m_label.setScale(this._m_originScale);
-
-    this._m_button.resize(this._m_label.getWidth(), this._m_label.getHeight());
     
     this.updateButton();
 
@@ -586,6 +589,8 @@ extends UIObject
   // UI background
 
   private _m_button : Phaser.GameObjects.RenderTexture;
+
+  private _m_buttonTint : number;
 
   private _m_contentSize : Point;
   
@@ -604,6 +609,10 @@ extends UIObject
   private _m_paddingRight: number;
 
   // UI misc variables
+
+  private _m_buttonWidth : number;
+
+  private _m_buttonHeight : number;
   
   private _m_originScale : number;
 
