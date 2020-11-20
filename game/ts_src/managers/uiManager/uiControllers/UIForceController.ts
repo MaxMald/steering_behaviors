@@ -1,5 +1,5 @@
 import { BaseActor } from "../../../actors/baseActor";
-import { ST_COMPONENT_ID, ST_TEXT_TYPE } from "../../../commons/stEnums";
+import { ST_COMPONENT_ID } from "../../../commons/stEnums";
 import { Ty_Sprite } from "../../../commons/stTypes";
 import { CmpForceController } from "../../../components/cmpforceController";
 import { Master } from "../../../master/master";
@@ -44,40 +44,19 @@ export class UIForceController
 
     // Actor Name
 
-    this._ui_actorName = new UILabel
-    (
-      0,
-      0, 
-      _scene, 
-      "#",
-      ST_TEXT_TYPE.H2
-    );
+    this._ui_actorName = UILabel.CreateH2(0, 0, _scene, "#");
 
     box.add(this._ui_actorName);
 
     // Actual Speed
 
-    this._ui_actualSpeed = new UILabel
-    (
-      0,
-      0,
-      _scene,
-      "#",
-      ST_TEXT_TYPE.Normal
-    );
+    this._ui_actualSpeed = UILabel.CreateStyleB(0, 0, _scene, "#");
 
     box.add(this._ui_actualSpeed);
 
     // Max Speed Label
 
-    this._ui_maxSpeed = new UILabel
-    (
-      0,
-      0,
-      _scene,
-      "#",
-      ST_TEXT_TYPE.Normal
-    );
+    this._ui_maxSpeed = UILabel.CreateStyleB(0, 0, _scene, "#");
 
     box.add(this._ui_maxSpeed);
 
@@ -122,14 +101,7 @@ export class UIForceController
 
     // Mass Label
 
-    this._ui_mass = new UILabel
-    (
-      0,
-      0,
-      _scene,
-      "#",
-      ST_TEXT_TYPE.Normal
-    );
+    this._ui_mass = UILabel.CreateStyleB(0, 0, _scene, "#");
 
     box.add(this._ui_mass);
 
@@ -237,6 +209,8 @@ export class UIForceController
       },
       this
     );
+
+    box.setLeftAlignment();
 
     ///////////////////////////////////
     // UI Force

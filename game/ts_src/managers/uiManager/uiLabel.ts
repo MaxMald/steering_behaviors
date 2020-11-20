@@ -1,14 +1,13 @@
 /**
  * Universidad de Artes Digitales, Guadalajara - 2020
  *
- * @summary 
+ * @summary Display text in a single line.
  *
  * @file uiLabel.ts
  * @author Max Alberto Solano Maldonado <nuup20@gmail.com>
  * @since November-10-2020
  */
 
-import { ST_TEXT_TYPE } from "../../commons/stEnums";
 import { UIObject } from "./uiObject";
 
 /**
@@ -22,13 +21,26 @@ export class UILabel
   extends UIObject
 {
 
+  /**
+   * Creates a text in a single line. The texture origin is set by (0.0, 0.5),
+   * and the text is left aligned. 
+   * 
+   * @param _x position in x axis.
+   * @param _y position in y axis.
+   * @param _scene phaser scene.
+   * @param _text label text.
+   * @param _font_key Bitmap text key.
+   * @param _font_size Bitmap text size.
+   * @param _tint Bitmap texture tint.
+   */
   constructor
   (
     _x : number, 
     _y: number, 
     _scene: Phaser.Scene, 
     _text: string,
-    _type?: ST_TEXT_TYPE,
+    _font_key?: string,
+    _font_size?: number,
     _tint?: number
   )
   {
@@ -37,53 +49,30 @@ export class UILabel
 
     this._m_listenerManager.addEvent("textChanged");
 
-    let font_key : string;
+    // Font Key
 
-    let font_size : number;
-
-    if(_type === undefined)
+    let font_key : string = "odin_rounded";    
+    
+    if(_font_key !== undefined)
     {
 
-      font_key = "supercomputer";
-      font_size = 30;
-
-    }
-    else
-    {
-
-      switch(_type)
-      {
-        case ST_TEXT_TYPE.H1:
-
-          font_key = "supercomputer";
-          font_size = 36;
-
-          break;
-
-        case ST_TEXT_TYPE.H2:
-
-          font_key = "odin_rounded";
-          font_size = 28;
-
-          break;
-
-        case ST_TEXT_TYPE.Normal:
-
-          font_key = "odin_rounded";
-          font_size = 20;
-
-          break;
-
-        default:
-
-          font_key = "odin_rounded";
-          font_size = 20;
-
-          break;
-      }
+      font_key = _font_key;
 
     }
 
+    // Font Size
+
+    let font_size : number = 20;
+
+    if(_font_size !== undefined)
+    {
+
+      font_size = _font_size;
+
+    }
+
+    // Font tint
+    
     let tint = 0x000000;
 
     if(_tint !== undefined)
@@ -102,15 +91,169 @@ export class UILabel
       font_size
     );
 
+    this._m_label = label;
+
     label.setTint(tint);
 
     label.setOrigin(0.0, 0.5);
 
     label.setLeftAlign();
 
-    this._m_label = label;
-
     return;
+
+  }
+
+  /**
+   * Creates a label with the H1 Style.
+   * 
+   * * Font Key: supercomputer.
+   * * Font Size: 36.
+   * 
+   * The texture origin is set by (0.0, 0.5),
+   * and the text is left aligned. 
+   * 
+   * @param _x position in x axis.
+   * @param _y position in y axis.
+   * @param _scene phaser scene.
+   * @param _text label text.
+   */
+  static CreateH1
+  (
+    _x: number,
+    _y: number,
+    _scene: Phaser.Scene,
+    _text: string
+  )
+  : UILabel
+  {
+
+    const label = new UILabel
+    (
+      _x,
+      _y,
+      _scene,
+      _text,
+      'supercomputer',
+      36
+    );
+
+    return label;
+
+  }
+
+  /**
+   * Creates a label with the H2 Style.
+   * 
+   * * Font Key: odin_rounded.
+   * * Font Size: 28.
+   * 
+   * The texture origin is set by (0.0, 0.5),
+   * and the text is left aligned. 
+   * 
+   * @param _x position in x axis.
+   * @param _y position in y axis.
+   * @param _scene phaser scene.
+   * @param _text label text.
+   */
+  static CreateH2
+  (
+    _x: number,
+    _y: number,
+    _scene: Phaser.Scene,
+    _text: string
+  )
+  : UILabel
+  {
+
+    const label = new UILabel
+    (
+      _x,
+      _y,
+      _scene,
+      _text,
+      "odin_rounded",
+      28
+    );
+
+    return label;
+
+  }
+
+  /**
+   * Creates a label with the Style A.
+   * 
+   * * Font Key: supercomputer.
+   * 
+   * The texture origin is set by (0.0, 0.5). The text is left aligned. The
+   * default size is 20.
+   * 
+   * @param _x position in x axis.
+   * @param _y position in y axis.
+   * @param _scene phaser scene.
+   * @param _text label text.
+   * @param _fontSize the Bitmap size.
+   */
+  static CreateStyleA
+  (
+    _x: number,
+    _y: number,
+    _scene: Phaser.Scene,
+    _text: string,
+    _fontSize?: number
+  )
+  : UILabel
+  {
+
+    const label = new UILabel
+    (
+      _x,
+      _y,
+      _scene,
+      _text,
+      "supercomputer",
+      _fontSize
+    );
+
+    return label;
+
+  }
+
+  /**
+   * Creates a label with the Style B.
+   * 
+   * * Font Key: odin_rounded.
+   * 
+   * The texture origin is set by (0.0, 0.5). The text is left aligned. The
+   * default size is 20.
+   * 
+   * @param _x position in x axis.
+   * @param _y position in y axis.
+   * @param _scene phaser scene.
+   * @param _text label text.
+   * @param _fontSize the Bitmap size.
+   */
+  static CreateStyleB
+  (
+    _x: number,
+    _y: number,
+    _scene: Phaser.Scene,
+    _text: string,
+    _fontSize?: number
+  )
+  : UILabel
+  {
+
+    const label = new UILabel
+    (
+      _x,
+      _y,
+      _scene,
+      _text,
+      "odin_rounded",
+      _fontSize
+    );
+
+    return label;
 
   }
 
@@ -180,6 +323,25 @@ export class UILabel
 
   }
 
+  /**
+   * Set the horizontal and vertical anchor (origin) of this UI Object.
+   * 
+   * @param _x The horizontal anchor (origin) of this UI Object.
+   * @param _y The vertical anchor (origin) of this UI Object.
+   */
+  setAnchor(_x: number, _y: number)
+  : void
+  {
+
+    this._m_label.setOrigin(_x, _y);
+
+    return;
+
+  }
+
+  /**
+   * The horizontal anchor (origin) of this Game Object.
+   */
   getAnchorX()
   : number
   {
@@ -188,11 +350,36 @@ export class UILabel
 
   }
 
+  /**
+   * The vertical anchor (origin) of this Game Object.
+   */
   getAnchorY()
   : number
   {
 
     return this._m_label.originY;
+
+  }
+
+  /**
+   * Get the x position of this UI Object.
+   */
+  getX()
+  : number
+  {
+
+    return this._m_label.x;
+
+  }
+
+  /**
+   * Get the y position of this UI Object.
+   */
+  getY()
+  : number
+  {
+
+    return this._m_label.y;
 
   }
 
@@ -213,6 +400,91 @@ export class UILabel
 
   }
 
+  /**
+   * Set the tint of the BitmapFont.
+   * 
+   * @param _tint Hexadecimal color. 
+   */
+  setTint(_tint: number)
+  : void
+  {
+
+    this._m_label.setTint(_tint);
+
+    return;
+
+  }
+
+  /**
+   * Enable the UI Element.
+   */
+  enable()
+  : void
+  {
+
+    this._m_label.setActive(true);
+    this._m_label.setVisible(true);
+
+    return;
+
+  }
+
+  /**
+   * Disable the UI Element.
+   */
+  disable()
+  : void
+  {
+
+    this._m_label.setActive(false);
+    this._m_label.setVisible(false);
+
+    return;
+
+  }
+
+  /**
+   * Set the lines of text in this BitmapText to be left-aligned. This only has
+   * any effect if this BitmapText contains more than one line of text.
+   */
+  leftAlign()
+  : void
+  {
+
+    this._m_label.setLeftAlign();
+
+    return;
+
+  }
+
+  /**
+   * Set the lines of text in this BitmapText to be right-aligned. This only has
+   * any effect if this BitmapText contains more than one line of text.
+   */
+  rightAlign()
+  : void
+  {
+
+    this._m_label.setRightAlign();
+
+    return;
+
+  }
+
+  /**
+   * Set the lines of text in this BitmapText to be center-aligned. This only
+   * has any effect if this BitmapText contains more than one line of text.
+   */
+  centerAlign()
+  : void
+  {
+
+    this._m_label.setCenterAlign();
+
+    return;
+
+  }
+
   destroy()
   : void
   {
@@ -225,6 +497,10 @@ export class UILabel
 
   }
 
+  /****************************************************/
+  /* Private                                          */
+  /****************************************************/
+  
   private _m_label: Phaser.GameObjects.BitmapText;
 
 }

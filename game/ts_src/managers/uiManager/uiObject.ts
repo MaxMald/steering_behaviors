@@ -138,6 +138,28 @@ export class UIObject
   }
 
   /**
+   * Get the x position of this UI Object.
+   */
+  getX()
+  : number
+  {
+
+    return 0;
+
+  }
+
+  /**
+   * Get the y position of this UI Object.
+   */
+  getY()
+  : number
+  {
+
+    return 0;
+
+  }
+
+  /**
    * Get the depth value.
    */
   getZ()
@@ -176,6 +198,23 @@ export class UIObject
 
   }
 
+  /**
+   * Set the horizontal and vertical anchor (origin) of this UI Object.
+   * 
+   * @param _x The horizontal anchor (origin) of this UI Object.
+   * @param _y The vertical anchor (origin) of this UI Object.
+   */
+  setAnchor(_x: number, _y: number)
+  : void
+  {
+
+    return;
+
+  }
+
+  /**
+   * The horizontal anchor (origin) of this UI Object.
+   */
   getAnchorX()
   : number
   {
@@ -184,11 +223,36 @@ export class UIObject
 
   }
 
+  /**
+   * The vertical anchor (origin) of this UI Object.
+   */
   getAnchorY()
   : number
   {
 
     return 0.5;
+
+  }
+
+  /**
+   * Enable the UI Element.
+   */
+  enable()
+  : void
+  {
+
+    return;
+
+  }
+
+  /**
+   * Disable the UI Element.
+   */
+  disable()
+  : void
+  {
+
+    return;
 
   }
 
