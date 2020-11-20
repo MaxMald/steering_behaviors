@@ -213,6 +213,17 @@ export class UIObject
   }
 
   /**
+  * Sets the scale of this UIObject.
+  * @param _x The horizontal scale of this UIObject.
+  * @param _y [optional] The vertical scale of this UIObject. If not set it will use the `_x` value. Default _x.
+  */
+ setScale(_x: number, _y?: number)
+ : void 
+ {
+   return;
+ }
+
+  /**
    * The horizontal anchor (origin) of this UI Object.
    */
   getAnchorX()

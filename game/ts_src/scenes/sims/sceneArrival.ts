@@ -88,7 +88,7 @@ extends Phaser.Scene
       width * 0.9,
       height * 0.9,
       this,
-      'Debug',
+      'Debug Gizmos big text',
       0x9000ff
     );
 

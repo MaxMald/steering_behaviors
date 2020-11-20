@@ -9,7 +9,8 @@
  */
 
 
-import { Ty_Image, Ty_Text } from "../../commons/stTypes";
+import { Point, Ty_Image, Ty_Text } from "../../commons/stTypes";
+import { UILabel } from "./uiLabel";
 import { UIObject } from "./uiObject";
 
 
@@ -64,19 +65,32 @@ extends UIObject
     this._m_listenerManager.addEvent("buttonOver");
     this._m_listenerManager.addEvent("buttonOverOut");
 
+    // Set initial size.
+
+    const contentSize = new Phaser.Geom.Point();
+
+    this._m_contentSize = contentSize;
+
+    this._m_buttonSize = new Phaser.Geom.Point();
+
     // Create button sprite.
 
     const button = _scene.add.nineslice
     (
       _x,
       _y,
-      100,
-      100,
+      contentSize.x,
+      contentSize.y,
       {
         key: _texture
       },
       [ 32 ]
     );
+
+    // Set gap to 0
+
+    this._m_gapTop = 0;
+    this._m_gapBottom = 0;
 
     // Set label tint
 
@@ -93,27 +107,20 @@ extends UIObject
 
     button.setTint(_buttonTint);
 
-    // Set button origin
-
-    button.setOrigin(0.5);
-
     // Set button interactive.
 
     button.setInteractive();
 
     // Set button label
 
-    const label = _scene.add.text
+    const label = UILabel.CreateStyleB
     (
       _x,
       _y,
+      _scene,
       _label,
-      {
-        fontFamily : 'Arial',
-        fontSize : _labelSize !== undefined ? _labelSize : 32
-      }
+      _labelSize
     );
-
     // Set label tint
 
     let labeltint = 0x000000;
@@ -131,11 +138,11 @@ extends UIObject
 
     // Set label origin.
   
-    label.setOrigin(0.5);
+    label.setAnchor(0.5, 0.9);
 
     // Resize the button
 
-    button.resize(label.width, label.height);
+    button.resize(label.getWidth(), label.getHeight());
 
     // Button Phaser event listeners
 
@@ -145,8 +152,13 @@ extends UIObject
     button.on('pointerout', this._onButtonOverOut, this);
 
     this._m_button = button;  
-
+    
     this._m_label = label;
+    
+    // Set padding to 0
+    this.setPadding(0);
+
+    this.setAnchor(0.5, 0.5);
 
     return;
   }
@@ -170,6 +182,8 @@ extends UIObject
   : UIButton
   {
     const button = new UIButton(_x, _y, "niceButton", _scene, _label);
+
+    button.setPadding(10, 0);
 
     return button;
   }
@@ -196,6 +210,8 @@ extends UIObject
   {
     const button = new UIButton(_x, _y, "niceButton", _scene, _label, _buttonTint);
 
+    button.setPadding(10, 0);
+
     return button;
   }
   
@@ -215,6 +231,28 @@ extends UIObject
   : number
   {
     return this._m_button.height;
+  }
+
+  /**
+   * Get the x position of this UI Object.
+   */
+  getX()
+  : number
+  {
+
+    return this._m_button.x;
+
+  }
+
+  /**
+   * Get the y position of this UI Object.
+   */
+  getY()
+  : number
+  {
+
+    return this._m_button.y;
+
   }
 
   /**
@@ -238,9 +276,6 @@ extends UIObject
     this._m_button.x += _x;
     this._m_button.y += _y;
 
-    this._m_label.x += _x;
-    this._m_label.y += _y;
-
     return;
   }
 
@@ -262,6 +297,24 @@ extends UIObject
 
   }
 
+  /**
+   * Set the horizontal and vertical anchor (origin) of this UI Object.
+   * 
+   * @param _x The horizontal anchor (origin) of this UI Object.
+   * @param _y The vertical anchor (origin) of this UI Object.
+   */
+  setAnchor(_x: number, _y: number)
+  : void
+  {
+
+    this._m_button.setOrigin(_x, _y);
+
+    this.updateButton();
+
+    return;
+
+  }
+
   getAnchorX()
   : number
   {
@@ -278,6 +331,147 @@ extends UIObject
 
   }
 
+  /**
+   * Enable the UI Element.
+   */
+  enable()
+  : void
+  {
+
+    this._m_button.setActive(true);
+    this._m_button.setVisible(true);
+
+    this._m_label.enable();
+    return;
+
+  }
+
+  /**
+   * Disable the UI Element.
+   */
+  disable()
+  : void
+  {
+
+    this._m_button.setActive(false);
+    this._m_button.setVisible(false);
+
+    this._m_label.disable();
+    return;
+
+  }
+
+  /**
+   * Generate space around an element's content, inside the box borders.
+   * 
+   * @param _all left, top, right and bottom padding 
+   */
+  setPadding(_all: number)
+  : void;
+
+  /**
+   * Generate space around an element's content, inside the box borders. [Left -
+   * Right, Top - Bottom].
+   * 
+   * @param _left_right left and right padding 
+   * @param _top_bottom top bottom padding
+   */
+  setPadding(_left_right: number, _top_bottom: number)
+  : void;
+
+  /**
+   * Generate space around an element's content, inside the box borders. [Left,
+   * Top - Bottom, Right].
+   * 
+   * @param _left left padding 
+   * @param _top_bottom top bottom padding
+   * @param _right right padding
+   */
+  setPadding(_left: number, _top_bottom: number, _right: number)
+  : void;
+
+  /**
+   * Generate space around an element's content, inside the box borders. [Left,
+   * Top, Right, Bottom].
+   * 
+   * @param _left_right left and right padding 
+   * @param _top_bottom top bottom padding
+   */
+  setPadding(_left_right: number, _top_bottom: number)
+  : void;
+
+  /**
+   * Generate space around an element's content, inside the box borders. [Left,
+   * Top, Right, Bottom].
+   * 
+   * @param _left left padding 
+   * @param _top top padding
+   * @param _right right padding
+   * @param _bottom bottom padding
+   */
+  setPadding(_left: number, _top?: number, _right?: number, _bottom?: number)
+  : void
+  {
+
+    if(_top === undefined)
+    {
+
+      this._m_paddingBottom = _left;
+      this._m_paddingTop = _left;
+      this._m_paddingLeft = _left;
+      this._m_paddingRight = _left;
+
+    }
+    else if(_right === undefined)
+    {
+
+      this._m_paddingLeft = _left;
+      this._m_paddingRight = _left;
+
+      this._m_paddingTop = _top;
+      this._m_paddingBottom = _top;
+
+    }
+    else if(_bottom === undefined)
+    {
+
+      this._m_paddingLeft = _left;
+
+      this._m_paddingTop = _top;
+      this._m_paddingBottom = _top;
+
+      this._m_paddingRight = _right;
+
+    }
+    else
+    {
+
+      this._m_paddingLeft = _left;
+      this._m_paddingTop = _top;
+      this._m_paddingRight = _right;
+      this._m_paddingBottom = _bottom;
+
+    }
+
+    this.updateButton();
+
+    return;
+
+  }
+
+  /**
+   * Update button size, resize button, and order elements.
+   */
+  updateButton()
+  : void
+  {
+    this.updateButtonSize();
+
+    this._resizeButton();
+
+    return;
+  }
+
   destroy()
   : void
   {
@@ -288,7 +482,65 @@ extends UIObject
     this.destroy();
   }
 
-  _onButtonPressed()
+  updateButtonSize()
+  : void
+  {
+    const contentSize = this._m_contentSize;
+
+    contentSize.setTo(0.0);
+
+    const width = this._m_button.width;
+
+    if(width > contentSize.x)
+    {
+      contentSize.x = width;
+    }
+
+    contentSize.y += this.getHeight() + this._m_gapTop + this._m_gapBottom;
+
+    // Update button size.
+
+    const buttonSize = this._m_buttonSize;
+
+    buttonSize.x = contentSize.x + this._m_paddingLeft + this._m_paddingRight;
+
+    buttonSize.y = contentSize.y + this._m_paddingBottom + this._m_paddingTop;
+
+    // Minimum size.
+
+    if(buttonSize.x < UIButton.MIN_WIDTH)
+    {
+
+      buttonSize.x = UIButton.MIN_WIDTH;
+
+    }
+
+    if(buttonSize.y < UIButton.MIN_HEIGHT)
+    {
+
+      buttonSize.y = UIButton.MIN_HEIGHT;
+
+    }
+
+    return;
+
+  }
+
+  /****************************************************/
+  /* Private Functions                                */
+  /****************************************************/
+
+  private _resizeButton()
+  : void
+  {
+    const buttonSize = this._m_buttonSize;
+
+    this._m_button.resize(buttonSize.x, buttonSize.y);
+    
+    return;
+  }
+
+  private _onButtonPressed()
   : void
   {
     this._m_button.setScale(this._m_pressedScale);
@@ -298,7 +550,7 @@ extends UIObject
     return;
   }
 
-  _onButtonReleased()
+  private _onButtonReleased()
   : void
   {
 
@@ -309,7 +561,7 @@ extends UIObject
     return;
   }
 
-  _onButtonOver()
+  private _onButtonOver()
   : void
   {
 
@@ -320,7 +572,7 @@ extends UIObject
     return;
   }
 
-  _onButtonOverOut()
+  private _onButtonOverOut()
   : void
   {
 
@@ -334,9 +586,39 @@ extends UIObject
   /****************************************************/
   /* Private                                          */
   /****************************************************/
+  
+
+  private static MIN_WIDTH : number = 65;
+
+  private static MIN_HEIGHT : number = 65;
+
+  // UI background
+
   private _m_button : Phaser.GameObjects.RenderTexture;
 
-  private _m_label : Ty_Text;
+  private _m_contentSize : Point;
+  
+  private _m_buttonSize : Point;
+  
+  private _m_label : UILabel;
+
+  // Padding Properties
+
+  private _m_paddingTop: number;
+
+  private _m_paddingBottom: number;
+
+  private _m_paddingLeft: number;
+
+  private _m_paddingRight: number;
+
+  // Gap
+
+  private _m_gapTop: number;
+
+  private _m_gapBottom: number;
+
+  // UI misc variables
 
   private _m_originScale : number;
 

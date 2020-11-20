@@ -401,6 +401,17 @@ export class UILabel
   }
 
   /**
+  * Sets the scale of this UIObject.
+  * @param _x The horizontal scale of this UIObject.
+  * @param _y [optional] The vertical scale of this UIObject. If not set it will use the `_x` value. Default _x.
+  */
+  setScale(_x: number, _y?: number)
+  : void 
+  {
+    this._m_label.setScale(_x, _y);
+    return;
+  }
+  /**
    * Set the tint of the BitmapFont.
    * 
    * @param _tint Hexadecimal color. 
