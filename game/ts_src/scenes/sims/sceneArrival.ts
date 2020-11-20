@@ -15,6 +15,7 @@ import { CmpForceController } from "../../components/cmpforceController";
 import { CmpSpriteController } from "../../components/cmpSpriteController";
 import { SimulationManager } from "../../managers/simulationManager/simulationManager";
 import { UIButton } from "../../managers/uiManager/uiButton";
+import { UIObject } from "../../managers/uiManager/uiObject";
 import { Master } from "../../master/master";
 import { ArrivalForce } from "../../steeringBehavior/forceArrival";
 
@@ -57,27 +58,59 @@ extends Phaser.Scene
     ///////////////////////////////////
     // Create scene buttons
 
-    let mainMenuButton : UIButton = new UIButton
+    let mainMenuButton : UIButton = UIButton.createColorButton
     (
       width * 0.1,
       height * 0.9,
-      'button',
       this,
       'Main menu',
-      this._onMainMenu,
-      0.25,
-      24
+      0x2272F1
     );
 
-    let debugButton : UIButton = new UIButton
+    mainMenuButton.subscribe
+    (
+      "buttonReleased",
+      "button",
+      function(_sender : UIObject, _args)
+      {
+
+        const button = _sender as UIButton;
+
+        master.onSimulationSceneDestroy(this);
+    
+        this.scene.start('main_menu');
+      },
+      this
+    );
+
+    let debugButton : UIButton = UIButton.createColorButton
     (
       width * 0.9,
       height * 0.9,
-      'button',
       this,
       'Debug',
-      this._onDebug,
-      0.25
+      0x9000ff
+    );
+
+    debugButton.subscribe
+    (
+      "buttonReleased",
+      "button",
+      function(_sender : UIObject, _args)
+      {
+
+        const button = _sender as UIButton;
+
+        if(master.isDebugEnable())
+        {
+          master.disableDebugging();
+        }
+        else
+        {
+          master.enableDebugging();
+        }
+      },
+      this
     );
     
     ///////////////////////////////////
@@ -241,33 +274,4 @@ extends Phaser.Scene
   /****************************************************/
   
   private _m_master : Master;
-
-  ///////////////////////////////////
-  // Callbacks
-
-  private _onDebug()
-  : void
-  {
-    if(this._m_master.isDebugEnable())
-    {
-      this._m_master.disableDebugging();
-    }
-    else
-    {
-      this._m_master.enableDebugging();
-    }
-
-    return;
-  }
-
-  private _onMainMenu()
-  : void
-  {
-    
-    this._m_master.onSimulationSceneDestroy(this);
-
-    this.scene.start('main_menu');
-
-    return;
-  }
 }

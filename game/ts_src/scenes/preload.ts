@@ -43,6 +43,12 @@ extends Phaser.Scene
       'images/button.png'
     );
 
+    this.load.image
+    (
+      'niceButton',
+      'images/niceButton.png'
+    );
+
     this.load.atlas
     (
       'game_art',

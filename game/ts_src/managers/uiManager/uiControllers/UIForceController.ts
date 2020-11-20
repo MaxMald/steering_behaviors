@@ -2,8 +2,10 @@ import { BaseActor } from "../../../actors/baseActor";
 import { ST_COMPONENT_ID, ST_TEXT_TYPE } from "../../../commons/stEnums";
 import { Ty_Sprite } from "../../../commons/stTypes";
 import { CmpForceController } from "../../../components/cmpforceController";
+import { Master } from "../../../master/master";
 import { IForce } from "../../../steeringBehavior/iForce";
 import { UIBox } from "../uiBox";
+import { UIButton } from "../uiButton";
 import { UILabel } from "../uiLabel";
 import { UIObject } from "../uiObject";
 import { UISlider } from "../uiSlider";
@@ -167,6 +169,72 @@ export class UIForceController
         return;
 
       } ,
+      this
+    );
+
+    // Main Menu button
+
+    this._ui_mainMenu = UIButton.createButton
+    (
+      0,
+      0,
+      _scene,
+      'Main menu'
+    );
+
+    box.add(this._ui_mainMenu);
+
+    this._ui_mainMenu.subscribe
+    (
+      "buttonReleased",
+      "button",
+      function(_sender : UIObject, _args)
+      {
+
+        const button = _sender as UIButton;
+
+        let master = Master.GetInstance();
+
+        master.onSimulationSceneDestroy(_scene);
+    
+        _scene.scene.start('main_menu');
+      },
+      this
+    );
+
+    // debug button
+
+    this._ui_debug = UIButton.createColorButton
+    (
+      0,
+      0,
+      _scene,
+      'Debug',
+      0x9000ff
+    );
+
+    box.add(this._ui_debug);
+
+    this._ui_debug.subscribe
+    (
+      "buttonReleased",
+      "button",
+      function(_sender : UIObject, _args)
+      {
+
+        const button = _sender as UIButton;
+
+        let master = Master.GetInstance();
+
+        if(master.isDebugEnable())
+        {
+          master.disableDebugging();
+        }
+        else
+        {
+          master.enableDebugging();
+        }
+      },
       this
     );
 
@@ -439,5 +507,9 @@ export class UIForceController
   private _ui_maxSpeedSlider: UISlider;
 
   private _ui_actualSpeed: UILabel;
+
+  private _ui_mainMenu: UIButton;
+
+  private _ui_debug: UIButton;
 
 }
