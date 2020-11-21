@@ -23,7 +23,7 @@ extends UIObject
    * 
    * @param _x The x position of the button.
    * @param _y The y position of the button.
-   * @param _texture The texture name for the button.
+   * @param _frame The texture name for the button.
    * @param _scene The scene where the button is gonna be created.
    * @param _label The text of the button.
    * @param _buttonTint [optional] The tint of the button in hexadecimal code.
@@ -41,7 +41,7 @@ extends UIObject
   (
     _x : number,
     _y : number,
-    _texture : string,
+    _frame : string,
     _scene : Phaser.Scene,
     _label : string,
     _buttonTint ?: number,
@@ -82,7 +82,8 @@ extends UIObject
       contentSize.x,
       contentSize.y,
       {
-        key: _texture
+        key: "game_art",
+        frame: _frame
       },
       [ 7 ]
     );
@@ -175,7 +176,7 @@ extends UIObject
   )
   : UIButton
   {
-    const button = new UIButton(_x, _y, "niceButton", _scene, _label);
+    const button = new UIButton(_x, _y, "niceButton.png", _scene, _label);
 
     button.setPadding(10);
 
@@ -202,7 +203,7 @@ extends UIObject
   )
   : UIButton
   {
-    const button = new UIButton(_x, _y, "niceButton", _scene, _label, _buttonTint);
+    const button = new UIButton(_x, _y, "niceButton.png", _scene, _label, _buttonTint);
 
     button.setPadding(10);
 
