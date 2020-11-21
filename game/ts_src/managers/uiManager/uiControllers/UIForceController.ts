@@ -6,6 +6,7 @@ import { Master } from "../../../master/master";
 import { IForce } from "../../../steeringBehavior/iForce";
 import { UIBox } from "../uiBox";
 import { UIButton } from "../uiButton";
+import { UIButtonImg } from "../uiButtonImg";
 import { UILabel } from "../uiLabel";
 import { UIObject } from "../uiObject";
 import { UISlider } from "../uiSlider";
@@ -146,7 +147,7 @@ export class UIForceController
 
     // Main Menu button
 
-    this._ui_mainMenu = UIButton.createButton
+    this._ui_mainMenu = UIButton.CreateButton
     (
       0,
       0,
@@ -176,7 +177,7 @@ export class UIForceController
 
     // debug button
 
-    this._ui_debug = UIButton.createColorButton
+    this._ui_debug = UIButton.CreateColorButton
     (
       0,
       0,
@@ -209,6 +210,39 @@ export class UIForceController
       },
       this
     );
+
+    // stop button image
+
+    this._ui_StopButtonImg = UIButtonImg.CreateStopButtonImg
+    (
+      0,
+      0,
+      _scene
+    );
+
+    box.add(this._ui_StopButtonImg);
+
+    // play button image
+
+    this._ui_playButtonImg = UIButtonImg.CreatePlayButtonImg
+    (
+      0,
+      0,
+      _scene
+    );
+
+    box.add(this._ui_playButtonImg);
+
+    // pause button image
+
+    this._ui_pauseButtonImg = UIButtonImg.CreatePauseButtonImg
+    (
+      0,
+      0,
+      _scene
+    );
+
+    box.add(this._ui_pauseButtonImg);
 
     box.setLeftAlignment();
 
@@ -485,5 +519,11 @@ export class UIForceController
   private _ui_mainMenu: UIButton;
 
   private _ui_debug: UIButton;
+
+  private _ui_playButtonImg: UIButtonImg;
+
+  private _ui_pauseButtonImg: UIButtonImg;
+
+  private _ui_StopButtonImg: UIButtonImg;
 
 }

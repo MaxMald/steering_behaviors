@@ -9,7 +9,7 @@
  */
 
 
-import { Point, Ty_Image, Ty_Text } from "../../commons/stTypes";
+import { Point } from "../../commons/stTypes";
 import { UILabel } from "./uiLabel";
 import { UIObject } from "./uiObject";
 
@@ -23,14 +23,13 @@ extends UIObject
    * 
    * @param _x The x position of the button.
    * @param _y The y position of the button.
-   * @param _frame The texture name for the button.
    * @param _scene The scene where the button is gonna be created.
+   * @param _frame The frame name for the button.
    * @param _label The text of the button.
    * @param _buttonTint [optional] The tint of the button in hexadecimal code.
    * @param _labelTint [optional] The label tint of the button in hexadecimal code.
    * @param _labelSize [optional] The label size of the button.
    * 
-   *
    * @event "buttonPressed" Triggered when the button is pressed.
    * @event "buttonReleased" Triggered when the button is released.
    * @event "buttonOver" Triggered when the cursor hovers the button.
@@ -41,8 +40,8 @@ extends UIObject
   (
     _x : number,
     _y : number,
-    _frame : string,
     _scene : Phaser.Scene,
+    _frame : string,
     _label : string,
     _buttonTint ?: number,
     _labelTint ?: number,
@@ -117,9 +116,11 @@ extends UIObject
       _label,
       _labelSize
     );
-    // Set label tint
+    // Set initial UILabel tint
 
     let labeltint = 0x000000;
+
+    // Check if tint have been passed on constructor.
 
     if(_labelTint !== undefined)
     {
@@ -128,30 +129,37 @@ extends UIObject
 
     }
 
-    // Set label tint
+    // Set UILabel tint.
 
     label.setTint(labeltint);
 
-    // Set label origin.
+    // Set UILabel anchor to center.
   
     label.setAnchor(0.5, 0.9);
 
     this._m_buttonWidth = button.width;
     this._m_buttonHeight = button.height;
 
-    // Button Phaser event listeners
+    // Button Phaser event listeners.
 
     button.on('pointerdown', this._onButtonPressed, this);
     button.on('pointerup', this._onButtonReleased, this);
     button.on('pointerover', this._onButtonOver, this);
     button.on('pointerout', this._onButtonOverOut, this);
 
-    this._m_button = button;  
+    // Save button sprite.
+
+    this._m_button = button;
+
+    // Save UILabel.
     
     this._m_label = label;
     
-    // Set padding to 0
+    // Set this UIButton padding to 0.
+
     this.setPadding(0);
+
+    // Set this UIButton anchor to center.
 
     this.setAnchor(0.5, 0.5);
 
@@ -167,7 +175,7 @@ extends UIObject
    * @param _label The text of the button.
    *
    */
-  static createButton
+  static CreateButton
   (
     _x : number,
     _y : number,
@@ -176,7 +184,12 @@ extends UIObject
   )
   : UIButton
   {
-    const button = new UIButton(_x, _y, "niceButton.png", _scene, _label);
+
+    // Create UIButton.
+
+    const button = new UIButton(_x, _y, _scene, "niceButton.png", _label);
+
+    // Set this UIButton padding to 10.
 
     button.setPadding(10);
 
@@ -193,7 +206,7 @@ extends UIObject
    * @param _buttonTint The tint of the button in hexadecimal code.
    *
    */
-  static createColorButton
+  static CreateColorButton
   (
     _x : number,
     _y : number,
@@ -203,7 +216,7 @@ extends UIObject
   )
   : UIButton
   {
-    const button = new UIButton(_x, _y, "niceButton.png", _scene, _label, _buttonTint);
+    const button = new UIButton(_x, _y, _scene, "niceButton.png", _label, _buttonTint);
 
     button.setPadding(10);
 
