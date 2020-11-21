@@ -32,9 +32,9 @@ export class UIBox
 
     // Set initial size.
 
-    const contentSize = new Phaser.Geom.Point();
+    const contentSize = new Phaser.Geom.Rectangle();
 
-    this._m_contentSize = contentSize;
+    this._m_contentBox = contentSize;
 
     this._m_boxSize = new Phaser.Geom.Point();    
 
@@ -476,6 +476,8 @@ export class UIBox
 
     this._resizeBackground();
 
+    this._updateContentBoxPosition();
+
     this._orderVertical();
 
     return;
@@ -552,11 +554,14 @@ export class UIBox
   : void
   {
 
-    // Update content size.
+    // Reset content box size.
 
-    const contentSize = this._m_contentSize;
+    const contentBox = this._m_contentBox;
 
-    contentSize.setTo(0.0, 0.0);    
+    contentBox.width = 0;
+    contentBox.height = 0;
+    
+    // Iterate over each UI Object.
 
     const aObjects = this._m_aObjects;
 
@@ -571,14 +576,16 @@ export class UIBox
 
       const width = uiObject.getWidth();
 
-      if(width > contentSize.x)
+      if(width > contentBox.width)
       {
 
-        contentSize.x = width;
+        contentBox.width = width;
 
       }      
 
-      contentSize.y += uiObject.getHeight() + this._m_gapTop + this._m_gapBottom;
+      contentBox.height += uiObject.getHeight() 
+      + this._m_gapTop 
+      + this._m_gapBottom;
 
     }
 
@@ -586,9 +593,9 @@ export class UIBox
 
     const boxSize = this._m_boxSize;
 
-    boxSize.x = contentSize.x + this._m_paddingLeft + this._m_paddingRight;
+    boxSize.x = contentBox.width + this._m_paddingLeft + this._m_paddingRight;
 
-    boxSize.y = contentSize.y + this._m_paddingBottom + this._m_paddingTop;
+    boxSize.y = contentBox.height + this._m_paddingBottom + this._m_paddingTop;
 
     // Minimum size.
 
@@ -659,6 +666,26 @@ export class UIBox
   /****************************************************/
   /* Private                                          */
   /****************************************************/
+
+  /**
+   * Updates the width and height of the content box, according to the attached
+   * elements in this UI Box.
+   */
+  private _updateContentBoxPosition()
+  : void
+  {
+
+    const bg = this._m_bg;
+
+    this._m_contentBox.setPosition
+    (
+      bg.x - (bg.width * bg.originX) + this._m_paddingLeft,
+      bg.y - (bg.height * bg.originY) + this._m_paddingTop
+    );
+
+    return;
+
+  }
   
   private _resizeBackground()
   : void
@@ -676,7 +703,6 @@ export class UIBox
 
   }
 
-
   private _orderVertical()
   : void
   {
@@ -687,17 +713,17 @@ export class UIBox
 
     let object : UIObject;
 
-    const bg = this._m_bg;
-
     const gapTop = this._m_gapTop;
 
     const gapBottom = this._m_gapBottom;
 
+    const contentBox = this._m_contentBox;
+
     let position = new Phaser.Geom.Point
     (
-      bg.x + this._m_paddingLeft - (bg.width * bg.originX),
-      bg.y + this._m_paddingTop - (bg.height * bg.originY)
-    );
+      contentBox.x,
+      contentBox.y
+    );    
 
     for(let i = 0; i < size; ++i)
     {
@@ -714,7 +740,7 @@ export class UIBox
 
       // Align object.
 
-      this._m_alignFn.call(this, object);
+      this._m_alignFn.call(this, contentBox, object);
 
       // Set the position of the next element.
 
@@ -729,85 +755,165 @@ export class UIBox
   ///////////////////////////////////
   // Alignments
 
-  private _alignLeft(_element : UIObject)
+  /**
+   * Set an UI Object aligned to the area of a Box.
+   * 
+   * @param _contentBox Box where the UI Object will be aligned.
+   * @param _element UI Object to be aligned.
+   * @param _t value from 0.0 to 1.0 of the horizontal alignment.
+   */
+  private _horizontalAlignToBox
+  (
+    _contentBox: Phaser.Geom.Rectangle,
+    _element : UIObject,
+    _t : number
+  )
   : void
   {
-    _element.setAnchor(0, _element.getAnchorY());
 
-    return;
+    // Horizontal position in the content box.
 
-  }
+    const x1 = _contentBox.x + (_t * _contentBox.width);
 
-  private _alignCenter(_element : UIObject)
-  : void
-  {
-
-    const contentWidth = this._m_contentSize.x;
-
-    _element.setAnchor(0.5, _element.getAnchorY());
-
-    _element.move
+    _element.setPosition
     (
-      contentWidth * 0.5,
-      0
+      x1 + ( _element.getWidth() * (_element.getAnchorX() - _t)),
+      _element.getY()
     );
 
     return;
 
   }
 
-  private _alignRight(_element : UIObject)
+  /**
+   * Set an UI Object to the left-aligned to the area of a Box.
+   * 
+   * @param _contentBox Box where the UI Object will be aligned.
+   * @param _element UI Object to be aligned.
+   */
+  private _alignLeft
+  (
+    _contentBox: Phaser.Geom.Rectangle, 
+    _element : UIObject
+  )
   : void
   {
 
-    const contentWidth = this._m_contentSize.x;
-
-    _element.setAnchor(1.0, _element.getAnchorY());
-
-    _element.move
-    (
-      contentWidth,
-      0
-    );
+    this._horizontalAlignToBox(_contentBox, _element, 0.0);
 
     return;
 
   }
 
+  /**
+   * Set an UI Object to the center-aligned to the area of a Box.
+   * 
+   * @param _contentBox Box where the UI Object will be aligned.
+   * @param _element UI Object to be aligned.
+   */
+  private _alignCenter
+  (
+    _contentBox: Phaser.Geom.Rectangle, 
+    _element : UIObject
+  )
+  : void
+  {
+
+    this._horizontalAlignToBox(_contentBox, _element, 0.5);
+
+    return;
+
+  }
+
+  /**
+   * Set an UI Object to the right-aligned to the area of a Box.
+   * 
+   * @param _contentBox Box where the UI Object will be aligned.
+   * @param _element UI Object to be aligned.
+   */
+  private _alignRight
+  (
+    _contentBox: Phaser.Geom.Rectangle, 
+    _element : UIObject
+  )
+  : void
+  {
+
+    this._horizontalAlignToBox(_contentBox, _element, 1.0);
+
+    return;
+
+  }
+
+  /**
+   * Minimum width that a UI Box can has.
+   */
   private static MIN_WIDTH : number = 65;
 
+  /**
+   * Minimum height that a UI Box can has.
+   */
   private static MIN_HEIGHT : number = 65;
 
-  // Alignment Function
+  // Horizontal Alignment Function
 
-  private _m_alignFn : (_element : UIObject) => void;
+  /**
+   * Reference to the active Horizontal Alignment Function.
+   */
+  private _m_alignFn : 
+  (
+    _contentBox: Phaser.Geom.Rectangle, 
+    _element : UIObject
+  ) => void;
 
-  // Elements
-
+  /**
+   * List of UI Objects included in this UI Box.
+   */
   private _m_aObjects : Array<UIObject>;  
 
-  // Padding Properties
-
+  /**
+   * Top space added to the content box.
+   */
   private _m_paddingTop: number;
 
+  /**
+   * Bottom space added to the content box.
+   */
   private _m_paddingBottom: number;
 
+  /**
+   * Left space added to the content box.
+   */
   private _m_paddingLeft: number;
 
+  /**
+   * Right space added to the content box.
+   */
   private _m_paddingRight: number;
 
-  // Gap
-
+  /**
+   * The space added at the top of each UI Element.
+   */
   private _m_gapTop: number;
 
+  /**
+   * The space added at the bottom of each UI Element.
+   */
   private _m_gapBottom: number;
 
-  // UI Background
+  /**
+   * Area that contains all the UI Objects of the UI Box.
+   */
+  private _m_contentBox: Phaser.Geom.Rectangle;
 
-  private _m_contentSize: Point;
-
+  /**
+   * The size of the UI Box. This value includes the padding space.
+   */
   private _m_boxSize: Point;
 
+  /**
+   * The UI Box background texture.
+   */
   private _m_bg: Phaser.GameObjects.RenderTexture;
 
 }

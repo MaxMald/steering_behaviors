@@ -210,7 +210,7 @@ export class UIForceController
       this
     );
 
-    box.setRightAlignment();
+    box.setCenterAlignment();
 
     ///////////////////////////////////
     // UI Force
