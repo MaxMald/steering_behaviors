@@ -58,7 +58,7 @@ extends Phaser.Scene
     ///////////////////////////////////
     // Create scene buttons
 
-    let mainMenuButton : UIButton = UIButton.createColorButton
+    let mainMenuButton : UIButton = UIButton.CreateColorButton
     (
       width * 0.1,
       height * 0.9,
@@ -83,7 +83,7 @@ extends Phaser.Scene
       this
     );
 
-    let debugButton : UIButton = UIButton.createColorButton
+    let debugButton : UIButton = UIButton.CreateColorButton
     (
       width * 0.9,
       height * 0.9,
