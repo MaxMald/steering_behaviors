@@ -174,7 +174,7 @@ import { Master } from "../../master/master";
       20,
       this
     );
-
+/*
     const uiMessageBox = new UIDialogBox
     (
       400,
@@ -185,14 +185,14 @@ import { Master } from "../../master/master";
       "game_art",
       "img_spaceShip.png"
     );
-
+*/
     // Add UI force controller to the UI Manager.
 
     const uiManager = master.getManager<UIManager>(ST_MANAGER_ID.kUIManager);
 
     uiManager.addUIController("forceUI", uiForceController);
 
-    uiManager.addUIController("messageBox", uiMessageBox);
+    //uiManager.addUIController("messageBox", uiMessageBox);
 
     // Set the active actor of the UI Manager.
 

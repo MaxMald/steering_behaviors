@@ -8,10 +8,8 @@
  * @since November-19-2020
  */
 
-import { UIBox } from "../uiBox";
-import { UIImage } from "../uiImage";
+import { UIBox } from "../uiBox/uiBox";
 import { UILabel } from "../uiLabel";
-import { UIText } from "../uiText";
 import { UIController } from "./UIController"
 
 export class UIDialogBox
@@ -23,10 +21,7 @@ export class UIDialogBox
     _x: number,
     _y: number,
     _scene: Phaser.Scene,
-    _title: string,
-    _message: string,
-    _imageTexture: string,
-    _imageFrame?: string | number
+    _title: string
   )
   {
     
@@ -46,22 +41,6 @@ export class UIDialogBox
 
     box.add(title);
 
-    // Create Message Image.
-
-    const image = new UIImage(0, 0, _scene, _imageTexture, _imageFrame);
-
-    this._m_image = image;
-
-    box.add(image);
-
-    // Create Message.
-
-    const message = UIText.CreateStyleB(0, 0, _scene, _message);
-
-    this._m_message = message;
-
-    box.add(message);
-
     box.setCenterAlignment();
 
     return;
@@ -79,7 +58,7 @@ export class UIDialogBox
     return;
 
   }
-
+/*
   setMessage(_msg: string)
   : void
   {
@@ -91,7 +70,8 @@ export class UIDialogBox
     return;
 
   }
-
+*/
+/*
   setImage(_texture: string, _frame?: number | string)
   : void
   {
@@ -103,10 +83,12 @@ export class UIDialogBox
     return;
 
   }
-
+*/
   open()
   : void
   {
+
+    this._m_box.enable();
 
     return;
 
@@ -115,6 +97,8 @@ export class UIDialogBox
   close()
   : void
   {
+
+    this._m_box.disable();
 
     return;
 
@@ -127,8 +111,6 @@ export class UIDialogBox
     this._m_box.destroy();
 
     this._m_box = null;
-    this._m_message = null;
-    this._m_image = null;
     this._m_title = null;
 
     super.destroy();
@@ -141,12 +123,14 @@ export class UIDialogBox
   /* Private                                          */
   /****************************************************/
   
-  private _m_box: UIBox;
+  /**
+   * The UI Box of the UI Dialog Box.
+   */
+  protected _m_box: UIBox;
 
-  private _m_title: UILabel;
-
-  private _m_image: UIImage;
-
-  private _m_message: UIText;
+  /**
+   * The UI Dialog Box title.
+   */
+  protected _m_title: UILabel;
 
 }
