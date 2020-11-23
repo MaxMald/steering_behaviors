@@ -176,7 +176,7 @@ import { Master } from "../../master/master";
       this
     );
 
-    const uiMessageBox = UIMessageBox.CreateAccept
+    const uiMessageBox = UIMessageBox.CreateYesNo
     (
       400,
       200,

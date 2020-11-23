@@ -45,8 +45,7 @@ export class UIVerticalBox
 
     // Add Content space.
 
-    const gapTop = box._m_gapTop;
-    const gapBottom = box._m_gapBottom;
+    const gap = box._m_gap;
 
     let elementH : number;
     let elementW : number;
@@ -63,9 +62,7 @@ export class UIVerticalBox
 
       object = aObjects[i];
 
-      elementH = object.getHeight()
-              + gapTop
-              + gapBottom;
+      elementH = object.getHeight() + gap;
 
       elementW = object.getWidth();
 
@@ -120,7 +117,7 @@ export class UIVerticalBox
 
       // Set the position of the next element.
 
-      position.y += object.getHeight() + gapTop + gapBottom;
+      position.y += object.getHeight() + gap;
 
     }
 

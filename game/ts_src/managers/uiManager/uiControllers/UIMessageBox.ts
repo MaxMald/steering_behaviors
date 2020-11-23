@@ -76,6 +76,8 @@ extends UIDialogBox
       : void
       {
 
+        this.close();
+
         this._m_fn.call(this._m_context, ST_BUTTON.kAccept);
 
         return;
@@ -85,6 +87,85 @@ extends UIDialogBox
     );
 
     buttonsBox.add(accept);
+
+    // Add Buttons Box to the Dialog Box.
+
+    messageBox._m_box.add(buttonsBox);
+
+    return messageBox;
+
+  }
+
+  static CreateYesNo
+  (
+    _x: number,
+    _y: number,
+    _scene: Phaser.Scene,
+    _title: string,
+    _message: string,
+    _callback: (_buttonKey: ST_BUTTON) => void,
+    _context: any
+  )
+  : UIMessageBox
+  {
+
+    const messageBox = new UIMessageBox(_x, _y, _scene, _title, _message);
+
+    // Buttons Box.
+
+    const buttonsBox= UIBox.CreateContentBoxB(0, 0, _scene);
+
+    buttonsBox.setHorizontalBox();
+
+    ///////////////////////////////////
+    // Yes
+
+    const butYes = UIButton.CreateButton(_x, _y, _scene, "Yes");
+
+    butYes.subscribe
+    (
+      "buttonReleased", 
+      "DialogBox",
+      function(_sender, _args)
+      : void
+      {
+
+        this.close();
+
+        this._m_fn.call(this._m_context, ST_BUTTON.kYes);
+
+        return;
+
+      },
+      messageBox
+    );
+
+    buttonsBox.add(butYes);
+
+    ///////////////////////////////////
+    // Yes
+
+    const butNo = UIButton.CreateButton(_x, _y, _scene, "No");
+
+    butNo.subscribe
+    (
+      "buttonReleased", 
+      "DialogBox",
+      function(_sender, _args)
+      : void
+      {
+
+        this.close();
+
+        this._m_fn.call(this._m_context, ST_BUTTON.kNo);
+
+        return;
+
+      },
+      messageBox
+    );
+
+    buttonsBox.add(butNo);
 
     // Add Buttons Box to the Dialog Box.
 

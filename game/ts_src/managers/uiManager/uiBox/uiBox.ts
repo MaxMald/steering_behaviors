@@ -62,8 +62,7 @@ export class UIBox
 
     // Set gap to 0
 
-    this._m_gapTop = 0;
-    this._m_gapBottom = 0;
+    this._m_gap = 0;
     
     // Set Vertical Box
 
@@ -88,7 +87,6 @@ export class UIBox
     const box = new UIBox(_x, _y, _scene, "box_bg.png");
 
     box.setPadding(20);
-
     box.setElementsGap(5);
 
     return box;
@@ -349,6 +347,9 @@ export class UIBox
       }
     );
 
+    this._m_bg.setActive(true);
+    this._m_bg.setVisible(true);
+
     return;
 
   }
@@ -372,6 +373,9 @@ export class UIBox
 
       }
     );
+
+    this._m_bg.setActive(false);
+    this._m_bg.setVisible(false);
 
     return;
 
@@ -498,29 +502,15 @@ export class UIBox
   : void;
 
   /**
-   * Set an space between each element in this box.
+   * Set an space between each UI Object in this box.
    * 
-   * @param _top top space. 
-   * @param _bottom bottom space.
-   */
-  setElementsGap(_top: number, _bottom?: number)
+   * @param _gap: space between each UI Object in this box.
+   * */
+  setElementsGap(_gap: number)
   : void
   {
 
-    if(_bottom === undefined)
-    {
-
-      this._m_gapTop = _top;
-      this._m_gapBottom = _top;
-
-    }
-    else
-    {
-
-      this._m_gapTop = _top;
-      this._m_gapBottom = _bottom;
-
-    }
+    this._m_gap = _gap;
 
     this.updateBox();
 
@@ -706,14 +696,9 @@ export class UIBox
   _m_paddingRight: number;
 
   /**
-   * The space added at the top of each UI Element.
+   * The space added between each UI Element.
    */
-  _m_gapTop: number;
-
-  /**
-   * The space added at the bottom of each UI Element.
-   */
-  _m_gapBottom: number;
+  _m_gap: number;
 
   /**
    * Area that contains all the UI Objects of the UI Box.
