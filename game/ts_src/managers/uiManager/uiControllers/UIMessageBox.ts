@@ -66,7 +66,7 @@ extends UIDialogBox
     ///////////////////////////////////
     // Accept
 
-    const accept = UIButton.createButton(_x, _y, _scene, "Accept");
+    const accept = UIButton.CreateButton(_x, _y, _scene, "Accept");
 
     accept.subscribe
     (
