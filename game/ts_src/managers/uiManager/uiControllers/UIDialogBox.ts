@@ -8,6 +8,7 @@
  * @since November-19-2020
  */
 
+import { ST_BUTTON } from "../../../commons/stEnums";
 import { UIBox } from "../uiBox/uiBox";
 import { UILabel } from "../uiLabel";
 import { UIController } from "./UIController"
@@ -58,32 +59,7 @@ export class UIDialogBox
     return;
 
   }
-/*
-  setMessage(_msg: string)
-  : void
-  {
 
-    this._m_message.setText(_msg);
-
-    this._m_box.updateBox();
-
-    return;
-
-  }
-*/
-/*
-  setImage(_texture: string, _frame?: number | string)
-  : void
-  {
-
-    this._m_image.setImage(_texture, _frame);
-
-    this._m_box.updateBox();
-
-    return;
-
-  }
-*/
   open()
   : void
   {
@@ -132,5 +108,15 @@ export class UIDialogBox
    * The UI Dialog Box title.
    */
   protected _m_title: UILabel;
+
+  /**
+   * Reference to the callback function.
+   */
+  protected _m_fn: (_buttonKey : ST_BUTTON) => void
+
+  /**
+   * Reference to the callback context.
+   */
+  protected _m_context: any;
 
 }
