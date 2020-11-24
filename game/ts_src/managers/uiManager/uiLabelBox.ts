@@ -50,7 +50,7 @@ export class UILabelBox
       "text_box.png" 
     );
 
-    this._m_box = box;
+    this._m_bg = box;
 
     if(_tint !== undefined)
     {
@@ -76,22 +76,6 @@ export class UILabelBox
 
     }
 
-    const label = _scene.add.bitmapText
-    (
-      _x,
-      _y,
-      font_key,
-      _text,
-      font_size
-    );
-
-    label.setTint(tint);
-
-    label.setOrigin(0.0, 0.5);
-
-    label.setLeftAlign();
-
-    this._m_label = label;
 
     return;
 
@@ -104,7 +88,7 @@ export class UILabelBox
   : number
   {
 
-    return this._m_box.width;
+    return this._m_bg.width;
 
   }
 
@@ -115,7 +99,7 @@ export class UILabelBox
   : number
   {
 
-    return this._m_box.height;
+    return this._m_bg.height;
 
   }
 
@@ -126,7 +110,7 @@ export class UILabelBox
   : number
   {
 
-    return this._m_box.x;
+    return this._m_bg.x;
 
   }
 
@@ -137,7 +121,7 @@ export class UILabelBox
   : number
   {
 
-    return this._m_box.y;
+    return this._m_bg.y;
 
   }
 
@@ -148,7 +132,7 @@ export class UILabelBox
   : number
   {
 
-    return this._m_box.depth;
+    return this._m_bg.depth;
 
   }
 
@@ -162,11 +146,8 @@ export class UILabelBox
   : void
   {
 
-    this._m_label.x += _x;
-    this._m_label.y += _y;
-
-    this._m_box.x += _x;
-    this._m_box.y += _y;
+    this._m_bg.x += _x;
+    this._m_bg.y += _y;
 
     return;
 
@@ -182,7 +163,7 @@ export class UILabelBox
   : void
   {
 
-    this._m_box.setPosition(_x, _y);
+    this._m_bg.setPosition(_x, _y);
     this._m_label.setPosition(_x, _y);
 
     return;
@@ -193,7 +174,7 @@ export class UILabelBox
   : number
   {
 
-    return this._m_box.originX;
+    return this._m_bg.originX;
 
   }
 
@@ -201,7 +182,7 @@ export class UILabelBox
   : number
   {
 
-    return this._m_box.originY;
+    return this._m_bg.originY;
 
   }
 
@@ -212,11 +193,11 @@ export class UILabelBox
   : void
   {
 
-    this._m_box.setActive(true);
-    this._m_box.setVisible(true);
+    this._m_bg.setActive(true);
+    this._m_bg.setVisible(true);
 
-    this._m_label.setActive(true);
-    this._m_label.setVisible(true);
+    this._m_label.enable();
+    this._m_button.enable();
 
     return;
 
