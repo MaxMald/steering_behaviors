@@ -17,6 +17,7 @@
 import { UIDialogBox } from "../../managers/uiManager/uiControllers/UIDialogBox";
 import { UIForceController } from "../../managers/uiManager/uiControllers/UIForceController";
 import { UIMessageBox } from "../../managers/uiManager/uiControllers/UIMessageBox";
+import { UISimulationController } from "../../managers/uiManager/uiControllers/UISimulationController";
 import { UIManager } from "../../managers/uiManager/uiManager";
 import { UIObject } from "../../managers/uiManager/uiObject";
 import { UISlider } from "../../managers/uiManager/uiSlider";
@@ -190,6 +191,13 @@ import { Master } from "../../master/master";
       this
     );
 
+    const uiSimController = UISimulationController.CreateSimControlBox
+    (
+      width * 0.5,
+      20,
+      this
+    );
+
     // Add UI force controller to the UI Manager.
 
     const uiManager = master.getManager<UIManager>(ST_MANAGER_ID.kUIManager);
@@ -197,6 +205,8 @@ import { Master } from "../../master/master";
     uiManager.addUIController("forceUI", uiForceController);
 
     uiManager.addUIController("messageBox", uiMessageBox);
+
+    uiManager.addUIController("mediaSimUI", uiSimController);
 
     // Set the active actor of the UI Manager.
 
