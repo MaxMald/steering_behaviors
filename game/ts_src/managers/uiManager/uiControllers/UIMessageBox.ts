@@ -92,6 +92,11 @@ extends UIDialogBox
 
     messageBox._m_box.add(buttonsBox);
 
+    // Callback
+
+    messageBox._m_fn = _callback;
+    messageBox._m_context = _context;
+
     return messageBox;
 
   }
@@ -170,6 +175,11 @@ extends UIDialogBox
     // Add Buttons Box to the Dialog Box.
 
     messageBox._m_box.add(buttonsBox);
+
+    // Callback
+
+    messageBox._m_fn = _callback;
+    messageBox._m_context = _context;
 
     return messageBox;
 
