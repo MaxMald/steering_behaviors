@@ -4,7 +4,7 @@ import { Ty_Sprite } from "../../../commons/stTypes";
 import { CmpForceController } from "../../../components/cmpforceController";
 import { Master } from "../../../master/master";
 import { IForce } from "../../../steeringBehavior/iForce";
-import { UIBox } from "../uiBox";
+import { UIBox } from "../uiBox/uiBox";
 import { UIButton } from "../uiButton";
 import { UIButtonImg } from "../uiButtonImg";
 import { UILabel } from "../uiLabel";

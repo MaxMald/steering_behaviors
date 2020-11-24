@@ -150,6 +150,25 @@ export const ST_TEXT_TYPE = Object.freeze
 
 });
 
+/**
+ * Button Type
+ */
+
+export type ST_BUTTON = EnumLiteralsOf<typeof ST_BUTTON>;
+
+export const ST_BUTTON = Object.freeze
+({
+  
+  kAccept : 0 as 0,
+
+  kCancel : 1 as 1,
+
+  kYes: 2 as 2,
+
+  kNo: 4 as 4
+
+});
+
 export type ST_STEER_FORCE = EnumLiteralsOf<typeof ST_STEER_FORCE>;
 
 export const ST_STEER_FORCE = Object.freeze

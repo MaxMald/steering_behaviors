@@ -11,7 +11,7 @@
 import { BaseActor } from "../../../actors/baseActor";
 import { Ty_Sprite } from "../../../commons/stTypes";
 import { SeekForce } from "../../../steeringBehavior/forceSeek";
-import { UIBox } from "../uiBox";
+import { UIBox } from "../uiBox/uiBox";
 
 export class UIForce
 {
