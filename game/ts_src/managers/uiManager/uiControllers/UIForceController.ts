@@ -8,6 +8,7 @@ import { UIBox } from "../uiBox/uiBox";
 import { UIButton } from "../uiButton";
 import { UIButtonImg } from "../uiButtonImg";
 import { UILabel } from "../uiLabel";
+import { UILabelBox } from "../uiLabelBox";
 import { UIObject } from "../uiObject";
 import { UISlider } from "../uiSlider";
 import { UIController } from "./UIController";
@@ -243,6 +244,12 @@ export class UIForceController
     );
 
     box.add(this._ui_pauseButtonImg);
+
+    // Label Box
+
+    const labelBox = new UILabelBox(0, 0, _scene, "Label Box");
+
+    box.add(labelBox);
 
     box.setLeftAlignment();
 
