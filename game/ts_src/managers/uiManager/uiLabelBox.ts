@@ -8,6 +8,8 @@
  * @since November-18-2020
  */
 
+import { UIImage } from "./uiImage";
+import { UILabel } from "./uiLabel";
 import { UIObject } from "./uiObject";
 
 /**
@@ -227,11 +229,11 @@ export class UILabelBox
   : void
   {
 
-    this._m_box.setActive(false);
-    this._m_box.setVisible(false);
+    this._m_bg.setActive(false);
+    this._m_bg.setVisible(false);
 
-    this._m_label.setActive(false);
-    this._m_label.setVisible(false);
+    this._m_label.disable();
+    this._m_button.disable();
 
     return;
 
@@ -259,7 +261,8 @@ export class UILabelBox
   {
 
     this._m_label.destroy();
-    this._m_box.destroy();
+    this._m_bg.destroy();
+    this._m_button.destroy();
 
     super.destroy();
 
@@ -271,8 +274,10 @@ export class UILabelBox
   /* Private                                          */
   /****************************************************/
   
-  private _m_label: Phaser.GameObjects.BitmapText;
+  private _m_label: UILabel;
 
-  private _m_box: Phaser.GameObjects.Image;
+  private _m_button: UIImage;
+
+  private _m_bg: Phaser.GameObjects.Image;
 
 }

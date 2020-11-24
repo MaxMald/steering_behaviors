@@ -1,7 +1,9 @@
 /**
  * Universidad de Artes Digitales, Guadalajara - 2020
  *
- * @summary 
+ * @summary A UI Dialog Box is an emergent window with content, and pre-defined
+ * action buttons. This class provides a base class for any type of UI Dialog
+ * Box in the game.
  *
  * @file UIDialogBox.ts
  * @author Max Alberto Solano Maldonado <nuup20@gmail.com>
@@ -13,10 +15,23 @@ import { UIBox } from "../uiBox/uiBox";
 import { UILabel } from "../uiLabel";
 import { UIController } from "./UIController"
 
+/**
+ * A UI Dialog Box is an emergent window with content, and pre-defined action
+ * buttons. This class provides a base class for any type of UI Dialog Box in
+ * the game. 
+ */
 export class UIDialogBox
   extends UIController
 {
 
+  /**
+   * Creates a UI Dialog Box with no action buttons.
+   * 
+   * @param _x position in x axis. 
+   * @param _y position in y axis.
+   * @param _scene Phaser Scene.
+   * @param _title Title.
+   */
   constructor
   (
     _x: number,
@@ -48,6 +63,11 @@ export class UIDialogBox
 
   }
 
+  /**
+   * Set the Title of the Dialog Box.
+   * 
+   * @param _title title. 
+   */
   setTitle(_title: string)
   : void
   {
@@ -60,6 +80,10 @@ export class UIDialogBox
 
   }
 
+  /**
+   * Open (show) the Dialog box. This will make visible and active all the
+   * UI Objects.
+   */
   open()
   : void
   {
@@ -70,6 +94,10 @@ export class UIDialogBox
 
   }
 
+  /**
+   * Close (hide) the Dialog box. This will make invisible all the
+   * UI Objects.
+   */
   close()
   : void
   {

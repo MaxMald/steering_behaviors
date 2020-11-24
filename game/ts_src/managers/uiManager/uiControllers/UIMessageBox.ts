@@ -1,7 +1,7 @@
 /**
  * Universidad de Artes Digitales, Guadalajara - 2020
  *
- * @summary 
+ * @summary Type of Dialog Box with a single message as content.
  *
  * @file UIMessageBox.ts
  * @author Max Alberto Solano Maldonado <nuup20@gmail.com>
@@ -14,10 +14,22 @@ import { UIButton } from "../uiButton";
 import { UIText } from "../uiText";
 import { UIDialogBox } from "./UIDialogBox";
 
+/**
+ * Type of Dialog Box with a single message as content.
+ */
 export class UIMessageBox 
 extends UIDialogBox
 {
 
+  /**
+   * Create a UI Message Box with no buttons.
+   * 
+   * @param _x position in x axis. 
+   * @param _y position in y axis.
+   * @param _scene Phaser scene.
+   * @param _title Window title.
+   * @param _message Message.
+   */
   constructor
   (
     _x: number,
@@ -42,6 +54,18 @@ extends UIDialogBox
 
   }
 
+  /**
+   * Creates a UI Message Windows with an "Accept" Button at the bottom of the
+   * content.
+   * 
+   * @param _x position in x axis. 
+   * @param _y position in y axis.
+   * @param _scene Phaser Scene.
+   * @param _title Window title.
+   * @param _message Message.
+   * @param _callback Function called when any of the button were pressed.
+   * @param _context Function context.
+   */
   static CreateAccept
   (
     _x: number,
@@ -96,6 +120,18 @@ extends UIDialogBox
 
   }
 
+  /**
+   * Creates a UI Message Windows with a "Yes" and "No" Buttons at the bottom of
+   * the content.
+   * 
+   * @param _x position in x axis. 
+   * @param _y position in y axis.
+   * @param _scene Phaser Scene.
+   * @param _title Window title.
+   * @param _message Message.
+   * @param _callback Function called when any of the button were pressed.
+   * @param _context Function context.
+   */
   static CreateYesNo
   (
     _x: number,
@@ -175,6 +211,11 @@ extends UIDialogBox
 
   }
 
+  /**
+   * Set the message of this UI Message Box.
+   * 
+   * @param _msg message. 
+   */
   setMessage(_msg: string)
   : void
   {
