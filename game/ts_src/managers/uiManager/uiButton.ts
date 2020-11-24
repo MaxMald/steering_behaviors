@@ -284,6 +284,8 @@ extends UIObject
     this._m_button.x += _x;
     this._m_button.y += _y;
 
+    this._m_label.move(_x, _y);
+
     return;
   }
 
@@ -487,7 +489,9 @@ extends UIObject
 
     this._m_label.destroy();
 
-    this.destroy();
+    super.destroy();
+
+    return;
   }
 
   updateButtonSize()
