@@ -184,7 +184,7 @@ extends UIDialogBox
     buttonsBox.add(butYes);
 
     ///////////////////////////////////
-    // Yes
+    // No
 
     const butNo = UIButton.CreateButton(_x, _y, _scene, "No");
 
