@@ -232,6 +232,198 @@ import { UIObject } from "./uiObject";
   }
 
   /**
+   * @summary Constructor of combo image button.
+   * 
+   * @param _x The x position of the button.
+   * @param _y The y position of the button.
+   * @param _scene The scene where the button is gonna be created.
+   *
+   */
+  static CreateComboButtonImg
+  (
+    _x : number,
+    _y : number,
+    _scene : Phaser.Scene,
+  )
+  : UIButtonImg
+  {
+
+    // Create UIButtonImg.
+
+    const button = new UIButtonImg
+    (
+      _x,
+      _y,
+      _scene,
+      "combo_but_normal.png",
+      "combo_but_hover.png",
+      "combo_but_press.png"
+    );
+
+    return button;
+  }
+
+  /**
+   * @summary Constructor of debug image button.
+   * 
+   * @param _x The x position of the button.
+   * @param _y The y position of the button.
+   * @param _scene The scene where the button is gonna be created.
+   *
+   */
+  static CreateDebugButtonImg
+  (
+    _x : number,
+    _y : number,
+    _scene : Phaser.Scene,
+  )
+  : UIButtonImg
+  {
+
+    // Create UIButtonImg.
+
+    const button = new UIButtonImg
+    (
+      _x,
+      _y,
+      _scene,
+      "debug_idle.png",
+      "debug_hover.png",
+      "debug_press.png"
+    );
+
+    return button;
+  }
+
+  /**
+   * @summary Constructor of home image button.
+   * 
+   * @param _x The x position of the button.
+   * @param _y The y position of the button.
+   * @param _scene The scene where the button is gonna be created.
+   *
+   */
+  static CreateHomeButtonImg
+  (
+    _x : number,
+    _y : number,
+    _scene : Phaser.Scene,
+  )
+  : UIButtonImg
+  {
+
+    // Create UIButtonImg.
+
+    const button = new UIButtonImg
+    (
+      _x,
+      _y,
+      _scene,
+      "home_idle.png",
+      "home_hover.png",
+      "home_press.png"
+    );
+
+    return button;
+  }
+
+  /**
+   * @summary Constructor of info image button.
+   * 
+   * @param _x The x position of the button.
+   * @param _y The y position of the button.
+   * @param _scene The scene where the button is gonna be created.
+   *
+   */
+  static CreateInfoButtonImg
+  (
+    _x : number,
+    _y : number,
+    _scene : Phaser.Scene,
+  )
+  : UIButtonImg
+  {
+
+    // Create UIButtonImg.
+
+    const button = new UIButtonImg
+    (
+      _x,
+      _y,
+      _scene,
+      "info_idle.png",
+      "info_hover.png",
+      "info_press.png"
+    );
+
+    return button;
+  }
+
+  /**
+   * @summary Constructor of yes image button.
+   * 
+   * @param _x The x position of the button.
+   * @param _y The y position of the button.
+   * @param _scene The scene where the button is gonna be created.
+   *
+   */
+  static CreateYesButtonImg
+  (
+    _x : number,
+    _y : number,
+    _scene : Phaser.Scene,
+  )
+  : UIButtonImg
+  {
+
+    // Create UIButtonImg.
+
+    const button = new UIButtonImg
+    (
+      _x,
+      _y,
+      _scene,
+      "yes_idle.png",
+      "yes_hover.png",
+      "yes_press.png"
+    );
+
+    return button;
+  }
+
+  /**
+   * @summary Constructor of no image button.
+   * 
+   * @param _x The x position of the button.
+   * @param _y The y position of the button.
+   * @param _scene The scene where the button is gonna be created.
+   *
+   */
+  static CreateNoButtonImg
+  (
+    _x : number,
+    _y : number,
+    _scene : Phaser.Scene,
+  )
+  : UIButtonImg
+  {
+
+    // Create UIButtonImg.
+
+    const button = new UIButtonImg
+    (
+      _x,
+      _y,
+      _scene,
+      "no_idle.png",
+      "no_hover.png",
+      "no_press.png"
+    );
+
+    return button;
+  }
+
+  /**
    * The width of the UI Object.
    */
   getWidth()
