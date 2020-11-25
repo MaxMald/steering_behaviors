@@ -118,7 +118,7 @@ extends UIObject
     );
     // Set initial UILabel tint
 
-    let labeltint = 0x000000;
+    let labeltint = 0xffffff;
 
     // Check if tint have been passed on constructor.
 
@@ -135,7 +135,7 @@ extends UIObject
 
     // Set UILabel anchor to center.
   
-    label.setAnchor(0.5, 0.9);
+    label.setAnchor(0.5, 0.8);
 
     this._m_buttonWidth = button.width;
     this._m_buttonHeight = button.height;
