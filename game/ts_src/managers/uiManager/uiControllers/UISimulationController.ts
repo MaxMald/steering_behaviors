@@ -96,6 +96,10 @@ extends UIController
 
     buttonsBox.setHorizontalBox();
 
+    buttonsBox.setCenterAlignment();
+
+    buttonsBox.setElementsGap(50);
+
     // stop button image
 
     const stopButton = UIButtonImg.CreateStopButtonImg

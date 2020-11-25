@@ -52,8 +52,8 @@ extends Phaser.Scene
     this.load.atlas
     (
       'game_art',
-      "images/game_art.png",
-      "images/game_art.js"
+      "images/game_art/game_art.png",
+      "images/game_art/game_art.js"
     );
 
     this.load.bitmapFont
