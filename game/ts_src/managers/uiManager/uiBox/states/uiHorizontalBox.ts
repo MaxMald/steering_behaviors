@@ -57,6 +57,8 @@ extends UIBoxState
 
     let object : UIObject;
 
+    const lastIndex = size - 1;
+
     for(let i = 0; i < size; ++i)
     {
 
@@ -64,7 +66,16 @@ extends UIBoxState
 
       elementH = object.getHeight();
 
-      elementW = object.getWidth() + gap;
+      elementW = object.getWidth();
+
+      // Add gap space. No gap for the last element.
+
+      if(i < lastIndex)
+      {
+
+        elementW += gap;
+
+      }
 
       contentBox.width += elementW;
       if(contentBox.height < elementH)
@@ -116,7 +127,7 @@ extends UIBoxState
       this._m_vAlignFn.call(this, contentBox, object);
 
       // Set the position of the next element.
-
+      
       position.x += object.getWidth() + gap;
 
     }
