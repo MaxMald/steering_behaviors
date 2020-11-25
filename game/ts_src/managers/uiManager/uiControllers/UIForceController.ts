@@ -46,6 +46,8 @@ export class UIForceController
 
     this._ui_box = box;
 
+    box.setElementsGap(7.5);
+
     // Actor Name
 
     const actorName = UILabel.CreateStyleA(0, 0, _scene, "", 32 );

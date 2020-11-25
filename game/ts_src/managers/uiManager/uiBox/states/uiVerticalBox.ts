@@ -57,12 +57,21 @@ export class UIVerticalBox
 
     let object : UIObject;
 
+    const lastIndex = size - 1;
+
     for(let i = 0; i < size; ++i)
     {
 
       object = aObjects[i];
 
-      elementH = object.getHeight() + gap;
+      elementH = object.getHeight();
+
+      if(i < lastIndex)
+      {
+
+        elementH += gap;
+
+      }
 
       elementW = object.getWidth();
 
@@ -96,8 +105,8 @@ export class UIVerticalBox
     (
       contentBox.x,
       contentBox.y
-    );    
-
+    );  
+    
     for(let i = 0; i < size; ++i)
     {
 
