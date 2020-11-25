@@ -7,6 +7,7 @@ import { IForce } from "../../../steeringBehavior/iForce";
 import { UIBox } from "../uiBox/uiBox";
 import { UIButton } from "../uiButton";
 import { UIButtonImg } from "../uiButtonImg";
+import { UIComboBox } from "../uiComboBox";
 import { UILabel } from "../uiLabel";
 import { UILabelBox } from "../uiLabelBox";
 import { UIObject } from "../uiObject";
@@ -245,11 +246,13 @@ export class UIForceController
 
     box.add(this._ui_pauseButtonImg);
 
-    // Label Box
+    // Combo Box.
 
-    const labelBox = new UILabelBox(0, 0, _scene, "Label Box");
+    const comboBox = new UIComboBox(0, 0, _scene);
 
-    box.add(labelBox);
+    comboBox.updateCombo(["Option 1", "Option 2", "Option 3"]);
+
+    box.add(comboBox);
 
     box.setLeftAlignment();
 

@@ -12,9 +12,7 @@
  * @since November-18-2020
  */
 
-import { UILabel } from "./uiLabel";
 import { UIObject } from "./uiObject";
-import { UIText } from "./uiText";
 
 /**
  * Display text in a single line inside a box.
@@ -22,6 +20,10 @@ import { UIText } from "./uiText";
  * Events:
  * 
  * * textChanged: triggered when the text of the label had been changed.
+ * * pointerdown: need to be interactive.
+ * * pointerup: need to be interactive.
+ * * pointerover: need to be interactive.
+ * * pointerout: need to be interactive.
  */
 export class UILabelBox
   extends UIObject
@@ -42,7 +44,13 @@ export class UILabelBox
 
     // Events
 
-    this._m_listenerManager.addEvent("textChanged");
+    const listenerManager = this._m_listenerManager;
+
+    listenerManager.addEvent("textChanged");
+    listenerManager.addEvent("pointerdown");
+    listenerManager.addEvent("pointerup");
+    listenerManager.addEvent("pointerout");
+    listenerManager.addEvent("pointerover");
 
     // Init Properties
 
@@ -101,6 +109,8 @@ export class UILabelBox
 
     this._updateLabel();
 
+    this._m_isInteractive = false;
+
     return;
 
   }
@@ -157,6 +167,22 @@ export class UILabelBox
   {
 
     return this._m_bg.depth;
+
+  }
+
+  /**
+   * Set the depth value.
+   *  
+   * @param _z depth value. 
+   */
+  setZ(_z: number)
+  : void
+  {
+
+    this._m_bg.depth = _z;
+    this._m_label.depth = _z;
+
+    return;
 
   }
 
@@ -267,6 +293,26 @@ export class UILabelBox
 
   }
 
+  setTextTint(_tint: number)
+  : void
+  {
+
+    this._m_label.setTint(_tint);
+
+    return;
+
+  }
+
+  setBoxTint(_tint: number)
+  : void
+  {
+
+    this._m_bg.setTint(_tint);
+
+    return;
+
+  }
+
   /**
    * Set the label text.
    * 
@@ -285,6 +331,17 @@ export class UILabelBox
   }
 
   /**
+   * Get the text of the label.
+   */
+  getText()
+  : string
+  {
+
+    return this._m_label.text;
+
+  }
+
+  /**
    * Set the space between the background and the text.
    * 
    * @param _padding space (pixel).
@@ -296,6 +353,92 @@ export class UILabelBox
     this._m_paddingLeft = _padding;
 
     this._updateLabel();
+
+    return;
+
+  }
+
+  /**
+   * Active pointer events.
+   */
+  setInteractive()
+  : void
+  {
+
+    if(!this._m_isInteractive)
+    {
+
+      this._m_isInteractive = true;
+
+      const bg = this._m_bg;
+
+      bg.setInteractive();
+
+      // Pointer down
+
+      bg.on
+      (
+        "pointerdown",
+        function()
+        {
+
+          this._m_listenerManager.call("pointerdown", this, undefined);
+          
+          return;
+
+        },
+        this
+      );
+
+      // Pointer Up
+
+      bg.on
+      (
+        "pointerup",
+        function()
+        {
+
+          this._m_listenerManager.call("pointerup", this, undefined);
+          
+          return;
+
+        },
+        this
+      );
+
+      // Pointer Over
+
+      bg.on
+      (
+        "pointerover",
+        function()
+        {
+
+          this._m_listenerManager.call("pointerover", this, undefined);
+          
+          return;
+
+        },
+        this
+      );
+
+      // Pointer Out
+
+      bg.on
+      (
+        "pointerout",
+        function()
+        {
+
+          this._m_listenerManager.call("pointerout", this, undefined);
+          
+          return;
+
+        },
+        this
+      );
+
+    }
 
     return;
 
@@ -344,5 +487,10 @@ export class UILabelBox
   private _m_label: Phaser.GameObjects.BitmapText;
 
   private _m_bg: Phaser.GameObjects.Image;
+
+  /**
+   * Indicates if the Label Box is interactive.
+   */
+  private _m_isInteractive: boolean;
 
 }
