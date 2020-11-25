@@ -232,6 +232,38 @@ import { UIObject } from "./uiObject";
   }
 
   /**
+   * @summary Constructor of combo image button.
+   * 
+   * @param _x The x position of the button.
+   * @param _y The y position of the button.
+   * @param _scene The scene where the button is gonna be created.
+   *
+   */
+  static CreateComboButtonImg
+  (
+    _x : number,
+    _y : number,
+    _scene : Phaser.Scene,
+  )
+  : UIButtonImg
+  {
+
+    // Create UIButtonImg.
+
+    const button = new UIButtonImg
+    (
+      _x,
+      _y,
+      _scene,
+      "combo_but_normal.png",
+      "combo_but_hover.png",
+      "combo_but_press.png"
+    );
+
+    return button;
+  }
+
+  /**
    * The width of the UI Object.
    */
   getWidth()
