@@ -357,7 +357,39 @@ import { UIObject } from "./uiObject";
     );
 
     return button;
-  } 
+  }
+
+  /**
+   * @summary Constructor of yes image button.
+   * 
+   * @param _x The x position of the button.
+   * @param _y The y position of the button.
+   * @param _scene The scene where the button is gonna be created.
+   *
+   */
+  static CreateYesButtonImg
+  (
+    _x : number,
+    _y : number,
+    _scene : Phaser.Scene,
+  )
+  : UIButtonImg
+  {
+
+    // Create UIButtonImg.
+
+    const button = new UIButtonImg
+    (
+      _x,
+      _y,
+      _scene,
+      "yes_idle.png",
+      "yes_hover.png",
+      "yes_press.png"
+    );
+
+    return button;
+  }
 
   /**
    * The width of the UI Object.
