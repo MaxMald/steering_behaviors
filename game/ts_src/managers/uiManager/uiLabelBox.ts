@@ -1,7 +1,11 @@
 /**
  * Universidad de Artes Digitales, Guadalajara - 2020
  *
- * @summary 
+ * @summary Display text in a single line inside a box.
+ * 
+ * Events:
+ * 
+ * * textChanged: triggered when the text of the label had been changed.
  *
  * @file uiLabelBox.ts
  * @author Max Alberto Solano Maldonado <nuup20@gmail.com>
@@ -16,6 +20,10 @@ import { UIObject } from "./uiObject";
  * Events:
  * 
  * * textChanged: triggered when the text of the label had been changed.
+ * * pointerdown: need to be interactive.
+ * * pointerup: need to be interactive.
+ * * pointerover: need to be interactive.
+ * * pointerout: need to be interactive.
  */
 export class UILabelBox
   extends UIObject
@@ -36,11 +44,21 @@ export class UILabelBox
 
     // Events
 
-    this._m_listenerManager.addEvent("textChanged");
+    const listenerManager = this._m_listenerManager;
 
-    // Box
+    listenerManager.addEvent("textChanged");
+    listenerManager.addEvent("pointerdown");
+    listenerManager.addEvent("pointerup");
+    listenerManager.addEvent("pointerout");
+    listenerManager.addEvent("pointerover");
 
-    const box = _scene.add.image
+    // Init Properties
+
+    this._m_paddingLeft = 10;
+
+    // Label Background
+
+    const bg = _scene.add.image
     (
       _x, 
       _y, 
@@ -48,48 +66,50 @@ export class UILabelBox
       "text_box.png" 
     );
 
-    this._m_box = box;
+    this._m_bg = bg;
 
-    if(_tint !== undefined)
+    if(_boxTint !== undefined)
     {
 
-      box.setTint(_boxTint);
+      bg.setTint(_boxTint);
 
     }
 
-    box.setOrigin(0.0, 0.5);
+    bg.setOrigin(0.0, 0.5);
     
-    // Label
-
-    let font_key : string = "odin_rounded";
-
-    let font_size : number = 20;
-
-    let tint = 0x000000;
-
-    if(_tint !== undefined)
-    {
-
-      tint = _tint;
-
-    }
+    // Create UI Label
 
     const label = _scene.add.bitmapText
     (
-      _x,
-      _y,
-      font_key,
+      0,
+      0,
+      "odin_rounded",
       _text,
-      font_size
+      20
     );
 
-    label.setTint(tint);
+    label.setOrigin(0.0, 0.70);
 
-    label.setOrigin(0.0, 0.5);
+    if(_tint !== undefined)
+    {
 
-    label.setLeftAlign();
+      label.setTint(_tint);
+
+    }
+    else
+    {
+
+      label.setTint(0x000000);
+
+    }
 
     this._m_label = label;
+
+    // Update label.
+
+    this._updateLabel();
+
+    this._m_isInteractive = false;
 
     return;
 
@@ -102,7 +122,7 @@ export class UILabelBox
   : number
   {
 
-    return this._m_box.width;
+    return this._m_bg.width;
 
   }
 
@@ -113,7 +133,7 @@ export class UILabelBox
   : number
   {
 
-    return this._m_box.height;
+    return this._m_bg.height;
 
   }
 
@@ -124,7 +144,7 @@ export class UILabelBox
   : number
   {
 
-    return this._m_box.x;
+    return this._m_bg.x;
 
   }
 
@@ -135,7 +155,7 @@ export class UILabelBox
   : number
   {
 
-    return this._m_box.y;
+    return this._m_bg.y;
 
   }
 
@@ -146,7 +166,23 @@ export class UILabelBox
   : number
   {
 
-    return this._m_box.depth;
+    return this._m_bg.depth;
+
+  }
+
+  /**
+   * Set the depth value.
+   *  
+   * @param _z depth value. 
+   */
+  setZ(_z: number)
+  : void
+  {
+
+    this._m_bg.depth = _z;
+    this._m_label.depth = _z;
+
+    return;
 
   }
 
@@ -160,11 +196,10 @@ export class UILabelBox
   : void
   {
 
-    this._m_label.x += _x;
-    this._m_label.y += _y;
+    this._m_bg.x += _x;
+    this._m_bg.y += _y;
 
-    this._m_box.x += _x;
-    this._m_box.y += _y;
+    this._updateLabel();
 
     return;
 
@@ -180,8 +215,29 @@ export class UILabelBox
   : void
   {
 
-    this._m_box.setPosition(_x, _y);
-    this._m_label.setPosition(_x, _y);
+    // Set Background position
+
+    this._m_bg.setPosition(_x, _y);
+
+    this._updateLabel();
+
+    return;
+
+  }
+
+  /**
+   * Set the horizontal and vertical anchor (origin) of this UI Object.
+   * 
+   * @param _x The horizontal anchor (origin) of this UI Object.
+   * @param _y The vertical anchor (origin) of this UI Object.
+   */
+  setAnchor(_x: number, _y: number)
+  : void
+  {
+
+    this._m_bg.setOrigin(_x, _y);
+
+    this._updateLabel();
 
     return;
 
@@ -191,7 +247,7 @@ export class UILabelBox
   : number
   {
 
-    return this._m_box.originX;
+    return this._m_bg.originX;
 
   }
 
@@ -199,7 +255,7 @@ export class UILabelBox
   : number
   {
 
-    return this._m_box.originY;
+    return this._m_bg.originY;
 
   }
 
@@ -210,8 +266,8 @@ export class UILabelBox
   : void
   {
 
-    this._m_box.setActive(true);
-    this._m_box.setVisible(true);
+    this._m_bg.setActive(true);
+    this._m_bg.setVisible(true);
 
     this._m_label.setActive(true);
     this._m_label.setVisible(true);
@@ -227,11 +283,31 @@ export class UILabelBox
   : void
   {
 
-    this._m_box.setActive(false);
-    this._m_box.setVisible(false);
+    this._m_bg.setActive(false);
+    this._m_bg.setVisible(false);
 
     this._m_label.setActive(false);
     this._m_label.setVisible(false);
+
+    return;
+
+  }
+
+  setTextTint(_tint: number)
+  : void
+  {
+
+    this._m_label.setTint(_tint);
+
+    return;
+
+  }
+
+  setBoxTint(_tint: number)
+  : void
+  {
+
+    this._m_bg.setTint(_tint);
 
     return;
 
@@ -254,12 +330,129 @@ export class UILabelBox
 
   }
 
+  /**
+   * Get the text of the label.
+   */
+  getText()
+  : string
+  {
+
+    return this._m_label.text;
+
+  }
+
+  /**
+   * Set the space between the background and the text.
+   * 
+   * @param _padding space (pixel).
+   */
+  setPaddingLeft(_padding: number)
+  : void
+  {
+
+    this._m_paddingLeft = _padding;
+
+    this._updateLabel();
+
+    return;
+
+  }
+
+  /**
+   * Active pointer events.
+   */
+  setInteractive()
+  : void
+  {
+
+    if(!this._m_isInteractive)
+    {
+
+      this._m_isInteractive = true;
+
+      const bg = this._m_bg;
+
+      bg.setInteractive();
+
+      // Pointer down
+
+      bg.on
+      (
+        "pointerdown",
+        function()
+        {
+
+          this._m_listenerManager.call("pointerdown", this, undefined);
+          
+          return;
+
+        },
+        this
+      );
+
+      // Pointer Up
+
+      bg.on
+      (
+        "pointerup",
+        function()
+        {
+
+          this._m_listenerManager.call("pointerup", this, undefined);
+          
+          return;
+
+        },
+        this
+      );
+
+      // Pointer Over
+
+      bg.on
+      (
+        "pointerover",
+        function()
+        {
+
+          this._m_listenerManager.call("pointerover", this, undefined);
+          
+          return;
+
+        },
+        this
+      );
+
+      // Pointer Out
+
+      bg.on
+      (
+        "pointerout",
+        function()
+        {
+
+          this._m_listenerManager.call("pointerout", this, undefined);
+          
+          return;
+
+        },
+        this
+      );
+
+    }
+
+    return;
+
+  }
+
   destroy()
   : void
   {
 
     this._m_label.destroy();
-    this._m_box.destroy();
+    this._m_label = null;
+
+    this._m_bg.destroy();
+    this._m_bg = null;
 
     super.destroy();
 
@@ -270,9 +463,34 @@ export class UILabelBox
   /****************************************************/
   /* Private                                          */
   /****************************************************/
+
+  /**
+   * Re-position the label.
+   */
+  private _updateLabel()
+  : void
+  {
+
+    const bg = this._m_bg;
+
+    const x = bg.x - (bg.width * bg.originX) + this._m_paddingLeft;
+    const y = bg.y - (bg.height * bg.originY) + (bg.height * 0.5);
+
+    this._m_label.setPosition(x, y);
+
+    return;
+
+  }
+
+  private _m_paddingLeft: number;
   
   private _m_label: Phaser.GameObjects.BitmapText;
 
-  private _m_box: Phaser.GameObjects.Image;
+  private _m_bg: Phaser.GameObjects.Image;
+
+  /**
+   * Indicates if the Label Box is interactive.
+   */
+  private _m_isInteractive: boolean;
 
 }

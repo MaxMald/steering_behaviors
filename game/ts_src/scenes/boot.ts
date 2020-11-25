@@ -32,14 +32,14 @@ extends Phaser.Scene
     this.load.atlas
     (
       'loading_ui',
-      'images/loading_ui.png',
-      'images/loading_ui.js'
+      'images/loading/loading_ui.png',
+      'images/loading/loading_ui.js'
     );
 
     this.load.image
     (
       'loading_bg',
-      'images/loading_bg.jpg'
+      'images/loading/loading_bg.jpg'
     );
 
     return;

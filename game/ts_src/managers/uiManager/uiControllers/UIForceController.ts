@@ -1,13 +1,16 @@
 import { BaseActor } from "../../../actors/baseActor";
-import { ST_COMPONENT_ID } from "../../../commons/stEnums";
+import { ST_COLOR_ID, ST_COMPONENT_ID } from "../../../commons/stEnums";
 import { Ty_Sprite } from "../../../commons/stTypes";
 import { CmpForceController } from "../../../components/cmpforceController";
 import { Master } from "../../../master/master";
 import { IForce } from "../../../steeringBehavior/iForce";
-import { UIBox } from "../uiBox";
+import { UIBox } from "../uiBox/uiBox";
 import { UIButton } from "../uiButton";
 import { UIButtonImg } from "../uiButtonImg";
+import { UIComboBox } from "../uiComboBox";
+import { UIImage } from "../uiImage";
 import { UILabel } from "../uiLabel";
+import { UILabelBox } from "../uiLabelBox";
 import { UIObject } from "../uiObject";
 import { UISlider } from "../uiSlider";
 import { UIController } from "./UIController";
@@ -45,19 +48,34 @@ export class UIForceController
 
     // Actor Name
 
-    this._ui_actorName = UILabel.CreateH2(0, 0, _scene, "#");
+    const actorName = UILabel.CreateStyleA(0, 0, _scene, "", 32 );
 
-    box.add(this._ui_actorName);
+    this._ui_actorName = actorName;
+
+    actorName.setTint(ST_COLOR_ID.kGold);
+
+    box.add(actorName);
+
+    // Separator
+
+    box.add
+    (
+      new UIImage(0,0,_scene, "game_art", "separator_a.png")
+    );
 
     // Actual Speed
 
     this._ui_actualSpeed = UILabel.CreateStyleB(0, 0, _scene, "#");
+
+    this._ui_actualSpeed.setTint(ST_COLOR_ID.kSkyBlueNeon);
 
     box.add(this._ui_actualSpeed);
 
     // Max Speed Label
 
     this._ui_maxSpeed = UILabel.CreateStyleB(0, 0, _scene, "#");
+
+    this._ui_maxSpeed.setTint(ST_COLOR_ID.kSkyBlueNeon);
 
     box.add(this._ui_maxSpeed);
 
@@ -104,6 +122,8 @@ export class UIForceController
 
     this._ui_mass = UILabel.CreateStyleB(0, 0, _scene, "#");
 
+    this._ui_mass.setTint(ST_COLOR_ID.kSkyBlueNeon);
+
     box.add(this._ui_mass);
 
     // Mass Slider
@@ -145,104 +165,13 @@ export class UIForceController
       this
     );
 
-    // Main Menu button
+    // Combo Box.
 
-    this._ui_mainMenu = UIButton.CreateButton
-    (
-      0,
-      0,
-      _scene,
-      'Main menu'
-    );
+    const comboBox = new UIComboBox(0, 0, _scene);
 
-    box.add(this._ui_mainMenu);
+    comboBox.updateCombo(["Option 1", "Option 2", "Option 3"]);
 
-    this._ui_mainMenu.subscribe
-    (
-      "buttonReleased",
-      "button",
-      function(_sender : UIObject, _args)
-      {
-
-        const button = _sender as UIButton;
-
-        let master = Master.GetInstance();
-
-        master.onSimulationSceneDestroy(_scene);
-    
-        _scene.scene.start('main_menu');
-      },
-      this
-    );
-
-    // debug button
-
-    this._ui_debug = UIButton.CreateColorButton
-    (
-      0,
-      0,
-      _scene,
-      'Debug',
-      0x9000ff
-    );
-
-    box.add(this._ui_debug);
-
-    this._ui_debug.subscribe
-    (
-      "buttonReleased",
-      "button",
-      function(_sender : UIObject, _args)
-      {
-
-        const button = _sender as UIButton;
-
-        let master = Master.GetInstance();
-
-        if(master.isDebugEnable())
-        {
-          master.disableDebugging();
-        }
-        else
-        {
-          master.enableDebugging();
-        }
-      },
-      this
-    );
-
-    // stop button image
-
-    this._ui_StopButtonImg = UIButtonImg.CreateStopButtonImg
-    (
-      0,
-      0,
-      _scene
-    );
-
-    box.add(this._ui_StopButtonImg);
-
-    // play button image
-
-    this._ui_playButtonImg = UIButtonImg.CreatePlayButtonImg
-    (
-      0,
-      0,
-      _scene
-    );
-
-    box.add(this._ui_playButtonImg);
-
-    // pause button image
-
-    this._ui_pauseButtonImg = UIButtonImg.CreatePauseButtonImg
-    (
-      0,
-      0,
-      _scene
-    );
-
-    box.add(this._ui_pauseButtonImg);
+    box.add(comboBox);
 
     box.setLeftAlignment();
 

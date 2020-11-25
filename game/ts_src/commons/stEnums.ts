@@ -129,7 +129,13 @@ export const ST_COLOR_ID = Object.freeze
 
   kPurple : 0x800080 as 0x800080,
 
-  kBrown : 0xA52A2A as 0xA52A2A
+  kBrown : 0xA52A2A as 0xA52A2A,
+
+  kSkyBlueNeon: 0xa7edeb as 0xa7edeb,
+
+  kGold: 0xffe033 as 0xffe033,
+
+  kDarkGold: 0x94351e as 0x94351e
 
 });
 
@@ -147,6 +153,25 @@ export const ST_TEXT_TYPE = Object.freeze
   H2 : 1 as 1,
 
   Normal: 2 as 2
+
+});
+
+/**
+ * Button Type
+ */
+
+export type ST_BUTTON = EnumLiteralsOf<typeof ST_BUTTON>;
+
+export const ST_BUTTON = Object.freeze
+({
+  
+  kAccept : 0 as 0,
+
+  kCancel : 1 as 1,
+
+  kYes: 2 as 2,
+
+  kNo: 4 as 4
 
 });
 

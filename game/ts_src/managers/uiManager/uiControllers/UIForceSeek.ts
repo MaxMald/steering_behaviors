@@ -10,7 +10,7 @@
 
 import { ST_TEXT_TYPE } from "../../../commons/stEnums";
 import { SeekForce } from "../../../steeringBehavior/forceSeek";
-import { UIBox } from "../uiBox";
+import { UIBox } from "../uiBox/uiBox";
 import { UILabel } from "../uiLabel";
 import { UIObject } from "../uiObject";
 import { UISlider } from "../uiSlider";

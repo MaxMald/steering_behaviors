@@ -5,7 +5,7 @@
  *
  * @file uiButton.ts
  * @author Jorge Alexandro Zamudio Arredondo <alexzamudio_11@hotmail.com>
- * @since November-10-2020
+ * @since November-18-2020
  */
 
 
@@ -118,7 +118,7 @@ extends UIObject
     );
     // Set initial UILabel tint
 
-    let labeltint = 0x000000;
+    let labeltint = 0xffffff;
 
     // Check if tint have been passed on constructor.
 
@@ -135,7 +135,7 @@ extends UIObject
 
     // Set UILabel anchor to center.
   
-    label.setAnchor(0.5, 0.9);
+    label.setAnchor(0.5, 0.8);
 
     this._m_buttonWidth = button.width;
     this._m_buttonHeight = button.height;
@@ -283,6 +283,8 @@ extends UIObject
   {
     this._m_button.x += _x;
     this._m_button.y += _y;
+
+    this._m_label.move(_x, _y);
 
     return;
   }
@@ -487,7 +489,9 @@ extends UIObject
 
     this._m_label.destroy();
 
-    this.destroy();
+    super.destroy();
+
+    return;
   }
 
   updateButtonSize()

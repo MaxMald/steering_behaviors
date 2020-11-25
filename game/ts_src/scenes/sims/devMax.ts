@@ -16,6 +16,8 @@
  import { SimulationManager } from "../../managers/simulationManager/simulationManager";
 import { UIDialogBox } from "../../managers/uiManager/uiControllers/UIDialogBox";
 import { UIForceController } from "../../managers/uiManager/uiControllers/UIForceController";
+import { UIMessageBox } from "../../managers/uiManager/uiControllers/UIMessageBox";
+import { UISimulationController } from "../../managers/uiManager/uiControllers/UISimulationController";
 import { UIManager } from "../../managers/uiManager/uiManager";
 import { UIObject } from "../../managers/uiManager/uiObject";
 import { UISlider } from "../../managers/uiManager/uiSlider";
@@ -175,15 +177,25 @@ import { Master } from "../../master/master";
       this
     );
 
-    const uiMessageBox = new UIDialogBox
+    const uiMessageBox = UIMessageBox.CreateYesNo
     (
       400,
       200,
       this,
       "Hello World",
       "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.",
-      "game_art",
-      "img_spaceShip.png"
+      function(_buttonKey)
+      {
+        return;
+      },
+      this
+    );
+
+    const uiSimController = UISimulationController.CreateSimControlBox
+    (
+      width * 0.5,
+      20,
+      this
     );
 
     // Add UI force controller to the UI Manager.
@@ -193,6 +205,8 @@ import { Master } from "../../master/master";
     uiManager.addUIController("forceUI", uiForceController);
 
     uiManager.addUIController("messageBox", uiMessageBox);
+
+    uiManager.addUIController("mediaSimUI", uiSimController);
 
     // Set the active actor of the UI Manager.
 
