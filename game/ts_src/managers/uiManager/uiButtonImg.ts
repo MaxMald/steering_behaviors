@@ -325,6 +325,38 @@ import { UIObject } from "./uiObject";
     );
 
     return button;
+  }
+
+  /**
+   * @summary Constructor of info image button.
+   * 
+   * @param _x The x position of the button.
+   * @param _y The y position of the button.
+   * @param _scene The scene where the button is gonna be created.
+   *
+   */
+  static CreateInfoButtonImg
+  (
+    _x : number,
+    _y : number,
+    _scene : Phaser.Scene,
+  )
+  : UIButtonImg
+  {
+
+    // Create UIButtonImg.
+
+    const button = new UIButtonImg
+    (
+      _x,
+      _y,
+      _scene,
+      "info_idle.png",
+      "info_hover.png",
+      "info_press.png"
+    );
+
+    return button;
   } 
 
   /**
