@@ -264,6 +264,38 @@ import { UIObject } from "./uiObject";
   }
 
   /**
+   * @summary Constructor of debug image button.
+   * 
+   * @param _x The x position of the button.
+   * @param _y The y position of the button.
+   * @param _scene The scene where the button is gonna be created.
+   *
+   */
+  static CreateDebugButtonImg
+  (
+    _x : number,
+    _y : number,
+    _scene : Phaser.Scene,
+  )
+  : UIButtonImg
+  {
+
+    // Create UIButtonImg.
+
+    const button = new UIButtonImg
+    (
+      _x,
+      _y,
+      _scene,
+      "debug_idle.png",
+      "debug_hover.png",
+      "debug_press.png"
+    );
+
+    return button;
+  } 
+
+  /**
    * The width of the UI Object.
    */
   getWidth()
