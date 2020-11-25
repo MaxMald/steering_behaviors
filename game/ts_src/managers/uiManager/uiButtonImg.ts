@@ -293,6 +293,38 @@ import { UIObject } from "./uiObject";
     );
 
     return button;
+  }
+
+  /**
+   * @summary Constructor of home image button.
+   * 
+   * @param _x The x position of the button.
+   * @param _y The y position of the button.
+   * @param _scene The scene where the button is gonna be created.
+   *
+   */
+  static CreateHomeButtonImg
+  (
+    _x : number,
+    _y : number,
+    _scene : Phaser.Scene,
+  )
+  : UIButtonImg
+  {
+
+    // Create UIButtonImg.
+
+    const button = new UIButtonImg
+    (
+      _x,
+      _y,
+      _scene,
+      "home_idle.png",
+      "home_hover.png",
+      "home_press.png"
+    );
+
+    return button;
   } 
 
   /**
