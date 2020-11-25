@@ -392,6 +392,38 @@ import { UIObject } from "./uiObject";
   }
 
   /**
+   * @summary Constructor of no image button.
+   * 
+   * @param _x The x position of the button.
+   * @param _y The y position of the button.
+   * @param _scene The scene where the button is gonna be created.
+   *
+   */
+  static CreateNoButtonImg
+  (
+    _x : number,
+    _y : number,
+    _scene : Phaser.Scene,
+  )
+  : UIButtonImg
+  {
+
+    // Create UIButtonImg.
+
+    const button = new UIButtonImg
+    (
+      _x,
+      _y,
+      _scene,
+      "no_idle.png",
+      "no_hover.png",
+      "no_press.png"
+    );
+
+    return button;
+  }
+
+  /**
    * The width of the UI Object.
    */
   getWidth()
