@@ -171,6 +171,19 @@ export class UIObject
   }
 
   /**
+   * Set the depth value.
+   *  
+   * @param _z depth value. 
+   */
+  setZ(_z: number)
+  : void
+  {
+
+    return;
+
+  }
+
+  /**
    * Move the UI Object an amount.
    * 
    * @param _x amount in x axis. 
