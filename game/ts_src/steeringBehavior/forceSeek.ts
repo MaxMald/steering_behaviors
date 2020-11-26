@@ -254,7 +254,9 @@ implements IForce
     this._m_self = null;
 
     this._m_debugManager = null;
+    
     return;
+    
   }
   
   /****************************************************/

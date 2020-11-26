@@ -8,7 +8,7 @@
  * @since November-12-2020
  */
 
-import { ST_TEXT_TYPE } from "../../../commons/stEnums";
+import { ST_COLOR_ID } from "../../../commons/stEnums";
 import { SeekForce } from "../../../steeringBehavior/forceSeek";
 import { UIBox } from "../uiBox/uiBox";
 import { UILabel } from "../uiLabel";
@@ -31,11 +31,19 @@ extends UIForce
 
     this._m_box = box;
 
+    box.setPadding(10, 18);
+
+    box.setElementsGap(7.5);
+
     // Title
 
-    this._m_title = UILabel.CreateH2(0, 0, _scene, "Seek Force");
+    const title = UILabel.CreateStyleA(0, 0, _scene, "Seek Force", 25);
 
-    box.add(this._m_title);
+    title.setTint(ST_COLOR_ID.kGold);
+
+    this._m_title = title;
+
+    box.add(title);
 
     // Force Magnitude label
 
@@ -104,7 +112,7 @@ extends UIForce
 
       this.setForceLabel(this._m_seek.getActualForce());
     
-    }    
+    }
 
     return;
 
