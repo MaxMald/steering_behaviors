@@ -118,7 +118,7 @@ extends Phaser.Scene
 
     // Create Phaser GameObject.
 
-    let shipSprite : Ty_Sprite = this.add.sprite(0, 0,'space_ship');
+    let shipSprite : Ty_Sprite = this.add.sprite(0, 0, 'game_art', 'blueShip.png');
 
     // Create Actor.
 
@@ -156,7 +156,7 @@ extends Phaser.Scene
     shipActor.sendMessage
     (
       ST_MESSAGE_ID.kSetScale,
-      new Phaser.Math.Vector2(0.1, 0.1)
+      new Phaser.Math.Vector2(0.5, 0.5)
     );
 
     // Set Actor Mass.
@@ -180,7 +180,7 @@ extends Phaser.Scene
 
     // Create Phaser GameObject.
 
-    let targetSprite : Ty_Sprite = this.add.sprite(0, 0,'space_ship');
+    let targetSprite : Ty_Sprite = this.add.sprite(0, 0, 'game_art', 'redShip.png');
 
     // Create Target.
 
@@ -210,7 +210,7 @@ extends Phaser.Scene
     targetActor.sendMessage
     (
       ST_MESSAGE_ID.kSetScale,
-      new Phaser.Math.Vector2(0.1, 0.1)
+      new Phaser.Math.Vector2(0.5, 0.5)
     );
 
     // Set Target Mass.

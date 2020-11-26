@@ -120,7 +120,7 @@ extends Phaser.Scene
 
     // Create Phaser GameObject.
 
-    let shipSprite : Ty_Sprite = this.add.sprite(0, 0,'space_ship');
+    let shipSprite : Ty_Sprite = this.add.sprite(0, 0, 'game_art', 'blueShip.png');
 
     // Create Actor.
 
@@ -150,7 +150,7 @@ extends Phaser.Scene
     shipActor.sendMessage
     (
       ST_MESSAGE_ID.kSetScale,
-      new Phaser.Math.Vector2(0.1, 0.1)
+      new Phaser.Math.Vector2(0.5, 0.5)
     );
 
     // Set Actor Mass.
@@ -174,15 +174,15 @@ extends Phaser.Scene
 
     // Create Phaser GameObject.
     
-    let obstacleSprite0 : Ty_Sprite = this.add.sprite(0, 0,'space_ship');
-    let obstacleSprite1 : Ty_Sprite = this.add.sprite(0, 0,'space_ship');
-    let obstacleSprite2 : Ty_Sprite = this.add.sprite(0, 0,'space_ship');
-    let obstacleSprite3 : Ty_Sprite = this.add.sprite(0, 0,'space_ship');
-    let obstacleSprite4 : Ty_Sprite = this.add.sprite(0, 0,'space_ship');
-    let obstacleSprite5 : Ty_Sprite = this.add.sprite(0, 0,'space_ship');
-    let obstacleSprite6 : Ty_Sprite = this.add.sprite(0, 0,'space_ship');
-    let obstacleSprite7 : Ty_Sprite = this.add.sprite(0, 0,'space_ship');
-
+    let obstacleSprite0 : Ty_Sprite = this.add.sprite(0, 0, 'game_art', 'redShip.png');
+    let obstacleSprite1 : Ty_Sprite = this.add.sprite(0, 0, 'game_art', 'redShip.png');
+    let obstacleSprite2 : Ty_Sprite = this.add.sprite(0, 0, 'game_art', 'redShip.png');
+    let obstacleSprite3 : Ty_Sprite = this.add.sprite(0, 0, 'game_art', 'redShip.png');
+    let obstacleSprite4 : Ty_Sprite = this.add.sprite(0, 0, 'game_art', 'redShip.png');
+    let obstacleSprite5 : Ty_Sprite = this.add.sprite(0, 0, 'game_art', 'redShip.png');
+    let obstacleSprite6 : Ty_Sprite = this.add.sprite(0, 0, 'game_art', 'redShip.png');
+    let obstacleSprite7 : Ty_Sprite = this.add.sprite(0, 0, 'game_art', 'redShip.png');
+    
     // Create obstacle Actors.
 
     let obstacleActor0 = BaseActor.Create<Ty_Sprite>(obstacleSprite0, 'obstacle0');
@@ -246,14 +246,14 @@ extends Phaser.Scene
 
     // Set obstacle actors scale.
 
-    obstacleActor0.sendMessage(ST_MESSAGE_ID.kSetScale, new Phaser.Math.Vector2(0.1, 0.1));
-    obstacleActor1.sendMessage(ST_MESSAGE_ID.kSetScale, new Phaser.Math.Vector2(0.1, 0.1));
-    obstacleActor2.sendMessage(ST_MESSAGE_ID.kSetScale, new Phaser.Math.Vector2(0.1, 0.1));
-    obstacleActor3.sendMessage(ST_MESSAGE_ID.kSetScale, new Phaser.Math.Vector2(0.1, 0.1));
-    obstacleActor4.sendMessage(ST_MESSAGE_ID.kSetScale, new Phaser.Math.Vector2(0.1, 0.1));
-    obstacleActor5.sendMessage(ST_MESSAGE_ID.kSetScale, new Phaser.Math.Vector2(0.1, 0.1));
-    obstacleActor6.sendMessage(ST_MESSAGE_ID.kSetScale, new Phaser.Math.Vector2(0.1, 0.1));
-    obstacleActor7.sendMessage(ST_MESSAGE_ID.kSetScale, new Phaser.Math.Vector2(0.1, 0.1));
+    obstacleActor0.sendMessage(ST_MESSAGE_ID.kSetScale, new Phaser.Math.Vector2(0.5, 0.5));
+    obstacleActor1.sendMessage(ST_MESSAGE_ID.kSetScale, new Phaser.Math.Vector2(0.5, 0.5));
+    obstacleActor2.sendMessage(ST_MESSAGE_ID.kSetScale, new Phaser.Math.Vector2(0.5, 0.5));
+    obstacleActor3.sendMessage(ST_MESSAGE_ID.kSetScale, new Phaser.Math.Vector2(0.5, 0.5));
+    obstacleActor4.sendMessage(ST_MESSAGE_ID.kSetScale, new Phaser.Math.Vector2(0.5, 0.5));
+    obstacleActor5.sendMessage(ST_MESSAGE_ID.kSetScale, new Phaser.Math.Vector2(0.5, 0.5));
+    obstacleActor6.sendMessage(ST_MESSAGE_ID.kSetScale, new Phaser.Math.Vector2(0.5, 0.5));
+    obstacleActor7.sendMessage(ST_MESSAGE_ID.kSetScale, new Phaser.Math.Vector2(0.5, 0.5));
 
     // Set obstacle actors Mass.
 

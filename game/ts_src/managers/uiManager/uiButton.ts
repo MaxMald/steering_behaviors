@@ -9,6 +9,7 @@
  */
 
 
+import { ST_COLOR_ID } from "../../commons/stEnums";
 import { Point } from "../../commons/stTypes";
 import { UILabel } from "./uiLabel";
 import { UIObject } from "./uiObject";
@@ -89,7 +90,7 @@ extends UIObject
 
     // Set label tint
 
-    this._m_buttonTint = 0xffffff;
+    this._m_buttonTint = ST_COLOR_ID.kWhite;
 
     if(_buttonTint !== undefined)
     {
