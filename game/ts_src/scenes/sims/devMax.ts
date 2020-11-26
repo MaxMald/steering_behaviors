@@ -83,6 +83,14 @@ import { Master } from "../../master/master";
        ST_MESSAGE_ID.kSetMaxSpeed,
        500
      );
+
+    // Set Actor scale.
+    
+    shipActor.sendMessage
+    (
+      ST_MESSAGE_ID.kSetScale,
+      new Phaser.Math.Vector2(0.5, 0.5)
+    );
  
      let canvas = this.game.canvas;
  
@@ -125,6 +133,14 @@ import { Master } from "../../master/master";
      targetActor.addComponent(new CmpSpriteController());
  
      targetActor.init();    
+
+     // Set target scale.
+    
+    targetActor.sendMessage
+    (
+      ST_MESSAGE_ID.kSetScale,
+      new Phaser.Math.Vector2(0.5, 0.5)
+    );
  
      targetActor.sendMessage
      (

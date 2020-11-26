@@ -60,8 +60,8 @@ import { WanderForce } from "../../steeringBehavior/forceWander";
      ///////////////////////////////////
      // Create Sprites and Actors
  
-     let shipSprtP0 : Ty_Sprite = this.add.sprite( 0, 0,'space_ship');
-     let fleeSprt0 : Ty_Sprite = this.add.sprite(0, 0, 'space_ship');
+     let shipSprtP0 : Ty_Sprite = this.add.sprite( 0, 0, 'game_art', 'blueShip.png');
+     let fleeSprt0 : Ty_Sprite = this.add.sprite(0, 0, 'game_art', 'redShip.png');
  
      let fleeActor0 = BaseActor.Create<Ty_Sprite>(fleeSprt0, 'SpaceShip0');
      let pursueActor0 = BaseActor.Create<Ty_Sprite>(shipSprtP0, 'SpaceShipP0');
@@ -97,13 +97,13 @@ import { WanderForce } from "../../steeringBehavior/forceWander";
      pursueActor0.sendMessage
      (
        ST_MESSAGE_ID.kSetScale,
-       new Phaser.Math.Vector2(0.125, 0.125)
+       new Phaser.Math.Vector2(0.5, 0.5)
      );
 
      fleeActor0.sendMessage
      (
        ST_MESSAGE_ID.kSetScale,
-       new Phaser.Math.Vector2(0.2, 0.2)
+       new Phaser.Math.Vector2(0.5, 0.5)
      );
  
      // Get canvas data
@@ -143,14 +143,14 @@ import { WanderForce } from "../../steeringBehavior/forceWander";
 
      // Create path sprites and array to follow
 
-     let pathSprt0 : Ty_Sprite = this.add.sprite( 0, 0,'space_ship');
-     let pathSprt1 : Ty_Sprite = this.add.sprite( 0, 0,'space_ship');
-     let pathSprt2 : Ty_Sprite = this.add.sprite( 0, 0,'space_ship');
-     let pathSprt3 : Ty_Sprite = this.add.sprite( 0, 0,'space_ship');
-     let pathSprt4 : Ty_Sprite = this.add.sprite( 0, 0,'space_ship');
-     let pathSprt5 : Ty_Sprite = this.add.sprite( 0, 0,'space_ship');
-     let pathSprt6 : Ty_Sprite = this.add.sprite( 0, 0,'space_ship');
-     let pathSprt7 : Ty_Sprite = this.add.sprite( 0, 0,'space_ship');
+     let pathSprt0 : Ty_Sprite = this.add.sprite( 0, 0, 'game_art', 'redShip.png');
+     let pathSprt1 : Ty_Sprite = this.add.sprite( 0, 0, 'game_art', 'redShip.png');
+     let pathSprt2 : Ty_Sprite = this.add.sprite( 0, 0, 'game_art', 'redShip.png');
+     let pathSprt3 : Ty_Sprite = this.add.sprite( 0, 0, 'game_art', 'redShip.png');
+     let pathSprt4 : Ty_Sprite = this.add.sprite( 0, 0, 'game_art', 'redShip.png');
+     let pathSprt5 : Ty_Sprite = this.add.sprite( 0, 0, 'game_art', 'redShip.png');
+     let pathSprt6 : Ty_Sprite = this.add.sprite( 0, 0, 'game_art', 'redShip.png');
+     let pathSprt7 : Ty_Sprite = this.add.sprite( 0, 0, 'game_art', 'redShip.png');
 
      let pathActor0 = BaseActor.Create(pathSprt0, 'path0');
      let pathActor1 = BaseActor.Create(pathSprt1, 'path1');
