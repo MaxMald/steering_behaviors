@@ -1,8 +1,7 @@
 import { BaseActor } from "../../../actors/baseActor";
-import { ST_COLOR_ID, ST_COMPONENT_ID } from "../../../commons/stEnums";
+import { ST_COLOR_ID, ST_COMPONENT_ID, ST_MANAGER_ID } from "../../../commons/stEnums";
 import { Ty_Sprite } from "../../../commons/stTypes";
 import { CmpForceController } from "../../../components/cmpforceController";
-import { Master } from "../../../master/master";
 import { IForce } from "../../../steeringBehavior/iForce";
 import { UIBox } from "../uiBox/uiBox";
 import { UIButton } from "../uiButton";
@@ -10,9 +9,9 @@ import { UIButtonImg } from "../uiButtonImg";
 import { UIComboBox } from "../uiComboBox";
 import { UIImage } from "../uiImage";
 import { UILabel } from "../uiLabel";
-import { UILabelBox } from "../uiLabelBox";
 import { UIObject } from "../uiObject";
 import { UISlider } from "../uiSlider";
+import { UISpeedometer } from "../uiSpeedometer";
 import { UIController } from "./UIController";
 import { UIForce } from "./UIForce";
 import { UIForceFactory } from "./UIForceFactory";
@@ -64,6 +63,14 @@ export class UIForceController
     (
       new UIImage(0,0,_scene, "game_art", "separator_a.png")
     );
+
+    // Speedometer 
+
+    const speedometer = new UISpeedometer(0,0,_scene);
+
+    this._ui_speedometer = speedometer;
+
+    box.add(speedometer);
 
     // Actual Speed
 
@@ -210,9 +217,11 @@ export class UIForceController
       (
         this._updateUIForce,
         this
-      );
+      );      
 
     }
+
+    this._updateSpeedometer();
 
     return;
 
@@ -380,6 +389,31 @@ export class UIForceController
 
   }
 
+  private _updateSpeedometer()
+  : void
+  {
+
+    const forceController = this._m_forceController;
+
+    if(forceController !== undefined)
+    {      
+
+      const t = forceController.getSpeed() / forceController.getMaxSpeed();
+
+      this._ui_speedometer.updatePointerAngle(-180.0 * (1 - t));
+
+    }
+    else
+    {
+
+      this._ui_speedometer.updatePointerAngle(180.0);
+
+    }
+
+    return;
+
+  }
+
   private _addUIForce(_uiForce: UIForce)
   : void
   {
@@ -432,6 +466,8 @@ export class UIForceController
   private _m_aUIForce : Array<UIForce>;
 
   // UI Objects
+
+  private _ui_speedometer: UISpeedometer;
 
   private _ui_box: UIBox;
 
