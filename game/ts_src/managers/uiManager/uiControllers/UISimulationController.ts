@@ -9,9 +9,11 @@
  */
 
 import { BaseActor } from "../../../actors/baseActor";
+import { ST_COLOR_ID } from "../../../commons/stEnums";
 import { Ty_Sprite } from "../../../commons/stTypes";
 import { UIBox } from "../uiBox/uiBox";
 import { UIButtonImg } from "../uiButtonImg";
+import { UIImage } from "../uiImage";
 import { UILabel } from "../uiLabel";
 import { UIController } from "./UIController";
 
@@ -67,9 +69,16 @@ extends UIController
 
     }
 
-    this._m_boxTitle = UILabel.CreateH2(0, 0, _scene, this._ui_boxTitle);
+    this._m_boxTitle = UILabel.CreateStyleA(0, 0, _scene, this._ui_boxTitle, 32);
+
+    this._m_boxTitle.setTint(ST_COLOR_ID.kGold);
 
     box.add(this._m_boxTitle);
+
+    box.add
+    (
+      new UIImage(0,0,_scene, "game_art", "separator_a.png")
+    );
   }
 
   /**
