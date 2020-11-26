@@ -59,7 +59,7 @@ import { Master } from "../../master/master";
  
      // Step I : Create Phaser GameObject
  
-     let shipSprite : Ty_Sprite = this.add.sprite( 0, 0,'space_ship');
+     let shipSprite : Ty_Sprite = this.add.sprite( 0, 0, 'game_art', 'blueShip.png');
  
      // Set II : create Actor.
  
@@ -82,12 +82,6 @@ import { Master } from "../../master/master";
      (
        ST_MESSAGE_ID.kSetMaxSpeed,
        500
-     );
- 
-     shipActor.sendMessage
-     (
-       ST_MESSAGE_ID.kSetScale,
-       new Phaser.Math.Vector2(0.2, 0.2)
      );
  
      let canvas = this.game.canvas;
@@ -114,7 +108,7 @@ import { Master } from "../../master/master";
  
      this._m_target_position = new Phaser.Math.Vector2();
  
-     let targetSprite = this.add.sprite(0, 0, 'space_ship');
+     let targetSprite = this.add.sprite(0, 0, 'game_art', 'redShip.png');
  
      let targetActor =  BaseActor.Create<Ty_Sprite>
      (
@@ -131,12 +125,6 @@ import { Master } from "../../master/master";
      targetActor.addComponent(new CmpSpriteController());
  
      targetActor.init();    
- 
-     targetActor.sendMessage
-     (
-       ST_MESSAGE_ID.kSetScale,
-       new Phaser.Math.Vector2(0.1, 0.1)
-     );
  
      targetActor.sendMessage
      (
