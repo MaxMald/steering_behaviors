@@ -127,8 +127,7 @@ extends UIForce
 
     this._m_seek = _force as SeekForce;
 
-<<<<<<< HEAD
-    if(_force !== undefined)
+    if(this._m_seek !== undefined)
     {
 
       if(_force.getType() !== ST_STEER_FORCE.kSeek)
@@ -138,11 +137,6 @@ extends UIForce
 
       }
 
-=======
-    if(this._m_seek !== undefined)
-    {
-
->>>>>>> origin/dev_alex
       this.setForceLabel(this._m_seek.getActualForce());
 
       this._m_forceSlider.setValue(this._m_seek.getMaxMagnitude());
