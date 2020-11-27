@@ -48,9 +48,9 @@ extends UIForce
 
     // Force Magnitude label
 
-    this._m_force = UILabel.CreateStyleB(0, 0, _scene, "#");
+    this._m_labelForce = UILabel.CreateStyleB(0, 0, _scene, "#");
 
-    box.add(this._m_force);
+    box.add(this._m_labelForce);
 
     // Maximum Force Label.
 
@@ -127,6 +127,7 @@ extends UIForce
 
     this._m_seek = _force as SeekForce;
 
+<<<<<<< HEAD
     if(_force !== undefined)
     {
 
@@ -137,6 +138,11 @@ extends UIForce
 
       }
 
+=======
+    if(this._m_seek !== undefined)
+    {
+
+>>>>>>> origin/dev_alex
       this.setForceLabel(this._m_seek.getActualForce());
 
       this._m_forceSlider.setValue(this._m_seek.getMaxMagnitude());
@@ -161,7 +167,7 @@ extends UIForce
   :void
   {
 
-    this._m_force.setText("Force Magnitude: " + _force.toPrecision(3) + " uN.");
+    this._m_labelForce.setText("Force Magnitude: " + _force.toPrecision(3) + " uN.");
 
     return;
 
@@ -201,7 +207,7 @@ extends UIForce
 
   private _m_title: UILabel;
 
-  private _m_force: UILabel;
+  private _m_labelForce: UILabel;
 
   private _m_maxMagnitude: UILabel;
 

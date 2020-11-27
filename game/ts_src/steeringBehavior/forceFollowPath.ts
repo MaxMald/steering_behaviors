@@ -215,6 +215,22 @@ implements IForce
 
   }
 
+  getMaxMagnitude()
+  : number
+  {
+
+    return this._m_force;
+
+  }
+
+  getActualForce()
+  : number
+  {
+
+    return this.m_seek.getActualForce();
+
+  }
+
   /**
    * Safely destroys this force.
    */

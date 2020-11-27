@@ -14,6 +14,7 @@ import { BaseActor } from "../actors/baseActor";
 import { ST_COMPONENT_ID } from "../commons/stEnums";
 import { Ty_Sprite, V2 } from "../commons/stTypes";
 import { Master } from "../master/master";
+import { SeekForce } from "../steeringBehavior/forceSeek";
 import { CmpForceController } from "./cmpforceController";
 import { IBaseComponent } from "./iBaseComponent";
 
@@ -67,7 +68,7 @@ implements IBaseComponent<Ty_Sprite>
 
     this._m_fireBackAnim.setPosition(this._m_v2_spritePosition.x, this._m_v2_spritePosition.y);
 
-    const deltaSpeed = forceController.getSpeed() / forceController.getMaxSpeed();
+    const deltaSpeed = forceController.getTotalActualForceMagnitude() / forceController.getTotalMaxForceMagnitude();
 
     this._m_fireBackAnim.setScale(this._m_sprite.scaleX * deltaSpeed, this._m_sprite.scaleY);
 
