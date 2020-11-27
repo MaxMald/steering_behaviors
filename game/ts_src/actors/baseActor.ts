@@ -404,7 +404,7 @@ implements IActor
   protected _cmpSimulationStop(_component : IBaseComponent<T>)
   : void
   {
-    _component.onSimulationStart();
+    _component.onSimulationStop();
     return;
   }
 

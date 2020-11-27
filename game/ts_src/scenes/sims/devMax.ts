@@ -215,11 +215,6 @@ import { Master } from "../../master/master";
     // Set the active actor of the UI Manager.
 
     uiManager.setTarget(shipActor);
-
-    ///////////////////////////////////
-     // Active Debugging
- 
-     this._m_master.enableDebugging();
  
      return;
    }

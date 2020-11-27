@@ -52,12 +52,15 @@ implements IManager
   update(_dt: number)
   : void 
   {
+
     this._m_actors.forEach
     (
       this._updateActor,
       this
     );
+
     return;
+
   }
 
   /**

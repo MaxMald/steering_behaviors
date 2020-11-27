@@ -263,7 +263,7 @@ extends UIController
   : void
   {
 
-    if(this._m_simulationManager.getState() === ST_SIM_SATE.kRunning)
+    if( this._m_simulationManager.getState() !== ST_SIM_SATE.kStopped)
     {
 
       this.m_master.stopSimulation();

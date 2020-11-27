@@ -9,9 +9,10 @@
  */
 
 import { BaseActor } from "../actors/baseActor";
-import { ST_COLOR_ID, ST_COMPONENT_ID, ST_MANAGER_ID, ST_MESSAGE_ID } from "../commons/stEnums";
+import { ST_COLOR_ID, ST_COMPONENT_ID, ST_MANAGER_ID, ST_MESSAGE_ID, ST_SIM_SATE } from "../commons/stEnums";
 import { Ty_Sprite, V2 } from "../commons/stTypes";
 import { DebugManager } from "../managers/debugManager/debugManager";
+import { SimulationManager } from "../managers/simulationManager/simulationManager";
 import { Master } from "../master/master";
 import { IForce } from "../steeringBehavior/iForce";
 import { IBaseComponent } from "./iBaseComponent";
@@ -93,6 +94,27 @@ implements IBaseComponent<Ty_Sprite>
     // Save a reference to the actor.
 
     this._m_actor = _actor;
+
+    ////////////////////////////////////
+    // Simulation State
+
+    const simulationManager = this._m_master.getManager<SimulationManager>
+    (
+      ST_MANAGER_ID.kSimManager
+    );
+
+    if(simulationManager.getState() === ST_SIM_SATE.kRunning)
+    {
+
+      this.onSimulationStart();
+
+    }
+    else
+    {
+
+      this.onSimulationStop();
+
+    }
 
     return;
   }
