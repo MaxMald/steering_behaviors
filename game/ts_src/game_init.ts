@@ -17,6 +17,7 @@ import { ScnDevSumano } from "./scenes/sims/devSumano";
 import { ScnArrival } from "./scenes/sims/sceneArrival";
 import { ScnWander } from "./scenes/sims/sceneWander";
 import { ScnObstacleAvoidance } from "./scenes/sims/sceneObstacleAvoidance";
+import { ScnFlee } from "./scenes/sims/sceneFlee";
 /**
  * Starts Application.
  */
@@ -92,6 +93,7 @@ class GameInit
     this.m_game.scene.add('main_menu', MainMenu);
 
     this.m_game.scene.add('devMax', ScnDevMax);
+    this.m_game.scene.add('sceneFlee', ScnFlee);
     this.m_game.scene.add('devSumano', ScnDevSumano);
     this.m_game.scene.add('sceneArrival', ScnArrival);
     this.m_game.scene.add('sceneWander', ScnWander);

@@ -24,12 +24,21 @@ extends Phaser.Scene
     this._createButton
     (
       midWidth,
-      150,
+      75,
       'Max',
       this._onDevMax
     );
 
-    // Alex Dev scene button
+    // Flee scene button
+    this._createButton
+    (
+      midWidth,
+      225,
+      'Flee',
+      this._onSceneFlee
+    );
+
+    // Arrival scene button
     this._createButton
     (
       midWidth - 300,
@@ -38,7 +47,7 @@ extends Phaser.Scene
       this._onSceneArrival
     );
 
-    // Force Arrival scene button
+    // Wander scene button
     this._createButton
     (
       midWidth,
@@ -47,7 +56,7 @@ extends Phaser.Scene
       this._onSceneWander
     );
 
-    // Force Obstacle Avoidance scene button
+    // Obstacle Avoidance scene button
     this._createButton
     (
       midWidth + 300,
@@ -134,6 +143,13 @@ extends Phaser.Scene
 
   ///////////////////////////////////
   // Callbacks
+
+  private _onSceneFlee()
+  : void
+  {
+    this.scene.start('sceneFlee');
+    return;
+  }
 
   private _onSceneArrival()
   : void
