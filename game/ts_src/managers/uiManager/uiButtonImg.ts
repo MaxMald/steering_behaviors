@@ -598,7 +598,7 @@ import { UIObject } from "./uiObject";
   {
     this._m_button.destroy();
 
-    this.destroy();
+    super.destroy();
   }
 
   /****************************************************/
