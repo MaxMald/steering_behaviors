@@ -10,6 +10,7 @@
 
 import { ST_COLOR_ID } from "../../../commons/stEnums";
 import { SeekForce } from "../../../steeringBehavior/forceSeek";
+import { IForce } from "../../../steeringBehavior/iForce";
 import { UIBox } from "../uiBox/uiBox";
 import { UILabel } from "../uiLabel";
 import { UIObject } from "../uiObject";
@@ -47,9 +48,9 @@ extends UIForce
 
     // Force Magnitude label
 
-    this._m_force = UILabel.CreateStyleB(0, 0, _scene, "#");
+    this._m_labelForce = UILabel.CreateStyleB(0, 0, _scene, "#");
 
-    box.add(this._m_force);
+    box.add(this._m_labelForce);
 
     // Maximum Force Label.
 
@@ -118,18 +119,18 @@ extends UIForce
 
   }
 
-  setTarget(_seekForce: SeekForce)
+  setTarget(_force: IForce)
   : void
   {
 
-    this._m_seek = _seekForce;
+    this._m_seek = _force as SeekForce;
 
-    if(_seekForce !== undefined)
+    if(this._m_seek !== undefined)
     {
 
-      this.setForceLabel(_seekForce.getActualForce());
+      this.setForceLabel(this._m_seek.getActualForce());
 
-      this._m_forceSlider.setValue(_seekForce.getMaxMagnitude());
+      this._m_forceSlider.setValue(this._m_seek.getMaxMagnitude());
 
     }
 
@@ -151,7 +152,7 @@ extends UIForce
   :void
   {
 
-    this._m_force.setText("Force Magnitude: " + _force.toPrecision(3) + " uN.");
+    this._m_labelForce.setText("Force Magnitude: " + _force.toPrecision(3) + " uN.");
 
     return;
 
@@ -191,7 +192,7 @@ extends UIForce
 
   private _m_title: UILabel;
 
-  private _m_force: UILabel;
+  private _m_labelForce: UILabel;
 
   private _m_maxMagnitude: UILabel;
 
