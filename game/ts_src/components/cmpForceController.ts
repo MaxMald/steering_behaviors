@@ -551,6 +551,31 @@ implements IBaseComponent<Ty_Sprite>
   }
 
   /**
+   * @summary Get the total actual force magnitude of this force controller.
+   */
+  getTotalActualForceMagnitude()
+  : number
+  {
+    return this._m_totalForce.length();
+  }
+
+  /**
+   * @summary Get the total max force magnitude of this force controller.
+   */
+  getTotalMaxForceMagnitude()
+  : number
+  {
+
+    let totalMaxForceMagnitude = 0;
+
+    this._m_hForce.forEach(force => {
+      totalMaxForceMagnitude += force.getMaxMagnitude();
+    });
+    
+    return totalMaxForceMagnitude;
+  }
+
+  /**
    * Check if the force controller is running.
    * 
    * @returns true if the force controller is running.

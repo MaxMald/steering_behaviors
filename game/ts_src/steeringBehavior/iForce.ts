@@ -59,6 +59,18 @@ export interface IForce
   : number;
 
   /**
+   * Get the max magnitude of this force.
+   */
+  getMaxMagnitude()
+  : number;
+
+  /**
+   * Get the actual force of this force.
+   */
+  getActualForce()
+  : number;
+
+  /**
    * Safely destroys this force.
    */
   destroy()
