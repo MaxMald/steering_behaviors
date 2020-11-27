@@ -31,6 +31,12 @@ extends Phaser.Scene
 
     // TODO
 
+    this.load.animation
+    (
+      'afireBack',
+      'animations/backFireAnimation.json'
+    );
+
     this.load.image
     (
       'button',
