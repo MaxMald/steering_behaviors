@@ -14,6 +14,7 @@ import { ST_COMPONENT_ID, ST_MANAGER_ID, ST_MESSAGE_ID } from "../../commons/stE
 import { Ty_Sprite, V2 } from "../../commons/stTypes";
 import { CmpForceController } from "../../components/cmpforceController";
 import { CmpSpriteController } from "../../components/cmpSpriteController";
+import { ShipFactory } from "../../factories/shipFactory";
 import { SimulationManager } from "../../managers/simulationManager/simulationManager";
 import { UIButton } from "../../managers/uiManager/uiButton";
 import { UIObject } from "../../managers/uiManager/uiObject";
@@ -118,24 +119,14 @@ extends Phaser.Scene
     ///////////////////////////////////
     // Create SpaceShip Actor
 
-    // Create Phaser GameObject.
-
-    let shipSprite : Ty_Sprite = this.add.sprite(0, 0, 'game_art', 'blueShip.png');
 
     // Create Actor.
 
-    let shipActor = BaseActor.Create<Ty_Sprite>(shipSprite, 'SpaceShip');
+    let shipActor = ShipFactory.CreateBlueShip(this, "Blue Ship");
 
     // Add Actor to simulation manager.
 
     simManager.addActor(shipActor);
-
-    // Create and init components.
-
-    shipActor.addComponent(new CmpSpriteController());
-    shipActor.addComponent(new CmpForceController());
-
-    shipActor.init();
 
     // Set Actor max speed.
 
@@ -145,54 +136,19 @@ extends Phaser.Scene
       50
     );
 
-    // Set Actor scale.
-    
-    shipActor.sendMessage
-    (
-      ST_MESSAGE_ID.kSetScale,
-      new Phaser.Math.Vector2(0.5, 0.5)
-    );
-
-    // Set Actor Mass.
-    
-    shipActor.sendMessage
-    (
-      ST_MESSAGE_ID.kSetMass,
-      1
-    );
-    
-    // Set Actor position.
-  
-    shipActor.sendMessage
-    (
-      ST_MESSAGE_ID.kSetPosition,
-      new Phaser.Math.Vector2(width * 0.5, height * 0.5)
-    );
-
     ////////////////////////////////////
     // Create obstacles actors
-
-    // Create Phaser GameObject.
-    
-    let obstacleSprite0 : Ty_Sprite = this.add.sprite(0, 0, 'game_art', 'redShip.png');
-    let obstacleSprite1 : Ty_Sprite = this.add.sprite(0, 0, 'game_art', 'redShip.png');
-    let obstacleSprite2 : Ty_Sprite = this.add.sprite(0, 0, 'game_art', 'redShip.png');
-    let obstacleSprite3 : Ty_Sprite = this.add.sprite(0, 0, 'game_art', 'redShip.png');
-    let obstacleSprite4 : Ty_Sprite = this.add.sprite(0, 0, 'game_art', 'redShip.png');
-    let obstacleSprite5 : Ty_Sprite = this.add.sprite(0, 0, 'game_art', 'redShip.png');
-    let obstacleSprite6 : Ty_Sprite = this.add.sprite(0, 0, 'game_art', 'redShip.png');
-    let obstacleSprite7 : Ty_Sprite = this.add.sprite(0, 0, 'game_art', 'redShip.png');
     
     // Create obstacle Actors.
 
-    let obstacleActor0 = BaseActor.Create<Ty_Sprite>(obstacleSprite0, 'obstacle0');
-    let obstacleActor1 = BaseActor.Create<Ty_Sprite>(obstacleSprite1, 'obstacle1');
-    let obstacleActor2 = BaseActor.Create<Ty_Sprite>(obstacleSprite2, 'obstacle2');
-    let obstacleActor3 = BaseActor.Create<Ty_Sprite>(obstacleSprite3, 'obstacle3');
-    let obstacleActor4 = BaseActor.Create<Ty_Sprite>(obstacleSprite4, 'obstacle4');
-    let obstacleActor5 = BaseActor.Create<Ty_Sprite>(obstacleSprite5, 'obstacle5');
-    let obstacleActor6 = BaseActor.Create<Ty_Sprite>(obstacleSprite6, 'obstacle6');
-    let obstacleActor7 = BaseActor.Create<Ty_Sprite>(obstacleSprite7, 'obstacle7');
+    let obstacleActor0 = ShipFactory.CreateRedShip(this, 'obstacle0');
+    let obstacleActor1 = ShipFactory.CreateRedShip(this, 'obstacle1');
+    let obstacleActor2 = ShipFactory.CreateRedShip(this, 'obstacle2');
+    let obstacleActor3 = ShipFactory.CreateRedShip(this, 'obstacle3');
+    let obstacleActor4 = ShipFactory.CreateRedShip(this, 'obstacle4');
+    let obstacleActor5 = ShipFactory.CreateRedShip(this, 'obstacle5');
+    let obstacleActor6 = ShipFactory.CreateRedShip(this, 'obstacle6');
+    let obstacleActor7 = ShipFactory.CreateRedShip(this, 'obstacle7');
 
     // Add obstacles to simulation manager.
 
@@ -205,34 +161,6 @@ extends Phaser.Scene
     simManager.addActor(obstacleActor6);
     simManager.addActor(obstacleActor7);
 
-    // Create and init obstacles components.
-
-    obstacleActor0.addComponent(new CmpSpriteController);
-    obstacleActor0.addComponent(new CmpForceController);
-    obstacleActor1.addComponent(new CmpSpriteController);
-    obstacleActor1.addComponent(new CmpForceController);
-    obstacleActor2.addComponent(new CmpSpriteController);
-    obstacleActor2.addComponent(new CmpForceController);
-    obstacleActor3.addComponent(new CmpSpriteController);
-    obstacleActor3.addComponent(new CmpForceController);
-    obstacleActor4.addComponent(new CmpSpriteController);
-    obstacleActor4.addComponent(new CmpForceController);
-    obstacleActor5.addComponent(new CmpSpriteController);
-    obstacleActor5.addComponent(new CmpForceController);
-    obstacleActor6.addComponent(new CmpSpriteController);
-    obstacleActor6.addComponent(new CmpForceController);
-    obstacleActor7.addComponent(new CmpSpriteController);
-    obstacleActor7.addComponent(new CmpForceController);
-
-    obstacleActor0.init();
-    obstacleActor1.init();
-    obstacleActor2.init();
-    obstacleActor3.init();
-    obstacleActor4.init();
-    obstacleActor5.init();
-    obstacleActor6.init();
-    obstacleActor7.init();
-
     // Set obstacle actors max speed.
 
     obstacleActor0.sendMessage(ST_MESSAGE_ID.kSetMaxSpeed, 25);
@@ -243,28 +171,6 @@ extends Phaser.Scene
     obstacleActor5.sendMessage(ST_MESSAGE_ID.kSetMaxSpeed, 25);
     obstacleActor6.sendMessage(ST_MESSAGE_ID.kSetMaxSpeed, 25);
     obstacleActor7.sendMessage(ST_MESSAGE_ID.kSetMaxSpeed, 25);
-
-    // Set obstacle actors scale.
-
-    obstacleActor0.sendMessage(ST_MESSAGE_ID.kSetScale, new Phaser.Math.Vector2(0.5, 0.5));
-    obstacleActor1.sendMessage(ST_MESSAGE_ID.kSetScale, new Phaser.Math.Vector2(0.5, 0.5));
-    obstacleActor2.sendMessage(ST_MESSAGE_ID.kSetScale, new Phaser.Math.Vector2(0.5, 0.5));
-    obstacleActor3.sendMessage(ST_MESSAGE_ID.kSetScale, new Phaser.Math.Vector2(0.5, 0.5));
-    obstacleActor4.sendMessage(ST_MESSAGE_ID.kSetScale, new Phaser.Math.Vector2(0.5, 0.5));
-    obstacleActor5.sendMessage(ST_MESSAGE_ID.kSetScale, new Phaser.Math.Vector2(0.5, 0.5));
-    obstacleActor6.sendMessage(ST_MESSAGE_ID.kSetScale, new Phaser.Math.Vector2(0.5, 0.5));
-    obstacleActor7.sendMessage(ST_MESSAGE_ID.kSetScale, new Phaser.Math.Vector2(0.5, 0.5));
-
-    // Set obstacle actors Mass.
-
-    obstacleActor0.sendMessage(ST_MESSAGE_ID.kSetMass, 1);
-    obstacleActor1.sendMessage(ST_MESSAGE_ID.kSetMass, 1);
-    obstacleActor2.sendMessage(ST_MESSAGE_ID.kSetMass, 1);
-    obstacleActor3.sendMessage(ST_MESSAGE_ID.kSetMass, 1);
-    obstacleActor4.sendMessage(ST_MESSAGE_ID.kSetMass, 1);
-    obstacleActor5.sendMessage(ST_MESSAGE_ID.kSetMass, 1);
-    obstacleActor6.sendMessage(ST_MESSAGE_ID.kSetMass, 1);
-    obstacleActor7.sendMessage(ST_MESSAGE_ID.kSetMass, 1);
 
     // Set obstacle actors positions.
     obstacleActor0.sendMessage(ST_MESSAGE_ID.kSetPosition, new Phaser.Math.Vector2(width * 0.45, height * 0.35));
@@ -280,14 +186,14 @@ extends Phaser.Scene
 
     let obstaclesArray : Ty_Sprite[] = new Array
     (
-      obstacleSprite0,
-      obstacleSprite1,
-      obstacleSprite2,
-      obstacleSprite3,
-      obstacleSprite4,
-      obstacleSprite5,
-      obstacleSprite6,
-      obstacleSprite7
+      obstacleActor0.getWrappedInstance(),
+      obstacleActor1.getWrappedInstance(),
+      obstacleActor2.getWrappedInstance(),
+      obstacleActor3.getWrappedInstance(),
+      obstacleActor4.getWrappedInstance(),
+      obstacleActor5.getWrappedInstance(),
+      obstacleActor6.getWrappedInstance(),
+      obstacleActor7.getWrappedInstance()
     );
     ///////////////////////////////////
     // Create a Force
@@ -309,20 +215,20 @@ extends Phaser.Scene
 
     obstacleAvoidance.init
     (
-      shipSprite,
+      shipActor.getWrappedInstance(),
       100,
       obstaclesArray,
       100
     );
 
-    obstacleWander0.init(obstacleSprite0, 50, 25, 5, 45, 100);
-    obstacleWander1.init(obstacleSprite1, 50, 25, 5, 45, 100);
-    obstacleWander2.init(obstacleSprite2, 50, 25, 5, 45, 100);
-    obstacleWander3.init(obstacleSprite3, 50, 25, 5, 45, 100);
-    obstacleWander4.init(obstacleSprite4, 50, 25, 5, 45, 100);
-    obstacleWander5.init(obstacleSprite5, 50, 25, 5, 45, 100);
-    obstacleWander6.init(obstacleSprite6, 50, 25, 5, 45, 100);
-    obstacleWander7.init(obstacleSprite7, 50, 25, 5, 45, 100);
+    obstacleWander0.init(obstacleActor0.getWrappedInstance(), 50, 25, 5, 45, 100);
+    obstacleWander1.init(obstacleActor1.getWrappedInstance(), 50, 25, 5, 45, 100);
+    obstacleWander2.init(obstacleActor2.getWrappedInstance(), 50, 25, 5, 45, 100);
+    obstacleWander3.init(obstacleActor3.getWrappedInstance(), 50, 25, 5, 45, 100);
+    obstacleWander4.init(obstacleActor4.getWrappedInstance(), 50, 25, 5, 45, 100);
+    obstacleWander5.init(obstacleActor5.getWrappedInstance(), 50, 25, 5, 45, 100);
+    obstacleWander6.init(obstacleActor6.getWrappedInstance(), 50, 25, 5, 45, 100);
+    obstacleWander7.init(obstacleActor7.getWrappedInstance(), 50, 25, 5, 45, 100);
     
     // Get Force Actor component.
     
@@ -373,32 +279,4 @@ extends Phaser.Scene
   
   private _m_master : Master;
 
-  ///////////////////////////////////
-  // Callbacks
-
-  private _onDebug()
-  : void
-  {
-    if(this._m_master.isDebugEnable())
-    {
-      this._m_master.disableDebugging();
-    }
-    else
-    {
-      this._m_master.enableDebugging();
-    }
-
-    return;
-  }
-
-  private _onMainMenu()
-  : void
-  {
-
-    this._m_master.onSimulationSceneDestroy(this);
-
-    this.scene.start('main_menu');
-
-    return;
-  }
 }

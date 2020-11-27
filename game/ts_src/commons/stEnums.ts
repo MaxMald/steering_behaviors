@@ -35,7 +35,9 @@ export const ST_COMPONENT_ID = Object.freeze
 
   kForceController : 1 as 1,
 
-  kSpriteController : 2 as 2
+  kSpriteController : 2 as 2,
+
+  kShipPropulsor : 3 as 3
 
 });
 

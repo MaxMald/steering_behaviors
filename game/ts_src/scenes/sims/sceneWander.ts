@@ -13,6 +13,7 @@ import { ST_COMPONENT_ID, ST_MANAGER_ID, ST_MESSAGE_ID } from "../../commons/stE
 import { Ty_Sprite, V2 } from "../../commons/stTypes";
 import { CmpForceController } from "../../components/cmpforceController";
 import { CmpSpriteController } from "../../components/cmpSpriteController";
+import { ShipFactory } from "../../factories/shipFactory";
 import { SimulationManager } from "../../managers/simulationManager/simulationManager";
 import { UIButton } from "../../managers/uiManager/uiButton";
 import { UIObject } from "../../managers/uiManager/uiObject";
@@ -116,24 +117,12 @@ extends Phaser.Scene
     ///////////////////////////////////
     // Create SpaceShip Actor
 
-    // Create Phaser GameObject.
-
-    let shipSprite : Ty_Sprite = this.add.sprite(0, 0, 'game_art', 'blueShip.png');
-
     // Create Actor.
 
-    let shipActor = BaseActor.Create<Ty_Sprite>(shipSprite, 'SpaceShip');
-
+    let shipActor = ShipFactory.CreateBlueShip(this, "Blue Ship");
     // Add Actor to simulation manager.
 
     simManager.addActor(shipActor);
-
-    // Create and init components.
-
-    shipActor.addComponent(new CmpSpriteController());
-    shipActor.addComponent(new CmpForceController());
-
-    shipActor.init();
 
     // Set Actor max speed.
 
@@ -141,30 +130,6 @@ extends Phaser.Scene
     (
       ST_MESSAGE_ID.kSetMaxSpeed,
       50
-    );
-
-    // Set Actor scale.
-    
-    shipActor.sendMessage
-    (
-      ST_MESSAGE_ID.kSetScale,
-      new Phaser.Math.Vector2(0.5, 0.5)
-    );
-
-    // Set Actor Mass.
-    
-    shipActor.sendMessage
-    (
-      ST_MESSAGE_ID.kSetMass,
-      1
-    );
-    
-    // Set Actor position.
-  
-    shipActor.sendMessage
-    (
-      ST_MESSAGE_ID.kSetPosition,
-      new Phaser.Math.Vector2(width * 0.5, height * 0.5)
     );
 
     ///////////////////////////////////
@@ -178,7 +143,7 @@ extends Phaser.Scene
 
     wander.init
     (
-      shipSprite,
+      shipActor.getWrappedInstance(),
       75,
       25,
       5,
@@ -214,33 +179,4 @@ extends Phaser.Scene
   /****************************************************/
   
   private _m_master : Master;
-
-  ///////////////////////////////////
-  // Callbacks
-
-  private _onDebug()
-  : void
-  {
-    if(this._m_master.isDebugEnable())
-    {
-      this._m_master.disableDebugging();
-    }
-    else
-    {
-      this._m_master.enableDebugging();
-    }
-
-    return;
-  }
-
-  private _onMainMenu()
-  : void
-  {
-    
-    this._m_master.onSimulationSceneDestroy(this);
-
-    this.scene.start('main_menu');
-
-    return;
-  }
 }

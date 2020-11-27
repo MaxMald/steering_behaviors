@@ -13,6 +13,7 @@ import { ST_COLOR_ID, ST_COMPONENT_ID, ST_MANAGER_ID, ST_MESSAGE_ID } from "../.
 import { Ty_Sprite, V2 } from "../../commons/stTypes";
 import { CmpForceController } from "../../components/cmpforceController";
 import { CmpSpriteController } from "../../components/cmpSpriteController";
+import { ShipFactory } from "../../factories/shipFactory";
 import { SimulationManager } from "../../managers/simulationManager/simulationManager";
 import { UIButton } from "../../managers/uiManager/uiButton";
 import { UIObject } from "../../managers/uiManager/uiObject";
@@ -115,24 +116,13 @@ extends Phaser.Scene
     ///////////////////////////////////
     // Create SpaceShip Actor
 
-    // Create Phaser GameObject.
-
-    let shipSprite : Ty_Sprite = this.add.sprite(0, 0, 'game_art', 'blueShip.png');
-
     // Create Actor.
 
-    let shipActor = BaseActor.Create<Ty_Sprite>(shipSprite, 'SpaceShip');
+    let shipActor = ShipFactory.CreateBlueShip(this, "Blue Ship");
 
     // Add Actor to simulation manager.
 
     simManager.addActor(shipActor);
-
-    // Create and init components.
-
-    shipActor.addComponent(new CmpSpriteController());
-    shipActor.addComponent(new CmpForceController());
-
-    shipActor.init();
 
     // Set Actor initial speed.
 
@@ -149,22 +139,6 @@ extends Phaser.Scene
       ST_MESSAGE_ID.kSetMaxSpeed,
       75
     );
-
-    // Set Actor scale.
-    
-    shipActor.sendMessage
-    (
-      ST_MESSAGE_ID.kSetScale,
-      new Phaser.Math.Vector2(0.5, 0.5)
-    );
-
-    // Set Actor Mass.
-    
-    shipActor.sendMessage
-    (
-      ST_MESSAGE_ID.kSetMass,
-      1
-    );
     
     // Set Actor position.
   
@@ -177,47 +151,18 @@ extends Phaser.Scene
     ///////////////////////////////////
     // Create target Actor
 
-    // Create Phaser GameObject.
-
-    let targetSprite : Ty_Sprite = this.add.sprite(0, 0, 'game_art', 'redShip.png');
-
     // Create Target.
 
-    let targetActor = BaseActor.Create<Ty_Sprite>(targetSprite, 'target');
+    let targetActor = ShipFactory.CreateRedShip(this, "Red Ship");
 
     // Add Target to simulation manager.
 
     simManager.addActor(targetActor);
 
-    // Create and init components.
-
-    targetActor.addComponent(new CmpSpriteController());
-    targetActor.addComponent(new CmpForceController());
-
-    targetActor.init();
-
-    // Set Actor max speed.
-
     targetActor.sendMessage
     (
       ST_MESSAGE_ID.kSetMaxSpeed,
       50
-    );
-
-    // Set Target scale.
-    
-    targetActor.sendMessage
-    (
-      ST_MESSAGE_ID.kSetScale,
-      new Phaser.Math.Vector2(0.5, 0.5)
-    );
-
-    // Set Target Mass.
-
-    targetActor.sendMessage
-    (
-      ST_MESSAGE_ID.kSetMass,
-      1
     );
     
     // Set Target position.
@@ -239,8 +184,8 @@ extends Phaser.Scene
 
     arrival.init
     (
-      shipSprite,
-      targetSprite,
+      shipActor.getWrappedInstance(),
+      targetActor.getWrappedInstance(),
       100,
       100
     );
