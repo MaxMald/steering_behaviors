@@ -195,3 +195,16 @@ export const ST_STEER_FORCE = Object.freeze
   kFollowPath: 6 as 6
 
 });
+
+export type ST_SIM_SATE = EnumLiteralsOf<typeof ST_SIM_SATE>;
+
+export const ST_SIM_SATE = Object.freeze
+({
+  
+  kStopped: 0 as 0,
+
+  kRunning: 1 as 1,
+
+  kPaused: 2 as 2
+
+});
