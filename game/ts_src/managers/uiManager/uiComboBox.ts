@@ -324,6 +324,29 @@ export class UIComboBox
   }
 
   /**
+   * Select the first option available in the combo box.
+   */
+  selectFirstOption()
+  : void
+  {
+
+    if(this._m_aOptionsStr !== undefined)
+    {
+
+      if(this._m_aOptionsStr.length > 0)
+      {
+
+        this.setSelection(this._m_aOptionsStr[0]);
+
+      }
+
+    }
+
+    return;
+
+  }
+
+  /**
    * Update the drop down list options of this UI Combo Box.
    * 
    * @param _options Array of options.

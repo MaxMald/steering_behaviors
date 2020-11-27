@@ -1,11 +1,9 @@
 import { BaseActor } from "../../../actors/baseActor";
-import { ST_COLOR_ID, ST_COMPONENT_ID, ST_MANAGER_ID, ST_STEER_FORCE } from "../../../commons/stEnums";
+import { ST_COLOR_ID, ST_COMPONENT_ID, ST_STEER_FORCE } from "../../../commons/stEnums";
 import { Ty_Sprite } from "../../../commons/stTypes";
 import { CmpForceController } from "../../../components/cmpforceController";
 import { IForce } from "../../../steeringBehavior/iForce";
 import { UIBox } from "../uiBox/uiBox";
-import { UIButton } from "../uiButton";
-import { UIButtonImg } from "../uiButtonImg";
 import { UIComboBox } from "../uiComboBox";
 import { UIImage } from "../uiImage";
 import { UILabel } from "../uiLabel";
@@ -14,7 +12,6 @@ import { UISlider } from "../uiSlider";
 import { UISpeedometer } from "../uiSpeedometer";
 import { UIController } from "./UIController";
 import { UIForce } from "./UIForce";
-import { UIForceFactory } from "./UIForceFactory";
 import { UIForceSeek } from "./UIForceSeek";
 
 export class UIForceController
@@ -211,13 +208,24 @@ export class UIForceController
 
     box.add(selectForce);
 
-    // Combo Box.
+    ///////////////////////////////////
+    // Force Combo Box
 
     const comboBox = new UIComboBox(0, 0, _scene);
 
-    comboBox.updateCombo(["Option 1", "Option 2", "Option 3"]);
+    this._ui_forceComboBox = comboBox;
+
+    comboBox.updateCombo(undefined);
 
     box.add(comboBox);
+
+    comboBox.subscribe
+    (
+      "selectionChanged", 
+      "UIController",
+      this._onForceComboBoxChanged,
+      this
+    );
 
     box.setLeftAlignment();
 
@@ -311,25 +319,12 @@ export class UIForceController
 
     this._ui_maxSpeedSlider.setValue(forceController.getMaxSpeed());
 
+    ///////////////////////////////////
     // Forces
 
-    let aForces: Map<string, IForce> = forceController.getForces();
+    // update Force Combo Box
 
-    const scene = this.m_master.getSimulationScene();
-
-    // Get the first force available.
-
-    if(aForces.size > 0)
-    {
-
-      const force : IForce = aForces.values().next().value;
-
-      this.setActiveForce
-      (
-        force
-      );
-
-    }
+    this._updateForceComboBox(forceController);
 
     // Update box.
 
@@ -347,6 +342,7 @@ export class UIForceController
     this.setActualSpeed(0);
     this.setMaxSpeed(0);
     this.setMass(0);
+    this._ui_forceComboBox.updateCombo(undefined);
 
     return;
 
@@ -468,6 +464,38 @@ export class UIForceController
   /* Private                                          */
   /****************************************************/
 
+  /**
+   * Update values of the Force Combo Box.
+   * 
+   * @param _forceController Force controller
+   */
+  private _updateForceComboBox(_forceController : CmpForceController)
+  : void
+  {
+
+    const hForces = _forceController.getForces();
+
+    const aForceName = new Array<string>();
+
+    hForces.forEach
+    (
+      function(_value: IForce, _name: string)
+      : void
+      {
+
+        aForceName.push(_name);
+
+      }
+    );
+
+    this._ui_forceComboBox.updateCombo(aForceName);
+
+    this._ui_forceComboBox.selectFirstOption();
+
+    return;
+
+  }
+
   private _addUIForce(_type: ST_STEER_FORCE, _uiForce: UIForce)
   : void
   {
@@ -485,6 +513,39 @@ export class UIForceController
     // Add to UI Force Map
 
     this._m_aUIForce.set(_type, _uiForce);
+
+    return;
+
+  }
+
+  private _onForceComboBoxChanged(_object : UIObject, _option: any)
+  : void
+  {
+
+    if(_option !== undefined)
+    {
+
+      const forceName = _option as string;
+
+      if(forceName !== "")
+      {
+
+        const forceController = this._m_forceController;
+
+        if(forceController !== undefined)
+        {
+
+          this.setActiveForce(forceController.getForce(forceName));
+
+          return;
+
+        }
+
+      }
+
+    }
+
+    this.setActiveForce(undefined);
 
     return;
 
@@ -536,6 +597,8 @@ export class UIForceController
   // UI Objects
 
   private _ui_speedometer: UISpeedometer;
+
+  private _ui_forceComboBox: UIComboBox;
 
   private _ui_box: UIBox;
 
