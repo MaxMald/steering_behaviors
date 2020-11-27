@@ -258,6 +258,14 @@ export class UIObject
 
   }
 
+  isEnable()
+  : boolean
+  {
+
+    return true;
+
+  }
+
   /**
    * Enable the UI Element.
    */

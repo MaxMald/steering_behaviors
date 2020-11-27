@@ -8,7 +8,7 @@
  * @since November-12-2020
  */
 
-import { ST_COLOR_ID } from "../../../commons/stEnums";
+import { ST_COLOR_ID, ST_STEER_FORCE } from "../../../commons/stEnums";
 import { SeekForce } from "../../../steeringBehavior/forceSeek";
 import { IForce } from "../../../steeringBehavior/iForce";
 import { UIBox } from "../uiBox/uiBox";
@@ -121,12 +121,21 @@ extends UIForce
 
   setTarget(_force: IForce)
   : void
-  {
+  {   
+
+    // Save value.
 
     this._m_seek = _force as SeekForce;
 
     if(this._m_seek !== undefined)
     {
+
+      if(_force.getType() !== ST_STEER_FORCE.kSeek)
+      {
+
+        throw new Error("UI Seek Force: Incorrect force.");
+
+      }
 
       this.setForceLabel(this._m_seek.getActualForce());
 

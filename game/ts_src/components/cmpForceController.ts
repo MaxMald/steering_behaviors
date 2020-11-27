@@ -141,6 +141,24 @@ implements IBaseComponent<Ty_Sprite>
 
     if(!this._m_bRunning)
     {
+
+      if(this._m_debug)
+      {
+
+        // Forces Debugging.
+
+        this._m_hForce.forEach
+        (
+          this._updateForceDebug,
+          this
+        );
+
+        // Force Controller Debugging.
+
+        this.updateDebug(0);
+
+      }
+
       return;
     }   
 
@@ -658,7 +676,7 @@ implements IBaseComponent<Ty_Sprite>
   /****************************************************/
 
   /**
-   * Update a force.
+   * Update a force and debugging.
    * 
    * @param _force force. 
    */
@@ -680,6 +698,26 @@ implements IBaseComponent<Ty_Sprite>
       _force.updateDebug(deltaTime);
     }
     return;
+  }
+
+  /**
+   * Update only debugging.
+   * 
+   * @param _force 
+   */
+  private _updateForceDebug(_force: IForce)
+  : void
+  {
+
+    let deltaTime: number = this._m_master.getDeltaTime();
+
+    if(this._m_debug)
+    {
+      _force.updateDebug(deltaTime);
+    }
+
+    return;
+
   }
 
   /**

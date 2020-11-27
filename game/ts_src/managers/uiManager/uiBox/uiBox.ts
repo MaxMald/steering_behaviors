@@ -63,6 +63,10 @@ export class UIBox
     // Set gap to 0
 
     this._m_gap = 0;
+
+    // Set enable flag
+
+    this._isEnable = true;
     
     // Set Vertical Box
 
@@ -350,6 +354,8 @@ export class UIBox
     this._m_bg.setActive(true);
     this._m_bg.setVisible(true);
 
+    this._isEnable = true;
+
     return;
 
   }
@@ -376,6 +382,8 @@ export class UIBox
 
     this._m_bg.setActive(false);
     this._m_bg.setVisible(false);
+
+    this._isEnable = false;
 
     return;
 
@@ -515,6 +523,14 @@ export class UIBox
     this.updateBox();
 
     return;
+
+  }
+
+  isEnable()
+  : boolean
+  {
+
+    return this._isEnable;
 
   }
 
@@ -729,6 +745,11 @@ export class UIBox
    * Minimum height that a UI Box can has.
    */
   private static MIN_HEIGHT : number = 65;
+
+  /**
+   * Indicates if this box is enabled.
+   */
+  private _isEnable: boolean;
 
   /**
    * The active state of the UI Box.

@@ -8,12 +8,21 @@
  * @since November-12-2020
  */
 
+import { IForce } from "../../../steeringBehavior/iForce";
 import { UIBox } from "../uiBox/uiBox";
 
 export class UIForce
 {
 
   update()
+  : void
+  {
+
+    return;
+
+  }
+
+  setTarget(_force: IForce)
   : void
   {
 

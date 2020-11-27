@@ -1,11 +1,9 @@
 import { BaseActor } from "../../../actors/baseActor";
-import { ST_COLOR_ID, ST_COMPONENT_ID, ST_MANAGER_ID } from "../../../commons/stEnums";
+import { ST_COLOR_ID, ST_COMPONENT_ID, ST_STEER_FORCE } from "../../../commons/stEnums";
 import { Ty_Sprite } from "../../../commons/stTypes";
 import { CmpForceController } from "../../../components/cmpforceController";
 import { IForce } from "../../../steeringBehavior/iForce";
 import { UIBox } from "../uiBox/uiBox";
-import { UIButton } from "../uiButton";
-import { UIButtonImg } from "../uiButtonImg";
 import { UIComboBox } from "../uiComboBox";
 import { UIImage } from "../uiImage";
 import { UILabel } from "../uiLabel";
@@ -14,7 +12,7 @@ import { UISlider } from "../uiSlider";
 import { UISpeedometer } from "../uiSpeedometer";
 import { UIController } from "./UIController";
 import { UIForce } from "./UIForce";
-import { UIForceFactory } from "./UIForceFactory";
+import { UIForceSeek } from "./UIForceSeek";
 
 export class UIForceController
   extends UIController
@@ -210,26 +208,39 @@ export class UIForceController
 
     box.add(selectForce);
 
-    // Combo Box.
+    ///////////////////////////////////
+    // Force Combo Box
 
     const comboBox = new UIComboBox(0, 0, _scene);
 
-    comboBox.updateCombo(["Option 1", "Option 2", "Option 3"]);
+    this._ui_forceComboBox = comboBox;
+
+    comboBox.updateCombo(undefined);
 
     box.add(comboBox);
+
+    comboBox.subscribe
+    (
+      "selectionChanged", 
+      "UIController",
+      this._onForceComboBoxChanged,
+      this
+    );
 
     box.setLeftAlignment();
 
     ///////////////////////////////////
     // UI Force
 
-    // Create UI force factory
-
-    this.uiForceFactory = new UIForceFactory();
-
     // Create UI force list
 
-    this._m_aUIForce = new Array<UIForce>();
+    const hUIForce = new Map<ST_STEER_FORCE, UIForce>();
+
+    this._m_aUIForce = hUIForce;
+
+    // Create each UI Force and add it to the box.
+
+    this._addUIForce(ST_STEER_FORCE.kSeek, new UIForceSeek(_scene, undefined));
 
     ///////////////////////////////////
     // Actor
@@ -249,11 +260,16 @@ export class UIForceController
 
       this.setActualSpeed(this._m_forceController.getSpeed());
 
-      this._m_aUIForce.forEach
-      (
-        this._updateUIForce,
-        this
-      );      
+      // Update Active UI Force
+
+      const activeUIForce = this._m_activeUIForce;
+      
+      if(activeUIForce !== undefined)
+      {
+
+        activeUIForce.update();
+
+      }
 
     }
 
@@ -274,13 +290,13 @@ export class UIForceController
 
       this._m_forceController = undefined;
 
-      this.disableUI();      
+      this.disableUI();
+      
+      this.setActiveForce(undefined);
 
       return;
 
     }
-
-    this._removeForces();
 
     this._m_target = _actor;
 
@@ -303,29 +319,12 @@ export class UIForceController
 
     this._ui_maxSpeedSlider.setValue(forceController.getMaxSpeed());
 
+    ///////////////////////////////////
     // Forces
 
-    const aForces = forceController.getForces();
+    // update Force Combo Box
 
-    const uiForceFactory = this.uiForceFactory;
-
-    const scene = this.m_master.getSimulationScene();
-
-    aForces.forEach
-    (
-      function(_force: IForce)
-      : void
-      {
-
-        const force =  uiForceFactory.createUIForce(scene, _force);
-
-        this._addUIForce(force);
-
-        return;
-
-      },
-      this
-    );
+    this._updateForceComboBox(forceController);
 
     // Update box.
 
@@ -343,6 +342,7 @@ export class UIForceController
     this.setActualSpeed(0);
     this.setMaxSpeed(0);
     this.setMass(0);
+    this._ui_forceComboBox.updateCombo(undefined);
 
     return;
 
@@ -389,17 +389,68 @@ export class UIForceController
   }
 
   /**
+   * Set the active force.
+   * 
+   * @param _type the type of the force. 
+   * @param _force the force.
+   */
+  setActiveForce(_force: IForce)
+  : void
+  {
+
+    // Disable active UI Force.
+
+    let activeForce = this._m_activeUIForce;
+
+    if(activeForce !== undefined)
+    {
+
+      activeForce.getBox().disable();
+
+      this._m_activeUIForce = undefined;
+
+    }
+
+    // Set Active.
+
+    if(_force !== undefined)
+    {
+
+      activeForce = this._m_aUIForce.get(_force.getType() as ST_STEER_FORCE);
+
+      if(activeForce === undefined)
+      {
+
+        throw new Error("UI Force does not exists!");
+
+      }
+
+      activeForce.getBox().enable();
+
+      activeForce.setTarget(_force);
+
+      this._m_activeUIForce = activeForce;
+
+    };
+
+    // Update box.
+
+    this._ui_box.updateBox();
+
+    return;
+
+  }
+
+  /**
   * Safely destroys the object.
   */
-  public destroy()
+  destroy()
   : void  
   {
 
     this._m_target = undefined;
     
     this._m_forceController = undefined;
-
-    this._removeForces();
 
     this._ui_box.destroy();
 
@@ -409,17 +460,92 @@ export class UIForceController
 
   }
 
-  uiForceFactory: UIForceFactory;
-
   /****************************************************/
   /* Private                                          */
   /****************************************************/
 
-  private _updateUIForce(_uiForce: UIForce)
+  /**
+   * Update values of the Force Combo Box.
+   * 
+   * @param _forceController Force controller
+   */
+  private _updateForceComboBox(_forceController : CmpForceController)
   : void
   {
 
-    _uiForce.update();
+    const hForces = _forceController.getForces();
+
+    const aForceName = new Array<string>();
+
+    hForces.forEach
+    (
+      function(_value: IForce, _name: string)
+      : void
+      {
+
+        aForceName.push(_name);
+
+      }
+    );
+
+    this._ui_forceComboBox.updateCombo(aForceName);
+
+    this._ui_forceComboBox.selectFirstOption();
+
+    return;
+
+  }
+
+  private _addUIForce(_type: ST_STEER_FORCE, _uiForce: UIForce)
+  : void
+  {
+
+    // Add UI Box to this UI Force Controller
+
+    const box = _uiForce.getBox();
+
+    this._ui_box.add(box);
+
+    // ... and disable it!
+
+    box.disable();    
+
+    // Add to UI Force Map
+
+    this._m_aUIForce.set(_type, _uiForce);
+
+    return;
+
+  }
+
+  private _onForceComboBoxChanged(_object : UIObject, _option: any)
+  : void
+  {
+
+    if(_option !== undefined)
+    {
+
+      const forceName = _option as string;
+
+      if(forceName !== "")
+      {
+
+        const forceController = this._m_forceController;
+
+        if(forceController !== undefined)
+        {
+
+          this.setActiveForce(forceController.getForce(forceName));
+
+          return;
+
+        }
+
+      }
+
+    }
+
+    this.setActiveForce(undefined);
 
     return;
 
@@ -449,47 +575,6 @@ export class UIForceController
     return;
 
   }
-
-  private _addUIForce(_uiForce: UIForce)
-  : void
-  {
-
-    this._m_aUIForce.push(_uiForce);
-
-    const box = _uiForce.getBox();
-
-    this._ui_box.add(box);
-
-    return;
-
-  }
-
-  private _removeForces()
-  : void
-  {
-
-    // Remove UI of actor forces.
-
-    const box = this._ui_box;
-
-    const aForces = this._m_aUIForce;
-
-    const size = aForces.length;
-
-    for(let i = 0; i < size; ++i)
-    {
-
-      box.remove(aForces[i].getBox());
-
-      aForces[i].destroy();
-
-    }
-
-    aForces.splice(0,size);
-
-    return;
-
-  }
   
   // Target
   
@@ -499,11 +584,21 @@ export class UIForceController
 
   // Steer Force
 
-  private _m_aUIForce : Array<UIForce>;
+  /**
+   * Reference to the map of forces.
+   */
+  private _m_aUIForce : Map<ST_STEER_FORCE, UIForce>;
+
+  /**
+   * The active UI Force.
+   */
+  private _m_activeUIForce : UIForce;
 
   // UI Objects
 
   private _ui_speedometer: UISpeedometer;
+
+  private _ui_forceComboBox: UIComboBox;
 
   private _ui_box: UIBox;
 
@@ -518,15 +613,5 @@ export class UIForceController
   private _ui_maxSpeedSlider: UISlider;
 
   private _ui_actualSpeed: UILabel;
-
-  private _ui_mainMenu: UIButton;
-
-  private _ui_debug: UIButton;
-
-  private _ui_playButtonImg: UIButtonImg;
-
-  private _ui_pauseButtonImg: UIButtonImg;
-
-  private _ui_StopButtonImg: UIButtonImg;
 
 }

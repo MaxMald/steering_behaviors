@@ -191,6 +191,23 @@ extends UIController
     );
 
     buttonsBox.add(pauseButton);
+
+    const debugButton = UIButtonImg.CreateDebugButtonImg
+    (
+      0,
+      0,
+      _scene
+    );
+
+    debugButton.subscribe
+    (
+      "buttonReleased", 
+      "UISimController",
+      simControlBox._onDebug,
+      simControlBox
+    );
+
+    buttonsBox.add(debugButton);
     
     simControlBox._m_box.add(buttonsBox);
 
@@ -269,6 +286,27 @@ extends UIController
       this.m_master.stopSimulation();
 
     }    
+
+    return;
+
+  }
+
+  private _onDebug()
+  : void
+  {
+
+    if(this.m_master.isDebugEnable())
+    {
+
+      this.m_master.disableDebugging();
+
+    }
+    else
+    {
+
+      this.m_master.enableDebugging();
+
+    }
 
     return;
 
