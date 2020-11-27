@@ -12,7 +12,9 @@
  import { ST_COMPONENT_ID, ST_MANAGER_ID, ST_MESSAGE_ID } from "../../commons/stEnums";
  import { Ty_Sprite, V2 } from "../../commons/stTypes";
  import { CmpForceController } from "../../components/cmpforceController";
+import { CmpShipPropulsor } from "../../components/cmpShipPropulsor";
  import { CmpSpriteController } from "../../components/cmpSpriteController";
+import { ShipFactory } from "../../factories/shipFactory";
  import { SimulationManager } from "../../managers/simulationManager/simulationManager";
 import { UIDialogBox } from "../../managers/uiManager/uiControllers/UIDialogBox";
 import { UIForceController } from "../../managers/uiManager/uiControllers/UIForceController";
@@ -56,61 +58,20 @@ import { Master } from "../../master/master";
      (
        ST_MANAGER_ID.kSimManager
      );
- 
-     // Step I : Create Phaser GameObject
- 
-     let shipSprite : Ty_Sprite = this.add.sprite( 0, 0, 'game_art', 'blueShip.png');
- 
-     // Set II : create Actor.
- 
-     let shipActor = BaseActor.Create<Ty_Sprite>(shipSprite, 'SpaceShip');
      
-     this._m_ship = shipActor;
+     this._m_ship = ShipFactory.CreateBlueShip(this, "Blue Ship");
  
      // Add ship to simulation manager.
  
-     simManager.addActor(shipActor);
- 
-     // Create and init components.
- 
-     shipActor.addComponent(new CmpSpriteController());
-     shipActor.addComponent(new CmpForceController());
- 
-     shipActor.init();
- 
-     shipActor.sendMessage
-     (
-       ST_MESSAGE_ID.kSetMaxSpeed,
-       500
-     );
+     simManager.addActor(this._m_ship);
 
-    // Set Actor scale.
-    
-    shipActor.sendMessage
-    (
-      ST_MESSAGE_ID.kSetScale,
-      new Phaser.Math.Vector2(0.5, 0.5)
-    );
- 
+     ///////////////////////////////////
+     // Create Target
+
      let canvas = this.game.canvas;
  
      let width : number = canvas.width;
      let height : number = canvas.height;
- 
-     shipActor.sendMessage
-     (
-       ST_MESSAGE_ID.kSetPosition,
-       new Phaser.Math.Vector2(width * 0.5, height * 0.5)
-     );
-     
-     shipActor.sendMessage
-     (
-       ST_MESSAGE_ID.kSetMass,
-       1
-     );     
-
-     ///////////////////////////////////
-     // Create Target
  
      this._m_target_center = new Phaser.Math.Vector2(width * 0.5, height * 0.25);
  
@@ -157,14 +118,14 @@ import { Master } from "../../master/master";
  
      seek.init
      (
-       shipSprite,
+       this._m_ship.getWrappedInstance(),
        targetSprite,
        125
      );
  
      // Step II : Get Component
  
-     let forceControl = shipActor.getComponent<CmpForceController>
+     let forceControl = this._m_ship.getComponent<CmpForceController>
      (
        ST_COMPONENT_ID.kForceController
      );
@@ -214,7 +175,7 @@ import { Master } from "../../master/master";
 
     // Set the active actor of the UI Manager.
 
-    uiManager.setTarget(shipActor);
+    uiManager.setTarget(this._m_ship);
 
     ///////////////////////////////////
      // Active Debugging

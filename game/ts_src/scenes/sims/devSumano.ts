@@ -13,6 +13,7 @@
  import { Ty_Sprite, V2 } from "../../commons/stTypes";
  import { CmpForceController } from "../../components/cmpforceController";
  import { CmpSpriteController } from "../../components/cmpSpriteController";
+import { ShipFactory } from "../../factories/shipFactory";
  import { SimulationManager } from "../../managers/simulationManager/simulationManager";
  import { Master } from "../../master/master";
 import { FollowPathForce } from "../../steeringBehavior/forceFollowPath";
@@ -60,11 +61,8 @@ import { WanderForce } from "../../steeringBehavior/forceWander";
      ///////////////////////////////////
      // Create Sprites and Actors
  
-     let shipSprtP0 : Ty_Sprite = this.add.sprite( 0, 0, 'game_art', 'blueShip.png');
-     let fleeSprt0 : Ty_Sprite = this.add.sprite(0, 0, 'game_art', 'redShip.png');
- 
-     let fleeActor0 = BaseActor.Create<Ty_Sprite>(fleeSprt0, 'SpaceShip0');
-     let pursueActor0 = BaseActor.Create<Ty_Sprite>(shipSprtP0, 'SpaceShipP0');
+     let fleeActor0 = ShipFactory.CreateBlueShip(this, "Blue Ship");
+     let pursueActor0 = ShipFactory.CreateRedShip(this, "Red Ship");
      
      this._m_shipP0 = pursueActor0;
      this._m_ship1 = fleeActor0;
@@ -74,37 +72,10 @@ import { WanderForce } from "../../steeringBehavior/forceWander";
      simManager.addActor(pursueActor0);
      simManager.addActor(fleeActor0);
  
-     // Create and init components.
- 
-     pursueActor0.addComponent(new CmpSpriteController());
-     pursueActor0.addComponent(new CmpForceController());
-
-     fleeActor0.addComponent(new CmpSpriteController());
-     fleeActor0.addComponent(new CmpForceController());
-
-     // Init Actors
- 
-     fleeActor0.init();    
-     pursueActor0.init();
- 
      // Set the max speeds
 
      pursueActor0.sendMessage(ST_MESSAGE_ID.kSetMaxSpeed, 100);
      fleeActor0.sendMessage(ST_MESSAGE_ID.kSetMaxSpeed, 80);
-
-     // Set the scales
-
-     pursueActor0.sendMessage
-     (
-       ST_MESSAGE_ID.kSetScale,
-       new Phaser.Math.Vector2(0.5, 0.5)
-     );
-
-     fleeActor0.sendMessage
-     (
-       ST_MESSAGE_ID.kSetScale,
-       new Phaser.Math.Vector2(0.5, 0.5)
-     );
  
      // Get canvas data
      let canvas = this.game.canvas;
@@ -124,10 +95,6 @@ import { WanderForce } from "../../steeringBehavior/forceWander";
        ST_MESSAGE_ID.kSetPosition,
        new Phaser.Math.Vector2(width * 0.55, height * 0.55)
      );
-
-     // Set masses
-     fleeActor0.sendMessage(ST_MESSAGE_ID.kSetMass,   75);
-     pursueActor0.sendMessage(ST_MESSAGE_ID.kSetMass, 75);
  
      // Create Force controlers
 
@@ -143,41 +110,14 @@ import { WanderForce } from "../../steeringBehavior/forceWander";
 
      // Create path sprites and array to follow
 
-     let pathSprt0 : Ty_Sprite = this.add.sprite( 0, 0, 'game_art', 'redShip.png');
-     let pathSprt1 : Ty_Sprite = this.add.sprite( 0, 0, 'game_art', 'redShip.png');
-     let pathSprt2 : Ty_Sprite = this.add.sprite( 0, 0, 'game_art', 'redShip.png');
-     let pathSprt3 : Ty_Sprite = this.add.sprite( 0, 0, 'game_art', 'redShip.png');
-     let pathSprt4 : Ty_Sprite = this.add.sprite( 0, 0, 'game_art', 'redShip.png');
-     let pathSprt5 : Ty_Sprite = this.add.sprite( 0, 0, 'game_art', 'redShip.png');
-     let pathSprt6 : Ty_Sprite = this.add.sprite( 0, 0, 'game_art', 'redShip.png');
-     let pathSprt7 : Ty_Sprite = this.add.sprite( 0, 0, 'game_art', 'redShip.png');
-
-     let pathActor0 = BaseActor.Create(pathSprt0, 'path0');
-     let pathActor1 = BaseActor.Create(pathSprt1, 'path1');
-     let pathActor2 = BaseActor.Create(pathSprt2, 'path2');
-     let pathActor3 = BaseActor.Create(pathSprt3, 'path3');
-     let pathActor4 = BaseActor.Create(pathSprt4, 'path4');
-     let pathActor5 = BaseActor.Create(pathSprt5, 'path5');
-     let pathActor6 = BaseActor.Create(pathSprt6, 'path6');
-     let pathActor7 = BaseActor.Create(pathSprt7, 'path7');
-
-     pathActor0.addComponent(new CmpSpriteController());
-     pathActor1.addComponent(new CmpSpriteController());
-     pathActor2.addComponent(new CmpSpriteController());
-     pathActor3.addComponent(new CmpSpriteController());
-     pathActor4.addComponent(new CmpSpriteController());
-     pathActor5.addComponent(new CmpSpriteController());
-     pathActor6.addComponent(new CmpSpriteController());
-     pathActor7.addComponent(new CmpSpriteController());
-
-     pathActor0.init();
-     pathActor1.init();
-     pathActor2.init();
-     pathActor3.init();
-     pathActor4.init();
-     pathActor5.init();
-     pathActor6.init();
-     pathActor7.init();
+     let pathActor0 = ShipFactory.CreateRedShip(this, 'path0');
+     let pathActor1 = ShipFactory.CreateRedShip(this, 'path1');
+     let pathActor2 = ShipFactory.CreateRedShip(this, 'path2');
+     let pathActor3 = ShipFactory.CreateRedShip(this, 'path3');
+     let pathActor4 = ShipFactory.CreateRedShip(this, 'path4');
+     let pathActor5 = ShipFactory.CreateRedShip(this, 'path5');
+     let pathActor6 = ShipFactory.CreateRedShip(this, 'path6');
+     let pathActor7 = ShipFactory.CreateRedShip(this, 'path7');
 
      pathActor0.sendMessage(ST_MESSAGE_ID.kSetScale, new Phaser.Math.Vector2(0.08, 0.08));
      pathActor1.sendMessage(ST_MESSAGE_ID.kSetScale, new Phaser.Math.Vector2(0.08, 0.08));
@@ -188,32 +128,71 @@ import { WanderForce } from "../../steeringBehavior/forceWander";
      pathActor6.sendMessage(ST_MESSAGE_ID.kSetScale, new Phaser.Math.Vector2(0.08, 0.08));
      pathActor7.sendMessage(ST_MESSAGE_ID.kSetScale, new Phaser.Math.Vector2(0.08, 0.08));
 
-     pathActor0.sendMessage(ST_MESSAGE_ID.kSetPosition, new Phaser.Math.Vector2(
-                                                        width * 0.1, height * 0.1));
-     pathActor1.sendMessage(ST_MESSAGE_ID.kSetPosition, new Phaser.Math.Vector2(
-                                                        width * 0.33, height * 0.5));
-     pathActor2.sendMessage(ST_MESSAGE_ID.kSetPosition, new Phaser.Math.Vector2(
-                                                        width * 0.1, height * 0.9));
-     pathActor3.sendMessage(ST_MESSAGE_ID.kSetPosition, new Phaser.Math.Vector2(
-                                                        width * 0.75, height * 0.5));
-     pathActor4.sendMessage(ST_MESSAGE_ID.kSetPosition, new Phaser.Math.Vector2(
-                                                        width * 0.5, height * 0.8));
-     pathActor5.sendMessage(ST_MESSAGE_ID.kSetPosition, new Phaser.Math.Vector2(
-                                                        width * 0.9, height * 0.9));
-     pathActor6.sendMessage(ST_MESSAGE_ID.kSetPosition, new Phaser.Math.Vector2(
-                                                        width * 0.9, height * 0.1));
-     pathActor7.sendMessage(ST_MESSAGE_ID.kSetPosition, new Phaser.Math.Vector2(
-                                                        width * 0.5, height * 0.33));
+     pathActor0.sendMessage
+     (
+       ST_MESSAGE_ID.kSetPosition,
+       new Phaser.Math.Vector2(width * 0.1, height * 0.1)
+     );
+     
+     pathActor1.sendMessage
+     (
+       ST_MESSAGE_ID.kSetPosition,
+       new Phaser.Math.Vector2(width * 0.33, height * 0.5)
+     );
 
-     let pathArray : Ty_Sprite[] = new Array(pathSprt0, pathSprt1, pathSprt2, pathSprt3,
-                                             pathSprt4, pathSprt5, pathSprt7, pathSprt6);
+     pathActor2.sendMessage
+     (
+       ST_MESSAGE_ID.kSetPosition,
+       new Phaser.Math.Vector2(width * 0.1, height * 0.9)
+     );
+
+     pathActor3.sendMessage
+     (
+       ST_MESSAGE_ID.kSetPosition,
+       new Phaser.Math.Vector2(width * 0.75, height * 0.5)
+     );
+
+     pathActor4.sendMessage
+     (
+       ST_MESSAGE_ID.kSetPosition,
+       new Phaser.Math.Vector2(width * 0.5, height * 0.8)
+     );
+
+     pathActor5.sendMessage
+     (
+       ST_MESSAGE_ID.kSetPosition,
+       new Phaser.Math.Vector2(width * 0.9, height * 0.9)
+     );
+
+     pathActor6.sendMessage
+     (
+       ST_MESSAGE_ID.kSetPosition,
+       new Phaser.Math.Vector2(width * 0.9, height * 0.1)
+     );
+
+     pathActor7.sendMessage
+     (
+       ST_MESSAGE_ID.kSetPosition,
+       new Phaser.Math.Vector2(width * 0.5, height * 0.33)
+     );
+
+     let pathArray : Ty_Sprite[] = new Array
+     (
+       pathActor0.getWrappedInstance(),
+       pathActor1.getWrappedInstance(),
+       pathActor2.getWrappedInstance(),
+       pathActor3.getWrappedInstance(),
+       pathActor4.getWrappedInstance(),
+       pathActor5.getWrappedInstance(),
+       pathActor7.getWrappedInstance(),
+       pathActor6.getWrappedInstance());
      // Create Forces
 
      let followPath0 : FollowPathForce = new FollowPathForce();
      let followPath1 : FollowPathForce = new FollowPathForce();
 
-     followPath0.init(shipSprtP0 , pathArray, 200, 30, forceControlP, 0, true);
-     followPath1.init(fleeSprt0 , pathArray, 150, 15, forceControlF, 2);
+     followPath0.init(pursueActor0.getWrappedInstance(), pathArray, 200, 30, forceControlP, 0, true);
+     followPath1.init(fleeActor0.getWrappedInstance(), pathArray, 150, 15, forceControlF, 2);
  
      // Add forces to controler
      forceControlP.addForce('path_0', followPath0);
