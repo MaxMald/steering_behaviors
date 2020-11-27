@@ -119,7 +119,7 @@ extends UIObject
     );
     // Set initial UILabel tint
 
-    let labeltint = 0xffffff;
+    let labeltint : number = ST_COLOR_ID.kWhite;
 
     // Check if tint have been passed on constructor.
 
@@ -176,7 +176,7 @@ extends UIObject
    * @param _label The text of the button.
    *
    */
-  static CreateButton
+  static CreateThemeButton
   (
     _x : number,
     _y : number,
@@ -188,7 +188,7 @@ extends UIObject
 
     // Create UIButton.
 
-    const button = new UIButton(_x, _y, _scene, "niceButton.png", _label);
+    const button = new UIButton(_x, _y, _scene, "themeButton_idle.png", _label);
 
     // Set this UIButton padding to 10.
 
@@ -217,7 +217,7 @@ extends UIObject
   )
   : UIButton
   {
-    const button = new UIButton(_x, _y, _scene, "niceButton.png", _label, _buttonTint);
+    const button = new UIButton(_x, _y, _scene, "colorButton_idle.png", _label, _buttonTint);
 
     button.setPadding(10);
 

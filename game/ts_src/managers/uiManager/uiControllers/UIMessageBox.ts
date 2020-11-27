@@ -11,6 +11,7 @@
 import { ST_BUTTON } from "../../../commons/stEnums";
 import { UIBox } from "../uiBox/uiBox";
 import { UIButton } from "../uiButton";
+import { UIButtonImg } from "../uiButtonImg";
 import { UIText } from "../uiText";
 import { UIDialogBox } from "./UIDialogBox";
 
@@ -90,7 +91,7 @@ extends UIDialogBox
     ///////////////////////////////////
     // Accept
 
-    const accept = UIButton.CreateButton(_x, _y, _scene, "Accept");
+    const accept = UIButton.CreateThemeButton(_x, _y, _scene, "Accept");
 
     accept.subscribe
     (
@@ -161,7 +162,7 @@ extends UIDialogBox
     ///////////////////////////////////
     // Yes
 
-    const butYes = UIButton.CreateButton(_x, _y, _scene, "Yes");
+    const butYes = UIButtonImg.CreateYesButtonImg(_x, _y, _scene);
 
     butYes.subscribe
     (
@@ -186,7 +187,7 @@ extends UIDialogBox
     ///////////////////////////////////
     // No
 
-    const butNo = UIButton.CreateButton(_x, _y, _scene, "No");
+    const butNo = UIButtonImg.CreateNoButtonImg(_x, _y, _scene);
 
     butNo.subscribe
     (

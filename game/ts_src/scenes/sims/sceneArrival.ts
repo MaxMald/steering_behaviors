@@ -9,7 +9,7 @@
  */
 
 import { BaseActor } from "../../actors/baseActor";
-import { ST_COMPONENT_ID, ST_MANAGER_ID, ST_MESSAGE_ID } from "../../commons/stEnums";
+import { ST_COLOR_ID, ST_COMPONENT_ID, ST_MANAGER_ID, ST_MESSAGE_ID } from "../../commons/stEnums";
 import { Ty_Sprite, V2 } from "../../commons/stTypes";
 import { CmpForceController } from "../../components/cmpforceController";
 import { CmpSpriteController } from "../../components/cmpSpriteController";
@@ -58,13 +58,12 @@ extends Phaser.Scene
     ///////////////////////////////////
     // Create scene buttons
 
-    let mainMenuButton : UIButton = UIButton.CreateColorButton
+    let mainMenuButton : UIButton = UIButton.CreateThemeButton
     (
       width * 0.1,
       height * 0.9,
       this,
-      'Main menu',
-      0x2272F1
+      'Main menu'
     );
 
     mainMenuButton.subscribe
