@@ -113,6 +113,8 @@ export class UIComboBox
 
     const selectedLabel = new UILabelBox(_x, _y, _scene, "");
 
+    selectedLabel.setBoxTint(0xbefbff);
+
     this._m_selectedLabel = selectedLabel;
 
     // Update box
@@ -510,6 +512,8 @@ export class UIComboBox
           aOptionsStr[i]
         );
 
+        optionLabel.setBoxTint(0xaffaff);
+
         optionLabel.setZ(10);
 
         optionLabel.setAnchor(0.0, 0.0);
@@ -637,7 +641,7 @@ export class UIComboBox
 
     this.setSelection(labelBox.getText());
 
-    labelBox.setBoxTint(ST_COLOR_ID.kWhite);
+    labelBox.setBoxTint(ST_COLOR_ID.kSkyBlueNeon);
     labelBox.setTextTint(ST_COLOR_ID.kBlack);
 
     this.closeCombo();
@@ -652,7 +656,7 @@ export class UIComboBox
 
     const labelBox = _uiLabel as UILabelBox;
 
-    labelBox.setBoxTint(ST_COLOR_ID.kGray);
+    labelBox.setBoxTint(0x5dc7ce);
     labelBox.setTextTint(ST_COLOR_ID.kBlack);
 
     return;
@@ -665,7 +669,7 @@ export class UIComboBox
 
     const labelBox = _uiLabel as UILabelBox;
 
-    labelBox.setBoxTint(ST_COLOR_ID.kWhite);
+    labelBox.setBoxTint(ST_COLOR_ID.kSkyBlueNeon);
     labelBox.setTextTint(ST_COLOR_ID.kBlack);
 
     return;

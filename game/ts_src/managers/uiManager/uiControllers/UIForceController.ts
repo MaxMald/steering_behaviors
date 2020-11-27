@@ -174,6 +174,42 @@ export class UIForceController
       this
     );
 
+    // SteerForce Title
+
+    const steerTitle = UILabel.CreateStyleB
+    (
+      0,
+      0,
+      _scene,
+      "Steer Force",
+      25  
+    );
+
+    box.add(steerTitle);
+
+    // Separator
+
+    box.add
+    (
+      new UIImage(0,0,_scene, "game_art", "separator_a.png")
+    );
+
+    steerTitle.setTint(ST_COLOR_ID.kGold);
+
+    // Select Force Label
+
+    const selectForce = UILabel.CreateStyleB
+    (
+      0,
+      0,
+      _scene,
+      "Select Steer Force"
+    );
+
+    selectForce.setTint(ST_COLOR_ID.kSkyBlueNeon);
+
+    box.add(selectForce);
+
     // Combo Box.
 
     const comboBox = new UIComboBox(0, 0, _scene);

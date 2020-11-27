@@ -9,8 +9,10 @@
  */
 
 import { BaseActor } from "../../../actors/baseActor";
-import { ST_COLOR_ID } from "../../../commons/stEnums";
+import { ST_COLOR_ID, ST_MANAGER_ID, ST_SIM_SATE } from "../../../commons/stEnums";
 import { Ty_Sprite } from "../../../commons/stTypes";
+import { Master } from "../../../master/master";
+import { SimulationManager } from "../../simulationManager/simulationManager";
 import { UIBox } from "../uiBox/uiBox";
 import { UIButtonImg } from "../uiButtonImg";
 import { UIImage } from "../uiImage";
@@ -79,6 +81,7 @@ extends UIController
     (
       new UIImage(0,0,_scene, "game_art", "separator_a.png")
     );
+
   }
 
   /**
@@ -96,8 +99,31 @@ extends UIController
     _scene : Phaser.Scene
   )
   : UISimulationController
-  {
-    const simControlBox = new UISimulationController(_x, _y, _scene, "Simulation controls");
+  { 
+
+    // Create
+
+    const simControlBox = new UISimulationController
+    (
+      _x, 
+      _y, 
+      _scene, 
+      "Simulation controls"
+    );
+
+    // Get Master Manager
+
+    simControlBox.m_master = Master.GetInstance();
+
+    // Get Simulation Manager
+
+    simControlBox._m_simulationManager 
+    = simControlBox.m_master.getManager<SimulationManager>
+    (
+      ST_MANAGER_ID.kSimManager
+    );
+
+    // Create UI
 
     const buttonsBox = UIBox.CreateContentBoxB(0, 0, _scene);
 
@@ -118,6 +144,14 @@ extends UIController
       _scene
     );
 
+    stopButton.subscribe
+    (
+      "buttonReleased", 
+      "UISimController",
+      simControlBox._onSimulationStop,
+      simControlBox
+    );
+
     buttonsBox.add(stopButton);
 
     // play button image
@@ -127,6 +161,14 @@ extends UIController
       0,
       0,
       _scene
+    );
+
+    playButton.subscribe
+    (
+      "buttonReleased", 
+      "UISimController",
+      simControlBox._onSimulationPlay,
+      simControlBox
     );
 
     buttonsBox.add(playButton);
@@ -140,6 +182,14 @@ extends UIController
       _scene
     );
 
+    pauseButton.subscribe
+    (
+      "buttonReleased", 
+      "UISimController",
+      simControlBox._onSimulationPause,
+      simControlBox
+    );
+
     buttonsBox.add(pauseButton);
     
     simControlBox._m_box.add(buttonsBox);
@@ -147,11 +197,87 @@ extends UIController
     simControlBox._m_box.setCenterAlignment();
 
     return simControlBox;
+
+  }
+
+  destroy()
+  : void
+  {
+
+    this._m_simulationManager = null;
+
+    this._m_box.destroy();
+    this._m_box = null;
+
+    this._m_boxTitle = null;
+
+    super.destroy();
+
+    return;
+
   }
 
   //****************************************************/
   /* Private                                          */
   /****************************************************/
+
+  private _onSimulationPause()
+  : void
+  {
+
+    if(this._m_simulationManager.getState() === ST_SIM_SATE.kRunning)
+    {
+
+      this.m_master.pauseSimulation();
+
+    }   
+
+    return;
+
+  }
+
+  private _onSimulationPlay()
+  : void
+  {
+
+    const state = this._m_simulationManager.getState();
+
+    if(state === ST_SIM_SATE.kStopped)
+    {
+
+      this.m_master.startSimulation();
+      
+    }
+    else if(state === ST_SIM_SATE.kPaused)
+    {
+
+      this.m_master.resumeSimulation();
+
+    }
+
+    return;
+
+  }
+
+  private _onSimulationStop()
+  : void
+  {
+
+    if( this._m_simulationManager.getState() !== ST_SIM_SATE.kStopped)
+    {
+
+      this.m_master.stopSimulation();
+
+    }    
+
+    return;
+
+  }
+
+  /**
+   * Reference to the simulation manager.
+   */
+  private _m_simulationManager: SimulationManager;
   
   // UI box components
 

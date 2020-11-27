@@ -11,6 +11,12 @@
 import { Ty_Image } from "../../commons/stTypes";
 import { UIObject } from "./uiObject";
  
+/**
+  * @event "buttonPressed" Triggered when the button is pressed.
+  * @event "buttonReleased" Triggered when the button is released.
+  * @event "buttonOver" Triggered when the cursor hovers the button.
+  * @event "buttonOverOut" Triggered when the cursor no longer hovers the button.
+*/
  export class UIButtonImg
  extends UIObject
  {

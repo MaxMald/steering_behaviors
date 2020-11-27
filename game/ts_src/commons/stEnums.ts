@@ -197,3 +197,29 @@ export const ST_STEER_FORCE = Object.freeze
   kFollowPath: 6 as 6
 
 });
+
+/**
+ * Indicates the current state of the Simulation Manager.
+ */
+
+export type ST_SIM_SATE = EnumLiteralsOf<typeof ST_SIM_SATE>;
+
+export const ST_SIM_SATE = Object.freeze
+({
+  
+  /**
+   * The simulation is stopped.
+   */
+  kStopped: 0 as 0,
+
+  /**
+   * The simulation is running.
+   */
+  kRunning: 1 as 1,
+
+  /**
+   * The simulation is paused.
+   */
+  kPaused: 2 as 2
+
+});
