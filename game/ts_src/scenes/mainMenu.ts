@@ -135,13 +135,6 @@ extends Phaser.Scene
   ///////////////////////////////////
   // Callbacks
 
-  private _onDevAlex()
-  : void
-  {
-    this.scene.start('devAlex');
-    return;
-  }
-
   private _onSceneArrival()
   : void
   {
