@@ -258,20 +258,15 @@ implements IForce
     return;
     
   }
-  
+
   /****************************************************/
-  /* Private                                          */
+  /* Protected                                        */
   /****************************************************/
   
   /**
    * Reference to the force controller.
    */
-  private _m_controller : CmpForceController;
-
-  /**
-   * Reference to the debug manager.
-   */
-  private _m_debugManager : DebugManager;
+  protected _m_controller : CmpForceController;
 
   ///////////////////////////////////
   // Physics properties
@@ -279,26 +274,35 @@ implements IForce
   /**
    * The seek force.
    */
-  private _m_seekForce : V2;
+  protected _m_seekForce : V2;
 
   /**
    * The desire velocity.
    */
-  private _m_desireVelocity : V2;
+  protected _m_desireVelocity : V2;
 
   /**
    * The max magnitude of the seek force.
    */
-  private _m_seekMaxLength : number;
+  protected _m_seekMaxLength : number;
 
   /**
    * The agent sprite.
    */
-  private _m_self : Ty_Sprite;
+  protected _m_self : Ty_Sprite;
 
   /**
    * The target sprite.
    */
-  private _m_target : Ty_Sprite;
+  protected _m_target : Ty_Sprite;
   
+
+  /****************************************************/
+  /* Private                                          */
+  /****************************************************/
+  
+  /**
+   * Reference to the debug manager.
+   */
+  private _m_debugManager : DebugManager;
 }
