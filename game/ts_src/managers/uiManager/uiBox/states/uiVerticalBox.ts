@@ -64,6 +64,15 @@ export class UIVerticalBox
 
       object = aObjects[i];
 
+      // Skip disable object.
+
+      if(!object.isEnable())
+      {
+
+        continue;
+
+      }
+
       elementH = object.getHeight();
 
       if(i < lastIndex)

@@ -8,7 +8,7 @@
  * @since November-12-2020
  */
 
-import { ST_STEER_FORCE, ST_TEXT_TYPE } from "../../../commons/stEnums";
+import { ST_STEER_FORCE } from "../../../commons/stEnums";
 import { SeekForce } from "../../../steeringBehavior/forceSeek";
 import { IForce } from "../../../steeringBehavior/iForce";
 import { UIForce } from "./UIForce";
