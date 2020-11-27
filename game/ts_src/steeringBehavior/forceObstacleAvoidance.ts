@@ -214,6 +214,22 @@ implements IForce
 
   }
 
+  getMaxMagnitude()
+  : number
+  {
+
+    return this._m_forceMagnitude;
+
+  }
+
+  getActualForce()
+  : number
+  {
+
+    return this._m_v2_obstacleAvoidanceForce.length();
+
+  }
+
   /**
    * Safely destroys this force.
    */
