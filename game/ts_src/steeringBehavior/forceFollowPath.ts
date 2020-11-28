@@ -58,18 +58,22 @@ implements IForce
     this.m_looping = _looping;
     this.m_pathSize = _path.length;
 
+    // Initialize vectors
+
+    this._m_v2_distance = new Phaser.Math.Vector2(0.0, 0.0);
+
     // Set the target at the start of path
     this.m_targetIndex = 0;
     // Get the target in path
 
-    if(_targetIndex != null)
+    if(_targetIndex !== undefined)
     {
       this.m_targetIndex = _targetIndex;
     }
 
     // Set the looping flag
     this.m_looping = false;
-    if(_looping != null)
+    if(_looping !== undefined)
     {
       this.m_looping = _looping;
     }
@@ -111,38 +115,43 @@ implements IForce
 
     let radius = this.m_radius;
 
-    let size = path.length;
+    let pathSize = path.length;
 
     let looping = this.m_looping;
 
     let seek = this.m_seek;
 
-    let i : number = this.m_targetIndex;
+    let targetIndex = this.m_targetIndex;
 
     // Check distance to target
 
-    let sqDist : number = new Phaser.Math.Vector2(self.x - path[i].x, self.x - path[i].x).lengthSq();
+    let targetDistance = this._m_v2_distance;
 
-    if (sqDist < radius * radius){
-      ++i;
-      if(i >= size)
+    targetDistance.set
+    (
+      path[targetIndex].x - self.x, 
+      path[targetIndex].y - self.y
+    );
+
+    this._m_distance = targetDistance.length();
+
+    if (this._m_distance < radius)
+    {
+      targetIndex++;
+      if(targetIndex == pathSize)
       {
         if (looping)
         {
-          i = 0;
+          targetIndex = 0;
         }
         else
         {
-          i = size - 1;
-          //seek.destroy();
-          //this.destroy();
+          targetIndex = pathSize - 1;
         }
       }
-      seek.setTarget(path[i]);
-      this.m_targetIndex = i;
-      //i = (i + 1) % (size - 1);
+      seek.setTarget(path[targetIndex]);
+      this.m_targetIndex = targetIndex;
     }
-    //seek.update(_dt);
     return;
   }
 
@@ -167,17 +176,38 @@ implements IForce
 
     for (let i = 0; i < size; ++i)
     {
-      debugManager.drawCircle(path[i].x, path[i].y, radius, 3, ST_COLOR_ID.kPurple);
+      debugManager.drawCircle
+      (
+        path[i].x,
+        path[i].y,
+        radius,
+        3,
+        ST_COLOR_ID.kPurple
+      );
+
       if (i < size - 1)
       {
-        debugManager.drawLine(path[i].x, path[i].y,
-                              path[i + 1].x ,path[i + 1].y, 3,
-                              ST_COLOR_ID.kPurple);
+        debugManager.drawLine
+        (
+          path[i].x,
+          path[i].y,
+          path[i + 1].x,
+          path[i + 1].y,
+          3,
+          ST_COLOR_ID.kBlue
+        );
       }
       else
       {
-        debugManager.drawLine(path[i].x, path[i].y, path[0].x ,path[0].y, 3, 
-                              ST_COLOR_ID.kPurple);
+        debugManager.drawLine
+        (
+          path[i].x,
+          path[i].y,
+          path[0].x,
+          path[0].y,
+          3,
+          ST_COLOR_ID.kBlue
+        );
       }
     }
 
@@ -300,4 +330,14 @@ implements IForce
   * Reference to the debug manager.
   */
  private _m_debugManager : DebugManager;
+
+ /**
+   * Distance to target.
+   */
+  private _m_distance : number;
+
+  /**
+   * Vector 2 for distance to target.
+   */
+  private _m_v2_distance : V2;
 }
