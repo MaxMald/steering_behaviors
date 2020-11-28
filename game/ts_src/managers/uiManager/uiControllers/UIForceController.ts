@@ -12,6 +12,7 @@ import { UISlider } from "../uiSlider";
 import { UISpeedometer } from "../uiSpeedometer";
 import { UIController } from "./UIController";
 import { UIForce } from "./UIForce";
+import { UIForceArrival } from "./UIForceArrival";
 import { UIForceSeek } from "./UIForceSeek";
 
 export class UIForceController
@@ -236,11 +237,12 @@ export class UIForceController
 
     const hUIForce = new Map<ST_STEER_FORCE, UIForce>();
 
-    this._m_aUIForce = hUIForce;
+     this._m_aUIForce = hUIForce;
 
     // Create each UI Force and add it to the box.
 
-    this._addUIForce(ST_STEER_FORCE.kSeek, new UIForceSeek(_scene, undefined));
+    this._addUIForce(ST_STEER_FORCE.kSeek, new UIForceSeek(_scene));
+    this._addUIForce(ST_STEER_FORCE.kArrive, new UIForceArrival(_scene));
 
     ///////////////////////////////////
     // Actor
@@ -429,7 +431,7 @@ export class UIForceController
 
       activeForce.setTarget(_force);
 
-      this._m_activeUIForce = activeForce;
+      this._m_activeUIForce = activeForce;      
 
     };
 
