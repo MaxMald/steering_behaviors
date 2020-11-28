@@ -288,6 +288,12 @@ implements IManager
     this._m_line = null;
     return;
   }
+
+  //********** Static ************/
+
+  static FORCE_LINE_WIDTH : number = 3;
+
+  static FORCE_CIRCLE_WIDTH : number = 2;
   
   /****************************************************/
   /* Private                                          */
