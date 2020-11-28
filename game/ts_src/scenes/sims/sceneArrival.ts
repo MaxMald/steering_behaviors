@@ -16,6 +16,8 @@ import { CmpSpriteController } from "../../components/cmpSpriteController";
 import { ShipFactory } from "../../factories/shipFactory";
 import { SimulationManager } from "../../managers/simulationManager/simulationManager";
 import { UIButton } from "../../managers/uiManager/uiButton";
+import { UIForceController } from "../../managers/uiManager/uiControllers/UIForceController";
+import { UIManager } from "../../managers/uiManager/uiManager";
 import { UIObject } from "../../managers/uiManager/uiObject";
 import { Master } from "../../master/master";
 import { ArrivalForce } from "../../steeringBehavior/forceArrival";
@@ -197,7 +199,27 @@ extends Phaser.Scene
       ST_COMPONENT_ID.kForceController
     );
 
-    shipController.addForce('arrival_1', arrival);    
+    shipController.addForce('arrival_1', arrival);
+
+    ///////////////////////////////////
+     // UI
+
+     const uiForceController = new UIForceController
+     (
+       20,
+       20,
+       this
+     );
+
+    // Add UI force controller to the UI Manager.
+
+    const uiManager = master.getManager<UIManager>(ST_MANAGER_ID.kUIManager);
+
+    uiManager.addUIController("forceUI", uiForceController);
+
+    // Set the active actor of the UI Manager.
+
+    uiManager.setTarget(shipActor);
 
     return;
 

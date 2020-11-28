@@ -121,6 +121,13 @@ export class UIVerticalBox
 
       object = aObjects[i];
 
+      if(!object.isEnable())
+      {
+
+        continue;
+
+      }
+
       // Set the initial position.
 
       object.setPosition

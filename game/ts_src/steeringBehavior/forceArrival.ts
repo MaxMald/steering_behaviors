@@ -10,7 +10,12 @@
 
 import { Master } from "../master/master";
 import { DebugManager } from "../managers/debugManager/debugManager";
-import { ST_COLOR_ID, ST_COMPONENT_ID, ST_MANAGER_ID, ST_MESSAGE_ID, ST_STEER_FORCE } from "../commons/stEnums";
+import 
+{
+  ST_COLOR_ID, 
+  ST_MANAGER_ID, 
+  ST_STEER_FORCE 
+} from "../commons/stEnums";
 import { Ty_Sprite, V2 } from "../commons/stTypes";
 import { CmpForceController } from "../components/cmpForceController";
 import { IForce } from "./iForce";
@@ -43,6 +48,7 @@ implements IForce
     _controller ?: CmpForceController
   )
   {
+    
     // Get variables
 
     this._m_self = _self;
@@ -54,9 +60,6 @@ implements IForce
     {
       this._m_controller = _controller;
     }
-
-    // Initialize vectors and points
-    this._m_v2_actualVelocity = new Phaser.Math.Vector2(0.0, 0.0);
 
     this._m_v2_desiredVelocity = new Phaser.Math.Vector2(0.0, 0.0);
 
@@ -70,6 +73,7 @@ implements IForce
     );
 
     return;
+
   }
 
   /**
@@ -80,8 +84,11 @@ implements IForce
   setController(_controller: CmpForceController)
   : void 
   {
+    
     this._m_controller = _controller;
+    
     return;
+
   }
 
   /**
@@ -92,25 +99,26 @@ implements IForce
   update(_dt: number)
   : void 
   {
+    
     // Get points
 
-    let target : Ty_Sprite = this._m_target;
+    const target : Ty_Sprite = this._m_target;
     
-    let self : Ty_Sprite = this._m_self;
+    const self : Ty_Sprite = this._m_self;
     
     // Get controller information.
 
-    let controller = this._m_controller;
+    const controller = this._m_controller;
 
     // Current Force
     
-    let actualVelocity = controller.getVelocity();
+    const actualVelocity = controller.getVelocity();
 
     // Desire Force    
 
-    let forceMagnitude = this._m_forceMagnitude;
+    const forceMagnitude = this._m_forceMagnitude;
 
-    let desiredVelocity = this._m_v2_desiredVelocity;
+    const desiredVelocity = this._m_v2_desiredVelocity;
 
     desiredVelocity.set
     (
@@ -124,10 +132,17 @@ implements IForce
 
     let arrivalMultiplier = this._m_distance / slowingRadius;
 
-    if(this._m_distance < slowingRadius) {
+    if(this._m_distance < slowingRadius) 
+    {
+
       desiredVelocity.setLength(forceMagnitude * arrivalMultiplier);
-    } else {
+    
+    } 
+    else 
+    {
+
       desiredVelocity.setLength(forceMagnitude);
+    
     }
 
     // Steer Force
@@ -145,6 +160,7 @@ implements IForce
     controller.addSteerForce(steerForce.x, steerForce.y);
 
     return;
+
   }
 
   /**
@@ -171,7 +187,8 @@ implements IForce
 
      // Steering force line
 
-     debugManager.drawLine(
+     debugManager.drawLine
+     (
       this._m_controller.getVelocity().x + sprite.x,
       this._m_controller.getVelocity().y + sprite.y,
       this._m_v2_desiredVelocity.x + sprite.x,
@@ -182,7 +199,8 @@ implements IForce
 
     // Desired Velocity line
 
-    debugManager.drawLine(
+    debugManager.drawLine
+    (
       sprite.x,
       sprite.y,
       this._m_v2_desiredVelocity.x + sprite.x,
@@ -192,7 +210,9 @@ implements IForce
     );
 
     // Slowing radius circle
-    debugManager.drawCircle(
+    
+    debugManager.drawCircle
+    (
       target.x,
       target.y,
       this._m_slowingRadius,
@@ -200,11 +220,15 @@ implements IForce
       ST_COLOR_ID.kPurple
     );
 
-    if(this._m_distance < this._m_slowingRadius) {
+    if(this._m_distance < this._m_slowingRadius) 
+    {
       sprite.setTint(0x3D85C6);
-    } else {
+    } 
+    else 
+    {
       sprite.clearTint();
     }
+
     return;
   }
 
@@ -264,13 +288,13 @@ implements IForce
 
     this._m_controller = null;
     this._m_v2_arrivalForce = null;
-    this._m_v2_actualVelocity = null;
     this._m_v2_desiredVelocity = null;
 
     this._m_debugManager = null;
 
     this._m_target = null;
     this._m_self = null;
+    
     return;
   }
   
@@ -312,11 +336,6 @@ implements IForce
    * The target sprite.
    */
   private _m_target : Ty_Sprite;
-
-  /**
-   * Vector 2 for actual velocity.
-   */
-  private _m_v2_actualVelocity : V2;
 
   /**
    * Vector 2 for desired velocity.

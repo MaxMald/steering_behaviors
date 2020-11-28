@@ -123,6 +123,19 @@ export class UIBox
 
   }
 
+  static CreateForceBox(_x: number, _y: number, _scene: Phaser.Scene)
+  : UIBox
+  {
+
+    const box = new UIBox(_x, _y, _scene, "box_bg_2.png");
+
+    box.setPadding(10, 18);
+    box.setElementsGap(7.5);
+
+    return box;
+
+  }
+
   static CreateContentBoxB(_x: number, _y:number, _scene: Phaser.Scene)
   : UIBox
   {

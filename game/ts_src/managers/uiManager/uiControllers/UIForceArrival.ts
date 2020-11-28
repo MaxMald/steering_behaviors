@@ -3,13 +3,13 @@
  *
  * @summary 
  *
- * @file UIForceSeek.ts
+ * @file UIForceArrival.ts
  * @author Max Alberto Solano Maldonado <nuup20@gmail.com>
- * @since November-12-2020
+ * @since November-27-2020
  */
 
 import { ST_COLOR_ID, ST_STEER_FORCE } from "../../../commons/stEnums";
-import { SeekForce } from "../../../steeringBehavior/forceSeek";
+import { ArrivalForce } from "../../../steeringBehavior/forceArrival";
 import { IForce } from "../../../steeringBehavior/iForce";
 import { UIBox } from "../uiBox/uiBox";
 import { UILabel } from "../uiLabel";
@@ -17,28 +17,26 @@ import { UIObject } from "../uiObject";
 import { UISlider } from "../uiSlider";
 import { UIForce } from "./UIForce";
 
-export class UIForceSeek
+export class UIForceArrival
 extends UIForce
 {
 
-  constructor(_scene : Phaser.Scene)
+  constructor(_scene: Phaser.Scene)
   {
 
-    super();    
+    super();
 
     // Create the box
     
     const box = UIBox.CreateForceBox(0,0,_scene);
 
-    this._m_box = box;
+    this._m_box = box;    
 
     // Title
 
-    const title = UILabel.CreateStyleA(0, 0, _scene, "Seek Force", 25);
+    const title = UILabel.CreateStyleA(0, 0, _scene, "Arrive Force", 25);
 
     title.setTint(ST_COLOR_ID.kGold);
-
-    this._m_title = title;
 
     box.add(title);
 
@@ -105,11 +103,13 @@ extends UIForce
   : void
   {
 
-    if(this._m_seek !== undefined)
+    if(this._m_arrival !== undefined)
     {
 
-      this.setForceLabel(this._m_seek.getActualForce());
-    
+      this.setForceLabel(this._m_arrival.getActualForce());
+
+      return;
+
     }
 
     return;
@@ -122,21 +122,23 @@ extends UIForce
 
     // Save value.
 
-    this._m_seek = _force as SeekForce;
+   const arrivalForce = _force as ArrivalForce;
 
-    if(this._m_seek !== undefined)
+   this._m_arrival = arrivalForce;
+
+    if(arrivalForce !== undefined)
     {
 
-      if(_force.getType() !== ST_STEER_FORCE.kSeek)
+      if(_force.getType() !== ST_STEER_FORCE.kArrive)
       {
 
-        throw new Error("UI Seek Force: Incorrect force.");
+        throw new Error("UI Arrive Force: Incorrect force.");
 
       }
 
-      this.setForceLabel(this._m_seek.getActualForce());
+      this.setForceLabel(arrivalForce.getActualForce());
 
-      this._m_forceSlider.setValue(this._m_seek.getMaxMagnitude());
+      this._m_forceSlider.setValue(arrivalForce.getMaxMagnitude());
 
     }
 
@@ -167,9 +169,7 @@ extends UIForce
   getBox()
   : UIBox
   {
-
     return this._m_box;
-
   }
 
   destroy()
@@ -177,7 +177,7 @@ extends UIForce
 
     this._m_box.destroy();
 
-    this._m_seek = undefined;
+    this._m_arrival = undefined;
 
     super.destroy();
 
@@ -188,17 +188,13 @@ extends UIForce
   /****************************************************/
   /* Private                                          */
   /****************************************************/
-  
-  /**
-   * Reference to the force.
-   */
-  private _m_seek: SeekForce;
 
-  // UI Elements.
+  private _m_arrival: ArrivalForce;
+
+  ////////////////////////////////////
+  // UI Elements
 
   private _m_box: UIBox;
-
-  private _m_title: UILabel;
 
   private _m_labelForce: UILabel;
 
