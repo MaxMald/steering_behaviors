@@ -271,6 +271,16 @@ implements IForce
 
   }
 
+  setMaxMagnitude(_magnitude: number)
+  : void
+  {
+
+    this._m_forceMagnitude = _magnitude;
+
+    return;
+
+  }
+
   getActualForce()
   : number
   {
