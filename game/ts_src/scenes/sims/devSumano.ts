@@ -15,6 +15,8 @@
  import { CmpSpriteController } from "../../components/cmpSpriteController";
 import { ShipFactory } from "../../factories/shipFactory";
  import { SimulationManager } from "../../managers/simulationManager/simulationManager";
+import { UISimulationController } from "../../managers/uiManager/uiControllers/UISimulationController";
+import { UIManager } from "../../managers/uiManager/uiManager";
  import { Master } from "../../master/master";
 import { FollowPathForce } from "../../steeringBehavior/forceFollowPath";
 import { PursueForce } from "../../steeringBehavior/forcePursue";
@@ -184,8 +186,8 @@ import { WanderForce } from "../../steeringBehavior/forceWander";
        pathActor3.getWrappedInstance(),
        pathActor4.getWrappedInstance(),
        pathActor5.getWrappedInstance(),
-       pathActor7.getWrappedInstance(),
-       pathActor6.getWrappedInstance());
+       pathActor6.getWrappedInstance(),
+       pathActor7.getWrappedInstance());
      // Create Forces
 
      let followPath0 : FollowPathForce = new FollowPathForce();
@@ -198,7 +200,31 @@ import { WanderForce } from "../../steeringBehavior/forceWander";
      forceControlP.addForce('path_0', followPath0);
      forceControlF.addForce('path_1', followPath1);
  
-     return;
+     ///////////////////////////////////
+    // UI
+    const uiSimController = UISimulationController.CreateSimControlBox
+    (
+      width * 0.5,
+      20,
+      this
+    );
+    
+    // Add UI force controller to the UI Manager.
+    
+    const uiManager = master.getManager<UIManager>(ST_MANAGER_ID.kUIManager);
+    
+    uiManager.addUIController("mediaSimUI", uiSimController);
+    
+    // Set the active actor of the UI Manager.
+    
+    uiManager.setTarget(pursueActor0);
+    
+    ///////////////////////////////////
+    // Active Debugging
+    
+    this._m_master.enableDebugging();
+    
+    return;
    }
  
    update(_time : number, _delta : number)
