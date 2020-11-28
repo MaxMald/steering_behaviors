@@ -181,7 +181,7 @@ implements IForce
         path[i].x,
         path[i].y,
         radius,
-        3,
+        DebugManager.FORCE_CIRCLE_WIDTH,
         ST_COLOR_ID.kPurple
       );
 
@@ -193,7 +193,7 @@ implements IForce
           path[i].y,
           path[i + 1].x,
           path[i + 1].y,
-          3,
+          DebugManager.FORCE_LINE_WIDTH,
           ST_COLOR_ID.kBlue
         );
       }
@@ -205,7 +205,7 @@ implements IForce
           path[i].y,
           path[0].x,
           path[0].y,
-          3,
+          DebugManager.FORCE_LINE_WIDTH,
           ST_COLOR_ID.kBlue
         );
       }
