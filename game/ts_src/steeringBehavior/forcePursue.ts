@@ -9,7 +9,6 @@
  */
 
 //import { Math } from "phaser";
-import { BaseActor } from "../actors/baseActor";
 import { ST_COLOR_ID, ST_MANAGER_ID, ST_STEER_FORCE } from "../commons/stEnums";
 import { Ty_Sprite, V2 } from "../commons/stTypes";
 import { CmpForceController } from "../components/cmpforceController";
@@ -34,7 +33,7 @@ implements IForce
    * @param _target The sprite of the target.
    * @param _force The magnitude of the force.
    * @param _predictionSteps How many steps/frames ahead to predict.
-   * @param _targetForceCtrl The forceControler of the target.
+   * @param _targetForceCtrl The Force Controller of the target.
    * @param _controller [optional] The controller of this force.
    */
   init
@@ -47,7 +46,8 @@ implements IForce
     _controller ?: CmpForceController
   )
   {
-    // Set the private mambers
+    // Set the private members
+
     this._m_self = _self;
     this._m_target = _target;
     this._m_force = _force;
@@ -60,6 +60,7 @@ implements IForce
     }
 
     // Init the member vectors
+    
     this._m_v2_actualVelocity = new Phaser.Math.Vector2(0.0, 0.0);
 
     this._m_v2_desiredVelocity = new Phaser.Math.Vector2(0.0, 0.0);

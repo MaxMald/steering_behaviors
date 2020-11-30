@@ -3,20 +3,18 @@
   *
   * @summary 
   *
-  * @file devMax.ts
+  * @file sceneSeek.ts
   * @author Max Alberto Solano Maldonado <nuup20@gmail.com>
   * @since August-30-2020
   */
 
- import { BaseActor } from "../../actors/baseActor";
- import { ST_COMPONENT_ID, ST_MANAGER_ID, ST_MESSAGE_ID } from "../../commons/stEnums";
- import { Ty_Sprite, V2 } from "../../commons/stTypes";
- import { CmpForceController } from "../../components/cmpforceController";
-import { CmpShipPropulsor } from "../../components/cmpShipPropulsor";
- import { CmpSpriteController } from "../../components/cmpSpriteController";
+import { BaseActor } from "../../actors/baseActor";
+import { ST_COMPONENT_ID, ST_MANAGER_ID, ST_MESSAGE_ID } from "../../commons/stEnums";
+import { Ty_Sprite, V2 } from "../../commons/stTypes";
+import { CmpForceController } from "../../components/cmpforceController";
+import { CmpSpriteController } from "../../components/cmpSpriteController";
 import { ShipFactory } from "../../factories/shipFactory";
- import { SimulationManager } from "../../managers/simulationManager/simulationManager";
-import { UIDialogBox } from "../../managers/uiManager/uiControllers/UIDialogBox";
+import { SimulationManager } from "../../managers/simulationManager/simulationManager";
 import { UIForceController } from "../../managers/uiManager/uiControllers/UIForceController";
 import { UIMessageBox } from "../../managers/uiManager/uiControllers/UIMessageBox";
 import { UISimulationController } from "../../managers/uiManager/uiControllers/UISimulationController";
@@ -24,10 +22,10 @@ import { UIManager } from "../../managers/uiManager/uiManager";
 import { UIObject } from "../../managers/uiManager/uiObject";
 import { UISlider } from "../../managers/uiManager/uiSlider";
 import { Master } from "../../master/master";
- import { SeekForce } from "../../steeringBehavior/forceSeek";
+import { SeekForce } from "../../steeringBehavior/forceSeek";
  
   
- export class ScnDevMax 
+ export class ScnSeek 
  extends Phaser.Scene
  {
    /****************************************************/

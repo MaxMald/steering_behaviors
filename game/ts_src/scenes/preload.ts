@@ -134,7 +134,7 @@ extends Phaser.Scene
 
     start.setInteractive();
 
-    start.on("pointerdown", this.onClickStart, this);
+    start.on("pointerup", this.onClickStart, this);
     start.on("pointerover", this.onOverStart, this);
     start.on("pointerout", this.onOutStart, this);    
 
