@@ -12,7 +12,7 @@ import { Plugin } from "phaser3-nineslice";
 import { Preload } from "./scenes/preload";
 import { Boot } from "./scenes/boot";
 import { MainMenu } from "./scenes/mainMenu";
-import { ScnDevMax } from "./scenes/sims/devMax";
+import { ScnSeek } from "./scenes/sims/sceneSeek";
 import { ScnDevSumano } from "./scenes/sims/devSumano";
 import { ScnArrival } from "./scenes/sims/sceneArrival";
 import { ScnWander } from "./scenes/sims/sceneWander";
@@ -92,9 +92,8 @@ class GameInit
     this.m_game.scene.add('preload', Preload);
     this.m_game.scene.add('main_menu', MainMenu);
 
-    this.m_game.scene.add('devMax', ScnDevMax);
+    this.m_game.scene.add('sceneSeek', ScnSeek);
     this.m_game.scene.add('sceneFlee', ScnFlee);
-    this.m_game.scene.add('devSumano', ScnDevSumano);
     this.m_game.scene.add('sceneArrival', ScnArrival);
     this.m_game.scene.add('sceneWander', ScnWander);
     this.m_game.scene.add('sceneObstacleAvoidance', ScnObstacleAvoidance);

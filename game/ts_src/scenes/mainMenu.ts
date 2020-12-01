@@ -7,6 +7,12 @@
   * @author Max Alberto Solano Maldonado <nuup20@gmail.com>
   * @since August-30-2020
   */
+
+import { ST_COLOR_ID } from "../commons/stEnums";
+import { UIBox } from "../managers/uiManager/uiBox/uiBox";
+import { UIButton } from "../managers/uiManager/uiButton";
+import { UIObject } from "../managers/uiManager/uiObject";
+
  
 export class MainMenu 
 extends Phaser.Scene
@@ -18,171 +24,176 @@ extends Phaser.Scene
   create()
   : void
   { 
-    let midWidth = this.game.canvas.width * 0.5;
+    
+    // Buttons Box
 
-    // Max Dev scene button
-    this._createButton
+    const box = UIBox.CreateBorderBox
     (
-      midWidth,
-      75,
-      'Max',
-      this._onDevMax
+      this.game.canvas.width * 0.5,
+      this.game.canvas.height * 0.5,
+      this
     );
 
-    // Flee scene button
-    this._createButton
+    box.setAnchor(0.5, 0.5);
+
+    box.setCenterAlignment();
+
+    ///////////////////////////////////
+    // Seek
+
+    const seek = UIButton.CreateColorButton
     (
-      midWidth,
-      225,
-      'Flee',
-      this._onSceneFlee
+      0,
+      0,
+      this,
+      "Seek",
+      ST_COLOR_ID.kWhite
     );
 
-    // Arrival scene button
-    this._createButton
+    seek.subscribe
     (
-      midWidth - 300,
-      300,
-      'Arrival',
-      this._onSceneArrival
+      "buttonReleased",
+      "MainMenu",
+      function(_sender: UIObject, _args: any)
+      : void
+      {
+
+        this.scene.start('sceneSeek');
+
+        return;
+
+      },
+      this
+    )
+
+    box.add(seek);
+
+    ///////////////////////////////////
+    // Flee
+
+    const flee = UIButton.CreateColorButton
+    (
+      0,
+      0,
+      this,
+      "Flee",
+      ST_COLOR_ID.kWhite
     );
 
-    // Wander scene button
-    this._createButton
+    flee.subscribe
     (
-      midWidth,
-      300,
-      'Wander',
-      this._onSceneWander
+      "buttonReleased",
+      "MainMenu",
+      function(_sender: UIObject, _args: any)
+      : void
+      {
+
+        this.scene.start('sceneFlee');
+
+        return;
+
+      },
+      this
+    )
+
+    box.add(flee);
+
+    ///////////////////////////////////
+    // Arrival
+
+    const arrival = UIButton.CreateColorButton
+    (
+      0,
+      0,
+      this,
+      "Arrival",
+      ST_COLOR_ID.kWhite
     );
 
-    // Obstacle Avoidance scene button
-    this._createButton
+    arrival.subscribe
     (
-      midWidth + 300,
-      300,
-      'Obstacle Avoidance',
-      this._onSceneObstacleAvoidance
+      "buttonReleased",
+      "MainMenu",
+      function(_sender: UIObject, _args: any)
+      : void
+      {
+
+        this.scene.start('sceneArrival');
+
+        return;
+
+      },
+      this
+    )
+
+    box.add(arrival);
+
+    ///////////////////////////////////
+    // Wander
+
+    const wander = UIButton.CreateColorButton
+    (
+      0,
+      0,
+      this,
+      "Wander",
+      ST_COLOR_ID.kWhite
     );
 
-    // Sumano Dev scene button
-    this._createButton
+    wander.subscribe
     (
-      midWidth,
-      450,
-      'Suma',
-      this._onDevSumano
+      "buttonReleased",
+      "MainMenu",
+      function(_sender: UIObject, _args: any)
+      : void
+      {
+
+        this.scene.start('sceneWander');
+
+        return;
+
+      },
+      this
+    )
+
+    box.add(wander);
+
+    ///////////////////////////////////
+    // Obstacle Avoidance
+
+    const oAvoidance = UIButton.CreateColorButton
+    (
+      0,
+      0,
+      this,
+      "Obstacle Avoidance",
+      ST_COLOR_ID.kWhite
     );
+
+    oAvoidance.subscribe
+    (
+      "buttonReleased",
+      "MainMenu",
+      function(_sender: UIObject, _args: any)
+      : void
+      {
+
+        this.scene.start('sceneObstacleAvoidance');
+
+        return;
+
+      },
+      this
+    )
+
+    box.add(oAvoidance);
+
     return;
   }
 
   update(_time : number, _delta : number)
   : void
   {   
-    return;
-  }
-
-  /****************************************************/
-  /* Private                                          */
-  /****************************************************/
-  
-  /**
-   * Create a new button.
-   * 
-   * @param _x The x position of the button. 
-   * @param _y The y position of the button.
-   * @param _label The text of the button.
-   * 
-   */
-  private _createButton
-  (
-    _x : number, 
-    _y : number, 
-    _label : string,
-    _callback : ()=>void
-  )
-  : void
-  {
-
-    // Create sprite.
-
-    let button = this.add.image
-    (
-      _x,
-      _y,
-      'button'
-    );
-
-    button.setScale(0.5, 0.5);
-
-    // Set interactive.
-
-    button.setInteractive();
-
-    // Label
-
-    let label = this.add.text
-    (
-      _x,
-      _y,
-      _label,
-      {
-        fontFamily : 'Arial',
-        fontSize : 32
-      }
-    );
-
-    label.setOrigin(0.5, 0.5);
-
-    // Set callback.
-
-    button.on('pointerdown', _callback, this);
-
-    return;
-  }
-
-  ///////////////////////////////////
-  // Callbacks
-
-  private _onSceneFlee()
-  : void
-  {
-    this.scene.start('sceneFlee');
-    return;
-  }
-
-  private _onSceneArrival()
-  : void
-  {
-    this.scene.start('sceneArrival');
-    return;
-  }
-
-  private _onSceneWander()
-  : void
-  {
-    this.scene.start('sceneWander');
-    return;
-  }
-
-  private _onSceneObstacleAvoidance()
-  : void
-  {
-    this.scene.start('sceneObstacleAvoidance');
-    return;
-  }
-
-  private _onDevMax()
-  : void
-  {
-    this.scene.start('devMax');
-    return;
-  }
-
-  private _onDevSumano()
-  : void
-  {
-    this.scene.start('devSumano');
     return;
   }
 }
