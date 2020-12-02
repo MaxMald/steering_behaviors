@@ -8,8 +8,8 @@
  * @since September-08-2020
  */
 
-//import { Math } from "phaser";
-import { ST_COLOR_ID, ST_MANAGER_ID, ST_STEER_FORCE } from "../commons/stEnums";
+import { BaseActor } from "../actors/baseActor";
+import { ST_COLOR_ID, ST_COMPONENT_ID, ST_MANAGER_ID, ST_STEER_FORCE } from "../commons/stEnums";
 import { Ty_Sprite, V2 } from "../commons/stTypes";
 import { CmpForceController } from "../components/cmpforceController";
 import { DebugManager } from "../managers/debugManager/debugManager";
@@ -26,50 +26,40 @@ implements IForce
   /* Public                                           */
   /****************************************************/
 
-  /**
-   * Initialize the Seek Force.
-   * 
-   * @param _self The sprite of the agent.
-   * @param _target The sprite of the target.
-   * @param _force The magnitude of the force.
-   * @param _predictionSteps How many steps/frames ahead to predict.
-   * @param _targetForceCtrl The Force Controller of the target.
-   * @param _controller [optional] The controller of this force.
-   */
   init
   (
-    _self : Ty_Sprite,
-    _target : Ty_Sprite,
-    _force : number,
-    _predictionSteps : number,
-    _targetForceCtrl : CmpForceController,
-    _controller ?: CmpForceController
+    _self : BaseActor<Ty_Sprite>,
+    _target : BaseActor<Ty_Sprite>,
+    _maxForceMagnitude : number
   )
   {
-    // Set the private members
+    // Init properties
 
-    this._m_self = _self;
-    this._m_target = _target;
-    this._m_force = _force;
-    this._m_targetForceCtrl = _targetForceCtrl;
-    this._m_predictionSteps = _predictionSteps;
+    this._m_self = _self.getWrappedInstance();
+    this._m_target = _target.getWrappedInstance();
 
-    if(this._m_controller !== undefined)
-    {
-      this._m_controller = _controller;
-    }
+    this._m_controller = _self.getComponent<CmpForceController>
+    (
+      ST_COMPONENT_ID.kForceController
+    );
+    this._m_targetController = _target.getComponent<CmpForceController>
+    (
+      ST_COMPONENT_ID.kForceController
+    );
 
-    // Init the member vectors
-    
-    this._m_v2_actualVelocity = new Phaser.Math.Vector2(0.0, 0.0);
+    this._m_maxForceMagnitude = _maxForceMagnitude;
 
-    this._m_v2_desiredVelocity = new Phaser.Math.Vector2(0.0, 0.0);
+    this._m_desireVelocity = new Phaser.Math.Vector2(); 
 
-    this._m_v2_forceMagnitude = new Phaser.Math.Vector2(0.0, 0.0);
+    this._m_targetPosition= new Phaser.Math.Vector2();
 
-    this._m_v2_force = new Phaser.Math.Vector2(0.0, 0.0);
+    this._m_selfPosition= new Phaser.Math.Vector2();
 
-    this._m_targetDir = new Phaser.Math.Vector2(0,0);
+    this._m_vDistance = new Phaser.Math.Vector2();
+
+    this._m_targetVelocity = new Phaser.Math.Vector2();
+
+    this._m_steerForce = new Phaser.Math.Vector2();
 
     this._m_debugManager = Master.GetInstance().getManager<DebugManager>
     (
@@ -77,89 +67,107 @@ implements IForce
     );
 
     return;
-  }
 
+  }
 
   setController(_controller: CmpForceController)
   : void 
   {
+
     this._m_controller = _controller;
+    
     return;
+
   }
 
   update(_dt: number)
   : void 
   {
-    // Get points
+    // Get Sprites
 
-    let target : Ty_Sprite = this._m_target;
+    const target : Ty_Sprite = this._m_target;
     
-    let self : Ty_Sprite = this._m_self;
+    const self : Ty_Sprite = this._m_self;
     
     // Get controller information.
 
-    let controller = this._m_controller;
+    const selfController = this._m_controller;
     
-    let direction = controller.getDirection();
+    const targetController = this._m_targetController;
 
-    let speed = controller.getSpeed();
+    /****************************************************/
+    /* Prediction                                       */
+    /****************************************************/
 
-    // Get target data
+    const selfPos = this._m_selfPosition;
 
-    let targetSpeed = this._m_targetForceCtrl.getSpeed();
+    selfPos.set(self.x, self.y);
 
-    let maxSpeed = controller.getMaxSpeed();
+    const targetPos = this._m_targetPosition;
 
-    let actualVelocity = this._m_v2_actualVelocity; 
+    targetPos.set(target.x, target.y);
 
-    let forceMagnitude = this._m_force;
+    // Calculate distance between target and self position.
 
-    // Current Force
+    const vDistance = this._m_vDistance;
 
-    actualVelocity.setTo(direction.x * speed, direction.y * speed);
+    vDistance.copy(targetPos);
 
-    //Pursue force
-    // Get target's direction
-    let targetDir = this._m_targetDir;
-    targetDir.copy(this._m_targetForceCtrl.getDirection());
+    vDistance.subtract(selfPos);
+
+    const distance = vDistance.length();
+
+    // Calculate the future steps
+
+    const steps = distance / selfController.getMaxSpeed();
+
+    // Calculate future position.
+
+    const targetVelocity = this._m_targetVelocity;
+
+    targetVelocity.copy(targetController.getVelocity());
+
+    targetVelocity.scale(steps);
+
+    targetPos.add(targetVelocity);
+
+    ///////////////////////////////////
+    // Seek future position
+
+    // Get actual velocity
+
+    const actualVelocity = selfController.getVelocity();
+
+    // Calculate desire velocity 
     
-    // Get more data to work with
-    let predictionSteps = this._m_predictionSteps;
-    
-    let desiredVelocity = this._m_v2_desiredVelocity;
-    
-    // Same as Seek
-    desiredVelocity.set
+    const desireVelocity = this._m_desireVelocity;
+
+    desireVelocity.set
     (
-      target.x - self.x, 
-      target.y - self.y
-    ); 
+      targetPos.x - self.x,
+      targetPos.y - self.y 
+    );
 
-    // Dynamically ajusting how far ahead to predict based on distance to target
-    let ajustedPrediction = desiredVelocity.length() / maxSpeed;
+    desireVelocity.setLength(this._m_maxForceMagnitude);
 
-    // Add the pursue calculations to the seek
-    desiredVelocity.add(targetDir.scale(predictionSteps * ajustedPrediction));
-    desiredVelocity.scale(targetSpeed / desiredVelocity.length());
-    // Steer Force
+    // Calculate the seek force
 
-    let steerForce = this._m_v2_forceMagnitude;
+    const seekForce = this._m_steerForce;
    
-    steerForce.set
-    (
-      desiredVelocity.x - actualVelocity.x, 
-      desiredVelocity.y - actualVelocity.y
-    );    
+    seekForce.copy(desireVelocity);
 
-    // Truncate force    
+    seekForce.subtract(actualVelocity);
 
-    steerForce.limit(forceMagnitude);
+    // Truncate the seek force if it exceeds the maximum length allowed.
+
+    seekForce.limit(this._m_maxForceMagnitude);
 
     // Add force to the controller.
 
-    controller.addSteerForce(steerForce.x, steerForce.y);
+    selfController.addSteerForce(seekForce.x, seekForce.y);
 
     return;
+
   }
 
   /**
@@ -171,51 +179,49 @@ implements IForce
   updateDebug(_dt : number)
   : void
   {
-    let debugManager = this._m_debugManager;
+    // Debug desire velocity.
 
-    let pos = this._m_self;
+    let self = this._m_self;
 
-    // Steering force line
-    debugManager.drawLine(
-      this._m_targetDir.x + pos.x,
-      this._m_targetDir.y + pos.y,
-      this._m_v2_actualVelocity.x + pos.x,
-      this._m_v2_actualVelocity.y + pos.y,
-      3,
-      ST_COLOR_ID.kRed
-    );
+    let desireVelocity = this._m_desireVelocity;
 
-    // Force line
-    debugManager.drawLine(
-      pos.x,
-      pos.y,
-      this._m_v2_forceMagnitude.x + pos.x,
-      this._m_v2_forceMagnitude.y + pos.y,
-      3,
-      ST_COLOR_ID.kBlue
-    );
-
-    // Desired Velocity Line
-    debugManager.drawLine(
-      pos.x,
-      pos.y,
-      this._m_targetDir.x + pos.x,
-      this._m_targetDir.y + pos.y,
-      3,
+    this._m_debugManager.drawLine
+    (
+      self.x,
+      self.y,
+      self.x + desireVelocity.x,
+      self.y + desireVelocity.y,
+      1,
       ST_COLOR_ID.kBlack
     );
 
-    // Target dir time steps circle
-    let target = this._m_target;
+    // Debug steer force.
 
-    debugManager.drawCircle(
-      target.x + this._m_targetDir.x,
-      target.y + this._m_targetDir.y,
-      5,
-      2,
-      ST_COLOR_ID.kYellow
+    let actualVelocity = this._m_controller.getVelocity();
+
+    this._m_debugManager.drawLine
+    (
+      self.x + actualVelocity.x,
+      self.y + actualVelocity.y,
+      self.x + desireVelocity.x,
+      self.y + desireVelocity.y,
+      1,
+      ST_COLOR_ID.kRed 
     );
+
+    // Debug predicted position
+
+    this._m_debugManager.drawCircle
+    (
+      this._m_targetPosition.x,
+      this._m_targetPosition.y,
+      5,
+      5,
+      ST_COLOR_ID.kOrange 
+    );
+
     return;
+
   }
 
   /**
@@ -253,7 +259,17 @@ implements IForce
   : number
   {
 
-    return this._m_force;
+    return this._m_maxForceMagnitude;
+
+  }
+
+  setMaxMagnitude(_maxMagnitude: number)
+  : void
+  {
+
+    this._m_maxForceMagnitude = _maxMagnitude;
+
+    return;
 
   }
 
@@ -261,7 +277,7 @@ implements IForce
   : number
   {
 
-    return this._m_v2_forceMagnitude.length();
+    return this._m_steerForce.length();
 
   }
 
@@ -273,17 +289,21 @@ implements IForce
   {
 
     this._m_controller = null;
-    this._m_v2_desiredVelocity = null;
-    this._m_targetDir = null;
-    this._m_v2_actualVelocity = null;
-    this._m_targetDir = null;
-    this._m_v2_forceMagnitude = null;
-    this._m_v2_force = null;
+    this._m_targetController = null;
     this._m_debugManager = null;
+
+    this._m_desireVelocity = null;
+    this._m_targetPosition = null;
+    this._m_selfPosition = null;
+    this._m_vDistance = null;
+    this._m_targetVelocity = null;
+    this._m_steerForce = null;
 
     this._m_target = null;
     this._m_self = null;
+
     return;
+
   }
   
   /****************************************************/
@@ -295,15 +315,15 @@ implements IForce
    */
   private _m_controller : CmpForceController;
 
-  /**
-   * The force in Vector2.
+   /**
+   * Force Controller of the target.
    */
-  private _m_v2_force : V2;
+  private _m_targetController : CmpForceController;
 
   /**
    * The magnitude of the applied force.
    */
-  private _m_force : number;
+  private _m_maxForceMagnitude : number;
 
   /**
    * The agent sprite.
@@ -313,40 +333,22 @@ implements IForce
   /**
    * The target sprite.
    */
-  private _m_target : Ty_Sprite;
-
-  /**
-   * Actual velocity of the pursue agent.
-   */
-  private _m_v2_actualVelocity : V2;
-
-  /**
-   * Desired velocity of the pursue agent.
-   */
-  private _m_v2_desiredVelocity : V2;
-
- /**
-   * The force in Vector2.
-   */
-  private _m_v2_forceMagnitude : V2;
-
-  /**
-   * ForceControler of the target.
-   */
-  private _m_targetForceCtrl : CmpForceController;
-
-  /**
-   * Velocity of the target.
-   */
-  private _m_targetDir : V2;
-
-  /**
-   * Prediction steps from the target.
-   */
-  private _m_predictionSteps : number;
+  private _m_target : Ty_Sprite;  
   
-    /**
+  private _m_desireVelocity: V2; 
+
+  private _m_targetPosition: V2;
+
+  private _m_selfPosition: V2;
+
+  private _m_vDistance: V2;
+
+  private _m_targetVelocity: V2;
+
+  private _m_steerForce: V2;
+  
+  /**
   * Reference to the debug manager.
   */
- private _m_debugManager : DebugManager;
+  private _m_debugManager : DebugManager;
 }

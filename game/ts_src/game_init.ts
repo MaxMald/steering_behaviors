@@ -13,11 +13,11 @@ import { Preload } from "./scenes/preload";
 import { Boot } from "./scenes/boot";
 import { MainMenu } from "./scenes/mainMenu";
 import { ScnSeek } from "./scenes/sims/sceneSeek";
-import { ScnDevSumano } from "./scenes/sims/devSumano";
 import { ScnArrival } from "./scenes/sims/sceneArrival";
 import { ScnWander } from "./scenes/sims/sceneWander";
 import { ScnObstacleAvoidance } from "./scenes/sims/sceneObstacleAvoidance";
 import { ScnFlee } from "./scenes/sims/sceneFlee";
+import { ScenePursuit } from "./scenes/sims/scenePursuit";
 /**
  * Starts Application.
  */
@@ -95,6 +95,7 @@ class GameInit
     this.m_game.scene.add('sceneSeek', ScnSeek);
     this.m_game.scene.add('sceneFlee', ScnFlee);
     this.m_game.scene.add('sceneArrival', ScnArrival);
+    this.m_game.scene.add('scenePursuit', ScenePursuit);
     this.m_game.scene.add('sceneWander', ScnWander);
     this.m_game.scene.add('sceneObstacleAvoidance', ScnObstacleAvoidance);
 

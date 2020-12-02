@@ -129,6 +129,36 @@ extends Phaser.Scene
     box.add(arrival);
 
     ///////////////////////////////////
+    // Pursuit
+
+    const pursuit = UIButton.CreateColorButton
+    (
+      0,
+      0,
+      this,
+      "Pursuit",
+      ST_COLOR_ID.kWhite
+    );
+
+    pursuit.subscribe
+    (
+      "buttonReleased",
+      "MainMenu",
+      function(_sender: UIObject, _args: any)
+      : void
+      {
+
+        this.scene.start('scenePursuit');
+
+        return;
+
+      },
+      this
+    )
+
+    box.add(pursuit);
+
+    ///////////////////////////////////
     // Wander
 
     const wander = UIButton.CreateColorButton
