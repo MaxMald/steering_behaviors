@@ -3,12 +3,13 @@
  *
  * @summary 
  *
- * @file UIForcePursuit.ts
+ * @file UIForceEvade.ts
  * @author Max Alberto Solano Maldonado <nuup20@gmail.com>
  * @since December-02-2020
  */
 
 import { ST_COLOR_ID, ST_STEER_FORCE } from "../../../commons/stEnums";
+import { EvadeForce } from "../../../steeringBehavior/forceEvade";
 import { PursueForce } from "../../../steeringBehavior/forcePursue";
 import { IForce } from "../../../steeringBehavior/iForce";
 import { UIBox } from "../uiBox/uiBox";
@@ -17,7 +18,7 @@ import { UIObject } from "../uiObject";
 import { UISlider } from "../uiSlider";
 import { UIForce } from "./UIForce";
 
-export class UIForcePursuit
+export class UIForceEvade
 extends UIForce
 {
 
@@ -34,7 +35,7 @@ extends UIForce
 
     // Title
 
-    const title = UILabel.CreateStyleA(0, 0, _scene, "Pursuit Force", 25);
+    const title = UILabel.CreateStyleA(0, 0, _scene, "Evade Force", 25);
 
     title.setTint(ST_COLOR_ID.kGold);
 
@@ -76,10 +77,10 @@ extends UIForce
 
         this.setMaximumMagnitudeLabel(maxMagnitude);
 
-        if(this._m_pursuitForce !== undefined)
+        if(this._m_evadeForce !== undefined)
         {
 
-          this._m_pursuitForce.setMaxMagnitude(maxMagnitude);
+          this._m_evadeForce.setMaxMagnitude(maxMagnitude);
 
         }
 
@@ -103,10 +104,10 @@ extends UIForce
   : void
   {
 
-    if(this._m_pursuitForce !== undefined)
+    if(this._m_evadeForce !== undefined)
     {
 
-      this.setForceLabel(this._m_pursuitForce.getActualForce());
+      this.setForceLabel(this._m_evadeForce.getActualForce());
 
       return;
 
@@ -122,23 +123,23 @@ extends UIForce
 
     // Save value.
 
-   const pursuitForce = _force as PursueForce;
+   const evadeForce = _force as EvadeForce;
 
-   this._m_pursuitForce = pursuitForce;
+   this._m_evadeForce = evadeForce;
 
-    if(pursuitForce !== undefined)
+    if(evadeForce !== undefined)
     {
 
-      if(_force.getType() !== ST_STEER_FORCE.kPursue)
+      if(_force.getType() !== ST_STEER_FORCE.kEvade)
       {
 
-        throw new Error("UI Pursuit Force: Incorrect force.");
+        throw new Error("UI Evade Force: Incorrect force.");
 
       }
 
-      this.setForceLabel(pursuitForce.getActualForce());
+      this.setForceLabel(evadeForce.getActualForce());
 
-      this._m_forceSlider.setValue(pursuitForce.getMaxMagnitude());
+      this._m_forceSlider.setValue(evadeForce.getMaxMagnitude());
 
     }
 
@@ -177,7 +178,7 @@ extends UIForce
 
     this._m_box.destroy();
 
-    this._m_pursuitForce = undefined;
+    this._m_evadeForce = undefined;
 
     super.destroy();
 
@@ -189,7 +190,7 @@ extends UIForce
   /* Private                                          */
   /****************************************************/
 
-  private _m_pursuitForce: PursueForce;
+  private _m_evadeForce: EvadeForce;
 
   ////////////////////////////////////
   // UI Elements
