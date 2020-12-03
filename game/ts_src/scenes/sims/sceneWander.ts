@@ -16,6 +16,7 @@ import { CmpSpriteController } from "../../components/cmpSpriteController";
 import { ShipFactory } from "../../factories/shipFactory";
 import { SimulationManager } from "../../managers/simulationManager/simulationManager";
 import { UIButton } from "../../managers/uiManager/uiButton";
+import { UIForceController } from "../../managers/uiManager/uiControllers/UIForceController";
 import { UISimulationController } from "../../managers/uiManager/uiControllers/UISimulationController";
 import { UIManager } from "../../managers/uiManager/uiManager";
 import { UIObject } from "../../managers/uiManager/uiObject";
@@ -164,6 +165,14 @@ extends Phaser.Scene
 
     ///////////////////////////////////
     // UI
+
+    const uiForceController = new UIForceController
+     (
+       20,
+       20,
+       this
+     );
+
     const uiSimController = UISimulationController.CreateSimControlBox
     (
       width * 0.5,
@@ -174,6 +183,8 @@ extends Phaser.Scene
     // Add UI force controller to the UI Manager.
     
     const uiManager = master.getManager<UIManager>(ST_MANAGER_ID.kUIManager);
+
+    uiManager.addUIController("forceUI", uiForceController);
     
     uiManager.addUIController("mediaSimUI", uiSimController);
     

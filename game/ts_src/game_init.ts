@@ -13,7 +13,6 @@ import { Preload } from "./scenes/preload";
 import { Boot } from "./scenes/boot";
 import { MainMenu } from "./scenes/mainMenu";
 import { ScnSeek } from "./scenes/sims/sceneSeek";
-import { ScnDevSumano } from "./scenes/sims/devSumano";
 import { ScnArrival } from "./scenes/sims/sceneArrival";
 import { ScnWander } from "./scenes/sims/sceneWander";
 import { ScnObstacleAvoidance } from "./scenes/sims/sceneObstacleAvoidance";

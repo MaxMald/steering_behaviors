@@ -13,7 +13,9 @@ import { UISpeedometer } from "../uiSpeedometer";
 import { UIController } from "./UIController";
 import { UIForce } from "./UIForce";
 import { UIForceArrival } from "./UIForceArrival";
+import { UIForceObstacleAvoidance } from "./UIForceObstacleAvoidance";
 import { UIForceSeek } from "./UIForceSeek";
+import { UIForceWander } from "./UIForceWander";
 
 export class UIForceController
   extends UIController
@@ -243,6 +245,8 @@ export class UIForceController
 
     this._addUIForce(ST_STEER_FORCE.kSeek, new UIForceSeek(_scene));
     this._addUIForce(ST_STEER_FORCE.kArrive, new UIForceArrival(_scene));
+    this._addUIForce(ST_STEER_FORCE.kWander, new UIForceWander(_scene));
+    this._addUIForce(ST_STEER_FORCE.kObstacleAvoidance, new UIForceObstacleAvoidance(_scene));
 
     ///////////////////////////////////
     // Actor
