@@ -34,7 +34,7 @@ extends UIForce
 
     // Title
 
-    const title = UILabel.CreateStyleA(0, 0, _scene, "Arrive Force", 25);
+    const title = UILabel.CreateStyleA(0, 0, _scene, "Wander Force", 25);
 
     title.setTint(ST_COLOR_ID.kGold);
 
@@ -132,7 +132,7 @@ extends UIForce
       if(_force.getType() !== ST_STEER_FORCE.kWander)
       {
 
-        throw new Error("UI Arrive Force: Incorrect force.");
+        throw new Error("UI Wander Force: Incorrect force.");
 
       }
 
