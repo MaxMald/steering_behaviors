@@ -8,8 +8,6 @@
  * @since September-28-2020
  */
 
-//import { Math } from "phaser";
-import { BaseActor } from "../actors/baseActor";
 import { ST_COLOR_ID, ST_MANAGER_ID, ST_STEER_FORCE } from "../commons/stEnums";
 import { Ty_Sprite, V2 } from "../commons/stTypes";
 import { CmpForceController } from "../components/cmpforceController";

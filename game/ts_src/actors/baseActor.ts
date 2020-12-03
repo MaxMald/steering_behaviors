@@ -30,13 +30,15 @@ implements IActor
   static Create<U>(_instance : U, _name : string)
   : BaseActor<U>
   {
-    let actor : BaseActor<U> = new BaseActor<U>();
+
+    const actor : BaseActor<U> = new BaseActor<U>();
     
     actor._m_components = new Array<IBaseComponent<U>>();
     actor._m_instance = _instance;
     actor.m_name = _name;   
 
     return actor;
+    
   }
 
   /**

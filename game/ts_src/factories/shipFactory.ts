@@ -14,6 +14,7 @@ import { BaseActor } from "../actors/baseActor";
 import { ST_MESSAGE_ID } from "../commons/stEnums";
 import { Ty_Sprite } from "../commons/stTypes";
 import { CmpForceController } from "../components/cmpforceController";
+import { cmpInteractiveActor } from "../components/cmpInteractiveActor";
 import { CmpShipPropulsor } from "../components/cmpShipPropulsor";
 import { CmpSpriteController } from "../components/cmpSpriteController";
 
@@ -43,6 +44,7 @@ export class ShipFactory
 
      shipActor.addComponent(new CmpSpriteController());
      shipActor.addComponent(new CmpForceController());
+     shipActor.addComponent(new cmpInteractiveActor());
      shipActor.addComponent(shipPropulsor);
      
      shipActor.init();
@@ -107,6 +109,7 @@ export class ShipFactory
 
      shipActor.addComponent(new CmpSpriteController());
      shipActor.addComponent(new CmpForceController());
+     shipActor.addComponent(new cmpInteractiveActor());
      shipActor.addComponent(shipPropulsor);
      
      shipActor.init();
