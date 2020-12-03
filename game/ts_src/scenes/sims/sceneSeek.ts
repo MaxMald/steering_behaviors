@@ -12,16 +12,14 @@ import { BaseActor } from "../../actors/baseActor";
 import { ST_COMPONENT_ID, ST_MANAGER_ID, ST_MESSAGE_ID } from "../../commons/stEnums";
 import { Ty_Sprite, V2 } from "../../commons/stTypes";
 import { CmpForceController } from "../../components/cmpforceController";
-import { CmpSpriteController } from "../../components/cmpSpriteController";
 import { ShipFactory } from "../../factories/shipFactory";
 import { SimulationManager } from "../../managers/simulationManager/simulationManager";
 import { UIForceController } from "../../managers/uiManager/uiControllers/UIForceController";
 import { UIMessageBox } from "../../managers/uiManager/uiControllers/UIMessageBox";
 import { UISimulationController } from "../../managers/uiManager/uiControllers/UISimulationController";
 import { UIManager } from "../../managers/uiManager/uiManager";
-import { UIObject } from "../../managers/uiManager/uiObject";
-import { UISlider } from "../../managers/uiManager/uiSlider";
 import { Master } from "../../master/master";
+import { ForceConstant } from "../../steeringBehavior/forceConstant";
 import { SeekForce } from "../../steeringBehavior/forceSeek";
  
   
@@ -57,43 +55,65 @@ import { SeekForce } from "../../steeringBehavior/forceSeek";
        ST_MANAGER_ID.kSimManager
      );
      
-     this._m_ship = ShipFactory.CreateBlueShip(this, "Blue Ship");
+     const blueShip = ShipFactory.CreateBlueShip(this, "Blue Ship");
  
      // Add ship to simulation manager.
  
-     simManager.addActor(this._m_ship);
+     simManager.addActor(blueShip);
 
-     ///////////////////////////////////
-     // Create Target
+     /****************************************************/
+     /* Target                                           */
+     /****************************************************/
 
      let canvas = this.game.canvas;
  
      let width : number = canvas.width;
      let height : number = canvas.height;
- 
-     this._m_target_center = new Phaser.Math.Vector2(width * 0.5, height * 0.25);
- 
-     this._m_target_position = new Phaser.Math.Vector2();
- 
-     let targetSprite = this.add.sprite(0, 0, 'game_art', 'redShip.png');
- 
-     let targetActor =  BaseActor.Create<Ty_Sprite>
+
+     const targetActor =  ShipFactory.CreateRedShip
      (
-       targetSprite,
-       'target'
+       this,
+       "Red Ship"
      );
- 
-     this._m_target = targetActor;
  
      // Add target to simulation manager.
  
      simManager.addActor(targetActor);
- 
-     targetActor.addComponent(new CmpSpriteController());
- 
-     targetActor.init();    
+
+     // Create the target force controller.
+
+     const targetFController = targetActor.getComponent<CmpForceController>
+     (
+       ST_COMPONENT_ID.kForceController
+     );
+
+     // Create Constant force.
+
+     const constantForce = new ForceConstant();
+
+     constantForce.init
+     (
+       targetActor.getWrappedInstance(),
+       new Phaser.Math.Vector2(0.4, 0.85),
+       300,
+       true 
+      );
+
+      targetFController.addForce("constant", constantForce);
 
      // Set target scale.
+
+    targetActor.sendMessage
+    (
+      ST_MESSAGE_ID.kSetMass,
+      3.0
+    );
+
+    targetActor.sendMessage
+    (
+      ST_MESSAGE_ID.kSetMaxSpeed,
+      300
+    );
     
     targetActor.sendMessage
     (
@@ -104,7 +124,7 @@ import { SeekForce } from "../../steeringBehavior/forceSeek";
      targetActor.sendMessage
      (
        ST_MESSAGE_ID.kSetPosition,
-       new Phaser.Math.Vector2(width * 0.5, height * 0.25)
+       new Phaser.Math.Vector2(width * 0.5, height * 0.5)
      );
  
      ///////////////////////////////////
@@ -116,14 +136,14 @@ import { SeekForce } from "../../steeringBehavior/forceSeek";
  
      seek.init
      (
-       this._m_ship.getWrappedInstance(),
-       targetSprite,
+      blueShip.getWrappedInstance(),
+       targetActor.getWrappedInstance(),
        125
      );
  
      // Step II : Get Component
  
-     let forceControl = this._m_ship.getComponent<CmpForceController>
+     let forceControl = blueShip.getComponent<CmpForceController>
      (
        ST_COMPONENT_ID.kForceController
      );
@@ -173,7 +193,7 @@ import { SeekForce } from "../../steeringBehavior/forceSeek";
 
     // Set the active actor of the UI Manager.
 
-    uiManager.setTarget(this._m_ship);
+    uiManager.setTarget(blueShip);
 
     ///////////////////////////////////
      // Active Debugging
@@ -190,69 +210,12 @@ import { SeekForce } from "../../steeringBehavior/forceSeek";
  
      this._m_master.update(_time, _delta * 0.001);
  
-     // Target Oscillation 
- 
-     let x = 300 * Math.sin(_time * 0.001);
-     let y = 300 * Math.cos(_time * 0.001);
- 
-     this._m_target_position.setTo
-     (
-       this._m_target_center.x + x,
-       this._m_target_center.y + y
-     );
- 
-     this._m_target.sendMessage
-     (
-       ST_MESSAGE_ID.kSetPosition,
-       this._m_target_position
-     );
- 
      return;
    }
  
    /****************************************************/
    /* Private                                          */
    /****************************************************/ 
-
-   private _onToggleOn(_sender: UIObject, _args: any)
-   : void
-   {
-
-    console.log("switch on");
-
-    return;
-
-   }
-
-   private _onToggleOff(_sender: UIObject, _args: any)
-   : void
-   {
-
-    console.log("switch off");
-
-    return;
-
-   }
-
-   private _onSliderChanged(_sender: UIObject, _args: any)
-   : void
-   {
-
-    const slider = _sender as UISlider;
-
-    console.log(slider.getValue());
-
-    return;
-
-   }
- 
-   private _m_target_center : V2;
- 
-   private _m_target_position : V2;
- 
-   private _m_target : BaseActor<Ty_Sprite>;
- 
-   private _m_ship : BaseActor<Ty_Sprite>;
  
    private _m_master : Master;
  }

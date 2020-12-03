@@ -3,9 +3,9 @@
  *
  * @summary 
  *
- * @file forcePursue.ts
- * @author Andrés Otoniel Sumano Hernández <andressumano@hotmail.com>
- * @since September-08-2020
+ * @file forceEvade.ts
+ * @author Max Alberto Solano Maldonado <nuup20@gmail.com>
+ * @since December-02-2020
  */
 
 import { BaseActor } from "../actors/baseActor";
@@ -19,7 +19,7 @@ import { IForce } from "./iForce";
 /**
  * 
  */
-export class PursueForce
+export class EvadeForce
 implements IForce
 {
   /****************************************************/
@@ -144,8 +144,8 @@ implements IForce
 
     desireVelocity.set
     (
-      targetPos.x - self.x,
-      targetPos.y - self.y 
+      self.x - targetPos.x,
+      self.y - targetPos.y 
     );
 
     desireVelocity.setLength(this._m_maxForceMagnitude);
@@ -251,7 +251,7 @@ implements IForce
   : number
   {
 
-    return ST_STEER_FORCE.kPursue;
+    return ST_STEER_FORCE.kEvade;
 
   }
 
