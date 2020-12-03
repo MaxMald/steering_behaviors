@@ -192,9 +192,13 @@ export const ST_STEER_FORCE = Object.freeze
 
   kPursue: 4 as 4,
 
-  kObstacleAvoidance: 5 as 5,
+  kEvade: 5 as 5,
 
-  kFollowPath: 6 as 6
+  kObstacleAvoidance: 6 as 6,
+
+  kFollowPath: 7 as 7,
+
+  kConstant: 8 as 8
 
 });
 
