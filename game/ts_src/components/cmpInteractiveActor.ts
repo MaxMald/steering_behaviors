@@ -10,8 +10,9 @@
  */
 
 import { BaseActor } from "../actors/baseActor";
-import { ST_COMPONENT_ID, ST_MANAGER_ID } from "../commons/stEnums";
-import { Ty_Sprite } from "../commons/stTypes";
+import { ST_COMPONENT_ID, ST_MANAGER_ID, ST_MESSAGE_ID, ST_SIM_SATE } from "../commons/stEnums";
+import { Ty_Sprite, V2 } from "../commons/stTypes";
+import { SimulationManager } from "../managers/simulationManager/simulationManager";
 import { UIManager } from "../managers/uiManager/uiManager";
 import { Master } from "../master/master";
 import { IBaseComponent } from "./iBaseComponent";
@@ -27,9 +28,14 @@ implements IBaseComponent<Ty_Sprite>
   constructor()
   {
 
-    // Get the UI Manager
+    // Get Managers
 
     const master = Master.GetInstance();
+
+    this._m_simulationManager = master.getManager<SimulationManager>
+    (
+      ST_MANAGER_ID.kSimManager
+    );
 
     this._m_uiManager = master.getManager<UIManager>
     (
@@ -46,13 +52,25 @@ implements IBaseComponent<Ty_Sprite>
 
     this._m_self = _actor;
 
+    this._m_moveVector = new Phaser.Math.Vector2();
+
     const sprite = _actor.getWrappedInstance();
 
-    sprite.setInteractive();
+    // Set the interactive sprite and enable de dragging feature.
+
+    sprite.setInteractive({draggable: true});
     
-    sprite.on("pointerup", this.selectActor, this);
+    // Pointer Events.
+
+    sprite.on("pointerdown", this.selectActor, this);
     sprite.on("pointerover", this.focusActor, this);
     sprite.on("pointerout", this.clearFocus, this);
+
+    // Dragging Events
+
+    sprite.on("drag", this.dragActor, this);
+    sprite.on("dragstart", this.dragStart, this);
+    sprite.on("dragend", this.dragEnd, this);
 
     return;
 
@@ -143,6 +161,9 @@ implements IBaseComponent<Ty_Sprite>
 
   }
 
+  /**
+   * Define this actor as the focussed actor in the UI Manager.
+   */
   focusActor()
   : void
   {
@@ -153,6 +174,9 @@ implements IBaseComponent<Ty_Sprite>
 
   }
 
+  /**
+   * Undefined the actor focussed in the UI Manager.
+   */
   clearFocus()
   : void
   {
@@ -163,12 +187,81 @@ implements IBaseComponent<Ty_Sprite>
 
   }
 
+  /**
+   * Enable the dragging mark (ghost effect).
+   */
+  dragStart()
+  : void
+  {
+
+    this._m_uiManager.setTarget(this._m_self);
+
+    this._m_self.sendMessage
+    (
+      ST_MESSAGE_ID.kSetAlpha,
+      0.5
+    );
+
+    return;
+
+  }
+
+  /**
+   * Remove dragging mark (ghost effect). 
+   */
+  dragEnd()
+  : void
+  {
+
+    this._m_self.sendMessage
+    (
+      ST_MESSAGE_ID.kSetAlpha,
+      1.0
+    );
+
+    return;
+
+  }
+
+  /**
+   * Called by the Phaser Event System.
+   * 
+   * @param _pointer 
+   * @param _dragX 
+   * @param _dragY 
+   */
+  dragActor
+  (
+    _pointer : Phaser.Input.Pointer, 
+    _dragX : number,
+    _dragY : number
+  )
+  : void
+  {
+
+    if(this._m_simulationManager.getState() === ST_SIM_SATE.kStopped)
+    {
+
+      this._m_self.sendMessage
+      (
+        ST_MESSAGE_ID.kSetPosition,
+        this._m_moveVector.set(_dragX, _dragY)
+      );
+
+    }    
+
+    return;
+
+  }
+
   destroy()
   : void 
   {
 
     this._m_uiManager = null;
+    this._m_simulationManager = null;
     this._m_self = null;
+    this._m_moveVector = null;
 
     return;
 
@@ -177,9 +270,25 @@ implements IBaseComponent<Ty_Sprite>
   /****************************************************/
   /* Private                                          */
   /****************************************************/
-  
+
+  /**
+   * Reference to the simulation manager.
+   */
+  private _m_simulationManager: SimulationManager;
+
+  /**
+   * Reference to the UI Manager.
+   */
   private _m_uiManager: UIManager;
 
+  /**
+   * Reference to the actor's sprite.
+   */
   private _m_self: BaseActor<Ty_Sprite>;
+
+  /**
+   * Vector with the position values, used by the actor message system.
+   */
+  private _m_moveVector: V2;
 
 }

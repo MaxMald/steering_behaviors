@@ -431,7 +431,11 @@ export class UIForceController
       if(activeForce === undefined)
       {
 
-        throw new Error("UI Force does not exists!");
+        console.error("UI Force does not exists.");
+
+        this._m_activeUIForce = undefined;
+
+        return;
 
       }
 

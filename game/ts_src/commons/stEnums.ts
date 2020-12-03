@@ -103,7 +103,14 @@ export const ST_MESSAGE_ID = Object.freeze
    * 
    * msg : number
    */
-  kSetMaxSpeed : 7 as 7
+  kSetMaxSpeed : 7 as 7,
+
+  /**
+   * Set the agent sprite alpha.
+   * 
+   * msg: number
+   */
+  kSetAlpha: 8 as 8
 });
 
 /**
