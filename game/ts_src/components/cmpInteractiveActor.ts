@@ -51,6 +51,8 @@ implements IBaseComponent<Ty_Sprite>
     sprite.setInteractive();
     
     sprite.on("pointerup", this.selectActor, this);
+    sprite.on("pointerover", this.focusActor, this);
+    sprite.on("pointerout", this.clearFocus, this);
 
     return;
 
@@ -136,6 +138,26 @@ implements IBaseComponent<Ty_Sprite>
   {
 
     this._m_uiManager.setTarget(this._m_self);
+
+    return;
+
+  }
+
+  focusActor()
+  : void
+  {
+
+    this._m_uiManager.focusActor(this._m_self);
+
+    return;
+
+  }
+
+  clearFocus()
+  : void
+  {
+
+    this._m_uiManager.clearFocusActor();
 
     return;
 

@@ -78,7 +78,7 @@ class GameInit
 
       // Background Color
 
-      backgroundColor: 0x6ab4d4        
+      backgroundColor: 0x0b032b        
     }   
 
     ///////////////////////////////////
