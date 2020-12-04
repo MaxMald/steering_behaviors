@@ -300,11 +300,54 @@ implements IActor
   }
 
   /**
+   * Get the next actor.
+   */
+  getNext()
+  : BaseActor<T>
+  {
+
+    return this._m_next;
+
+  }
+
+  setNext(_actor: BaseActor<T>)
+  : void
+  {
+
+    this._m_next = _actor;
+
+    return;
+
+  }
+
+  /**
+   * Get the previous actor.
+   */
+  getPrevious()
+  : BaseActor<T>
+  {
+
+    return this._m_previous;
+
+  }
+
+  setPrevious(_actor: BaseActor<T>)
+  : void
+  {
+
+    this._m_previous = _actor;
+
+    return;
+
+  }
+
+  /**
    * Destroys all the component attached to this BaseActor.
    */
   destroy()
   : void
-  {    
+  { 
+
     let component : IBaseComponent<T>;
 
     while(this._m_components.length) 
@@ -313,7 +356,12 @@ implements IActor
       
       component.destroy();      
     }
+
+    this._m_next = null;
+    this._m_previous = null;
+
     return;
+
   }
 
   /****************************************************/
@@ -424,4 +472,14 @@ implements IActor
    * List of components attached to this BaseActor.
    */
   protected _m_components : Array<IBaseComponent<T>>;
+
+  /**
+   * Reference to the next agent.
+   */
+  protected _m_next: BaseActor<T>;
+
+  /**
+   * Reference to the previous agent.
+   */
+  protected _m_previous: BaseActor<T>;
 }

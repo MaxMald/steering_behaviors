@@ -67,7 +67,7 @@ export class UIManager
       const w = sprite.displayWidth;
       const h = sprite.displayHeight;
 
-      const size = (w > h ? w : h);
+      const size = (w > h ? w : h) * 0.6;
 
       this._m_debugManager.drawCircle
       (
@@ -98,7 +98,7 @@ export class UIManager
       const w = sprite.displayWidth;
       const h = sprite.displayHeight;
 
-      const size = (w > h ? w : h);
+      const size = (w > h ? w : h) * 0.6;
 
       this._m_debugManager.drawCircle
       (

@@ -3,7 +3,7 @@
  *
  * @summary 
  *
- * @file forceFolloPath.ts
+ * @file forceFollowPath.ts
  * @author Andrés Otoniel Sumano Hernández <andressumano@hotmail.com>
  * @since September-28-2020
  */
@@ -12,9 +12,10 @@ import { ST_COLOR_ID, ST_MANAGER_ID, ST_STEER_FORCE } from "../commons/stEnums";
 import { Ty_Sprite, V2 } from "../commons/stTypes";
 import { CmpForceController } from "../components/cmpforceController";
 import { DebugManager } from "../managers/debugManager/debugManager";
-import { Master } from "../master/master";
 import { IForce } from "./iForce";
 import { SeekForce } from "./forceSeek";
+import { BaseActor } from "../actors/baseActor";
+import { Master } from "../master/master";
 
 /**
  * 
@@ -22,135 +23,188 @@ import { SeekForce } from "./forceSeek";
 export class FollowPathForce
 implements IForce
 {
+  
   /****************************************************/
   /* Public                                           */
   /****************************************************/
 
-  /**
-   * Initialize the Seek Force.
-   * 
-   * @param _self The sprite of the agent.
-   * @param _path The array of sprites to follow along.
-   * @param _force The magnitude of the force.
-   * @param _radius The detection radius of the path points 
-   * @param _targetIndex [optional] if the target in path[] should start elsewhere of 0 
-   * @param _looping [optional] If the actor should follow the path in a loop
-   * @param _controller [optional] The controller of this force.
-   */
   init
   (
-    _self : Ty_Sprite,
-    _path : Ty_Sprite[],
+    _self : BaseActor<Ty_Sprite>,
     _force : number,
     _radius : number,
-    _controller : CmpForceController,
-    _targetIndex ?: number,
     _looping ?: boolean
   )
   {
-    // Set the private mambers
+
     this._m_self = _self;
-    this.m_path = _path;
-    this._m_force = _force;
-    this.m_radius = _radius;
-    this.m_looping = _looping;
-    this.m_pathSize = _path.length;
 
-    // Initialize vectors
+    this._m_radius = _radius;
 
-    this._m_v2_distance = new Phaser.Math.Vector2(0.0, 0.0);
+    this._m_v2_distance = new Phaser.Math.Vector2();
+    this._m_forceToPath = new Phaser.Math.Vector2();
+    this._m_prevPointPos = new Phaser.Math.Vector2();
+    this._m_vToSelf = new Phaser.Math.Vector2();
+    this._m_vPath = new Phaser.Math.Vector2();
 
-    // Set the target at the start of path
-    this.m_targetIndex = 0;
-    // Get the target in path
+    // Get Debug Manager
 
-    if(_targetIndex !== undefined)
-    {
-      this.m_targetIndex = _targetIndex;
-    }
+    const master = Master.GetInstance();
 
-    // Set the looping flag
-    this.m_looping = false;
-    if(_looping !== undefined)
-    {
-      this.m_looping = _looping;
-    }
-
-    this._m_controller = _controller;
-
-    // Get the debugManager
-    this._m_debugManager = Master.GetInstance().getManager<DebugManager>
+    this._m_debugManager = master.getManager<DebugManager>
     (
       ST_MANAGER_ID.kDebugManager
     );
 
-    // Create the ForceSeek that will be used and altered by this
+    // Looping
 
-    this.m_seek = new SeekForce();
-    this.m_seek.init(this._m_self, this.m_path[this.m_targetIndex], this._m_force);
-    _controller.addForce('pathFollow' + this._m_self.name, this.m_seek);
+    if(_looping !== undefined)
+    {
 
+      this._m_looping = _looping;
+
+    }
+    else
+    {
+
+      this._m_looping = false;
+
+    }
+
+    // Create Seek.
+
+    const seek = new SeekForce();
+
+    this._m_seek = seek;
+
+    seek.init
+    (
+      _self.getWrappedInstance(),
+      undefined,
+      _force
+    );
+
+    // Start node is undefined.
+
+    this.setStartNode(undefined);
+    
     return;
-  }
 
-
-  setController(_controller: CmpForceController)
-  : void 
-  {
-    this._m_controller = _controller;
-    this.m_seek.setController(_controller);
-    return;
   }
 
   update(_dt: number)
-  : void 
+  : void
   {
-    // Get the array and target
 
-    let self = this._m_self;
+    let activeNode = this._m_activeNode;
 
-    let path : Ty_Sprite[] = this.m_path;
-
-    let radius = this.m_radius;
-
-    let pathSize = path.length;
-
-    let looping = this.m_looping;
-
-    let seek = this.m_seek;
-
-    let targetIndex = this.m_targetIndex;
-
-    // Check distance to target
-
-    let targetDistance = this._m_v2_distance;
-
-    targetDistance.set
-    (
-      path[targetIndex].x - self.x, 
-      path[targetIndex].y - self.y
-    );
-
-    this._m_distance = targetDistance.length();
-
-    if (this._m_distance < radius)
+    if(activeNode !== undefined)
     {
-      targetIndex++;
-      if(targetIndex == pathSize)
+
+      // Get the distance between self and the target node.
+
+      const self = this._m_self.getWrappedInstance();
+
+      const target = activeNode.getWrappedInstance();
+
+      const vDistance = this._m_v2_distance;
+
+      vDistance.set
+      (
+        target.x - self.x,
+        target.y - self.y
+      );
+
+      // Go to next node.
+
+      const distance = vDistance.length();
+
+      if(distance <= this._m_radius)
       {
-        if (looping)
+
+        this._setActiveNode(activeNode.getNext());
+
+        activeNode = this._m_activeNode;
+
+        if(activeNode === undefined)
         {
-          targetIndex = 0;
+
+          if(this._m_looping)
+          {
+
+            const startNode = this._m_startNode;
+
+            this._m_seek.setTarget(startNode.getWrappedInstance());
+
+            this._m_activeNode = startNode;
+
+            activeNode = startNode;
+
+          }
+
         }
-        else
-        {
-          targetIndex = pathSize - 1;
-        }
+
       }
-      seek.setTarget(path[targetIndex]);
-      this.m_targetIndex = targetIndex;
+
+      /****************************************************/
+      /* Forces                                           */
+      /****************************************************/      
+
+      if(activeNode !== undefined)
+      {
+
+        // Seek Force
+
+        this._m_seek.update(_dt);
+
+        // Force to path.
+
+        const vPath = this._m_vPath;
+
+        const prevNodePos = this._m_prevPointPos;
+
+        const nodeSprite = activeNode.getWrappedInstance();
+
+        vPath.set
+        (
+          nodeSprite.x - prevNodePos.x,
+          nodeSprite.y - prevNodePos.y
+        );
+
+        const toSelf = this._m_vToSelf;
+
+        toSelf.set
+        (
+          self.x - prevNodePos.x,
+          self.y - prevNodePos.y
+        );
+
+        // Calculate the projection magnitude.
+
+        const projMagnitude = toSelf.dot(vPath) / vPath.length();
+
+        // Shadow vector
+
+        const forceToPath = this._m_forceToPath;
+
+        forceToPath.copy(vPath);
+
+        forceToPath.setLength(projMagnitude);
+
+        // Calculate force to path.
+
+        forceToPath.subtract(toSelf);
+
+        // Add force.
+
+        this._m_controller.addSteerForce(forceToPath.x, forceToPath.y);
+
+      }      
+
     }
+
     return;
+
   }
 
   /**
@@ -162,54 +216,41 @@ implements IForce
   updateDebug(_dt : number)
   : void
   {
-    let debugManager = this._m_debugManager;
 
-    let path = this.m_path;
+    this._m_seek.updateDebug(_dt);
 
-    let size = path.length;
+    // Force to Path
 
-    let radius = this.m_radius;
+    const self = this._m_self.getWrappedInstance();
 
-    // Debug only draws the path and node circles
+    const actualVelocity = this._m_controller.getVelocity();
 
-    for (let i = 0; i < size; ++i)
-    {
-      debugManager.drawCircle
-      (
-        path[i].x,
-        path[i].y,
-        radius,
-        DebugManager.FORCE_CIRCLE_WIDTH,
-        ST_COLOR_ID.kPurple
-      );
+    const forceToPath = this._m_forceToPath;
 
-      if (i < size - 1)
-      {
-        debugManager.drawLine
-        (
-          path[i].x,
-          path[i].y,
-          path[i + 1].x,
-          path[i + 1].y,
-          DebugManager.FORCE_LINE_WIDTH,
-          ST_COLOR_ID.kBlue
-        );
-      }
-      else
-      {
-        debugManager.drawLine
-        (
-          path[i].x,
-          path[i].y,
-          path[0].x,
-          path[0].y,
-          DebugManager.FORCE_LINE_WIDTH,
-          ST_COLOR_ID.kBlue
-        );
-      }
-    }
+    this._m_debugManager.drawLine
+    (
+      self.x + actualVelocity.x,
+      self.y + actualVelocity.y,
+      self.x + actualVelocity.x + forceToPath.x,
+      self.y + actualVelocity.y + forceToPath.y,
+      2,
+      ST_COLOR_ID.kYellow 
+    );
+    
+    return;
+
+  }
+
+  setController(_controller: CmpForceController)
+  : void 
+  {
+
+    this._m_controller = _controller;
+
+    this._m_seek.setController(_controller);
 
     return;
+
   }
 
   /**
@@ -218,8 +259,11 @@ implements IForce
   onDebugEnable()
   : void 
   {
-    // TODO
+    
+    this._m_seek.onDebugEnable();    
+
     return;
+
   }
 
   /**
@@ -228,8 +272,11 @@ implements IForce
   onDebugDisable()
   : void 
   {
-    // TODO
+    
+    this._m_seek.onDebugDisable();
+
     return;
+
   }
 
   /**
@@ -243,11 +290,21 @@ implements IForce
 
   }
 
+  setMaxMagnitude(_magnitude: number)
+  : void
+  {
+
+    this._m_seek.setMaxMagnitude(_magnitude);
+
+    return;
+
+  }
+
   getMaxMagnitude()
   : number
   {
 
-    return this._m_force;
+    return this._m_seek.getMaxMagnitude();
 
   }
 
@@ -255,7 +312,52 @@ implements IForce
   : number
   {
 
-    return this.m_seek.getActualForce();
+    return this._m_seek.getActualForce();
+
+  }
+
+  /**
+   * Set the start node.
+   * 
+   * @param _startNode 
+   */
+  setStartNode(_startNode: BaseActor<Ty_Sprite>)
+  : void
+  {
+
+    this._m_startNode = _startNode;
+
+    this._setActiveNode(_startNode);
+
+    return;
+
+  }
+
+  /**
+   * Set the vision radius of this agent.
+   * 
+   * @param _radius vision radius. 
+   */
+  setVisionRadius(_radius: number)
+  : void
+  {
+
+    this._m_radius = _radius;
+
+    return;
+
+  }
+
+  /**
+   * Set the start node as the active node.
+   */
+  reset()
+  : void
+  {
+
+    this._setActiveNode(this._m_startNode);
+
+    return;
 
   }
 
@@ -266,76 +368,134 @@ implements IForce
   : void 
   {
 
-    this._m_controller = null;
-    this._m_debugManager = null;
-    this.m_seek = null;
-
-    this.m_path = null;
     this._m_self = null;
+    this._m_startNode = null;
+    this._m_debugManager = null;
+    
+    this._m_seek.destroy();
+
+    this._m_v2_distance = null;
+    this._m_prevPointPos = null;
+    this._m_vToSelf = null;
+    this._m_vPath = null;
+    this._m_forceToPath = null;
+    
     return;
+
   }
   
   /****************************************************/
   /* Private                                          */
   /****************************************************/
-  
+
+  private _setActiveNode(_node: BaseActor<Ty_Sprite>)
+  : void
+  {
+
+    if(_node !== undefined)
+    {
+
+      // Set the previous node position.
+
+      const nodeSprite = _node.getWrappedInstance();
+
+      if(this._m_activeNode === undefined)
+      {
+
+        this._m_prevPointPos.set(nodeSprite.x, nodeSprite.y);
+
+      }
+      else
+      {
+
+        const activeNodeSprite = this._m_activeNode.getWrappedInstance();
+
+        this._m_prevPointPos.set(activeNodeSprite.x, activeNodeSprite.y);
+
+      }
+
+      // Set seek target.
+
+      this._m_activeNode = _node;
+
+      this._m_seek.setTarget(_node.getWrappedInstance());
+
+    }
+    else
+    {
+
+      this._m_prevPointPos.set(0.0, 0.0);
+      this._m_activeNode = undefined;
+      this._m_seek.setTarget(undefined);
+
+    }
+
+    return;
+
+  }
+
   /**
    * Reference to the force controller.
    */
-  private _m_controller : CmpForceController;
+  private _m_controller: CmpForceController;
 
   /**
-   * The magnitude of the applied force.
+   * The agent.
    */
-  private _m_force : number;
+  private _m_self : BaseActor<Ty_Sprite>;
 
   /**
-   * The agent sprite.
+   * The starting node.
    */
-  private _m_self : Ty_Sprite;
+  private _m_startNode: BaseActor<Ty_Sprite>;
 
   /**
-   * The target sprite.
+   * The active node.
    */
-  private m_path : Ty_Sprite[];
-
-  /**
-   * Current target index in path[]
-   */
-  private m_targetIndex : number;
+  private _m_activeNode: BaseActor<Ty_Sprite>;
 
   /**
    * The detection radius for switching targets in the path
    */
-  private m_radius : number;
+  private _m_radius : number;
 
   /**
-   * If the actor will follow the path like a circuit
+   * Indicates if the target will loop over the node.
    */
-  private m_looping : boolean;
+  private _m_looping : boolean;
 
   /**
-   * The size of the path array
+   * Seek Force.
    */
-  private m_pathSize : number;
-
-  /**
-   * Seek Force used internally
-   */
-  private m_seek : SeekForce;
+  private _m_seek : SeekForce;
 
   /**
   * Reference to the debug manager.
   */
- private _m_debugManager : DebugManager;
+  private _m_debugManager : DebugManager;
 
- /**
-   * Distance to target.
+  /**
+   * Force to path.
    */
-  private _m_distance : number;
+  private _m_forceToPath: V2;
 
   /**
    * Vector 2 for distance to target.
    */
   private _m_v2_distance : V2;
+
+  /**
+   * The position of the previous point.
+   */
+  private _m_prevPointPos: V2;
+
+  /**
+   * Vector path.
+   */
+  private _m_vPath: V2;
+
+  /**
+   * Vector from the previous node position to self.
+   */
+  private _m_vToSelf: V2;
 }

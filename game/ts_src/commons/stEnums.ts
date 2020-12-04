@@ -110,7 +110,14 @@ export const ST_MESSAGE_ID = Object.freeze
    * 
    * msg: number
    */
-  kSetAlpha: 8 as 8
+  kSetAlpha: 8 as 8,
+
+  /**
+   * Play a sprite animation.
+   * 
+   * msg: [string] animation key.
+   */
+  kPlayAnimation: 9 as 9
 });
 
 /**

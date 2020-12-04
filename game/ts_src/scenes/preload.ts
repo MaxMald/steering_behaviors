@@ -37,6 +37,12 @@ extends Phaser.Scene
       'animations/backFireAnimation.json'
     );
 
+    this.load.animation
+    (
+      "satellite_a",
+      "animations/ambienceAnimations.json"
+    );
+
     this.load.image
     (
       'button',

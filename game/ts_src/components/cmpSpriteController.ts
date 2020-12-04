@@ -78,6 +78,12 @@ implements IBaseComponent<Ty_Sprite>
       this.setAlpha(_obj as number);
 
       return;
+
+      case ST_MESSAGE_ID.kPlayAnimation:
+
+      this.playAnimation(_obj as string);
+
+      return;
     }
 
     return;
@@ -101,6 +107,16 @@ implements IBaseComponent<Ty_Sprite>
       sprite.x + _x,
       sprite.y + _y
     );
+
+    return;
+
+  }
+
+  playAnimation(_key: string)
+  : void
+  {
+
+    this._m_sprite.play(_key);
 
     return;
 

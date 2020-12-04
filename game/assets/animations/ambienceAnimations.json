@@ -1,0 +1,80 @@
+{
+  "anims": [
+    {
+      "key": "satellite_a",
+      "type": "frame",
+      "frames": [
+        {
+          "key": "game_art",
+          "frame": "Bomb_3_Idle_000.png",
+          "duration": 0,
+          "visible": false
+        },
+        {
+          "key": "game_art",
+          "frame": "Bomb_3_Idle_001.png",
+          "duration": 0,
+          "visible": false
+        },
+        {
+          "key": "game_art",
+          "frame": "Bomb_3_Idle_002.png",
+          "duration": 0,
+          "visible": false
+        },
+        {
+          "key": "game_art",
+          "frame": "Bomb_3_Idle_003.png",
+          "duration": 0,
+          "visible": false
+        },
+        {
+          "key": "game_art",
+          "frame": "Bomb_3_Idle_004.png",
+          "duration": 0,
+          "visible": false
+        },
+        {
+          "key": "game_art",
+          "frame": "Bomb_3_Idle_005.png",
+          "duration": 0,
+          "visible": false
+        },
+        {
+          "key": "game_art",
+          "frame": "Bomb_3_Idle_006.png",
+          "duration": 0,
+          "visible": false
+        },
+        {
+          "key": "game_art",
+          "frame": "Bomb_3_Idle_007.png",
+          "duration": 0,
+          "visible": false
+        },
+        {
+          "key": "game_art",
+          "frame": "Bomb_3_Idle_008.png",
+          "duration": 0,
+          "visible": false
+        },
+        {
+          "key": "game_art",
+          "frame": "Bomb_3_Idle_009.png",
+          "duration": 0,
+          "visible": false
+        }
+      ],
+      "frameRate": 12,
+      "duration": 1,
+      "skipMissedFrames": true,
+      "delay": 0,
+      "repeat": -1,
+      "repeatDelay": 0,
+      "yoyo": false,
+      "showOnStart": false,
+      "hideOnComplete": false
+    }
+  ],
+  "globalTimeScale": 1
+}

@@ -1,15 +1,17 @@
 /**
-  * Universidad de Artes Digitales, Guadalajara - 2020
-  *
-  * @summary 
-  *
-  * @file sceneSeek.ts
-  * @author Max Alberto Solano Maldonado <nuup20@gmail.com>
-  * @since August-30-2020
-  */
-
+ * Universidad de Artes Digitales, Guadalajara - 2020
+ *
+ * @summary 
+ *
+ * @file sceneFollowPath.ts
+ * @author Max Alberto Solano Maldonado <nuup20@gmail.com>
+ * @since December-03-2020
+ */
+import { BaseActor } from "../../actors/baseActor";
 import { ST_COMPONENT_ID, ST_MANAGER_ID, ST_MESSAGE_ID } from "../../commons/stEnums";
+import { Ty_Sprite } from "../../commons/stTypes";
 import { CmpForceController } from "../../components/cmpforceController";
+import { AmbienceFactory } from "../../factories/ambienceFactory";
 import { ShipFactory } from "../../factories/shipFactory";
 import { SimulationManager } from "../../managers/simulationManager/simulationManager";
 import { UIForceController } from "../../managers/uiManager/uiControllers/UIForceController";
@@ -18,10 +20,11 @@ import { UISimulationController } from "../../managers/uiManager/uiControllers/U
 import { UIManager } from "../../managers/uiManager/uiManager";
 import { Master } from "../../master/master";
 import { ForceConstant } from "../../steeringBehavior/forceConstant";
+import { FollowPathForce } from "../../steeringBehavior/forceFollowPath";
 import { SeekForce } from "../../steeringBehavior/forceSeek";
  
   
- export class ScnSeek 
+ export class SceneFollowPath 
  extends Phaser.Scene
  {
    /****************************************************/
@@ -43,12 +46,13 @@ import { SeekForce } from "../../steeringBehavior/forceSeek";
  
      master.onSimulationSceneCreate(this);
  
-     ///////////////////////////////////
-     // Create SpaceShip Actor
+     /****************************************************/
+     /* Space Ship                                       */
+     /****************************************************/
  
      // Get simulation manager.
  
-     let simManager : SimulationManager = master.getManager<SimulationManager>
+     const simManager : SimulationManager = master.getManager<SimulationManager>
      (
        ST_MANAGER_ID.kSimManager
      );
@@ -60,96 +64,75 @@ import { SeekForce } from "../../steeringBehavior/forceSeek";
      simManager.addActor(blueShip);
 
      /****************************************************/
-     /* Target                                           */
+     /* Nodes                                            */
      /****************************************************/
 
-     let canvas = this.game.canvas;
+     const canvas = this.game.canvas;
  
-     let width : number = canvas.width;
-     let height : number = canvas.height;
+     const hWidth : number = canvas.width * 0.5;
+     const hHeight : number = canvas.height * 0.5;
 
-     const targetActor =  ShipFactory.CreateRedShip
-     (
-       this,
-       "Red Ship"
-     );
- 
-     // Add target to simulation manager.
- 
-     simManager.addActor(targetActor);
+     let startNode : BaseActor<Ty_Sprite> = undefined;
+     let prevNode : BaseActor<Ty_Sprite> = undefined;
 
-     // Create the target force controller.
+     const t = ( Phaser.Math.PI2 / 10);
 
-     const targetFController = targetActor.getComponent<CmpForceController>
-     (
-       ST_COMPONENT_ID.kForceController
-     );
+     for(let i = 0; i < 10; ++ i )
+     {
 
-     // Create Constant force.
-
-     const constantForce = new ForceConstant();
-
-     constantForce.init
-     (
-       targetActor.getWrappedInstance(),
-       new Phaser.Math.Vector2(0.4, 0.85),
-       300,
-       true 
+      const node = AmbienceFactory.CreateSatellite
+      (
+        hWidth + ( Math.sin(t * i) * 200 ),
+        hHeight + ( Math.cos(t * i) * 200),
+        this,
+        "Satellite_" + i.toString() 
       );
 
-      targetFController.addForce("constant", constantForce);
+      if(prevNode === undefined)
+      {
 
-     // Set target scale.
+        startNode = node;
+        prevNode = node;
 
-    targetActor.sendMessage
-    (
-      ST_MESSAGE_ID.kSetMass,
-      3.0
-    );
+      }
+      else
+      {
 
-    targetActor.sendMessage
-    (
-      ST_MESSAGE_ID.kSetMaxSpeed,
-      300
-    );
-    
-    targetActor.sendMessage
-    (
-      ST_MESSAGE_ID.kSetScale,
-      new Phaser.Math.Vector2(0.5, 0.5)
-    );
+        prevNode.setNext(node);
+        node.setPrevious(prevNode);
+
+        prevNode = node;
+
+      }
+
+     }
+
+     /****************************************************/
+     /* Forces                                           */
+     /****************************************************/
  
-     targetActor.sendMessage
+     const followPath = new FollowPathForce();
+
+     followPath.init
      (
-       ST_MESSAGE_ID.kSetPosition,
-       new Phaser.Math.Vector2(width * 0.5, height * 0.5)
+       blueShip,
+       150,
+       15,
+       true
      );
- 
-     ///////////////////////////////////
-     // Create a Force
- 
-     // Step I : Create the force
- 
-     let seek : SeekForce = new SeekForce();
- 
-     seek.init
-     (
-      blueShip.getWrappedInstance(),
-       targetActor.getWrappedInstance(),
-       125
-     );
- 
-     // Step II : Get Component
- 
-     let forceControl = blueShip.getComponent<CmpForceController>
+
+     followPath.setStartNode(startNode);
+
+     const blueShipFController = blueShip.getComponent<CmpForceController>
      (
        ST_COMPONENT_ID.kForceController
      );
- 
-     forceControl.addForce('seek_1', seek );
 
-     ///////////////////////////////////
-     // UI
+     blueShipFController.addForce("Follow Path", followPath);
+
+     /****************************************************/
+     /* UI                                               */
+     /****************************************************/
 
     const uiForceController = new UIForceController
     (
@@ -174,7 +157,7 @@ import { SeekForce } from "../../steeringBehavior/forceSeek";
 
     const uiSimController = UISimulationController.CreateSimControlBox
     (
-      width * 0.5,
+      hWidth,
       20,
       this
     );

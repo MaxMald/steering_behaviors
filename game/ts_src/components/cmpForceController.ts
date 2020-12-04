@@ -57,6 +57,8 @@ implements IBaseComponent<Ty_Sprite>
     this._m_bRunning = true;
     
     this._m_debug = false;
+
+    this._m_maxSpeed = 1.0;
     
     return;
   }
