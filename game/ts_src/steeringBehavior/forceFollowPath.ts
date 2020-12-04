@@ -47,6 +47,8 @@ implements IForce
     this._m_vToSelf = new Phaser.Math.Vector2();
     this._m_vPath = new Phaser.Math.Vector2();
 
+    this._m_forceToPathScale = 1.0;
+
     // Get Debug Manager
 
     const master = Master.GetInstance();
@@ -122,25 +124,35 @@ implements IForce
       if(distance <= this._m_radius)
       {
 
-        this._setActiveNode(activeNode.getNext());
+        const nextNode = activeNode.getNext();
 
-        activeNode = this._m_activeNode;
-
-        if(activeNode === undefined)
+        if(nextNode === undefined)
         {
 
           if(this._m_looping)
           {
 
-            const startNode = this._m_startNode;
+            this._setActiveNode(this._m_startNode);
 
-            this._m_seek.setTarget(startNode.getWrappedInstance());
-
-            this._m_activeNode = startNode;
-
-            activeNode = startNode;
+            activeNode = this._m_startNode;
 
           }
+          else
+          {
+
+            this._setActiveNode(undefined);
+
+            activeNode = undefined;
+
+          }
+
+        }
+        else
+        {
+
+          this._setActiveNode(nextNode);
+
+          activeNode = nextNode;
 
         }
 
@@ -195,6 +207,8 @@ implements IForce
 
         forceToPath.subtract(toSelf);
 
+        forceToPath.scale(this._m_forceToPathScale);
+
         // Add force.
 
         this._m_controller.addSteerForce(forceToPath.x, forceToPath.y);
@@ -235,6 +249,17 @@ implements IForce
       self.y + actualVelocity.y + forceToPath.y,
       2,
       ST_COLOR_ID.kYellow 
+    );
+
+    // Radius of vision
+
+    this._m_debugManager.drawCircle
+    (
+      self.x,
+      self.y,
+      this._m_radius,
+      1,
+      ST_COLOR_ID.kWhite
     );
     
     return;
@@ -304,7 +329,29 @@ implements IForce
   : number
   {
 
-    return this._m_seek.getMaxMagnitude();
+    const seekMag = this._m_seek.getMaxMagnitude();
+
+    const pathMag = this._m_forceToPath.length();
+
+    return (seekMag > pathMag ? seekMag : pathMag);
+
+  }
+
+  setForceToPathScale(_scale: number)
+  : void
+  {
+
+    this._m_forceToPathScale = _scale;
+
+    return;
+
+  }
+
+  getForceToPathScale()
+  : number
+  {
+
+    return this._m_forceToPathScale;
 
   }
 
@@ -345,6 +392,17 @@ implements IForce
     this._m_radius = _radius;
 
     return;
+
+  }
+
+  /**
+   * Get the radius of vision.
+   */
+  getVisionRadius()
+  : number
+  {
+
+    return this._m_radius;
 
   }
 
@@ -475,6 +533,11 @@ implements IForce
   private _m_debugManager : DebugManager;
 
   /**
+   * Scale of the force to path.
+   */
+  private _m_forceToPathScale: number;
+
+  /**
    * Force to path.
    */
   private _m_forceToPath: V2;
@@ -498,4 +561,5 @@ implements IForce
    * Vector from the previous node position to self.
    */
   private _m_vToSelf: V2;
+  
 }
