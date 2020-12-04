@@ -66,7 +66,7 @@ extends UIForce
     this._m_forceSlider.subscribe
     (
       "valueChanged",
-      "UIForceSeek",
+      "UIForcePursuit",
       function(_sender: UIObject, _args: any)
       {
 

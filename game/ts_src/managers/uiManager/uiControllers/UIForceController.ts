@@ -20,6 +20,7 @@ import { UIForceSeek } from "./UIForceSeek";
 import { UIForceWander } from "./UIForceWander";
 import { UIForceFollowPath } from "./UIForceFollowPath";
 import { UIForceConstant } from "./UIForceConstant";
+import { UIForceFlee } from "./UIForceFlee";
 
 export class UIForceController
   extends UIController
@@ -248,6 +249,7 @@ export class UIForceController
     // Create each UI Force and add it to the box.
 
     this._addUIForce(ST_STEER_FORCE.kSeek, new UIForceSeek(_scene));
+    this._addUIForce(ST_STEER_FORCE.kFlee, new UIForceFlee(_scene));
     this._addUIForce(ST_STEER_FORCE.kArrive, new UIForceArrival(_scene));
     this._addUIForce(ST_STEER_FORCE.kPursue, new UIForcePursuit(_scene));
     this._addUIForce(ST_STEER_FORCE.kEvade, new UIForceEvade(_scene));
