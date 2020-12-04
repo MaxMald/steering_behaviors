@@ -219,6 +219,36 @@ extends Phaser.Scene
     box.add(wander);
 
     ///////////////////////////////////
+    // Follow Path
+
+    const followPath = UIButton.CreateColorButton
+    (
+      0,
+      0,
+      this,
+      "Follow Path",
+      ST_COLOR_ID.kWhite
+    );
+
+    followPath.subscribe
+    (
+      "buttonReleased",
+      "MainMenu",
+      function(_sender: UIObject, _args: any)
+      : void
+      {
+
+        this.scene.start('sceneFollowPath');
+
+        return;
+
+      },
+      this
+    )
+
+    box.add(followPath);
+
+    ///////////////////////////////////
     // Obstacle Avoidance
 
     const oAvoidance = UIButton.CreateColorButton

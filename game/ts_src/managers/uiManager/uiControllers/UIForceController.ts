@@ -18,6 +18,8 @@ import { UIForcePursuit } from "./UIForcePursuit";
 import { UIForceObstacleAvoidance } from "./UIForceObstacleAvoidance";
 import { UIForceSeek } from "./UIForceSeek";
 import { UIForceWander } from "./UIForceWander";
+import { UIForceFollowPath } from "./UIForceFollowPath";
+import { UIForceConstant } from "./UIForceConstant";
 
 export class UIForceController
   extends UIController
@@ -251,6 +253,8 @@ export class UIForceController
     this._addUIForce(ST_STEER_FORCE.kEvade, new UIForceEvade(_scene));
     this._addUIForce(ST_STEER_FORCE.kWander, new UIForceWander(_scene));
     this._addUIForce(ST_STEER_FORCE.kObstacleAvoidance, new UIForceObstacleAvoidance(_scene));
+    this._addUIForce(ST_STEER_FORCE.kFollowPath, new UIForceFollowPath(_scene));
+    this._addUIForce(ST_STEER_FORCE.kConstant, new UIForceConstant(_scene));
 
     ///////////////////////////////////
     // Actor
@@ -431,7 +435,11 @@ export class UIForceController
       if(activeForce === undefined)
       {
 
-        throw new Error("UI Force does not exists!");
+        console.error("UI Force does not exists.");
+
+        this._m_activeUIForce = undefined;
+
+        return;
 
       }
 

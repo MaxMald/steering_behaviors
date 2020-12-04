@@ -118,48 +118,54 @@ implements IForce
     // Get the target object
 
     let target : Ty_Sprite = this._m_target;
-    
-    // Get self object
-
-    let self : Ty_Sprite = this._m_self;
-    
-    // Get reference to force controller
-
-    let forceController = this._m_controller;
-    
-    // Get actual velocity
-
-    let actualVelocity = forceController.getVelocity();
-
-    // Calculate desire velocity 
-    
-    let desireVelocity = this._m_desireVelocity;
-
-    desireVelocity.set
-    (
-      target.x - self.x,
-      target.y - self.y 
-    );
-
-    desireVelocity.setLength(this._m_seekMaxLength);
-
-    // Calculate the seek force
-
-    let seekForce = this._m_seekForce;
    
-    seekForce.copy(desireVelocity);
+    if(target !== undefined)
+    {
 
-    seekForce.subtract(actualVelocity);
+      // Get self object
 
-    // Truncate the seek force if it exceeds the maximum length allowed.
+      let self : Ty_Sprite = this._m_self;
+      
+      // Get reference to force controller
 
-    seekForce.limit(this._m_seekMaxLength);
+      let forceController = this._m_controller;
+      
+      // Get actual velocity
 
-    // Add force to the controller.
+      let actualVelocity = forceController.getVelocity();
 
-    forceController.addSteerForce(seekForce.x, seekForce.y);
+      // Calculate desire velocity 
+      
+      let desireVelocity = this._m_desireVelocity;
+
+      desireVelocity.set
+      (
+        target.x - self.x,
+        target.y - self.y 
+      );
+
+      desireVelocity.setLength(this._m_seekMaxLength);
+
+      // Calculate the seek force
+
+      let seekForce = this._m_seekForce;
+      
+      seekForce.copy(desireVelocity);
+
+      seekForce.subtract(actualVelocity);
+
+      // Truncate the seek force if it exceeds the maximum length allowed.
+
+      seekForce.limit(this._m_seekMaxLength);
+
+      // Add force to the controller.
+
+      forceController.addSteerForce(seekForce.x, seekForce.y);
+
+    }    
 
     return;
+    
   }
 
   /**
@@ -171,11 +177,13 @@ implements IForce
   updateDebug(_dt : number)
   : void
   {
+
+    const self = this._m_self;
+
+    const desireVelocity = this._m_desireVelocity;
+
+    /*
     // Debug desire velocity.
-
-    let self = this._m_self;
-
-    let desireVelocity = this._m_desireVelocity;
 
     this._m_debugManager.drawLine
     (
@@ -186,8 +194,8 @@ implements IForce
       1,
       ST_COLOR_ID.kBlack
     );
-
-    // Debug steer force.
+      */
+    // Debug steer force.    
 
     let actualVelocity = this._m_controller.getVelocity();
 

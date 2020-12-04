@@ -37,7 +37,9 @@ export const ST_COMPONENT_ID = Object.freeze
 
   kSpriteController : 2 as 2,
 
-  kShipPropulsor : 3 as 3
+  kShipPropulsor : 3 as 3,
+
+  kInteractiveActor: 4 as 4
 
 });
 
@@ -101,7 +103,21 @@ export const ST_MESSAGE_ID = Object.freeze
    * 
    * msg : number
    */
-  kSetMaxSpeed : 7 as 7
+  kSetMaxSpeed : 7 as 7,
+
+  /**
+   * Set the agent sprite alpha.
+   * 
+   * msg: number
+   */
+  kSetAlpha: 8 as 8,
+
+  /**
+   * Play a sprite animation.
+   * 
+   * msg: [string] animation key.
+   */
+  kPlayAnimation: 9 as 9
 });
 
 /**

@@ -8,12 +8,9 @@
  * @since November-27-2020
  */
 
-
-
 import { ST_STEER_FORCE } from "../commons/stEnums";
 import { Ty_Sprite } from "../commons/stTypes";
 import { SeekForce } from "./forceSeek";
-
 
 export class FleeForce
 extends SeekForce

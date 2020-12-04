@@ -9,9 +9,10 @@
  */
 
 import { BaseActor } from "../../actors/baseActor";
-import { ST_MANAGER_ID } from "../../commons/stEnums";
-import { Ty_Image } from "../../commons/stTypes";
+import { ST_COLOR_ID, ST_MANAGER_ID } from "../../commons/stEnums";
+import { Ty_Image, Ty_Sprite } from "../../commons/stTypes";
 import { Master } from "../../master/master";
+import { DebugManager } from "../debugManager/debugManager";
 import { IManager } from "../iManager";
 import { UIController } from "./uiControllers/UIController";
 
@@ -34,6 +35,16 @@ export class UIManager
     this._m_aControllers = new Map<string, UIController>();
 
     this.m_target = undefined;
+    this.m_focusedActor = undefined;
+
+    // Get Debug Manager
+
+    const master = Master.GetInstance();
+
+    this._m_debugManager = master.getManager<DebugManager>
+    (
+      ST_MANAGER_ID.kDebugManager
+    );
 
     return;
   
@@ -47,6 +58,69 @@ export class UIManager
     (
       this._updateController
     );
+
+    if(this.m_target !== undefined)
+    {
+
+      const sprite = this.m_target.getWrappedInstance();
+
+      const w = sprite.displayWidth;
+      const h = sprite.displayHeight;
+
+      const size = (w > h ? w : h) * 0.6;
+
+      this._m_debugManager.drawCircle
+      (
+        sprite.x,
+        sprite.y,
+        size,
+        3,
+        ST_COLOR_ID.kGreen
+      );
+
+      this._m_debugManager.drawCircle
+      (
+        sprite.x,
+        sprite.y,
+        size * 1.1,
+        1.5,
+        ST_COLOR_ID.kGreen,
+        0.4
+      );
+
+    }
+
+    if(this.m_focusedActor !== undefined)
+    {
+
+      const sprite = this.m_focusedActor.getWrappedInstance();
+
+      const w = sprite.displayWidth;
+      const h = sprite.displayHeight;
+
+      const size = (w > h ? w : h) * 0.6;
+
+      this._m_debugManager.drawCircle
+      (
+        sprite.x,
+        sprite.y,
+        size,
+        3,
+        ST_COLOR_ID.kOrange
+      );
+
+      this._m_debugManager.drawCircle
+      (
+        sprite.x,
+        sprite.y,
+        size * 1.1,
+        1.5,
+        ST_COLOR_ID.kOrange,
+        0.4
+      );
+
+
+    }
 
     return;
   
@@ -116,6 +190,7 @@ export class UIManager
     this._m_aControllers.clear();
 
     this.m_target = undefined;
+    this.m_focusedActor = undefined;
 
     return;
 
@@ -232,6 +307,8 @@ export class UIManager
 
     this.m_target = _target;
 
+    this.clearFocusActor();
+
     this._m_aControllers.forEach
     (
       function(_controller: UIController)
@@ -243,7 +320,40 @@ export class UIManager
         return;
 
       }
-    );
+    );    
+
+    return;
+
+  }
+
+  /**
+   * Set the focused actor of the UI Manager.
+   * 
+   * @param _actor The focused actor.
+   */
+  focusActor(_actor: BaseActor<Ty_Sprite>)
+  : void
+  {
+
+    if(_actor !== this.m_target)
+    {
+
+      this.m_focusedActor = _actor;
+
+    }
+
+    return;
+
+  }
+
+  /**
+   * Undefined the focused actor.
+   */
+  clearFocusActor()
+  : void
+  {
+
+    this.m_focusedActor = undefined;
 
     return;
 
@@ -322,9 +432,16 @@ export class UIManager
   }
 
   /**
-   * The view target.
+   * The selected actor of the UI Controller. This agent is defined when the
+   * pointer click over an interactive actor.
    */
   public m_target: BaseActor<Ty_Image>;
+
+  /**
+   * The focused actor by the main pointer. This agent is defined when the
+   * pointer is over an interactive actor.
+   */
+  public m_focusedActor: BaseActor<Ty_Sprite>;
 
   /****************************************************/
   /* Private                                          */
@@ -347,6 +464,8 @@ export class UIManager
 
   }
 
+  private _m_debugManager: DebugManager;
+
   /**
    * A map of controllers or the scene.
    */
@@ -355,6 +474,6 @@ export class UIManager
   /**
    * Reference to the master manager.
    */
-  private _m_master: Master;
+  private _m_master: Master;  
 
  }
