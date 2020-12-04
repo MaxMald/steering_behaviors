@@ -8,20 +8,20 @@
  * @since December-03-2020
  */
 import { BaseActor } from "../../actors/baseActor";
-import { ST_COMPONENT_ID, ST_MANAGER_ID, ST_MESSAGE_ID } from "../../commons/stEnums";
+import { ST_COMPONENT_ID, ST_MANAGER_ID } from "../../commons/stEnums";
 import { Ty_Sprite } from "../../commons/stTypes";
 import { CmpForceController } from "../../components/cmpforceController";
 import { AmbienceFactory } from "../../factories/ambienceFactory";
 import { ShipFactory } from "../../factories/shipFactory";
 import { SimulationManager } from "../../managers/simulationManager/simulationManager";
+import { UIButtonImg } from "../../managers/uiManager/uiButtonImg";
 import { UIForceController } from "../../managers/uiManager/uiControllers/UIForceController";
 import { UIMessageBox } from "../../managers/uiManager/uiControllers/UIMessageBox";
 import { UISimulationController } from "../../managers/uiManager/uiControllers/UISimulationController";
 import { UIManager } from "../../managers/uiManager/uiManager";
+import { UIObject } from "../../managers/uiManager/uiObject";
 import { Master } from "../../master/master";
-import { ForceConstant } from "../../steeringBehavior/forceConstant";
 import { FollowPathForce } from "../../steeringBehavior/forceFollowPath";
-import { SeekForce } from "../../steeringBehavior/forceSeek";
  
   
  export class SceneFollowPath 
@@ -46,16 +46,49 @@ import { SeekForce } from "../../steeringBehavior/forceSeek";
  
      master.onSimulationSceneCreate(this);
  
-     /****************************************************/
-     /* Space Ship                                       */
-     /****************************************************/
- 
      // Get simulation manager.
  
      const simManager : SimulationManager = master.getManager<SimulationManager>
      (
        ST_MANAGER_ID.kSimManager
      );
+
+     // Get canvas size.
+  
+    let canvas = this.game.canvas;
+  
+    let width : number = canvas.width;
+    let height : number = canvas.height;
+
+    ///////////////////////////////////
+    // Create scene buttons
+
+    let mainMenuButton : UIButtonImg = UIButtonImg.CreateHomeButtonImg
+    (
+      width * 0.9,
+      height * 0.1,
+      this
+    );
+
+    mainMenuButton.subscribe
+    (
+      "buttonReleased",
+      "button",
+      function(_sender : UIObject, _args)
+      {
+
+        const button = _sender as UIButtonImg;
+
+        master.onSimulationSceneDestroy(this);
+    
+        this.scene.start('main_menu');
+      },
+      this
+    );
+
+     /****************************************************/
+     /* Space Ship                                       */
+     /****************************************************/
      
      const blueShip = ShipFactory.CreateBlueShip(this, "Blue Ship");
  
@@ -66,8 +99,6 @@ import { SeekForce } from "../../steeringBehavior/forceSeek";
      /****************************************************/
      /* Nodes                                            */
      /****************************************************/
-
-     const canvas = this.game.canvas;
  
      const hWidth : number = canvas.width * 0.5;
      const hHeight : number = canvas.height * 0.5;

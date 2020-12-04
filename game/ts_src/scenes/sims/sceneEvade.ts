@@ -12,14 +12,14 @@ import { ST_COMPONENT_ID, ST_MANAGER_ID, ST_MESSAGE_ID } from "../../commons/stE
 import { CmpForceController } from "../../components/cmpforceController";
 import { ShipFactory } from "../../factories/shipFactory";
 import { SimulationManager } from "../../managers/simulationManager/simulationManager";
+import { UIButtonImg } from "../../managers/uiManager/uiButtonImg";
 import { UIForceController } from "../../managers/uiManager/uiControllers/UIForceController";
 import { UIMessageBox } from "../../managers/uiManager/uiControllers/UIMessageBox";
 import { UISimulationController } from "../../managers/uiManager/uiControllers/UISimulationController";
 import { UIManager } from "../../managers/uiManager/uiManager";
+import { UIObject } from "../../managers/uiManager/uiObject";
 import { Master } from "../../master/master";
-import { ForceConstant } from "../../steeringBehavior/forceConstant";
 import { EvadeForce } from "../../steeringBehavior/forceEvade";
-import { PursueForce } from "../../steeringBehavior/forcePursue";
 import { SeekForce } from "../../steeringBehavior/forceSeek";
 
 export class SceneEvade
@@ -48,14 +48,42 @@ export class SceneEvade
       ST_MANAGER_ID.kSimManager
     );
 
+    // Get canvas size.
+  
+    let canvas = this.game.canvas;
+  
+    let width : number = canvas.width;
+    let height : number = canvas.height;
+
+    ///////////////////////////////////
+    // Create scene buttons
+
+    let mainMenuButton : UIButtonImg = UIButtonImg.CreateHomeButtonImg
+    (
+      width * 0.9,
+      height * 0.1,
+      this
+    );
+
+    mainMenuButton.subscribe
+    (
+      "buttonReleased",
+      "button",
+      function(_sender : UIObject, _args)
+      {
+
+        const button = _sender as UIButtonImg;
+
+        master.onSimulationSceneDestroy(this);
+    
+        this.scene.start('main_menu');
+      },
+      this
+    );
+
     /****************************************************/
     /* Red Ship                                         */
     /****************************************************/
-
-    let canvas = this.game.canvas;
- 
-    let width : number = canvas.width;
-    let height : number = canvas.height;
 
     const targetActor =  ShipFactory.CreateRedShip
     (

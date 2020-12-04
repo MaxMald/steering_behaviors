@@ -8,14 +8,11 @@
  * @since October-24-2020
  */
 
-import { BaseActor } from "../../actors/baseActor";
-import { ST_COLOR_ID, ST_COMPONENT_ID, ST_MANAGER_ID, ST_MESSAGE_ID } from "../../commons/stEnums";
-import { Ty_Sprite, V2 } from "../../commons/stTypes";
+import { ST_COMPONENT_ID, ST_MANAGER_ID, ST_MESSAGE_ID } from "../../commons/stEnums";
 import { CmpForceController } from "../../components/cmpforceController";
-import { CmpSpriteController } from "../../components/cmpSpriteController";
 import { ShipFactory } from "../../factories/shipFactory";
 import { SimulationManager } from "../../managers/simulationManager/simulationManager";
-import { UIButton } from "../../managers/uiManager/uiButton";
+import { UIButtonImg } from "../../managers/uiManager/uiButtonImg";
 import { UIForceController } from "../../managers/uiManager/uiControllers/UIForceController";
 import { UISimulationController } from "../../managers/uiManager/uiControllers/UISimulationController";
 import { UIManager } from "../../managers/uiManager/uiManager";
@@ -62,12 +59,11 @@ extends Phaser.Scene
     ///////////////////////////////////
     // Create scene buttons
 
-    let mainMenuButton : UIButton = UIButton.CreateThemeButton
+    let mainMenuButton : UIButtonImg = UIButtonImg.CreateHomeButtonImg
     (
-      width * 0.1,
-      height * 0.9,
-      this,
-      'Main menu'
+      width * 0.9,
+      height * 0.1,
+      this
     );
 
     mainMenuButton.subscribe
@@ -77,41 +73,11 @@ extends Phaser.Scene
       function(_sender : UIObject, _args)
       {
 
-        const button = _sender as UIButton;
+        const button = _sender as UIButtonImg;
 
         master.onSimulationSceneDestroy(this);
     
         this.scene.start('main_menu');
-      },
-      this
-    );
-
-    let debugButton : UIButton = UIButton.CreateColorButton
-    (
-      width * 0.9,
-      height * 0.9,
-      this,
-      'Debug Gizmos big text',
-      0x9000ff
-    );
-
-    debugButton.subscribe
-    (
-      "buttonReleased",
-      "button",
-      function(_sender : UIObject, _args)
-      {
-
-        const button = _sender as UIButton;
-
-        if(master.isDebugEnable())
-        {
-          master.disableDebugging();
-        }
-        else
-        {
-          master.enableDebugging();
-        }
       },
       this
     );

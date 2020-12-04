@@ -12,7 +12,7 @@ import { ST_COMPONENT_ID, ST_MANAGER_ID, ST_MESSAGE_ID } from "../../commons/stE
 import { CmpForceController } from "../../components/cmpforceController";
 import { ShipFactory } from "../../factories/shipFactory";
 import { SimulationManager } from "../../managers/simulationManager/simulationManager";
-import { UIButton } from "../../managers/uiManager/uiButton";
+import { UIButtonImg } from "../../managers/uiManager/uiButtonImg";
 import { UISimulationController } from "../../managers/uiManager/uiControllers/UISimulationController";
 import { UIManager } from "../../managers/uiManager/uiManager";
 import { UIObject } from "../../managers/uiManager/uiObject";
@@ -60,12 +60,11 @@ import { FleeForce } from "../../steeringBehavior/forceFlee";
     ///////////////////////////////////
     // Create scene buttons
 
-    let mainMenuButton : UIButton = UIButton.CreateThemeButton
+    let mainMenuButton : UIButtonImg = UIButtonImg.CreateHomeButtonImg
     (
-      width * 0.1,
-      height * 0.9,
-      this,
-      'Main menu'
+      width * 0.9,
+      height * 0.1,
+      this
     );
 
     mainMenuButton.subscribe
@@ -75,41 +74,11 @@ import { FleeForce } from "../../steeringBehavior/forceFlee";
       function(_sender : UIObject, _args)
       {
 
-        const button = _sender as UIButton;
+        const button = _sender as UIButtonImg;
 
         master.onSimulationSceneDestroy(this);
     
         this.scene.start('main_menu');
-      },
-      this
-    );
-
-    let debugButton : UIButton = UIButton.CreateColorButton
-    (
-      width * 0.9,
-      height * 0.9,
-      this,
-      'Debug Gizmos big text',
-      0x9000ff
-    );
-
-    debugButton.subscribe
-    (
-      "buttonReleased",
-      "button",
-      function(_sender : UIObject, _args)
-      {
-
-        const button = _sender as UIButton;
-
-        if(master.isDebugEnable())
-        {
-          master.disableDebugging();
-        }
-        else
-        {
-          master.enableDebugging();
-        }
       },
       this
     );

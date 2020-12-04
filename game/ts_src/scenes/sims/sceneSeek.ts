@@ -12,10 +12,12 @@ import { ST_COMPONENT_ID, ST_MANAGER_ID, ST_MESSAGE_ID } from "../../commons/stE
 import { CmpForceController } from "../../components/cmpforceController";
 import { ShipFactory } from "../../factories/shipFactory";
 import { SimulationManager } from "../../managers/simulationManager/simulationManager";
+import { UIButtonImg } from "../../managers/uiManager/uiButtonImg";
 import { UIForceController } from "../../managers/uiManager/uiControllers/UIForceController";
 import { UIMessageBox } from "../../managers/uiManager/uiControllers/UIMessageBox";
 import { UISimulationController } from "../../managers/uiManager/uiControllers/UISimulationController";
 import { UIManager } from "../../managers/uiManager/uiManager";
+import { UIObject } from "../../managers/uiManager/uiObject";
 import { Master } from "../../master/master";
 import { ForceConstant } from "../../steeringBehavior/forceConstant";
 import { SeekForce } from "../../steeringBehavior/forceSeek";
@@ -43,15 +45,48 @@ import { SeekForce } from "../../steeringBehavior/forceSeek";
  
      master.onSimulationSceneCreate(this);
  
-     ///////////////////////////////////
-     // Create SpaceShip Actor
- 
      // Get simulation manager.
  
      let simManager : SimulationManager = master.getManager<SimulationManager>
      (
        ST_MANAGER_ID.kSimManager
      );
+
+     // Get canvas size.
+  
+    let canvas = this.game.canvas;
+  
+    let width : number = canvas.width;
+    let height : number = canvas.height;
+
+    ///////////////////////////////////
+    // Create scene buttons
+
+    let mainMenuButton : UIButtonImg = UIButtonImg.CreateHomeButtonImg
+    (
+      width * 0.9,
+      height * 0.1,
+      this
+    );
+
+    mainMenuButton.subscribe
+    (
+      "buttonReleased",
+      "button",
+      function(_sender : UIObject, _args)
+      {
+
+        const button = _sender as UIButtonImg;
+
+        master.onSimulationSceneDestroy(this);
+    
+        this.scene.start('main_menu');
+      },
+      this
+    );
+
+     ///////////////////////////////////
+     // Create SpaceShip Actor
      
      const blueShip = ShipFactory.CreateBlueShip(this, "Blue Ship");
  
@@ -62,11 +97,6 @@ import { SeekForce } from "../../steeringBehavior/forceSeek";
      /****************************************************/
      /* Target                                           */
      /****************************************************/
-
-     let canvas = this.game.canvas;
- 
-     let width : number = canvas.width;
-     let height : number = canvas.height;
 
      const targetActor =  ShipFactory.CreateRedShip
      (
