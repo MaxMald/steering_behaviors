@@ -44,11 +44,14 @@ implements IForce
     _controller ?: CmpForceController
   )
   {
+
     this._m_self = _self;
 
     if(_controller !== undefined)
     {
+
       this._m_controller = _controller;
+      
     }
 
     // Is the force direction relative to the agent direction?
