@@ -13,6 +13,7 @@ import { CmpForceController } from "../../components/cmpforceController";
 import { ShipFactory } from "../../factories/shipFactory";
 import { SimulationManager } from "../../managers/simulationManager/simulationManager";
 import { UIButtonImg } from "../../managers/uiManager/uiButtonImg";
+import { UIForceController } from "../../managers/uiManager/uiControllers/UIForceController";
 import { UISimulationController } from "../../managers/uiManager/uiControllers/UISimulationController";
 import { UIManager } from "../../managers/uiManager/uiManager";
 import { UIObject } from "../../managers/uiManager/uiObject";
@@ -170,22 +171,31 @@ import { FleeForce } from "../../steeringBehavior/forceFlee";
     
     ///////////////////////////////////
     // UI
-    const uiSimController = UISimulationController.CreateSimControlBox
+    const uiForceController = new UIForceController
     (
-      width * 0.5,
+      20,
       20,
       this
     );
-    
-    // Add UI force controller to the UI Manager.
-    
-    const uiManager = master.getManager<UIManager>(ST_MANAGER_ID.kUIManager);
-    
-    uiManager.addUIController("mediaSimUI", uiSimController);
-    
-    // Set the active actor of the UI Manager.
-    
-    uiManager.setTarget(shipActor);
+
+   const uiSimController = UISimulationController.CreateSimControlBox
+   (
+     width * 0.5,
+     20,
+     this
+   );
+   
+   // Add UI force controller to the UI Manager.
+   
+   const uiManager = master.getManager<UIManager>(ST_MANAGER_ID.kUIManager);
+   
+   uiManager.addUIController("forceUI", uiForceController);
+
+   uiManager.addUIController("mediaSimUI", uiSimController);
+   
+   // Set the active actor of the UI Manager.
+   
+   uiManager.setTarget(shipActor);
     
     ///////////////////////////////////
     // Active Debugging
