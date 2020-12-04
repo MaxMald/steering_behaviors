@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.4" tiledversion="1.4.2" orientation="orthogonal" renderorder="right-down" width="64" height="48" tilewidth="16" tileheight="16" infinite="0" nextlayerid="4" nextobjectid="4">
+ <tileset firstgid="1" name="space_art" tilewidth="1024" tileheight="768" tilecount="10" columns="0">
+  <grid orientation="orthogonal" width="1" height="1"/>
+  <tile id="0">
+   <image width="1024" height="768" source="../images/bg_space_01.png"/>
+  </tile>
+  <tile id="1">
+   <image width="207" height="198" source="../images/game_art/planetAsset 2.png"/>
+  </tile>
+  <tile id="2">
+   <image width="237" height="234" source="../images/game_art/planetAsset 5.png"/>
+  </tile>
+  <tile id="3">
+   <image width="281" height="321" source="../images/game_art/planetAsset 6.png"/>
+  </tile>
+  <tile id="4">
+   <image width="250" height="238" source="../images/game_art/planetAsset 7.png"/>
+  </tile>
+  <tile id="5">
+   <image width="208" height="210" source="../images/game_art/planetAsset 8.png"/>
+  </tile>
+  <tile id="6">
+   <image width="271" height="298" source="../images/game_art/planetAsset 9.png"/>
+  </tile>
+  <tile id="7">
+   <image width="225" height="266" source="../images/game_art/planetAsset 10.png"/>
+  </tile>
+  <tile id="8">
+   <image width="237" height="232" source="../images/game_art/planetAsset 11.png"/>
+  </tile>
+  <tile id="9">
+   <image width="262" height="276" source="../images/game_art/planetAsset 12.png"/>
+  </tile>
+ </tileset>
+ <objectgroup id="2" name="background" locked="1">
+  <object id="1" gid="1" x="0" y="768" width="1024" height="768"/>
+ </objectgroup>
+ <objectgroup id="3" name="backProps">
+  <object id="2" gid="2" x="738.333" y="681.667" width="207" height="198"/>
+  <object id="3" gid="9" x="328.667" y="350.667" width="153" height="149.772"/>
+ </objectgroup>
+</map>
