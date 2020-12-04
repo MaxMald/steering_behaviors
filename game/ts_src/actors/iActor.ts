@@ -18,7 +18,7 @@
    /****************************************************/
 
    /**
-    * Initilize the actor.
+    * Initialize the actor.
     */
    init()
    : void;
@@ -43,6 +43,42 @@
    */
   getName()
   : string;
+
+  /**
+   * Called when the simulation had started.
+   */
+  onSimulationStart()
+  : void;
+
+  /**
+   * Called when the simulation had paused.
+   */
+  onSimulationPause()
+  : void;
+
+  /**
+   * Called when the simulation had resumed.
+   */
+  onSimulationResume()
+  : void;
+
+  /**
+   * Called when the simulation had stopped.
+   */
+  onSimulationStop()
+  : void;
+
+  /**
+   * Called when the debug feature had been enable.
+   */
+  onDebugEnable()
+  : void;
+
+  /**
+   * Called when the debug feature had been disable.
+   */
+  onDebugDisable()
+  : void;
 
   /**
    * Destroy actor.

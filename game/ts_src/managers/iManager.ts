@@ -8,13 +8,15 @@
  * @since September-07-2020
  */
 
+import { Master } from "../master/master";
+
 /**
  * Provides a common interface for each manager.
  */
 export interface IManager
 {
   /**
-   * Initiliaze the Manager. Called by Master when the App before the aplication
+   * Initialize the Manager. Called by Master when the App before the application
    * was created
    */
   init() 
@@ -38,15 +40,35 @@ export interface IManager
   : void;
 
   /**
-   * Called by Master when the game is been created.
+   * Set the Master Manager
+   * 
+   * @param _master Master Manager. 
    */
-  onGameSceneCreate()
+  setMasterManager(_master : Master)
+  : void;
+
+  /**
+   * Get this Manager ID.
+   */
+  getID()
+  : number;
+
+  /**
+   * Called by Master when all managers had been created.
+   */
+  onPrepare()
   : void;
 
   /**
    * Called by Master when the game is been created.
    */
-  onGameSceneDestroy()
+  onSimulationSceneCreate(_scene : Phaser.Scene)
+  : void;
+
+  /**
+   * Called by Master when the game is been created.
+   */
+  onSimulationSceneDestroy(_scene : Phaser.Scene)
   : void;
 
   /**
@@ -70,7 +92,19 @@ export interface IManager
   /**
    * Called by Master when the game is shutdown.
    */
-  onSimulationShutdown()
+  onSimulationStop()
+  : void;
+
+  /**
+   * Called by Master when the debug feature is enabled.
+   */
+  onDebugEnable()
+  : void;
+
+  /**
+   * Called by Master when the debug feature is disable.
+   */
+  onDebugDisable()
   : void;
 
   /**

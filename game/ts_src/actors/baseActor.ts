@@ -12,8 +12,8 @@ import { IBaseComponent } from "../components/iBaseComponent";
 import { IActor } from "./iActor";
 
 /**
- * Simple actor class (from the Component Pattern) wich has an array of 
- * components that defines its behaviour. 
+ * Simple actor class (from the Component Pattern) which has an array of 
+ * components that defines its behavior. 
  */
 export class BaseActor<T>
 implements IActor
@@ -30,13 +30,15 @@ implements IActor
   static Create<U>(_instance : U, _name : string)
   : BaseActor<U>
   {
-    let actor : BaseActor<U> = new BaseActor<U>();
+
+    const actor : BaseActor<U> = new BaseActor<U>();
     
     actor._m_components = new Array<IBaseComponent<U>>();
     actor._m_instance = _instance;
     actor.m_name = _name;   
 
     return actor;
+    
   }
 
   /**
@@ -54,7 +56,6 @@ implements IActor
       components[index].init(this);  
       ++index;
     }
-
     return;
   }
 
@@ -73,7 +74,6 @@ implements IActor
       this._updateComponent,
       this
     );
-
     return;
   }
 
@@ -210,6 +210,11 @@ implements IActor
   onSimulationStart()
   : void
   {
+    this._m_components.forEach
+    (
+      this._cmpSimulationStart,
+      this
+    );
     return;
   }
 
@@ -219,15 +224,67 @@ implements IActor
   onSimulationPause()
   : void
   {
+    this._m_components.forEach
+    (
+      this._cmpSimulationPause,
+      this
+    );
     return;
   }
 
   /**
-   * Called when the simualtion had just resumed.
+   * Called when the simulation had just resumed.
    */
   onSimulationResume()
   : void
   {
+    this._m_components.forEach
+    (
+      this._cmpSimulationResume,
+      this
+    );
+    return;
+  }
+
+  /**
+   * Called when the simulation had just stopped.
+   */
+  onSimulationStop()
+  : void
+  {
+    this._m_components.forEach
+    (
+      this._cmpSimulationStop,
+      this
+    );
+    return;
+  }
+
+  /**
+   * Called when the debug feature had been enable.
+   */
+  onDebugEnable()
+  : void
+  {
+    this._m_components.forEach
+    (
+      this._cmpDebugEnable,
+      this
+    );
+    return;
+  }
+
+  /**
+   * Called when the debug feature had been disable.
+   */
+  onDebugDisable()
+  : void
+  {
+    this._m_components.forEach
+    (
+      this._cmpDebugDisable,
+      this
+    );
     return;
   }
 
@@ -243,11 +300,54 @@ implements IActor
   }
 
   /**
+   * Get the next actor.
+   */
+  getNext()
+  : BaseActor<T>
+  {
+
+    return this._m_next;
+
+  }
+
+  setNext(_actor: BaseActor<T>)
+  : void
+  {
+
+    this._m_next = _actor;
+
+    return;
+
+  }
+
+  /**
+   * Get the previous actor.
+   */
+  getPrevious()
+  : BaseActor<T>
+  {
+
+    return this._m_previous;
+
+  }
+
+  setPrevious(_actor: BaseActor<T>)
+  : void
+  {
+
+    this._m_previous = _actor;
+
+    return;
+
+  }
+
+  /**
    * Destroys all the component attached to this BaseActor.
    */
   destroy()
   : void
-  {    
+  { 
+
     let component : IBaseComponent<T>;
 
     while(this._m_components.length) 
@@ -256,7 +356,12 @@ implements IActor
       
       component.destroy();      
     }
+
+    this._m_next = null;
+    this._m_previous = null;
+
     return;
+
   }
 
   /****************************************************/
@@ -282,6 +387,78 @@ implements IActor
   }
 
   /**
+   * Called when the debug is enable.
+   * 
+   * @param _component 
+   */
+  protected _cmpDebugEnable(_component : IBaseComponent<T>)
+  : void
+  {
+    _component.onDebugEnable();
+    return;
+  }
+
+  /**
+   * Called when the debug is disable.
+   * 
+   * @param _component 
+   */
+  protected _cmpDebugDisable(_component : IBaseComponent<T>)
+  : void
+  {
+    _component.onDebugDisable();
+    return;
+  }
+
+  /**
+   * Called when the simulation starts.
+   * 
+   * @param _component 
+   */
+  protected _cmpSimulationStart(_component : IBaseComponent<T>)
+  : void
+  {
+    _component.onSimulationStart();
+    return;
+  }
+
+  /**
+   * Called when the simulation pause.
+   * 
+   * @param _component 
+   */
+  protected _cmpSimulationPause(_component : IBaseComponent<T>)
+  : void
+  {
+    _component.onSimulationPause();
+    return;
+  }
+
+  /**
+   * Called when the simulation resume.
+   * 
+   * @param _component 
+   */
+  protected _cmpSimulationResume(_component : IBaseComponent<T>)
+  : void
+  {
+    _component.onSimulationResume();
+    return;
+  }
+
+  /**
+   * Called when the simulation stop.
+   * 
+   * @param _component 
+   */
+  protected _cmpSimulationStop(_component : IBaseComponent<T>)
+  : void
+  {
+    _component.onSimulationStop();
+    return;
+  }
+
+  /**
    * The name of this BaseActor.
    */
   protected m_name : string;
@@ -295,4 +472,14 @@ implements IActor
    * List of components attached to this BaseActor.
    */
   protected _m_components : Array<IBaseComponent<T>>;
+
+  /**
+   * Reference to the next agent.
+   */
+  protected _m_next: BaseActor<T>;
+
+  /**
+   * Reference to the previous agent.
+   */
+  protected _m_previous: BaseActor<T>;
 }
