@@ -57,20 +57,33 @@ implements IBaseComponent<Ty_Sprite>
 
     this._m_v2_spriteDirection.set(direction.x, direction.y);
 
-    this._m_fireBackAnim.setAngle(Phaser.Math.RadToDeg(this._m_v2_spriteDirection.angle()));
+    const directionAngle = Phaser.Math.RadToDeg(this._m_v2_spriteDirection.angle());
+
+    this._m_fireBackAnim.setAngle(directionAngle);
 
     this._m_v2_spriteDirection.scale(-1);
 
     this._m_v2_spritePosition.set(
       this._m_v2_spriteDirection.x * this._m_sprite.width * 0.4 + this._m_sprite.x,
-      this._m_v2_spriteDirection.y * this._m_sprite.width * 0.4 +  this._m_sprite.y
+      this._m_v2_spriteDirection.y * this._m_sprite.width * 0.4 + this._m_sprite.y
     );
 
-    this._m_fireBackAnim.setPosition(this._m_v2_spritePosition.x, this._m_v2_spritePosition.y);
+    this._m_fireBackAnim.setPosition
+    (
+      this._m_v2_spritePosition.x,
+      this._m_v2_spritePosition.y
+    );
 
-    const deltaSpeed = forceController.getTotalActualForceMagnitude() / forceController.getTotalMaxForceMagnitude();
+    const deltaSpeed = (
+      forceController.getTotalActualForceMagnitude() / 
+      forceController.getTotalMaxForceMagnitude()
+      );
 
-    this._m_fireBackAnim.setScale(this._m_sprite.scaleX * deltaSpeed, this._m_sprite.scaleY);
+    this._m_fireBackAnim.setScale
+    (
+      this._m_sprite.scaleX * deltaSpeed,
+      this._m_sprite.scaleY
+    );
 
     return;
 
