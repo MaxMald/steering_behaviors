@@ -1,0 +1,59 @@
+{
+  "anims": [
+    {
+      "key": "blueBackFire",
+      "type": "frame",
+      "frames": [
+        {
+          "key": "game_art",
+          "frame": "blueBackFire_1.png",
+          "duration": 0,
+          "visible": false
+        },
+        {
+          "key": "game_art",
+          "frame": "blueBackFire_2.png",
+          "duration": 0,
+          "visible": false
+        }
+      ],
+      "frameRate": 24,
+      "duration": 1,
+      "skipMissedFrames": true,
+      "delay": 0,
+      "repeat": -1,
+      "repeatDelay": 0,
+      "yoyo": false,
+      "showOnStart": false,
+      "hideOnComplete": false
+    },
+    {
+      "key": "redBackFire",
+      "type": "frame",
+      "frames": [
+        {
+          "key": "game_art",
+          "frame": "redBackFire_1.png",
+          "duration": 0,
+          "visible": false
+        },
+        {
+          "key": "game_art",
+          "frame": "redBackFire_2.png",
+          "duration": 0,
+          "visible": false
+        }
+      ],
+      "frameRate": 24,
+      "duration": 1,
+      "skipMissedFrames": true,
+      "delay": 0,
+      "repeat": -1,
+      "repeatDelay": 0,
+      "yoyo": false,
+      "showOnStart": false,
+      "hideOnComplete": false
+    }
+  ],
+  "globalTimeScale": 1
+}

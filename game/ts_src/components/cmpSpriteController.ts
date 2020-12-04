@@ -40,6 +40,7 @@ implements IBaseComponent<Ty_Sprite>
   receive(_id: number, _obj: any)
   : void 
   {
+
     switch(_id)
     {
       case ST_MESSAGE_ID.kMove:
@@ -69,10 +70,24 @@ implements IBaseComponent<Ty_Sprite>
       case ST_MESSAGE_ID.kSetAngle:
 
       this._m_sprite.setAngle(Phaser.Math.RadToDeg(_obj as number));
+
+      return;
+
+      case ST_MESSAGE_ID.kSetAlpha:
+
+      this.setAlpha(_obj as number);
+
+      return;
+
+      case ST_MESSAGE_ID.kPlayAnimation:
+
+      this.playAnimation(_obj as string);
+
       return;
     }
 
     return;
+
   }
 
   /**
@@ -84,6 +99,7 @@ implements IBaseComponent<Ty_Sprite>
   move(_x : number, _y : number)
   : void
   {
+
     let sprite = this._m_sprite;
 
     sprite.setPosition
@@ -91,7 +107,19 @@ implements IBaseComponent<Ty_Sprite>
       sprite.x + _x,
       sprite.y + _y
     );
+
     return;
+
+  }
+
+  playAnimation(_key: string)
+  : void
+  {
+
+    this._m_sprite.play(_key);
+
+    return;
+
   }
 
   /**
@@ -103,6 +131,7 @@ implements IBaseComponent<Ty_Sprite>
   setPosition(_x : number, _y : number)
   : void
   {
+    
     let go = this._m_sprite;
 
     go.setPosition
@@ -110,7 +139,9 @@ implements IBaseComponent<Ty_Sprite>
       _x,
       _y
     );
+
     return;
+
   }
 
   /**
@@ -122,10 +153,23 @@ implements IBaseComponent<Ty_Sprite>
   setScale(_x : number, _y : number)
   : void
   {
+
     let go = this._m_sprite;
 
     go.setScale(_x, _y);
+    
     return;
+
+  }
+
+  setAlpha(_alpha: number)
+  : void
+  {
+
+    this._m_sprite.setAlpha(_alpha);
+
+    return;
+
   }
 
   onSimulationStart()

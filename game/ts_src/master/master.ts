@@ -9,9 +9,11 @@
  */
 
 import { ST_MANAGER_ID } from "../commons/stEnums";
+import { DebugManager } from "../managers/debugManager/debugManager";
 import { IManager } from "../managers/iManager";
 import { NullManager } from "../managers/nullManager";
 import { SimulationManager } from "../managers/simulationManager/simulationManager";
+import { UIManager } from "../managers/uiManager/uiManager";
 
 export class Master
 {
@@ -393,7 +395,9 @@ export class Master
     ///////////////////////////////////
     // Create Managers
 
+    this.addManager(DebugManager.Create());
     this.addManager(SimulationManager.Create());
+    this.addManager(UIManager.Create());
     
     // onPrepare Callback.
 
@@ -407,6 +411,17 @@ export class Master
       }
     );
 
+    // init
+
+    hManagers.forEach
+    (
+      function(_manager : IManager)
+      : void
+      {
+        _manager.init();
+        return;
+      }
+    );
     return
   }
 

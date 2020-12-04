@@ -10,7 +10,7 @@
 
 import { BaseActor } from "../../actors/baseActor";
 import { IActor } from "../../actors/iActor";
-import { ST_MANAGER_ID } from "../../commons/stEnums";
+import { ST_MANAGER_ID, ST_SIM_SATE } from "../../commons/stEnums";
 import { Master } from "../../master/master";
 import { IManager } from "../iManager";
 
@@ -52,12 +52,15 @@ implements IManager
   update(_dt: number)
   : void 
   {
+
     this._m_actors.forEach
     (
       this._updateActor,
       this
     );
+
     return;
+
   }
 
   /**
@@ -152,6 +155,7 @@ implements IManager
   addActor(_actor : IActor)
   : void
   {
+
     if(this._m_actors.has(_actor.getName()))
     {
       console.warn
@@ -163,7 +167,9 @@ implements IManager
     }
 
     this._m_actors.set(_actor.getName(), _actor);
-    return 
+    
+    return;
+
   }
 
   /**
@@ -172,15 +178,21 @@ implements IManager
   onPrepare()
   : void 
   {
+
     this._m_actors = new Map<string, IActor>();
+
     return;
+
   }
 
   onSimulationSceneCreate(_scene : Phaser.Scene)
   : void 
   {
-    // TODO
+    
+    this._m_state = ST_SIM_SATE.kStopped;
+
     return;
+
   }
 
   /**
@@ -191,13 +203,21 @@ implements IManager
   onSimulationSceneDestroy(_scene : Phaser.Scene)
   : void 
   {
+
+    this._m_state = ST_SIM_SATE.kStopped;
+
     this.clear();
+
     return;
+
   }
 
   onSimulationStart()
   : void 
   {
+
+    this._m_state = ST_SIM_SATE.kRunning;
+
     this._m_actors.forEach
     (
       function(_actor : IActor)
@@ -206,12 +226,17 @@ implements IManager
         return;
       }
     );
+
     return;
+
   }
 
   onSimulationPause()
   : void 
   {
+
+    this._m_state = ST_SIM_SATE.kPaused;
+
     this._m_actors.forEach
     (
       function(_actor : IActor)
@@ -220,12 +245,17 @@ implements IManager
         return;
       }
     );
+
     return;
+
   }
 
   onSimulationResume()
   : void 
   {
+
+    this._m_state = ST_SIM_SATE.kRunning;
+
     this._m_actors.forEach
     (
       function(_actor : IActor)
@@ -234,7 +264,9 @@ implements IManager
         return;
       }
     );
+
     return;
+
   }
 
   /**
@@ -243,6 +275,9 @@ implements IManager
   onSimulationStop()
   : void 
   {
+
+    this._m_state = ST_SIM_SATE.kStopped;
+
     this._m_actors.forEach
     (
       function(_actor : IActor)
@@ -251,7 +286,9 @@ implements IManager
         return;
       }
     );
+
     return;
+
   }
 
   /**
@@ -303,12 +340,29 @@ implements IManager
   }
 
   /**
+   * Get the actual simulation state. Available states:
+   * 
+   * * Stopped: The simulation is stopped.
+   * * Running: The simulation is running.
+   * * Paused: The simulation is paused.
+   */
+  getState()
+  : ST_SIM_SATE
+  {
+
+    return this._m_state;
+
+  }
+
+  /**
    * Destroy all Actors in this Managers.
    */
   destroy()
   : void 
   {
+
     this.clear();    
+    
     this._m_actors = null;
 
     return;
@@ -371,5 +425,10 @@ implements IManager
   /**
    * Table of actors in this simulation manager.
    */
-  private _m_actors : Map<string, IActor>;  
+  private _m_actors : Map<string, IActor>;
+
+  /**
+   * The state of the simulation manager.
+   */
+  private _m_state: ST_SIM_SATE;
 }

@@ -32,6 +32,15 @@ export interface IForce
   : void;
 
   /**
+   * Updates the debugging logic. Called only when the debugging feature is 
+   * enable.
+   * 
+   * @param _dt delta time in seconds.
+   */
+  updateDebug(_dt : number)
+  : void;
+
+  /**
    * Called when the debug feature had been enable.
    */
   onDebugEnable()
@@ -42,6 +51,24 @@ export interface IForce
    */
   onDebugDisable()
   : void;
+
+  /**
+   * Get the type of this force.
+   */
+  getType()
+  : number;
+
+  /**
+   * Get the max magnitude of this force.
+   */
+  getMaxMagnitude()
+  : number;
+
+  /**
+   * Get the actual force of this force.
+   */
+  getActualForce()
+  : number;
 
   /**
    * Safely destroys this force.
