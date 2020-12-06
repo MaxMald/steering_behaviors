@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.4" tiledversion="1.4.2" orientation="orthogonal" renderorder="right-down" width="64" height="48" tilewidth="16" tileheight="16" infinite="0" nextlayerid="4" nextobjectid="6">
+<map version="1.4" tiledversion="1.4.2" orientation="orthogonal" renderorder="right-down" width="64" height="48" tilewidth="16" tileheight="16" infinite="0" nextlayerid="5" nextobjectid="13">
  <editorsettings>
-  <export target="ambience_01.json" format="json"/>
+  <export target="simulation_ui.json" format="json"/>
  </editorsettings>
  <tileset firstgid="1" name="space_art" tilewidth="1024" tileheight="768" tilecount="18" columns="0">
   <grid orientation="orthogonal" width="1" height="1"/>
@@ -60,18 +60,46 @@
    <image width="42" height="42" source="../images/game_art/yes_hover.png"/>
   </tile>
  </tileset>
- <objectgroup id="2" name="background">
-  <object id="1" gid="1" x="0" y="768" width="1024" height="768"/>
- </objectgroup>
- <objectgroup id="3" name="backProps">
-  <object id="2" type="image" gid="2" x="698.089" y="657.298" width="207" height="198">
+ <objectgroup id="3" name="SimulationButtons">
+  <object id="6" name="simStop" type="uiImageButton" gid="17" x="404" y="63.3333" width="42" height="42">
    <properties>
-    <property name="frame" value="planetAsset 2.png"/>
+    <property name="frame" value="stop_but_normal.png"/>
+    <property name="frame_hover" value="stop_but_hover.png"/>
+    <property name="frame_press" value="stop_but_press.png"/>
+    <property name="texture" value="game_art"/>
    </properties>
   </object>
-  <object id="3" type="image" gid="9" x="693.76" y="466.984" width="153" height="149.772" rotation="282.475">
+  <object id="7" name="simPlay" type="uiImageButton" gid="16" x="468" y="63.3333" width="42" height="42">
    <properties>
-    <property name="frame" value="planetAsset 11.png"/>
+    <property name="frame" value="play_but_normal.png"/>
+    <property name="frame_hover" value="play_but_hover.png"/>
+    <property name="frame_press" value="play_but_press.png"/>
+    <property name="texture" value="game_art"/>
+   </properties>
+  </object>
+  <object id="8" name="simPause" type="uiImageButton" gid="15" x="532" y="63.3333" width="42" height="42">
+   <properties>
+    <property name="frame" value="pause_but_normal.png"/>
+    <property name="frame_hover" value="pause_but_hover.png"/>
+    <property name="frame_press" value="pause_but_press.png"/>
+    <property name="texture" value="game_art"/>
+   </properties>
+  </object>
+  <object id="9" name="simDebug" type="uiImageButton" gid="11" x="596" y="63.3333" width="42" height="42">
+   <properties>
+    <property name="frame" value="debug_idle.png"/>
+    <property name="frame_hover" value="debug_hover.png"/>
+    <property name="frame_press" value="debug_press.png"/>
+    <property name="texture" value="game_art"/>
+   </properties>
+  </object>
+ </objectgroup>
+ <objectgroup id="4" name="SceneButtons">
+  <object id="12" name="menuButton" type="uiImageButton" gid="12" x="964.667" y="65.3333" width="42" height="42">
+   <properties>
+    <property name="frame" value="home_idle.png"/>
+    <property name="frame_hover" value="home_hover.png"/>
+    <property name="frame_press" value="home_press.png"/>
     <property name="texture" value="game_art"/>
    </properties>
   </object>

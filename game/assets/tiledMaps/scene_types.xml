@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objecttypes>
+ <objecttype name="image" color="#a0a0a4">
+  <property name="frame" type="string"/>
+  <property name="frame_idx" type="int" default="0"/>
+  <property name="texture" type="string" default="game_art"/>
+ </objecttype>
+ <objecttype name="sprite" color="#a0a0a4">
+  <property name="animation" type="string"/>
+  <property name="frame" type="string"/>
+  <property name="frame_idx" type="int" default="0"/>
+  <property name="texture" type="string" default="game_art"/>
+ </objecttype>
+ <objecttype name="uiImageButton" color="#a0a0a4">
+  <property name="frame" type="string"/>
+  <property name="frame_hover" type="string"/>
+  <property name="frame_hover_idx" type="int" default="0"/>
+  <property name="frame_idx" type="int" default="0"/>
+  <property name="frame_press" type="string"/>
+  <property name="frame_press_idx" type="int" default="0"/>
+  <property name="texture" type="string"/>
+ </objecttype>
+</objecttypes>
