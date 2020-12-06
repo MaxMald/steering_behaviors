@@ -208,36 +208,22 @@
                  "y":63.3333
                 }, 
                 {
-                 "height":19,
-                 "id":14,
+                 "gid":21,
+                 "height":23,
+                 "id":17,
                  "name":"",
                  "properties":[
                         {
-                         "name":"font_color",
-                         "type":"color",
-                         "value":"#ffff0000"
-                        }, 
-                        {
-                         "name":"font_key",
+                         "name":"init_value",
                          "type":"string",
-                         "value":"supercomputer"
-                        }, 
-                        {
-                         "name":"font_size",
-                         "type":"int",
-                         "value":16
+                         "value":""
                         }],
                  "rotation":0,
-                 "text":
-                    {
-                     "text":"Hello World",
-                     "wrap":true
-                    },
-                 "type":"uiLabel",
+                 "type":"uiComboBox",
                  "visible":true,
-                 "width":83,
-                 "x":405.833333333333,
-                 "y":74.5
+                 "width":177,
+                 "x":407.333333333333,
+                 "y":96.6666666666667
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -305,7 +291,7 @@
          "y":0
         }],
  "nextlayerid":5,
- "nextobjectid":16,
+ "nextobjectid":18,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.4.2",
@@ -323,7 +309,7 @@
          "margin":0,
          "name":"space_art",
          "spacing":0,
-         "tilecount":18,
+         "tilecount":21,
          "tileheight":768,
          "tiles":[
                 {
@@ -433,6 +419,24 @@
                  "image":"..\/images\/game_art\/yes_hover.png",
                  "imageheight":42,
                  "imagewidth":42
+                }, 
+                {
+                 "id":18,
+                 "image":"..\/images\/game_art\/slider_bg.png",
+                 "imageheight":23,
+                 "imagewidth":207
+                }, 
+                {
+                 "id":19,
+                 "image":"..\/images\/game_art\/velocimetro_bg.png",
+                 "imageheight":125,
+                 "imagewidth":211
+                }, 
+                {
+                 "id":20,
+                 "image":"..\/images\/game_art\/text_box.png",
+                 "imageheight":23,
+                 "imagewidth":177
                 }],
          "tilewidth":1024
         }],

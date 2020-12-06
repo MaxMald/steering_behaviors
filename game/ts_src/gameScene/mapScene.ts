@@ -8,7 +8,7 @@
  * @since December-05-2020
  */
 
-import { Ty_Image, Ty_TiledObject } from "../commons/stTypes";
+import { Ty_TiledObject } from "../commons/stTypes";
 import { TiledMapFactory } from "../factories/tiledMapFactory";
 
  /**
@@ -44,6 +44,8 @@ export class MapScene
     hFactories.set("uiImageButton", TiledMapFactory.CreateUIButtonImage);
     hFactories.set("bitmapText", TiledMapFactory.CreateBitmapText);
     hFactories.set("uiLabel", TiledMapFactory.CreateUILabel);
+    hFactories.set("uiSlider", TiledMapFactory.CreateUISlider);
+    hFactories.set("uiComboBox", TiledMapFactory.CreateUIComboBox);
 
     /****************************************************/
     /* Scene Instance                                   */

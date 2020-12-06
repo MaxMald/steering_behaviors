@@ -11,8 +11,10 @@
 
 import { Ty_TiledObject } from "../commons/stTypes";
 import { UIButtonImg } from "../managers/uiManager/uiButtonImg";
+import { UIComboBox } from "../managers/uiManager/uiComboBox";
 import { UILabel } from "../managers/uiManager/uiLabel";
 import { UIObject } from "../managers/uiManager/uiObject";
+import { UISlider } from "../managers/uiManager/uiSlider";
 
 /**
  * Provides functions to create phaser game objects from custom TileMap objects.
@@ -195,6 +197,56 @@ export class TiledMapFactory
     }
 
     return sprite;
+
+  }
+
+  static CreateUIComboBox
+  (
+    _object: Ty_TiledObject,
+    _scene: Phaser.Scene
+  )
+  : UIComboBox
+  {
+
+    // Get custom properties.
+
+    const hProperties = TiledMapFactory.CreatePropertiesMap(_object.properties);
+
+    const comboBox = new UIComboBox
+    (
+      _object.x,
+      _object.y - _object.height * 0.5,
+      _scene
+    );
+
+    comboBox.setSelection(hProperties.get("init_value").value);
+
+    return comboBox;
+
+  }
+
+  static CreateUISlider
+  (
+    _object: Ty_TiledObject,
+    _scene: Phaser.Scene
+  )
+  : UISlider
+  {
+
+    // Get custom properties.
+
+    const hProperties = TiledMapFactory.CreatePropertiesMap(_object.properties);
+
+    const slider = new UISlider
+    (
+      _object.x + _object.width * 0.5,
+      _object.y - _object.height * 0.5,
+      _scene,
+      hProperties.get("min_value").value,
+      hProperties.get("max_value").value
+    );
+
+    return slider;
 
   }
 

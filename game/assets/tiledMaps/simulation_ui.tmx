@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.4" tiledversion="1.4.2" orientation="orthogonal" renderorder="right-down" width="64" height="48" tilewidth="16" tileheight="16" infinite="0" nextlayerid="5" nextobjectid="16">
+<map version="1.4" tiledversion="1.4.2" orientation="orthogonal" renderorder="right-down" width="64" height="48" tilewidth="16" tileheight="16" infinite="0" nextlayerid="5" nextobjectid="18">
  <editorsettings>
   <export target="simulation_ui.json" format="json"/>
  </editorsettings>
- <tileset firstgid="1" name="space_art" tilewidth="1024" tileheight="768" tilecount="18" columns="0">
+ <tileset firstgid="1" name="space_art" tilewidth="1024" tileheight="768" tilecount="21" columns="0">
   <grid orientation="orthogonal" width="1" height="1"/>
   <tile id="0">
    <image width="1024" height="768" source="../images/bg_space_01.png"/>
@@ -59,6 +59,15 @@
   <tile id="17">
    <image width="42" height="42" source="../images/game_art/yes_hover.png"/>
   </tile>
+  <tile id="18">
+   <image width="207" height="23" source="../images/game_art/slider_bg.png"/>
+  </tile>
+  <tile id="19">
+   <image width="211" height="125" source="../images/game_art/velocimetro_bg.png"/>
+  </tile>
+  <tile id="20">
+   <image width="177" height="23" source="../images/game_art/text_box.png"/>
+  </tile>
  </tileset>
  <objectgroup id="3" name="SimulationButtons">
   <object id="6" name="simStop" type="uiImageButton" gid="17" x="404" y="63.3333" width="42" height="42">
@@ -93,13 +102,7 @@
     <property name="texture" value="game_art"/>
    </properties>
   </object>
-  <object id="14" type="uiLabel" x="405.833" y="74.5" width="83" height="19">
-   <properties>
-    <property name="font_color" type="color" value="#ffff0000"/>
-    <property name="font_key" value="supercomputer"/>
-   </properties>
-   <text wrap="1">Hello World</text>
-  </object>
+  <object id="17" type="uiComboBox" gid="21" x="407.333" y="96.6667" width="177" height="23"/>
  </objectgroup>
  <objectgroup id="4" name="SceneButtons">
   <object id="12" name="menuButton" type="uiImageButton" gid="12" x="964.667" y="65.3333" width="42" height="42">
