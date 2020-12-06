@@ -47,6 +47,8 @@ export class MapScene
     hFactories.set("uiSlider", TiledMapFactory.CreateUISlider);
     hFactories.set("uiComboBox", TiledMapFactory.CreateUIComboBox);
     hFactories.set("uiSpeedometer", TiledMapFactory.CreateSpeedometer);
+    hFactories.set("rectangle", TiledMapFactory.CreateRectangle);
+    hFactories.set("point", TiledMapFactory.CreatePoint);
 
     /****************************************************/
     /* Scene Instance                                   */

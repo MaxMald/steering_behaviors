@@ -9,6 +9,8 @@
  * @since December-04-2020
  */
 
+import { STPoint } from "../commons/stPoint";
+import { STRectangle } from "../commons/stRectangle";
 import { Ty_TiledObject } from "../commons/stTypes";
 import { UIButtonImg } from "../managers/uiManager/uiButtonImg";
 import { UIComboBox } from "../managers/uiManager/uiComboBox";
@@ -26,6 +28,52 @@ export class TiledMapFactory
   /****************************************************/
   /* Public                                           */
   /****************************************************/
+
+  /**
+   * Create a ST Rectangle object
+   * 
+   * @param _object Tiled object. 
+   * @param _scene Phaser scene.
+   */
+  static CreateRectangle
+  (
+    _object: Ty_TiledObject,
+    _scene: Phaser.Scene
+  )
+  : STRectangle
+  {
+
+    return new STRectangle
+    (
+      _object.x,
+      _object.y,
+      _object.width,
+      _object.height
+    );
+
+  }
+
+  /**
+   * Create a ST Rectangle object
+   * 
+   * @param _object Tiled object. 
+   * @param _scene Phaser scene.
+   */
+  static CreatePoint
+  (
+    _object: Ty_TiledObject,
+    _scene: Phaser.Scene
+  )
+  : STPoint
+  {
+
+    return new STPoint
+    (
+      _object.x,
+      _object.y
+    );
+
+  }
 
   /**
    * Creates a phaser Bitmap Text game object, from a tiled object. Returns the phaser

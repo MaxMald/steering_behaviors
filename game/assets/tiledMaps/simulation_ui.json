@@ -60,8 +60,8 @@
                  "type":"uiImageButton",
                  "visible":true,
                  "width":42,
-                 "x":404,
-                 "y":63.3333
+                 "x":640,
+                 "y":64
                 }, 
                 {
                  "gid":16,
@@ -108,8 +108,8 @@
                  "type":"uiImageButton",
                  "visible":true,
                  "width":42,
-                 "x":468,
-                 "y":63.3333
+                 "x":704,
+                 "y":64
                 }, 
                 {
                  "gid":15,
@@ -156,8 +156,8 @@
                  "type":"uiImageButton",
                  "visible":true,
                  "width":42,
-                 "x":532,
-                 "y":63.3333
+                 "x":768,
+                 "y":64
                 }, 
                 {
                  "gid":11,
@@ -204,8 +204,8 @@
                  "type":"uiImageButton",
                  "visible":true,
                  "width":42,
-                 "x":596,
-                 "y":63.3333
+                 "x":832,
+                 "y":64
                 }, 
                 {
                  "gid":21,
@@ -216,8 +216,8 @@
                  "type":"uiComboBox",
                  "visible":true,
                  "width":177,
-                 "x":425.333333333333,
-                 "y":450.666666666667
+                 "x":30.3333333333334,
+                 "y":234.333333333333
                 }, 
                 {
                  "gid":20,
@@ -228,8 +228,8 @@
                  "type":"uiSpeedometer",
                  "visible":true,
                  "width":211,
-                 "x":405,
-                 "y":274
+                 "x":25,
+                 "y":196
                 }, 
                 {
                  "height":19,
@@ -239,7 +239,7 @@
                         {
                          "name":"font_color",
                          "type":"color",
-                         "value":"#ff000000"
+                         "value":"#ffa7edeb"
                         }, 
                         {
                          "name":"font_key",
@@ -254,15 +254,16 @@
                  "rotation":0,
                  "text":
                     {
+                     "color":"#a7edeb",
                      "fontfamily":"Odin Rounded",
                      "text":"Mass",
                      "wrap":true
                     },
-                 "type":"bitmapText",
+                 "type":"uiLabel",
                  "visible":true,
                  "width":83,
-                 "x":424.5,
-                 "y":358.833333333333
+                 "x":260.5,
+                 "y":147.5
                 }, 
                 {
                  "gid":19,
@@ -273,19 +274,19 @@
                         {
                          "name":"max_value",
                          "type":"float",
-                         "value":0
+                         "value":300
                         }, 
                         {
                          "name":"min_value",
                          "type":"float",
-                         "value":0
+                         "value":1
                         }],
                  "rotation":0,
                  "type":"uiSlider",
                  "visible":true,
                  "width":207,
-                 "x":422,
-                 "y":403.333333333333
+                 "x":258,
+                 "y":192
                 }, 
                 {
                  "height":19,
@@ -295,7 +296,7 @@
                         {
                          "name":"font_color",
                          "type":"color",
-                         "value":"#ff000000"
+                         "value":"#ffa7edeb"
                         }, 
                         {
                          "name":"font_key",
@@ -310,15 +311,16 @@
                  "rotation":0,
                  "text":
                     {
+                     "color":"#a7edeb",
                      "fontfamily":"Odin Rounded",
                      "text":"Max Speed",
                      "wrap":true
                     },
-                 "type":"bitmapText",
+                 "type":"uiLabel",
                  "visible":true,
                  "width":83,
-                 "x":423,
-                 "y":313.583333333333
+                 "x":259,
+                 "y":102.25
                 }, 
                 {
                  "gid":19,
@@ -329,19 +331,99 @@
                         {
                          "name":"max_value",
                          "type":"float",
-                         "value":0
+                         "value":300
                         }, 
                         {
                          "name":"min_value",
                          "type":"float",
-                         "value":0
+                         "value":1
                         }],
                  "rotation":0,
                  "type":"uiSlider",
                  "visible":true,
                  "width":207,
-                 "x":420.5,
-                 "y":358.083333333333
+                 "x":256.5,
+                 "y":146.75
+                }, 
+                {
+                 "height":19,
+                 "id":23,
+                 "name":"speed_label",
+                 "properties":[
+                        {
+                         "name":"font_color",
+                         "type":"color",
+                         "value":"#ffa7edeb"
+                        }, 
+                        {
+                         "name":"font_key",
+                         "type":"string",
+                         "value":"odin_rounded"
+                        }, 
+                        {
+                         "name":"font_size",
+                         "type":"int",
+                         "value":16
+                        }],
+                 "rotation":0,
+                 "text":
+                    {
+                     "color":"#a7edeb",
+                     "fontfamily":"Odin Rounded",
+                     "text":"Speed",
+                     "wrap":true
+                    },
+                 "type":"uiLabel",
+                 "visible":true,
+                 "width":83,
+                 "x":257.5,
+                 "y":78
+                }, 
+                {
+                 "height":38,
+                 "id":24,
+                 "name":"ship_name",
+                 "properties":[
+                        {
+                         "name":"font_color",
+                         "type":"color",
+                         "value":"#ffffe033"
+                        }, 
+                        {
+                         "name":"font_key",
+                         "type":"string",
+                         "value":"odin_rounded"
+                        }, 
+                        {
+                         "name":"font_size",
+                         "type":"int",
+                         "value":32
+                        }],
+                 "rotation":0,
+                 "text":
+                    {
+                     "color":"#ffe033",
+                     "fontfamily":"Odin Rounded",
+                     "pixelsize":32,
+                     "text":"Ship Name",
+                     "wrap":true
+                    },
+                 "type":"uiLabel",
+                 "visible":true,
+                 "width":169,
+                 "x":35.1666666666666,
+                 "y":20.8333333333333
+                }, 
+                {
+                 "height":27,
+                 "id":25,
+                 "name":"force_area",
+                 "rotation":0,
+                 "type":"rectangle",
+                 "visible":true,
+                 "width":207.5,
+                 "x":31.3333333333333,
+                 "y":241.333333333333
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -409,7 +491,7 @@
          "y":0
         }],
  "nextlayerid":5,
- "nextobjectid":23,
+ "nextobjectid":26,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.4.2",

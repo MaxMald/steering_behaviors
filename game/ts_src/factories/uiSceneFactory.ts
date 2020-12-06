@@ -35,12 +35,7 @@ export class SceneUIFactory
     ///////////////////////////////////
     // Force Manager
 
-    const uiForceController = new UIForceController
-    (
-      20,
-      20,
-      _scene
-    );
+    const uiForceController = new UIForceController(uiMap,_scene);
 
     _uiManager.addUIController("forceUI", uiForceController);
 
