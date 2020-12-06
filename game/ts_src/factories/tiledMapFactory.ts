@@ -15,6 +15,7 @@ import { UIComboBox } from "../managers/uiManager/uiComboBox";
 import { UILabel } from "../managers/uiManager/uiLabel";
 import { UIObject } from "../managers/uiManager/uiObject";
 import { UISlider } from "../managers/uiManager/uiSlider";
+import { UISpeedometer } from "../managers/uiManager/uiSpeedometer";
 
 /**
  * Provides functions to create phaser game objects from custom TileMap objects.
@@ -200,6 +201,25 @@ export class TiledMapFactory
 
   }
 
+  static CreateSpeedometer
+  (
+    _object: Ty_TiledObject,
+    _scene: Phaser.Scene
+  )
+  : UISpeedometer
+  {
+
+    const speedometer = new UISpeedometer
+    (
+      _object.x + _object.width * 0.5,
+      _object.y - _object.height * 0.5,
+      _scene
+    );
+
+    return speedometer;
+
+  }
+
   static CreateUIComboBox
   (
     _object: Ty_TiledObject,
@@ -207,19 +227,12 @@ export class TiledMapFactory
   )
   : UIComboBox
   {
-
-    // Get custom properties.
-
-    const hProperties = TiledMapFactory.CreatePropertiesMap(_object.properties);
-
     const comboBox = new UIComboBox
     (
       _object.x,
       _object.y - _object.height * 0.5,
       _scene
     );
-
-    comboBox.setSelection(hProperties.get("init_value").value);
 
     return comboBox;
 

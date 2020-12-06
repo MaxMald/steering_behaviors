@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.4" tiledversion="1.4.2" orientation="orthogonal" renderorder="right-down" width="64" height="48" tilewidth="16" tileheight="16" infinite="0" nextlayerid="5" nextobjectid="18">
+<map version="1.4" tiledversion="1.4.2" orientation="orthogonal" renderorder="right-down" width="64" height="48" tilewidth="16" tileheight="16" infinite="0" nextlayerid="5" nextobjectid="23">
  <editorsettings>
   <export target="simulation_ui.json" format="json"/>
  </editorsettings>
@@ -102,7 +102,22 @@
     <property name="texture" value="game_art"/>
    </properties>
   </object>
-  <object id="17" type="uiComboBox" gid="21" x="407.333" y="96.6667" width="177" height="23"/>
+  <object id="17" name="forceComboBox" type="uiComboBox" gid="21" x="425.333" y="450.667" width="177" height="23"/>
+  <object id="18" name="speedometer" type="uiSpeedometer" gid="20" x="405" y="274" width="211" height="125"/>
+  <object id="19" name="mass_label" type="bitmapText" x="424.5" y="358.833" width="83" height="19">
+   <properties>
+    <property name="font_key" value="odin_rounded"/>
+   </properties>
+   <text fontfamily="Odin Rounded" wrap="1">Mass</text>
+  </object>
+  <object id="20" name="mass_slider" type="uiSlider" gid="19" x="422" y="403.333" width="207" height="23"/>
+  <object id="21" name="maxSpeed_label" type="bitmapText" x="423" y="313.583" width="83" height="19">
+   <properties>
+    <property name="font_key" value="odin_rounded"/>
+   </properties>
+   <text fontfamily="Odin Rounded" wrap="1">Max Speed</text>
+  </object>
+  <object id="22" name="maxSpeed_slider" type="uiSlider" gid="19" x="420.5" y="358.083" width="207" height="23"/>
  </objectgroup>
  <objectgroup id="4" name="SceneButtons">
   <object id="12" name="menuButton" type="uiImageButton" gid="12" x="964.667" y="65.3333" width="42" height="42">

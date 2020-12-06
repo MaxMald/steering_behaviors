@@ -211,19 +211,137 @@
                  "gid":21,
                  "height":23,
                  "id":17,
-                 "name":"",
-                 "properties":[
-                        {
-                         "name":"init_value",
-                         "type":"string",
-                         "value":""
-                        }],
+                 "name":"forceComboBox",
                  "rotation":0,
                  "type":"uiComboBox",
                  "visible":true,
                  "width":177,
-                 "x":407.333333333333,
-                 "y":96.6666666666667
+                 "x":425.333333333333,
+                 "y":450.666666666667
+                }, 
+                {
+                 "gid":20,
+                 "height":125,
+                 "id":18,
+                 "name":"speedometer",
+                 "rotation":0,
+                 "type":"uiSpeedometer",
+                 "visible":true,
+                 "width":211,
+                 "x":405,
+                 "y":274
+                }, 
+                {
+                 "height":19,
+                 "id":19,
+                 "name":"mass_label",
+                 "properties":[
+                        {
+                         "name":"font_color",
+                         "type":"color",
+                         "value":"#ff000000"
+                        }, 
+                        {
+                         "name":"font_key",
+                         "type":"string",
+                         "value":"odin_rounded"
+                        }, 
+                        {
+                         "name":"font_size",
+                         "type":"int",
+                         "value":16
+                        }],
+                 "rotation":0,
+                 "text":
+                    {
+                     "fontfamily":"Odin Rounded",
+                     "text":"Mass",
+                     "wrap":true
+                    },
+                 "type":"bitmapText",
+                 "visible":true,
+                 "width":83,
+                 "x":424.5,
+                 "y":358.833333333333
+                }, 
+                {
+                 "gid":19,
+                 "height":23,
+                 "id":20,
+                 "name":"mass_slider",
+                 "properties":[
+                        {
+                         "name":"max_value",
+                         "type":"float",
+                         "value":0
+                        }, 
+                        {
+                         "name":"min_value",
+                         "type":"float",
+                         "value":0
+                        }],
+                 "rotation":0,
+                 "type":"uiSlider",
+                 "visible":true,
+                 "width":207,
+                 "x":422,
+                 "y":403.333333333333
+                }, 
+                {
+                 "height":19,
+                 "id":21,
+                 "name":"maxSpeed_label",
+                 "properties":[
+                        {
+                         "name":"font_color",
+                         "type":"color",
+                         "value":"#ff000000"
+                        }, 
+                        {
+                         "name":"font_key",
+                         "type":"string",
+                         "value":"odin_rounded"
+                        }, 
+                        {
+                         "name":"font_size",
+                         "type":"int",
+                         "value":16
+                        }],
+                 "rotation":0,
+                 "text":
+                    {
+                     "fontfamily":"Odin Rounded",
+                     "text":"Max Speed",
+                     "wrap":true
+                    },
+                 "type":"bitmapText",
+                 "visible":true,
+                 "width":83,
+                 "x":423,
+                 "y":313.583333333333
+                }, 
+                {
+                 "gid":19,
+                 "height":23,
+                 "id":22,
+                 "name":"maxSpeed_slider",
+                 "properties":[
+                        {
+                         "name":"max_value",
+                         "type":"float",
+                         "value":0
+                        }, 
+                        {
+                         "name":"min_value",
+                         "type":"float",
+                         "value":0
+                        }],
+                 "rotation":0,
+                 "type":"uiSlider",
+                 "visible":true,
+                 "width":207,
+                 "x":420.5,
+                 "y":358.083333333333
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -291,7 +409,7 @@
          "y":0
         }],
  "nextlayerid":5,
- "nextobjectid":18,
+ "nextobjectid":23,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.4.2",
