@@ -13,6 +13,7 @@ import { Ty_Sprite } from "../../commons/stTypes";
 import { CmpForceController } from "../../components/cmpforceController";
 import { AmbienceFactory } from "../../factories/ambienceFactory";
 import { ShipFactory } from "../../factories/shipFactory";
+import { SceneUIFactory } from "../../factories/uiSceneFactory";
 import { SimulationManager } from "../../managers/simulationManager/simulationManager";
 import { UIForceController } from "../../managers/uiManager/uiControllers/UIForceController";
 import { UIMessageBox } from "../../managers/uiManager/uiControllers/UIMessageBox";
@@ -130,47 +131,17 @@ import { SeekForce } from "../../steeringBehavior/forceSeek";
 
      blueShipFController.addForce("Follow Path", followPath);
 
-     /****************************************************/
+    /****************************************************/
      /* UI                                               */
-     /****************************************************/
-
-    const uiForceController = new UIForceController
-    (
-      20,
-      20,
-      this
-    );
-
-    const uiMessageBox = UIMessageBox.CreateYesNo
-    (
-      400,
-      200,
-      this,
-      "Hello World",
-      "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.",
-      function(_buttonKey)
-      {
-        return;
-      },
-      this
-    );
-
-    const uiSimController = UISimulationController.CreateSimControlBox
-    (
-      hWidth,
-      20,
-      this
-    );
-
-    // Add UI force controller to the UI Manager.
-
+     /****************************************************/    
+    
+    // Get UI Manager
+    
     const uiManager = master.getManager<UIManager>(ST_MANAGER_ID.kUIManager);
 
-    uiManager.addUIController("forceUI", uiForceController);
+    // Create the Simulation Map Scene
 
-    uiManager.addUIController("messageBox", uiMessageBox);
-
-    uiManager.addUIController("mediaSimUI", uiSimController);
+    SceneUIFactory.CreateSimulationUIScene("simulation_ui", this, uiManager);
 
     // Set the active actor of the UI Manager.
 

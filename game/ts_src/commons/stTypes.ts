@@ -7,6 +7,8 @@ export type Ty_Image = Phaser.GameObjects.Image;
 
 export type Ty_Text = Phaser.GameObjects.Text;
 
+export type Ty_TiledObject = Phaser.Types.Tilemaps.TiledObject;
+
 ///////////////////////////////////
 // Math
 

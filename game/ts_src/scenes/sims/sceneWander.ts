@@ -14,6 +14,7 @@ import { Ty_Sprite, V2 } from "../../commons/stTypes";
 import { CmpForceController } from "../../components/cmpforceController";
 import { CmpSpriteController } from "../../components/cmpSpriteController";
 import { ShipFactory } from "../../factories/shipFactory";
+import { SceneUIFactory } from "../../factories/uiSceneFactory";
 import { SimulationManager } from "../../managers/simulationManager/simulationManager";
 import { UIButton } from "../../managers/uiManager/uiButton";
 import { UIForceController } from "../../managers/uiManager/uiControllers/UIForceController";
@@ -57,65 +58,7 @@ extends Phaser.Scene
     let canvas = this.game.canvas;
   
     let width : number = canvas.width;
-    let height : number = canvas.height;
-
-        ///////////////////////////////////
-    // Create scene buttons
-
-    let mainMenuButton : UIButton = UIButton.CreateColorButton
-    (
-      width * 0.1,
-      height * 0.9,
-      this,
-      'Main menu',
-      0x2272F1
-    );
-
-    mainMenuButton.subscribe
-    (
-      "buttonReleased",
-      "button",
-      function(_sender : UIObject, _args)
-      {
-
-        const button = _sender as UIButton;
-
-        master.onSimulationSceneDestroy(this);
-    
-        this.scene.start('main_menu');
-      },
-      this
-    );
-
-    let debugButton : UIButton = UIButton.CreateColorButton
-    (
-      width * 0.9,
-      height * 0.9,
-      this,
-      'Debug',
-      0x9000ff
-    );
-
-    debugButton.subscribe
-    (
-      "buttonReleased",
-      "button",
-      function(_sender : UIObject, _args)
-      {
-
-        const button = _sender as UIButton;
-
-        if(master.isDebugEnable())
-        {
-          master.disableDebugging();
-        }
-        else
-        {
-          master.enableDebugging();
-        }
-      },
-      this
-    );
+    let height : number = canvas.height;    
     
     ///////////////////////////////////
     // Create SpaceShip Actor
@@ -163,33 +106,20 @@ extends Phaser.Scene
 
     shipController.addForce('wander_1', wander);
 
-    ///////////////////////////////////
-    // UI
-
-    const uiForceController = new UIForceController
-     (
-       20,
-       20,
-       this
-     );
-
-    const uiSimController = UISimulationController.CreateSimControlBox
-    (
-      width * 0.5,
-      20,
-      this
-    );
+    /****************************************************/
+    /* UI                                               */
+    /****************************************************/    
     
-    // Add UI force controller to the UI Manager.
+    // Get UI Manager
     
     const uiManager = master.getManager<UIManager>(ST_MANAGER_ID.kUIManager);
 
-    uiManager.addUIController("forceUI", uiForceController);
-    
-    uiManager.addUIController("mediaSimUI", uiSimController);
-    
+    // Create the Simulation Map Scene
+
+    SceneUIFactory.CreateSimulationUIScene("simulation_ui", this, uiManager);
+
     // Set the active actor of the UI Manager.
-    
+
     uiManager.setTarget(shipActor);
     
     ///////////////////////////////////

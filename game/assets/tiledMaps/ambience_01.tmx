@@ -64,12 +64,12 @@
   <object id="1" gid="1" x="0" y="768" width="1024" height="768"/>
  </objectgroup>
  <objectgroup id="3" name="backProps">
-  <object id="2" type="image" gid="2" x="698.089" y="657.298" width="207" height="198">
+  <object id="2" type="image" gid="2" x="734.089" y="696.298" width="207" height="198">
    <properties>
     <property name="frame" value="planetAsset 2.png"/>
    </properties>
   </object>
-  <object id="3" type="image" gid="9" x="693.76" y="466.984" width="153" height="149.772" rotation="282.475">
+  <object id="3" type="image" gid="9" x="697.76" y="483.984" width="153" height="149.772" rotation="282.475">
    <properties>
     <property name="frame" value="planetAsset 11.png"/>
     <property name="texture" value="game_art"/>
