@@ -61,7 +61,7 @@
                  "visible":true,
                  "width":42,
                  "x":404,
-                 "y":63.3333333333333
+                 "y":63.3333
                 }, 
                 {
                  "gid":16,
@@ -109,7 +109,7 @@
                  "visible":true,
                  "width":42,
                  "x":468,
-                 "y":63.3333333333333
+                 "y":63.3333
                 }, 
                 {
                  "gid":15,
@@ -157,7 +157,7 @@
                  "visible":true,
                  "width":42,
                  "x":532,
-                 "y":63.3333333333333
+                 "y":63.3333
                 }, 
                 {
                  "gid":11,
@@ -205,7 +205,7 @@
                  "visible":true,
                  "width":42,
                  "x":596,
-                 "y":63.3333333333333
+                 "y":63.3333
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -263,8 +263,8 @@
                  "type":"uiImageButton",
                  "visible":true,
                  "width":42,
-                 "x":964.666666666667,
-                 "y":65.3333333333333
+                 "x":964.667,
+                 "y":65.3333
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -273,7 +273,7 @@
          "y":0
         }],
  "nextlayerid":5,
- "nextobjectid":13,
+ "nextobjectid":14,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.4.2",

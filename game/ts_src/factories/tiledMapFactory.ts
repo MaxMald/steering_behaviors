@@ -21,6 +21,67 @@ export class TiledMapFactory
   /****************************************************/
   /* Public                                           */
   /****************************************************/
+
+  /**
+   * Creates a phaser Bitmap Text game object, from a tiled object. Returns the phaser
+   * game object.
+   * 
+   * @param _object Tiled object. 
+   * @param _scene Phaser scene.
+   */
+  static CreateBitmapText
+  (
+    _object: Phaser.Types.Tilemaps.TiledObject,
+    _scene: Phaser.Scene
+  )
+  : Phaser.GameObjects.BitmapText
+  {
+
+    // Get properties
+
+    const hProperties = TiledMapFactory.CreatePropertiesMap(_object.properties);
+
+    // Create bitmap text
+
+    const bitmapText = _scene.add.bitmapText
+    (
+      _object.x,
+      _object.y,
+      hProperties.get("font_key").value,
+      _object.text.text,
+      hProperties.get("font_size").value
+    );
+
+    bitmapText.setOrigin(0, 0);
+
+    // Get font color.
+
+    let colorString: string = hProperties.get("font_color").value;
+
+    // Remove # character and alpha values (three first characters).
+
+    colorString = colorString.substring(3, colorString.length);    
+
+    // Convert to Hex number
+
+    const color: number = parseInt(colorString, 16);
+
+    // Set font color.
+
+    bitmapText.setTint(color)
+
+    // Text wrapping.
+
+    if(_object.text.wrap)
+    {
+
+      bitmapText.maxWidth = _object.width;
+
+    }
+
+    return bitmapText;
+    
+  }
   
   /**
    * Create a phaser image game object, from a tiled object. This function
