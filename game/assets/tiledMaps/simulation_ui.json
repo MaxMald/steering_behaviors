@@ -206,6 +206,38 @@
                  "width":42,
                  "x":596,
                  "y":63.3333
+                }, 
+                {
+                 "height":19,
+                 "id":14,
+                 "name":"",
+                 "properties":[
+                        {
+                         "name":"font_color",
+                         "type":"color",
+                         "value":"#ffff0000"
+                        }, 
+                        {
+                         "name":"font_key",
+                         "type":"string",
+                         "value":"supercomputer"
+                        }, 
+                        {
+                         "name":"font_size",
+                         "type":"int",
+                         "value":16
+                        }],
+                 "rotation":0,
+                 "text":
+                    {
+                     "text":"Hello World",
+                     "wrap":true
+                    },
+                 "type":"uiLabel",
+                 "visible":true,
+                 "width":83,
+                 "x":405.833333333333,
+                 "y":74.5
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -273,7 +305,7 @@
          "y":0
         }],
  "nextlayerid":5,
- "nextobjectid":14,
+ "nextobjectid":16,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.4.2",

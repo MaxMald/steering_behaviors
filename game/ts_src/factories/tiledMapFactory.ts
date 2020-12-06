@@ -9,7 +9,9 @@
  * @since December-04-2020
  */
 
+import { Ty_TiledObject } from "../commons/stTypes";
 import { UIButtonImg } from "../managers/uiManager/uiButtonImg";
+import { UILabel } from "../managers/uiManager/uiLabel";
 import { UIObject } from "../managers/uiManager/uiObject";
 
 /**
@@ -196,13 +198,56 @@ export class TiledMapFactory
 
   }
 
+  static CreateUILabel
+  (
+    _object: Ty_TiledObject,
+    _scene: Phaser.Scene
+  )
+  : UILabel
+  {
+
+    // Get custom properties.
+
+    const hProperties = TiledMapFactory.CreatePropertiesMap(_object.properties);
+
+    // Get font color.
+
+    let colorString: string = hProperties.get("font_color").value;
+
+    // Remove # character and alpha values (three first characters).
+
+    colorString = colorString.substring(3, colorString.length);    
+
+    // Convert to Hex number
+
+    const color: number = parseInt(colorString, 16);
+
+    // Create bitmap text
+
+    const uiLabel = new UILabel
+    (
+      _object.x,
+      _object.y,
+      _scene,
+      _object.text.text,
+      hProperties.get("font_key").value,
+      hProperties.get("font_size").value,
+      color
+    );
+
+    uiLabel.setAnchor(0, 0);
+
+    return uiLabel;
+
+  }
+
   /**
    * Create an UI Button Image from a tiled object.
    * 
    * @param _object 
    * @param _scene 
    */
-  static createUIButtonImage
+  static CreateUIButtonImage
   (
     _object: Phaser.Types.Tilemaps.TiledObject,
     _scene: Phaser.Scene

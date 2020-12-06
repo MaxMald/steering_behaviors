@@ -41,8 +41,9 @@ export class MapScene
 
     hFactories.set("image", TiledMapFactory.CreateImage);
     hFactories.set("sprite", TiledMapFactory.CreateSprite);
-    hFactories.set("uiImageButton", TiledMapFactory.createUIButtonImage);
+    hFactories.set("uiImageButton", TiledMapFactory.CreateUIButtonImage);
     hFactories.set("bitmapText", TiledMapFactory.CreateBitmapText);
+    hFactories.set("uiLabel", TiledMapFactory.CreateUILabel);
 
     /****************************************************/
     /* Scene Instance                                   */

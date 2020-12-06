@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.4" tiledversion="1.4.2" orientation="orthogonal" renderorder="right-down" width="64" height="48" tilewidth="16" tileheight="16" infinite="0" nextlayerid="5" nextobjectid="14">
+<map version="1.4" tiledversion="1.4.2" orientation="orthogonal" renderorder="right-down" width="64" height="48" tilewidth="16" tileheight="16" infinite="0" nextlayerid="5" nextobjectid="16">
  <editorsettings>
   <export target="simulation_ui.json" format="json"/>
  </editorsettings>
@@ -92,6 +92,13 @@
     <property name="frame_press" value="debug_press.png"/>
     <property name="texture" value="game_art"/>
    </properties>
+  </object>
+  <object id="14" type="uiLabel" x="405.833" y="74.5" width="83" height="19">
+   <properties>
+    <property name="font_color" type="color" value="#ffff0000"/>
+    <property name="font_key" value="supercomputer"/>
+   </properties>
+   <text wrap="1">Hello World</text>
   </object>
  </objectgroup>
  <objectgroup id="4" name="SceneButtons">
