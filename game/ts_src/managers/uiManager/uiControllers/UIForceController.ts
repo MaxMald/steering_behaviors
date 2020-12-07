@@ -1,11 +1,10 @@
 import { BaseActor } from "../../../actors/baseActor";
-import { ST_COLOR_ID, ST_COMPONENT_ID, ST_STEER_FORCE } from "../../../commons/stEnums";
+import { ST_COMPONENT_ID, ST_STEER_FORCE } from "../../../commons/stEnums";
 import { Ty_Sprite } from "../../../commons/stTypes";
 import { CmpForceController } from "../../../components/cmpforceController";
 import { IForce } from "../../../steeringBehavior/iForce";
 import { UIBox } from "../uiBox/uiBox";
 import { UIComboBox } from "../uiComboBox";
-import { UIImage } from "../uiImage";
 import { UILabel } from "../uiLabel";
 import { UIObject } from "../uiObject";
 import { UISlider } from "../uiSlider";

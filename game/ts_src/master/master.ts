@@ -9,6 +9,7 @@
  */
 
 import { ST_MANAGER_ID } from "../commons/stEnums";
+import { AmbienceManager } from "../managers/ambienceManager/ambienceManager";
 import { DebugManager } from "../managers/debugManager/debugManager";
 import { IManager } from "../managers/iManager";
 import { NullManager } from "../managers/nullManager";
@@ -398,6 +399,7 @@ export class Master
     this.addManager(DebugManager.Create());
     this.addManager(SimulationManager.Create());
     this.addManager(UIManager.Create());
+    this.addManager(AmbienceManager.Create());
     
     // onPrepare Callback.
 

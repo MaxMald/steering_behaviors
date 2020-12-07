@@ -11,13 +11,10 @@
 import { ST_COMPONENT_ID, ST_MANAGER_ID, ST_MESSAGE_ID } from "../../commons/stEnums";
 import { CmpForceController } from "../../components/cmpforceController";
 import { ShipFactory } from "../../factories/shipFactory";
-import { TiledMapFactory } from "../../factories/tiledMapFactory";
 import { SceneUIFactory } from "../../factories/uiSceneFactory";
 import { MapScene } from "../../gameScene/mapScene";
+import { AmbienceManager } from "../../managers/ambienceManager/ambienceManager";
 import { SimulationManager } from "../../managers/simulationManager/simulationManager";
-import { UIForceController } from "../../managers/uiManager/uiControllers/UIForceController";
-import { UIMessageBox } from "../../managers/uiManager/uiControllers/UIMessageBox";
-import { UISimulationController } from "../../managers/uiManager/uiControllers/UISimulationController";
 import { UIManager } from "../../managers/uiManager/uiManager";
 import { Master } from "../../master/master";
 import { ForceConstant } from "../../steeringBehavior/forceConstant";
@@ -162,6 +159,17 @@ import { SeekForce } from "../../steeringBehavior/forceSeek";
      forceControl.addForce('seek_1', seek );
 
      /****************************************************/
+     /* Foreground Ambience                              */
+     /****************************************************/
+
+      const ambienceMng = master.getManager<AmbienceManager>
+      (
+        ST_MANAGER_ID.kAmbienceManager
+      );
+
+      ambienceMng.createStarDust(this);
+
+     /****************************************************/
      /* UI                                               */
      /****************************************************/    
     
@@ -180,7 +188,7 @@ import { SeekForce } from "../../steeringBehavior/forceSeek";
     ///////////////////////////////////
      // Active Debugging
  
-     this._m_master.enableDebugging();
+     this._m_master.stopSimulation();
  
      return;
    }

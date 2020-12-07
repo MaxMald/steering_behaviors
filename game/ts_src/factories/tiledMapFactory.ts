@@ -9,15 +9,19 @@
  * @since December-04-2020
  */
 
+import { ST_MANAGER_ID } from "../commons/stEnums";
 import { STPoint } from "../commons/stPoint";
 import { STRectangle } from "../commons/stRectangle";
 import { Ty_TiledObject } from "../commons/stTypes";
+import { MotionImage } from "../gameScene/motionImage";
+import { AmbienceManager } from "../managers/ambienceManager/ambienceManager";
 import { UIButtonImg } from "../managers/uiManager/uiButtonImg";
 import { UIComboBox } from "../managers/uiManager/uiComboBox";
 import { UILabel } from "../managers/uiManager/uiLabel";
 import { UIObject } from "../managers/uiManager/uiObject";
 import { UISlider } from "../managers/uiManager/uiSlider";
 import { UISpeedometer } from "../managers/uiManager/uiSpeedometer";
+import { Master } from "../master/master";
 
 /**
  * Provides functions to create phaser game objects from custom TileMap objects.
@@ -28,6 +32,81 @@ export class TiledMapFactory
   /****************************************************/
   /* Public                                           */
   /****************************************************/
+
+  static CreateMotionImage
+  (
+    _object: Ty_TiledObject,
+    _scene: Phaser.Scene
+  )
+  : MotionImage
+  {
+
+    // Get properties
+
+    const hProperties = TiledMapFactory.CreatePropertiesMap(_object.properties);
+
+    // Get Frame
+
+    let frame: string | number;
+
+    const objFrame : string = hProperties.get("frame").value;
+    const objFrameIdx : number = hProperties.get("frame_idx").value;
+
+    if(objFrame !== "")
+    {
+
+      frame = objFrame;
+
+    }
+    else
+    {
+
+      frame = objFrameIdx;
+
+    }
+
+    // Create Motion Image
+
+    const image = new MotionImage
+    (
+      _scene,
+      _object.x + _object.width * 0.5,
+      _object.y - _object.height * 0.5,
+      hProperties.get("velocity").value,
+      hProperties.get("texture").value,
+      frame
+    );
+
+    // Get font color.
+
+    let colorString: string = hProperties.get("tint").value;
+
+    // Remove # character and alpha values (three first characters).
+
+    colorString = colorString.substring(3, colorString.length);    
+
+    // Convert to Hex number
+
+    const color: number = parseInt(colorString, 16);
+
+    // Set font color.
+
+    image.setTint(color)
+
+    // Add image to ambience manager.
+
+    const master = Master.GetInstance();
+
+    const ambience = master.getManager<AmbienceManager>
+    (
+      ST_MANAGER_ID.kAmbienceManager
+    );
+
+    ambience.addObject(image);
+
+    return image;
+
+  }
 
   /**
    * Create a ST Rectangle object
@@ -121,7 +200,7 @@ export class TiledMapFactory
 
     // Set font color.
 
-    bitmapText.setTint(color)
+    bitmapText.setTint(color);
 
     // Text wrapping.
 

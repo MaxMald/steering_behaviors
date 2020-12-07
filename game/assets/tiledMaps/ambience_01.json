@@ -20,8 +20,24 @@
                  "height":768,
                  "id":1,
                  "name":"",
+                 "properties":[
+                        {
+                         "name":"frame",
+                         "type":"string",
+                         "value":""
+                        }, 
+                        {
+                         "name":"frame_idx",
+                         "type":"int",
+                         "value":0
+                        }, 
+                        {
+                         "name":"texture",
+                         "type":"string",
+                         "value":"bg_space_01"
+                        }],
                  "rotation":0,
-                 "type":"",
+                 "type":"image",
                  "visible":true,
                  "width":1024,
                  "x":0,
@@ -35,13 +51,242 @@
         }, 
         {
          "draworder":"topdown",
-         "id":3,
-         "name":"backProps",
+         "id":4,
+         "name":"layerC",
          "objects":[
+                {
+                 "gid":20,
+                 "height":326,
+                 "id":18,
+                 "name":"",
+                 "properties":[
+                        {
+                         "name":"frame",
+                         "type":"string",
+                         "value":"clouds_2.png"
+                        }, 
+                        {
+                         "name":"frame_idx",
+                         "type":"int",
+                         "value":0
+                        }, 
+                        {
+                         "name":"texture",
+                         "type":"string",
+                         "value":"game_art"
+                        }, 
+                        {
+                         "name":"tint",
+                         "type":"color",
+                         "value":"#ffffffff"
+                        }, 
+                        {
+                         "name":"velocity",
+                         "type":"float",
+                         "value":-10
+                        }],
+                 "rotation":0,
+                 "type":"motionImage",
+                 "visible":true,
+                 "width":512,
+                 "x":0,
+                 "y":416
+                }, 
+                {
+                 "gid":20,
+                 "height":326,
+                 "id":22,
+                 "name":"",
+                 "properties":[
+                        {
+                         "name":"frame",
+                         "type":"string",
+                         "value":"clouds_2.png"
+                        }, 
+                        {
+                         "name":"frame_idx",
+                         "type":"int",
+                         "value":0
+                        }, 
+                        {
+                         "name":"texture",
+                         "type":"string",
+                         "value":"game_art"
+                        }, 
+                        {
+                         "name":"tint",
+                         "type":"color",
+                         "value":"#ffffffff"
+                        }, 
+                        {
+                         "name":"velocity",
+                         "type":"float",
+                         "value":-10
+                        }],
+                 "rotation":0,
+                 "type":"motionImage",
+                 "visible":true,
+                 "width":512,
+                 "x":512,
+                 "y":416
+                }, 
+                {
+                 "gid":20,
+                 "height":326,
+                 "id":23,
+                 "name":"",
+                 "properties":[
+                        {
+                         "name":"frame",
+                         "type":"string",
+                         "value":"clouds_2.png"
+                        }, 
+                        {
+                         "name":"frame_idx",
+                         "type":"int",
+                         "value":0
+                        }, 
+                        {
+                         "name":"texture",
+                         "type":"string",
+                         "value":"game_art"
+                        }, 
+                        {
+                         "name":"tint",
+                         "type":"color",
+                         "value":"#ffffffff"
+                        }, 
+                        {
+                         "name":"velocity",
+                         "type":"float",
+                         "value":-10
+                        }],
+                 "rotation":0,
+                 "type":"motionImage",
+                 "visible":true,
+                 "width":512,
+                 "x":1024,
+                 "y":416
+                }, 
+                {
+                 "gid":9,
+                 "height":142.83170554803,
+                 "id":26,
+                 "name":"",
+                 "properties":[
+                        {
+                         "name":"frame",
+                         "type":"string",
+                         "value":"planetAsset 11.png"
+                        }, 
+                        {
+                         "name":"frame_idx",
+                         "type":"int",
+                         "value":0
+                        }, 
+                        {
+                         "name":"texture",
+                         "type":"string",
+                         "value":"game_art"
+                        }],
+                 "rotation":287.41602819546,
+                 "type":"image",
+                 "visible":true,
+                 "width":145.909975064151,
+                 "x":783.967017908992,
+                 "y":433.098498102014
+                }],
+         "opacity":1,
+         "type":"objectgroup",
+         "visible":true,
+         "x":0,
+         "y":0
+        }, 
+        {
+         "draworder":"topdown",
+         "id":5,
+         "name":"layerB",
+         "objects":[
+                {
+                 "gid":19,
+                 "height":503,
+                 "id":13,
+                 "name":"",
+                 "properties":[
+                        {
+                         "name":"frame",
+                         "type":"string",
+                         "value":"clouds.png"
+                        }, 
+                        {
+                         "name":"frame_idx",
+                         "type":"int",
+                         "value":0
+                        }, 
+                        {
+                         "name":"texture",
+                         "type":"string",
+                         "value":"game_art"
+                        }, 
+                        {
+                         "name":"tint",
+                         "type":"color",
+                         "value":"#ffff4ad8"
+                        }, 
+                        {
+                         "name":"velocity",
+                         "type":"float",
+                         "value":10
+                        }],
+                 "rotation":0,
+                 "type":"motionImage",
+                 "visible":true,
+                 "width":1024,
+                 "x":-1024,
+                 "y":656
+                }, 
+                {
+                 "gid":19,
+                 "height":503,
+                 "id":14,
+                 "name":"",
+                 "properties":[
+                        {
+                         "name":"frame",
+                         "type":"string",
+                         "value":"clouds.png"
+                        }, 
+                        {
+                         "name":"frame_idx",
+                         "type":"int",
+                         "value":0
+                        }, 
+                        {
+                         "name":"texture",
+                         "type":"string",
+                         "value":"game_art"
+                        }, 
+                        {
+                         "name":"tint",
+                         "type":"color",
+                         "value":"#ffff4ad8"
+                        }, 
+                        {
+                         "name":"velocity",
+                         "type":"float",
+                         "value":10
+                        }],
+                 "rotation":0,
+                 "type":"motionImage",
+                 "visible":true,
+                 "width":1024,
+                 "x":0,
+                 "y":656
+                }, 
                 {
                  "gid":2,
                  "height":198,
-                 "id":2,
+                 "id":16,
                  "name":"",
                  "properties":[
                         {
@@ -63,45 +308,28 @@
                  "type":"image",
                  "visible":true,
                  "width":207,
-                 "x":734.089,
-                 "y":696.298
-                }, 
-                {
-                 "gid":9,
-                 "height":149.772,
-                 "id":3,
-                 "name":"",
-                 "properties":[
-                        {
-                         "name":"frame",
-                         "type":"string",
-                         "value":"planetAsset 11.png"
-                        }, 
-                        {
-                         "name":"frame_idx",
-                         "type":"int",
-                         "value":0
-                        }, 
-                        {
-                         "name":"texture",
-                         "type":"string",
-                         "value":"game_art"
-                        }],
-                 "rotation":282.475,
-                 "type":"image",
-                 "visible":true,
-                 "width":153,
-                 "x":697.76,
-                 "y":483.984
+                 "x":761.833,
+                 "y":671.667
                 }],
          "opacity":1,
          "type":"objectgroup",
          "visible":true,
          "x":0,
          "y":0
+        }, 
+        {
+         "draworder":"topdown",
+         "id":6,
+         "name":"layerA",
+         "objects":[],
+         "opacity":1,
+         "type":"objectgroup",
+         "visible":true,
+         "x":0,
+         "y":0
         }],
- "nextlayerid":4,
- "nextobjectid":6,
+ "nextlayerid":8,
+ "nextobjectid":27,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.4.2",
@@ -119,7 +347,7 @@
          "margin":0,
          "name":"space_art",
          "spacing":0,
-         "tilecount":18,
+         "tilecount":20,
          "tileheight":768,
          "tiles":[
                 {
@@ -229,6 +457,18 @@
                  "image":"..\/images\/game_art\/yes_hover.png",
                  "imageheight":42,
                  "imagewidth":42
+                }, 
+                {
+                 "id":18,
+                 "image":"..\/images\/game_art\/clouds.png",
+                 "imageheight":503,
+                 "imagewidth":1024
+                }, 
+                {
+                 "id":19,
+                 "image":"..\/images\/game_art\/clouds_2.png",
+                 "imageheight":326,
+                 "imagewidth":512
                 }],
          "tilewidth":1024
         }],

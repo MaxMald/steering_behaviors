@@ -49,6 +49,7 @@ export class MapScene
     hFactories.set("uiSpeedometer", TiledMapFactory.CreateSpeedometer);
     hFactories.set("rectangle", TiledMapFactory.CreateRectangle);
     hFactories.set("point", TiledMapFactory.CreatePoint);
+    hFactories.set("motionImage", TiledMapFactory.CreateMotionImage);
 
     /****************************************************/
     /* Scene Instance                                   */

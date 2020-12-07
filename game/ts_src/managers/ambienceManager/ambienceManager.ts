@@ -19,10 +19,19 @@ implements IManager
   /****************************************************/
   /* Public                                           */
   /****************************************************/
+
+  static Create()
+  : AmbienceManager
+  {
+
+    return new AmbienceManager();
+
+  }
   
   init()
   : void 
   {
+    
     
     return;
 
@@ -31,6 +40,19 @@ implements IManager
   update(_dt: number)
   : void 
   {
+
+    // Update each object.
+
+    if(!this._m_isPaused)
+    {
+
+      this._m_aObjects.forEach
+      (
+        this.updateObject,
+        this
+      );
+
+    }    
 
     return;
   
@@ -82,6 +104,27 @@ implements IManager
   : void 
   {
 
+    if(this._m_starDustEmitter !== undefined)
+    {
+
+      this._m_starDustEmitter.destroy();
+      this._m_starDustEmitter = undefined;
+
+    }
+
+    // Destroy ambience objects
+
+    const aObject = this._m_aObjects;
+
+    while(aObject.length)
+    {
+
+      const amObject = aObject.pop();
+
+      amObject.destroy();
+
+    }
+
     return;
   
   }
@@ -90,6 +133,15 @@ implements IManager
   : void 
   {
 
+    if(this._m_starDustEmitter !== undefined)
+    {
+
+      this._m_starDustEmitter.resume();
+
+      this._m_isPaused = false;
+
+    }
+
     return;
 
   }
@@ -97,6 +149,15 @@ implements IManager
   onSimulationPause()
   : void 
   {
+
+    if(this._m_starDustEmitter !== undefined)
+    {
+
+      this._m_starDustEmitter.pause();
+
+      this._m_isPaused = true;
+
+    }
     
     return;
 
@@ -106,6 +167,15 @@ implements IManager
   : void 
   {
 
+    if(this._m_starDustEmitter !== undefined)
+    {
+
+      this._m_starDustEmitter.resume();
+
+      this._m_isPaused = false;
+
+    }
+
     return;
   
   }
@@ -113,6 +183,15 @@ implements IManager
   onSimulationStop()
   : void 
   {
+
+    if(this._m_starDustEmitter !== undefined)
+    {
+
+      this._m_starDustEmitter.pause();
+
+      this._m_isPaused = true;
+
+    }
 
     return;
   
@@ -134,9 +213,89 @@ implements IManager
   
   }
 
+  addObject(_object: AmbienceObject)
+  : void
+  {
+
+    this._m_aObjects.push(_object);
+
+    return;
+
+  }
+
+  /**
+   * Creates a phaser particle emitter for the star dust.
+   * 
+   * @param _scene Phaser scene. 
+   */
+  createStarDust(_scene: Phaser.Scene)
+  : void
+  {
+
+    if(this._m_starDustEmitter === undefined)
+    {
+
+      // Emit over the canvas area
+
+      const emitZone = new Phaser.Geom.Rectangle
+      (
+        0,
+        0,
+        _scene.game.canvas.width,
+        _scene.game.canvas.height
+      );
+
+      // Create particles.
+
+      const particles = _scene.add.particles("game_art");
+
+      this._m_starDustEmitter = particles;
+
+      // Create particles emitter.
+
+      particles.createEmitter
+      (
+        {
+          frame: ["blue_fare.png", "magenta_fare.png"],
+          speed: { min: -10, max: 10 },
+          lifespan: 1000,
+          quantity: 1,
+          scale: { min: 0.1, max: 0.4 },
+          alpha: { start: 1, end: 0 },
+          blendMode: 'ADD',
+          emitZone: { source: emitZone }
+        }
+      );
+
+    }
+
+    return;
+
+  }
+
   destroy()
   : void 
   {
+
+    if(this._m_starDustEmitter !== undefined)
+    {
+
+      this._m_starDustEmitter.destroy();
+
+    }
+
+    // Destroy ambience objects
+
+    const aObject = this._m_aObjects;
+
+    while(aObject.length)
+    {
+
+      const amObject = aObject.pop();
+
+      amObject.destroy();
+
+    }
 
     this._m_master = null;
 
@@ -147,7 +306,59 @@ implements IManager
   /****************************************************/
   /* Private                                          */
   /****************************************************/
+
+  private constructor()
+  {
+
+    this._m_starDustEmitter = undefined;
+
+    this._m_aObjects = new Array<AmbienceObject>();
+
+    this._m_isPaused = false;
   
+    return;
+
+  }
+
+  private updateObject(_object: AmbienceObject)
+  : void
+  {
+
+    _object.update();
+
+    return;
+
+  }
+  
+  /**
+   * Reference to the master manager.
+   */
   private _m_master: Master;
 
+  /**
+   * Reference to the star dust emitter.
+   */
+  private _m_starDustEmitter: Phaser.GameObjects.Particles.ParticleEmitterManager;
+
+  /**
+   * Array of parallax images
+   */
+  private _m_aObjects: Array<AmbienceObject>;
+
+  /**
+   * Indicates if the game is paused.
+   */
+  private _m_isPaused: boolean;
+
+}
+
+interface AmbienceObject
+{
+  
+  update()
+  : void;
+
+  destroy()
+  : void;
+  
 }
