@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.4" tiledversion="1.4.2" orientation="orthogonal" renderorder="right-down" width="64" height="48" tilewidth="16" tileheight="16" infinite="0" nextlayerid="6" nextobjectid="32">
+<map version="1.4" tiledversion="1.4.2" orientation="orthogonal" renderorder="right-down" width="64" height="48" tilewidth="16" tileheight="16" infinite="0" nextlayerid="6" nextobjectid="35">
  <editorsettings>
   <export target="simulation_ui.json" format="json"/>
  </editorsettings>
- <tileset firstgid="1" name="space_art" tilewidth="1024" tileheight="768" tilecount="22" columns="0">
+ <tileset firstgid="1" name="space_art" tilewidth="1024" tileheight="768" tilecount="23" columns="0">
   <grid orientation="orthogonal" width="1" height="1"/>
   <tile id="0">
    <image width="1024" height="768" source="../images/bg_space_01.png"/>
@@ -71,11 +71,19 @@
   <tile id="22">
    <image width="978" height="212" source="../images/game_art/ui_bg.png"/>
   </tile>
+  <tile id="25">
+   <image width="211" height="45" source="../images/game_art/force_box.png"/>
+  </tile>
  </tileset>
  <objectgroup id="5" name="BG">
   <object id="31" type="image" gid="23" x="21" y="218" width="978" height="212">
    <properties>
     <property name="frame" value="ui_bg.png"/>
+   </properties>
+  </object>
+  <object id="34" type="image" gid="26" x="30.1667" y="271.333" width="211" height="45">
+   <properties>
+    <property name="frame" value="force_box.png"/>
    </properties>
   </object>
  </objectgroup>
@@ -112,31 +120,30 @@
     <property name="texture" value="game_art"/>
    </properties>
   </object>
-  <object id="17" name="forceComboBox" type="uiComboBox" gid="21" x="110.333" y="188.166" width="177" height="23"/>
   <object id="18" name="speedometer" type="uiSpeedometer" gid="20" x="387.5" y="199.5" width="211" height="125"/>
-  <object id="19" name="mass_label" type="uiLabel" x="108" y="100" width="83" height="19">
+  <object id="19" name="mass_label" type="uiLabel" x="106.667" y="131.667" width="83" height="19">
    <properties>
     <property name="font_color" type="color" value="#ffa7edeb"/>
     <property name="font_key" value="odin_rounded"/>
-    <property name="font_size" type="int" value="18"/>
+    <property name="font_size" type="int" value="20"/>
    </properties>
    <text fontfamily="Odin Rounded" wrap="1" color="#a7edeb">Mass</text>
   </object>
-  <object id="20" name="mass_slider" type="uiSlider" gid="19" x="108" y="144.75" width="207" height="23">
+  <object id="20" name="mass_slider" type="uiSlider" gid="19" x="106.667" y="184.417" width="207" height="23">
    <properties>
     <property name="max_value" type="float" value="300"/>
     <property name="min_value" type="float" value="1"/>
    </properties>
   </object>
-  <object id="21" name="maxSpeed_label" type="uiLabel" x="108" y="53.4167" width="83" height="19">
+  <object id="21" name="maxSpeed_label" type="uiLabel" x="106.333" y="69.75" width="83" height="19">
    <properties>
     <property name="font_color" type="color" value="#ffa7edeb"/>
     <property name="font_key" value="odin_rounded"/>
-    <property name="font_size" type="int" value="18"/>
+    <property name="font_size" type="int" value="20"/>
    </properties>
    <text fontfamily="Odin Rounded" wrap="1" color="#a7edeb">Max Speed</text>
   </object>
-  <object id="22" name="maxSpeed_slider" type="uiSlider" gid="19" x="108" y="97.9167" width="207" height="23">
+  <object id="22" name="maxSpeed_slider" type="uiSlider" gid="19" x="106.333" y="123.75" width="207" height="23">
    <properties>
     <property name="max_value" type="float" value="300"/>
     <property name="min_value" type="float" value="1"/>
@@ -150,7 +157,7 @@
    </properties>
    <text fontfamily="Supercomputer" pixelsize="24" wrap="1" color="#ffe033">Ship Name</text>
   </object>
-  <object id="25" name="force_area" type="rectangle" x="24.3333" y="216.166" width="26.1667" height="17.6667"/>
+  <object id="25" name="force_area" type="rectangle" x="25.0833" y="260.583" width="26.1667" height="17.6667"/>
   <object id="27" type="bitmapText" x="866.167" y="58.1667" width="169" height="38">
    <properties>
     <property name="font_color" type="color" value="#ffffe033"/>
@@ -166,14 +173,6 @@
     <property name="font_size" type="int" value="25"/>
    </properties>
    <text fontfamily="Odin Rounded" pixelsize="27" wrap="1" color="#ffe033">Simulation</text>
-  </object>
-  <object id="29" type="bitmapText" x="109.5" y="144.5" width="83" height="19">
-   <properties>
-    <property name="font_color" type="color" value="#ffa7edeb"/>
-    <property name="font_key" value="odin_rounded"/>
-    <property name="font_size" type="int" value="18"/>
-   </properties>
-   <text fontfamily="Odin Rounded" wrap="1" color="#a7edeb">Select Force</text>
   </object>
  </objectgroup>
  <objectgroup id="4" name="SceneButtons">

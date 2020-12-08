@@ -42,6 +42,34 @@
                  "width":978,
                  "x":21,
                  "y":218
+                }, 
+                {
+                 "gid":26,
+                 "height":45,
+                 "id":34,
+                 "name":"",
+                 "properties":[
+                        {
+                         "name":"frame",
+                         "type":"string",
+                         "value":"force_box.png"
+                        }, 
+                        {
+                         "name":"frame_idx",
+                         "type":"int",
+                         "value":0
+                        }, 
+                        {
+                         "name":"texture",
+                         "type":"string",
+                         "value":"game_art"
+                        }],
+                 "rotation":0,
+                 "type":"image",
+                 "visible":true,
+                 "width":211,
+                 "x":30.1666666666667,
+                 "y":271.333333333333
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -147,7 +175,7 @@
                  "type":"uiImageButton",
                  "visible":true,
                  "width":42,
-                 "x":710.166666666667,
+                 "x":710.167,
                  "y":133.5
                 }, 
                 {
@@ -196,7 +224,7 @@
                  "visible":true,
                  "width":42,
                  "x":757,
-                 "y":132.833333333333
+                 "y":132.833
                 }, 
                 {
                  "gid":11,
@@ -244,19 +272,7 @@
                  "visible":true,
                  "width":42,
                  "x":709,
-                 "y":182.333333333333
-                }, 
-                {
-                 "gid":21,
-                 "height":23,
-                 "id":17,
-                 "name":"forceComboBox",
-                 "rotation":0,
-                 "type":"uiComboBox",
-                 "visible":true,
-                 "width":177,
-                 "x":110.3333,
-                 "y":188.166333333333
+                 "y":182.333
                 }, 
                 {
                  "gid":20,
@@ -288,7 +304,7 @@
                         {
                          "name":"font_size",
                          "type":"int",
-                         "value":18
+                         "value":20
                         }],
                  "rotation":0,
                  "text":
@@ -301,8 +317,8 @@
                  "type":"uiLabel",
                  "visible":true,
                  "width":83,
-                 "x":108,
-                 "y":100
+                 "x":106.666666666667,
+                 "y":131.666666666667
                 }, 
                 {
                  "gid":19,
@@ -324,8 +340,8 @@
                  "type":"uiSlider",
                  "visible":true,
                  "width":207,
-                 "x":108,
-                 "y":144.75
+                 "x":106.666666666667,
+                 "y":184.416666666667
                 }, 
                 {
                  "height":19,
@@ -345,7 +361,7 @@
                         {
                          "name":"font_size",
                          "type":"int",
-                         "value":18
+                         "value":20
                         }],
                  "rotation":0,
                  "text":
@@ -358,8 +374,8 @@
                  "type":"uiLabel",
                  "visible":true,
                  "width":83,
-                 "x":108,
-                 "y":53.4166666666667
+                 "x":106.333333333333,
+                 "y":69.7500333333333
                 }, 
                 {
                  "gid":19,
@@ -381,8 +397,8 @@
                  "type":"uiSlider",
                  "visible":true,
                  "width":207,
-                 "x":108,
-                 "y":97.9166666666667
+                 "x":106.333333333333,
+                 "y":123.750033333333
                 }, 
                 {
                  "height":38,
@@ -416,19 +432,19 @@
                  "type":"uiLabel",
                  "visible":true,
                  "width":169,
-                 "x":141.500033333333,
-                 "y":12.9999666666667
+                 "x":141.5,
+                 "y":13
                 }, 
                 {
-                 "height":17.6666666666667,
+                 "height":17.6667,
                  "id":25,
                  "name":"force_area",
                  "rotation":0,
                  "type":"rectangle",
                  "visible":true,
-                 "width":26.1666666666667,
-                 "x":24.3333,
-                 "y":216.166333333333
+                 "width":26.1667,
+                 "x":25.0833,
+                 "y":260.582666666667
                 }, 
                 {
                  "height":38,
@@ -462,8 +478,8 @@
                  "type":"bitmapText",
                  "visible":true,
                  "width":169,
-                 "x":866.166666666667,
-                 "y":58.1666666666667
+                 "x":866.167,
+                 "y":58.1667
                 }, 
                 {
                  "height":38,
@@ -497,42 +513,8 @@
                  "type":"bitmapText",
                  "visible":true,
                  "width":169,
-                 "x":686.666666666667,
-                 "y":55.3333333333333
-                }, 
-                {
-                 "height":19,
-                 "id":29,
-                 "name":"",
-                 "properties":[
-                        {
-                         "name":"font_color",
-                         "type":"color",
-                         "value":"#ffa7edeb"
-                        }, 
-                        {
-                         "name":"font_key",
-                         "type":"string",
-                         "value":"odin_rounded"
-                        }, 
-                        {
-                         "name":"font_size",
-                         "type":"int",
-                         "value":18
-                        }],
-                 "rotation":0,
-                 "text":
-                    {
-                     "color":"#a7edeb",
-                     "fontfamily":"Odin Rounded",
-                     "text":"Select Force",
-                     "wrap":true
-                    },
-                 "type":"bitmapText",
-                 "visible":true,
-                 "width":83,
-                 "x":109.5,
-                 "y":144.5
+                 "x":686.667,
+                 "y":55.3333
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -590,11 +572,11 @@
                  "type":"uiImageButton",
                  "visible":true,
                  "width":42,
-                 "x":871.333666666667,
-                 "y":134.166633333333
+                 "x":871.334,
+                 "y":134.167
                 }, 
                 {
-                 "height":34.3333333333333,
+                 "height":34.3333,
                  "id":30,
                  "name":"speed_label",
                  "properties":[
@@ -625,7 +607,7 @@
                  "type":"uiLabel",
                  "visible":true,
                  "width":83,
-                 "x":389.166666666667,
+                 "x":389.167,
                  "y":49
                 }],
          "opacity":1,
@@ -635,7 +617,7 @@
          "y":0
         }],
  "nextlayerid":6,
- "nextobjectid":32,
+ "nextobjectid":35,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.4.2",
@@ -653,7 +635,7 @@
          "margin":0,
          "name":"space_art",
          "spacing":0,
-         "tilecount":22,
+         "tilecount":23,
          "tileheight":768,
          "tiles":[
                 {
@@ -787,6 +769,12 @@
                  "image":"..\/images\/game_art\/ui_bg.png",
                  "imageheight":212,
                  "imagewidth":978
+                }, 
+                {
+                 "id":25,
+                 "image":"..\/images\/game_art\/force_box.png",
+                 "imageheight":45,
+                 "imagewidth":211
                 }],
          "tilewidth":1024
         }],

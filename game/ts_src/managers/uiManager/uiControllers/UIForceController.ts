@@ -1,5 +1,5 @@
 import { BaseActor } from "../../../actors/baseActor";
-import { ST_COMPONENT_ID, ST_STEER_FORCE } from "../../../commons/stEnums";
+import { ST_COLOR_ID, ST_COMPONENT_ID, ST_STEER_FORCE } from "../../../commons/stEnums";
 import { Ty_Sprite } from "../../../commons/stTypes";
 import { CmpForceController } from "../../../components/cmpforceController";
 import { IForce } from "../../../steeringBehavior/iForce";
@@ -22,6 +22,7 @@ import { UIForceConstant } from "./UIForceConstant";
 import { MapScene } from "../../../gameScene/mapScene";
 import { UIGroup } from "../uiGroup";
 import { STRectangle } from "../../../commons/stRectangle";
+import { UIImage } from "../uiImage";
 
 export class UIForceController
   extends UIController
@@ -148,26 +149,7 @@ export class UIForceController
 
       } ,
       this
-    );
-
-    ///////////////////////////////////
-    // Force Combo Box
-
-    const comboBox = _uiScene.getObject<UIComboBox>("forceComboBox");
-
-    this._ui_forceComboBox = comboBox;
-
-    comboBox.updateCombo(undefined);
-
-    group.add(comboBox);
-
-    comboBox.subscribe
-    (
-      "selectionChanged", 
-      "UIController",
-      this._onForceComboBoxChanged,
-      this
-    );
+    );    
 
     ///////////////////////////////////
     // UI Force Box
@@ -177,6 +159,39 @@ export class UIForceController
     this._ui_box = UIBox.CreateContentBox(forceArea.x, forceArea.y, _scene);
 
     this._ui_box.setPadding(15, 20);
+
+    ///////////////////////////////////
+    // Force Combo Box
+
+    // Select Force Label
+
+    const selectForce = UILabel.CreateStyleB(0, 0, _scene, "Select Force");
+
+    selectForce.setTint(ST_COLOR_ID.kSkyBlueNeon);
+
+    this._ui_box.add(selectForce);
+
+    // Combo Box
+
+    const comboBox = new UIComboBox(0, 0, _scene);
+
+    this._ui_forceComboBox = comboBox;
+
+    comboBox.updateCombo(undefined);
+
+    this._ui_box.add(comboBox);
+
+    comboBox.subscribe
+    (
+      "selectionChanged", 
+      "UIController",
+      this._onForceComboBoxChanged,
+      this
+    );
+
+    // Separator.
+
+    this._ui_box.add(new UIImage(0, 0, _scene, "game_art", "separator_a.png"));
 
     ///////////////////////////////////
     // UI Force
