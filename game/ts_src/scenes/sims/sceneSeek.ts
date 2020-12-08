@@ -15,6 +15,7 @@ import { SceneUIFactory } from "../../factories/uiSceneFactory";
 import { MapScene } from "../../gameScene/mapScene";
 import { AmbienceManager } from "../../managers/ambienceManager/ambienceManager";
 import { SimulationManager } from "../../managers/simulationManager/simulationManager";
+import { UIButtonImg } from "../../managers/uiManager/uiButtonImg";
 import { UIManager } from "../../managers/uiManager/uiManager";
 import { UIObject } from "../../managers/uiManager/uiObject";
 import { Master } from "../../master/master";
@@ -70,32 +71,6 @@ import { SeekForce } from "../../steeringBehavior/forceSeek";
   
     let width : number = canvas.width;
     let height : number = canvas.height;
-
-    ///////////////////////////////////
-    // Create scene buttons
-
-    let mainMenuButton : UIButtonImg = UIButtonImg.CreateHomeButtonImg
-    (
-      width * 0.9,
-      height * 0.1,
-      this
-    );
-
-    mainMenuButton.subscribe
-    (
-      "buttonReleased",
-      "button",
-      function(_sender : UIObject, _args)
-      {
-
-        const button = _sender as UIButtonImg;
-
-        master.onSimulationSceneDestroy(this);
-    
-        this.scene.start('main_menu');
-      },
-      this
-    );
 
      ///////////////////////////////////
      // Create SpaceShip Actor

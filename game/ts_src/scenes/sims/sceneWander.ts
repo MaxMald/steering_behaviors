@@ -13,11 +13,7 @@ import { CmpForceController } from "../../components/cmpforceController";
 import { ShipFactory } from "../../factories/shipFactory";
 import { SceneUIFactory } from "../../factories/uiSceneFactory";
 import { SimulationManager } from "../../managers/simulationManager/simulationManager";
-import { UIButtonImg } from "../../managers/uiManager/uiButtonImg";
-import { UIForceController } from "../../managers/uiManager/uiControllers/UIForceController";
-import { UISimulationController } from "../../managers/uiManager/uiControllers/UISimulationController";
 import { UIManager } from "../../managers/uiManager/uiManager";
-import { UIObject } from "../../managers/uiManager/uiObject";
 import { Master } from "../../master/master";
 import { WanderForce } from "../../steeringBehavior/forceWander";
 
