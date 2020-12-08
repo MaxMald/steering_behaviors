@@ -170,7 +170,7 @@
                 }, 
                 {
                  "gid":9,
-                 "height":142.83170554803,
+                 "height":142.832,
                  "id":26,
                  "name":"",
                  "properties":[
@@ -189,12 +189,12 @@
                          "type":"string",
                          "value":"game_art"
                         }],
-                 "rotation":287.41602819546,
+                 "rotation":287.416,
                  "type":"image",
                  "visible":true,
-                 "width":145.909975064151,
-                 "x":783.967017908992,
-                 "y":433.098498102014
+                 "width":145.91,
+                 "x":783.967,
+                 "y":433.098
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -347,7 +347,7 @@
          "margin":0,
          "name":"space_art",
          "spacing":0,
-         "tilecount":20,
+         "tilecount":21,
          "tileheight":768,
          "tiles":[
                 {
@@ -469,6 +469,12 @@
                  "image":"..\/images\/game_art\/clouds_2.png",
                  "imageheight":326,
                  "imagewidth":512
+                }, 
+                {
+                 "id":20,
+                 "image":"..\/images\/game_art\/ui_bg.png",
+                 "imageheight":190,
+                 "imagewidth":978
                 }],
          "tilewidth":1024
         }],

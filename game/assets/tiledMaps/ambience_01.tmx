@@ -3,7 +3,7 @@
  <editorsettings>
   <export target="ambience_01.json" format="json"/>
  </editorsettings>
- <tileset firstgid="1" name="space_art" tilewidth="1024" tileheight="768" tilecount="20" columns="0">
+ <tileset firstgid="1" name="space_art" tilewidth="1024" tileheight="768" tilecount="21" columns="0">
   <grid orientation="orthogonal" width="1" height="1"/>
   <tile id="0">
    <image width="1024" height="768" source="../images/bg_space_01.png"/>
@@ -64,6 +64,9 @@
   </tile>
   <tile id="19">
    <image width="512" height="326" source="../images/game_art/clouds_2.png"/>
+  </tile>
+  <tile id="20">
+   <image width="978" height="190" source="../images/game_art/ui_bg.png"/>
   </tile>
  </tileset>
  <objectgroup id="2" name="background" locked="1">

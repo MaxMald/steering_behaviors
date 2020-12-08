@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.4" tiledversion="1.4.2" orientation="orthogonal" renderorder="right-down" width="64" height="48" tilewidth="16" tileheight="16" infinite="0" nextlayerid="5" nextobjectid="26">
+<map version="1.4" tiledversion="1.4.2" orientation="orthogonal" renderorder="right-down" width="64" height="48" tilewidth="16" tileheight="16" infinite="0" nextlayerid="6" nextobjectid="32">
  <editorsettings>
   <export target="simulation_ui.json" format="json"/>
  </editorsettings>
- <tileset firstgid="1" name="space_art" tilewidth="1024" tileheight="768" tilecount="21" columns="0">
+ <tileset firstgid="1" name="space_art" tilewidth="1024" tileheight="768" tilecount="22" columns="0">
   <grid orientation="orthogonal" width="1" height="1"/>
   <tile id="0">
    <image width="1024" height="768" source="../images/bg_space_01.png"/>
@@ -68,9 +68,19 @@
   <tile id="20">
    <image width="177" height="23" source="../images/game_art/text_box.png"/>
   </tile>
+  <tile id="22">
+   <image width="978" height="212" source="../images/game_art/ui_bg.png"/>
+  </tile>
  </tileset>
+ <objectgroup id="5" name="BG">
+  <object id="31" type="image" gid="23" x="21" y="218" width="978" height="212">
+   <properties>
+    <property name="frame" value="ui_bg.png"/>
+   </properties>
+  </object>
+ </objectgroup>
  <objectgroup id="3" name="SimulationButtons">
-  <object id="6" name="simStop" type="uiImageButton" gid="17" x="640" y="64" width="42" height="42">
+  <object id="6" name="simStop" type="uiImageButton" gid="17" x="660" y="134" width="42" height="42">
    <properties>
     <property name="frame" value="stop_but_normal.png"/>
     <property name="frame_hover" value="stop_but_hover.png"/>
@@ -78,7 +88,7 @@
     <property name="texture" value="game_art"/>
    </properties>
   </object>
-  <object id="7" name="simPlay" type="uiImageButton" gid="16" x="704" y="64" width="42" height="42">
+  <object id="7" name="simPlay" type="uiImageButton" gid="16" x="710.167" y="133.5" width="42" height="42">
    <properties>
     <property name="frame" value="play_but_normal.png"/>
     <property name="frame_hover" value="play_but_hover.png"/>
@@ -86,7 +96,7 @@
     <property name="texture" value="game_art"/>
    </properties>
   </object>
-  <object id="8" name="simPause" type="uiImageButton" gid="15" x="768" y="64" width="42" height="42">
+  <object id="8" name="simPause" type="uiImageButton" gid="15" x="757" y="132.833" width="42" height="42">
    <properties>
     <property name="frame" value="pause_but_normal.png"/>
     <property name="frame_hover" value="pause_but_hover.png"/>
@@ -94,7 +104,7 @@
     <property name="texture" value="game_art"/>
    </properties>
   </object>
-  <object id="9" name="simDebug" type="uiImageButton" gid="11" x="832" y="64" width="42" height="42">
+  <object id="9" name="simDebug" type="uiImageButton" gid="11" x="709" y="182.333" width="42" height="42">
    <properties>
     <property name="frame" value="debug_idle.png"/>
     <property name="frame_hover" value="debug_hover.png"/>
@@ -102,59 +112,86 @@
     <property name="texture" value="game_art"/>
    </properties>
   </object>
-  <object id="17" name="forceComboBox" type="uiComboBox" gid="21" x="30.3333" y="234.333" width="177" height="23"/>
-  <object id="18" name="speedometer" type="uiSpeedometer" gid="20" x="25" y="196" width="211" height="125"/>
-  <object id="19" name="mass_label" type="uiLabel" x="260.5" y="147.5" width="83" height="19">
+  <object id="17" name="forceComboBox" type="uiComboBox" gid="21" x="110.333" y="188.166" width="177" height="23"/>
+  <object id="18" name="speedometer" type="uiSpeedometer" gid="20" x="387.5" y="199.5" width="211" height="125"/>
+  <object id="19" name="mass_label" type="uiLabel" x="108" y="100" width="83" height="19">
    <properties>
     <property name="font_color" type="color" value="#ffa7edeb"/>
     <property name="font_key" value="odin_rounded"/>
+    <property name="font_size" type="int" value="18"/>
    </properties>
    <text fontfamily="Odin Rounded" wrap="1" color="#a7edeb">Mass</text>
   </object>
-  <object id="20" name="mass_slider" type="uiSlider" gid="19" x="258" y="192" width="207" height="23">
+  <object id="20" name="mass_slider" type="uiSlider" gid="19" x="108" y="144.75" width="207" height="23">
    <properties>
     <property name="max_value" type="float" value="300"/>
     <property name="min_value" type="float" value="1"/>
    </properties>
   </object>
-  <object id="21" name="maxSpeed_label" type="uiLabel" x="259" y="102.25" width="83" height="19">
+  <object id="21" name="maxSpeed_label" type="uiLabel" x="108" y="53.4167" width="83" height="19">
    <properties>
     <property name="font_color" type="color" value="#ffa7edeb"/>
     <property name="font_key" value="odin_rounded"/>
+    <property name="font_size" type="int" value="18"/>
    </properties>
    <text fontfamily="Odin Rounded" wrap="1" color="#a7edeb">Max Speed</text>
   </object>
-  <object id="22" name="maxSpeed_slider" type="uiSlider" gid="19" x="256.5" y="146.75" width="207" height="23">
+  <object id="22" name="maxSpeed_slider" type="uiSlider" gid="19" x="108" y="97.9167" width="207" height="23">
    <properties>
     <property name="max_value" type="float" value="300"/>
     <property name="min_value" type="float" value="1"/>
    </properties>
   </object>
-  <object id="23" name="speed_label" type="uiLabel" x="257.5" y="78" width="83" height="19">
+  <object id="24" name="ship_name" type="uiLabel" x="141.5" y="13" width="169" height="38">
    <properties>
-    <property name="font_color" type="color" value="#ffa7edeb"/>
-    <property name="font_key" value="odin_rounded"/>
+    <property name="font_color" type="color" value="#ffffe033"/>
+    <property name="font_key" value="supercomputer"/>
+    <property name="font_size" type="int" value="24"/>
    </properties>
-   <text fontfamily="Odin Rounded" wrap="1" color="#a7edeb">Speed</text>
+   <text fontfamily="Supercomputer" pixelsize="24" wrap="1" color="#ffe033">Ship Name</text>
   </object>
-  <object id="24" name="ship_name" type="uiLabel" x="35.1667" y="20.8333" width="169" height="38">
+  <object id="25" name="force_area" type="rectangle" x="24.3333" y="216.166" width="26.1667" height="17.6667"/>
+  <object id="27" type="bitmapText" x="866.167" y="58.1667" width="169" height="38">
    <properties>
     <property name="font_color" type="color" value="#ffffe033"/>
     <property name="font_key" value="odin_rounded"/>
-    <property name="font_size" type="int" value="32"/>
+    <property name="font_size" type="int" value="25"/>
    </properties>
-   <text fontfamily="Odin Rounded" pixelsize="32" wrap="1" color="#ffe033">Ship Name</text>
+   <text fontfamily="Odin Rounded" pixelsize="27" wrap="1" color="#ffe033">Menu</text>
   </object>
-  <object id="25" name="force_area" type="rectangle" x="31.3333" y="241.333" width="207.5" height="27"/>
+  <object id="28" type="bitmapText" x="686.667" y="55.3333" width="169" height="38">
+   <properties>
+    <property name="font_color" type="color" value="#ffffe033"/>
+    <property name="font_key" value="odin_rounded"/>
+    <property name="font_size" type="int" value="25"/>
+   </properties>
+   <text fontfamily="Odin Rounded" pixelsize="27" wrap="1" color="#ffe033">Simulation</text>
+  </object>
+  <object id="29" type="bitmapText" x="109.5" y="144.5" width="83" height="19">
+   <properties>
+    <property name="font_color" type="color" value="#ffa7edeb"/>
+    <property name="font_key" value="odin_rounded"/>
+    <property name="font_size" type="int" value="18"/>
+   </properties>
+   <text fontfamily="Odin Rounded" wrap="1" color="#a7edeb">Select Force</text>
+  </object>
  </objectgroup>
  <objectgroup id="4" name="SceneButtons">
-  <object id="12" name="menuButton" type="uiImageButton" gid="12" x="964.667" y="65.3333" width="42" height="42">
+  <object id="12" name="menuButton" type="uiImageButton" gid="12" x="871.334" y="134.167" width="42" height="42">
    <properties>
     <property name="frame" value="home_idle.png"/>
     <property name="frame_hover" value="home_hover.png"/>
     <property name="frame_press" value="home_press.png"/>
     <property name="texture" value="game_art"/>
    </properties>
+  </object>
+  <object id="30" name="speed_label" type="uiLabel" x="389.167" y="49" width="83" height="34.3333">
+   <properties>
+    <property name="font_color" type="color" value="#ffa7edeb"/>
+    <property name="font_key" value="odin_rounded"/>
+    <property name="font_size" type="int" value="18"/>
+   </properties>
+   <text fontfamily="Odin Rounded" pixelsize="19" wrap="1" color="#a7edeb">Speed</text>
   </object>
  </objectgroup>
 </map>

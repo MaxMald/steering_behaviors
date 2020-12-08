@@ -174,7 +174,9 @@ export class UIForceController
 
     const forceArea = _uiScene.getObject<STRectangle>("force_area");
 
-    this._ui_box = UIBox.CreateBorderBox(forceArea.x, forceArea.y, _scene);
+    this._ui_box = UIBox.CreateContentBox(forceArea.x, forceArea.y, _scene);
+
+    this._ui_box.setPadding(15, 20);
 
     ///////////////////////////////////
     // UI Force
