@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objecttypes>
+ <objecttype name="bitmapText" color="#a0a0a4">
+  <property name="font_color" type="color" default="#ff000000"/>
+  <property name="font_key" type="string"/>
+  <property name="font_size" type="int" default="16"/>
+ </objecttype>
+ <objecttype name="image" color="#a0a0a4">
+  <property name="frame" type="string"/>
+  <property name="frame_idx" type="int" default="0"/>
+  <property name="texture" type="string" default="game_art"/>
+ </objecttype>
+ <objecttype name="motionImage" color="#a0a0a4">
+  <property name="frame" type="string"/>
+  <property name="frame_idx" type="int" default="0"/>
+  <property name="texture" type="string" default="game_art"/>
+  <property name="tint" type="color" default="#ffffffff"/>
+  <property name="velocity" type="float" default="0"/>
+ </objecttype>
+ <objecttype name="point" color="#a0a0a4"/>
+ <objecttype name="rectangle" color="#a0a0a4"/>
+ <objecttype name="sprite" color="#a0a0a4">
+  <property name="animation" type="string"/>
+  <property name="frame" type="string"/>
+  <property name="frame_idx" type="int" default="0"/>
+  <property name="texture" type="string" default="game_art"/>
+ </objecttype>
+ <objecttype name="uiComboBox" color="#a0a0a4"/>
+ <objecttype name="uiImageButton" color="#a0a0a4">
+  <property name="frame" type="string"/>
+  <property name="frame_hover" type="string"/>
+  <property name="frame_hover_idx" type="int" default="0"/>
+  <property name="frame_idx" type="int" default="0"/>
+  <property name="frame_press" type="string"/>
+  <property name="frame_press_idx" type="int" default="0"/>
+  <property name="texture" type="string"/>
+ </objecttype>
+ <objecttype name="uiLabel" color="#a0a0a4">
+  <property name="font_color" type="color" default="#ff000000"/>
+  <property name="font_key" type="string"/>
+  <property name="font_size" type="int" default="16"/>
+ </objecttype>
+ <objecttype name="uiSlider" color="#a0a0a4">
+  <property name="max_value" type="float" default="0"/>
+  <property name="min_value" type="float" default="0"/>
+ </objecttype>
+ <objecttype name="uiSpeedometer" color="#a0a0a4"/>
+</objecttypes>

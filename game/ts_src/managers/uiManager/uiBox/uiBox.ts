@@ -80,6 +80,10 @@ export class UIBox
 
     this.setLeftAlignment();
 
+    // Not invisible bg.
+
+    this.setClearBox(false);
+
     return;
 
   }
@@ -149,22 +153,28 @@ export class UIBox
 
   }
 
+  setClearBox(_clear: boolean)
+  : void
+  {
+
+    this._m_isClearBox = _clear;
+
+    if(_clear)
+    {
+
+      this._m_bg.setVisible(false);
+
+    }
+
+    return;
+
+  }
+
   add(_object: UIObject)
   : void
   {
 
     this._m_aObjects.push(_object);    
-
-    // Check depth
-
-    const depth = _object.getZ();
-
-    if(depth <= this._m_bg.depth)
-    {
-
-      this._m_bg.setDepth(depth - 1);
-
-    }
 
     // Update
 
@@ -365,7 +375,13 @@ export class UIBox
     );
 
     this._m_bg.setActive(true);
-    this._m_bg.setVisible(true);
+
+    if(!this._m_isClearBox)
+    {
+
+      this._m_bg.setVisible(true);
+    
+    }    
 
     this._isEnable = true;
 
@@ -752,31 +768,36 @@ export class UIBox
   /**
    * Minimum width that a UI Box can has.
    */
-  private static MIN_WIDTH : number = 65;
+  protected static MIN_WIDTH : number = 65;
 
   /**
    * Minimum height that a UI Box can has.
    */
-  private static MIN_HEIGHT : number = 65;
+  protected static MIN_HEIGHT : number = 65;
 
   /**
    * Indicates if this box is enabled.
    */
-  private _isEnable: boolean;
+  protected _isEnable: boolean;
 
   /**
    * The active state of the UI Box.
    */
-  private _m_activeState: UIBoxState;
+  protected _m_activeState: UIBoxState;
 
   /**
    * Vertical Order State.
    */
-  private _m_verticalState: UIVerticalBox;
+  protected _m_verticalState: UIVerticalBox;
 
   /**
    * Horizontal Order State.
    */
-  private _m_horizontalState: UIHorizontalBox;
+  protected _m_horizontalState: UIHorizontalBox;
+
+  /**
+   * Indicates if box bg is invisible.
+   */
+  protected _m_isClearBox: boolean;
 
 }

@@ -26,7 +26,7 @@ export class UIManager
 
     return new UIManager();
 
-  }
+  }  
 
   init()
   : void 

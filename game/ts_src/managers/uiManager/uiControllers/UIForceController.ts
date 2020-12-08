@@ -5,7 +5,6 @@ import { CmpForceController } from "../../../components/cmpforceController";
 import { IForce } from "../../../steeringBehavior/iForce";
 import { UIBox } from "../uiBox/uiBox";
 import { UIComboBox } from "../uiComboBox";
-import { UIImage } from "../uiImage";
 import { UILabel } from "../uiLabel";
 import { UIObject } from "../uiObject";
 import { UISlider } from "../uiSlider";
@@ -21,6 +20,10 @@ import { UIForceWander } from "./UIForceWander";
 import { UIForceFollowPath } from "./UIForceFollowPath";
 import { UIForceConstant } from "./UIForceConstant";
 import { UIForceFlee } from "./UIForceFlee";
+import { MapScene } from "../../../gameScene/mapScene";
+import { UIGroup } from "../uiGroup";
+import { STRectangle } from "../../../commons/stRectangle";
+import { UIImage } from "../uiImage";
 
 export class UIForceController
   extends UIController
@@ -28,10 +31,8 @@ export class UIForceController
 
   constructor
   (
-    _x: number, 
-    _y: number, 
-    _scene: Phaser.Scene, 
-    _target ?: BaseActor<Ty_Sprite>
+    _uiScene : MapScene,
+    _scene : Phaser.Scene
   )
   {
 
@@ -40,72 +41,50 @@ export class UIForceController
     ///////////////////////////////////
     // UI
 
-    // Create box.
+    // Create Group.
 
-    const box = UIBox.CreateBorderBox
-    (
-      _x, 
-      _y,
-      _scene
-    );    
+    const group = new UIGroup();
 
-    this._ui_box = box;
+    this._ui_group = group;
 
-    box.setElementsGap(7.5);
-
+    ///////////////////////////////////
     // Actor Name
 
-    const actorName = UILabel.CreateStyleA(0, 0, _scene, "", 32 );
+    const actorName = _uiScene.getObject<UILabel>("ship_name");
 
     this._ui_actorName = actorName;
 
-    actorName.setTint(ST_COLOR_ID.kGold);
+    group.add(actorName);
 
-    box.add(actorName);
-
-    // Separator
-
-    box.add
-    (
-      new UIImage(0,0,_scene, "game_art", "separator_a.png")
-    );
-
+    ///////////////////////////////////
     // Speedometer 
 
-    const speedometer = new UISpeedometer(0,0,_scene);
+    const speedometer = _uiScene.getObject<UISpeedometer>("speedometer");
 
     this._ui_speedometer = speedometer;
 
-    box.add(speedometer);
+    group.add(speedometer);
 
-    // Actual Speed
+    ///////////////////////////////////
+    // Speed Label
 
-    this._ui_actualSpeed = UILabel.CreateStyleB(0, 0, _scene, "#");
+    this._ui_actualSpeed = _uiScene.getObject<UILabel>("speed_label");
 
-    this._ui_actualSpeed.setTint(ST_COLOR_ID.kSkyBlueNeon);
+    group.add(this._ui_actualSpeed);
 
-    box.add(this._ui_actualSpeed);
+    ///////////////////////////////////
+    // Max. Speed Label
 
-    // Max Speed Label
+    this._ui_maxSpeed = _uiScene.getObject<UILabel>("maxSpeed_label");
 
-    this._ui_maxSpeed = UILabel.CreateStyleB(0, 0, _scene, "#");
+    group.add(this._ui_maxSpeed);
 
-    this._ui_maxSpeed.setTint(ST_COLOR_ID.kSkyBlueNeon);
+    ///////////////////////////////////
+    // Max. Speed slider
 
-    box.add(this._ui_maxSpeed);
+    this._ui_maxSpeedSlider = _uiScene.getObject<UISlider>("maxSpeed_slider");
 
-    // Max Speed Slider
-
-    this._ui_maxSpeedSlider = new UISlider
-    (
-      0,
-      0,
-      _scene,
-      1,
-      300
-    );
-
-    box.add(this._ui_maxSpeedSlider);
+    group.add(this._ui_maxSpeedSlider);
 
     this._ui_maxSpeedSlider.subscribe
     (
@@ -133,26 +112,19 @@ export class UIForceController
       this
     );
 
+    ///////////////////////////////////
     // Mass Label
 
-    this._ui_mass = UILabel.CreateStyleB(0, 0, _scene, "#");
+    this._ui_mass = _uiScene.getObject<UILabel>("mass_label");
 
-    this._ui_mass.setTint(ST_COLOR_ID.kSkyBlueNeon);
+    group.add(this._ui_mass);
 
-    box.add(this._ui_mass);
-
+    ///////////////////////////////////
     // Mass Slider
 
-    this._ui_massSlider = new UISlider
-    (
-      0,
-      0,
-      _scene,
-      1,
-      10
-    );
+    this._ui_massSlider = _uiScene.getObject<UISlider>("mass_slider");
 
-    box.add(this._ui_massSlider);
+    group.add(this._ui_massSlider);
 
     this._ui_massSlider.subscribe
     (
@@ -178,46 +150,29 @@ export class UIForceController
 
       } ,
       this
-    );
+    );    
 
-    // SteerForce Title
+    ///////////////////////////////////
+    // UI Force Box
 
-    const steerTitle = UILabel.CreateStyleB
-    (
-      0,
-      0,
-      _scene,
-      "Steer Force",
-      25  
-    );
+    const forceArea = _uiScene.getObject<STRectangle>("force_area");
 
-    box.add(steerTitle);
+    this._ui_box = UIBox.CreateContentBox(forceArea.x, forceArea.y, _scene);
 
-    // Separator
-
-    box.add
-    (
-      new UIImage(0,0,_scene, "game_art", "separator_a.png")
-    );
-
-    steerTitle.setTint(ST_COLOR_ID.kGold);
-
-    // Select Force Label
-
-    const selectForce = UILabel.CreateStyleB
-    (
-      0,
-      0,
-      _scene,
-      "Select Steer Force"
-    );
-
-    selectForce.setTint(ST_COLOR_ID.kSkyBlueNeon);
-
-    box.add(selectForce);
+    this._ui_box.setPadding(15, 20);
 
     ///////////////////////////////////
     // Force Combo Box
+
+    // Select Force Label
+
+    const selectForce = UILabel.CreateStyleB(0, 0, _scene, "Select Force");
+
+    selectForce.setTint(ST_COLOR_ID.kSkyBlueNeon);
+
+    this._ui_box.add(selectForce);
+
+    // Combo Box
 
     const comboBox = new UIComboBox(0, 0, _scene);
 
@@ -225,7 +180,7 @@ export class UIForceController
 
     comboBox.updateCombo(undefined);
 
-    box.add(comboBox);
+    this._ui_box.add(comboBox);
 
     comboBox.subscribe
     (
@@ -235,7 +190,9 @@ export class UIForceController
       this
     );
 
-    box.setLeftAlignment();
+    // Separator.
+
+    this._ui_box.add(new UIImage(0, 0, _scene, "game_art", "separator_a.png"));
 
     ///////////////////////////////////
     // UI Force
@@ -244,7 +201,7 @@ export class UIForceController
 
     const hUIForce = new Map<ST_STEER_FORCE, UIForce>();
 
-     this._m_aUIForce = hUIForce;
+    this._m_aUIForce = hUIForce;
 
     // Create each UI Force and add it to the box.
 
@@ -472,6 +429,8 @@ export class UIForceController
     
     this._m_forceController = undefined;
 
+    this._ui_group.destroy();
+
     this._ui_box.destroy();
 
     super.destroy();
@@ -633,5 +592,7 @@ export class UIForceController
   private _ui_maxSpeedSlider: UISlider;
 
   private _ui_actualSpeed: UILabel;
+
+  private _ui_group: UIGroup;
 
 }

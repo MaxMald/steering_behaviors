@@ -30,6 +30,10 @@ extends UIForce
     
     const box = UIBox.CreateForceBox(0,0,_scene);
 
+    box.setClearBox(true);
+    
+    box.setPadding(0);
+    
     this._m_box = box;
 
     // Title

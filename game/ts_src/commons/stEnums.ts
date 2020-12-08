@@ -17,7 +17,9 @@ export const ST_MANAGER_ID = Object.freeze
 
   kUIManager : 2 as 2,
 
-  kDebugManager : 3 as 3
+  kDebugManager : 3 as 3,
+
+  kAmbienceManager : 4 as 4
 });
 
 /**

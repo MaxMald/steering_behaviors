@@ -8,7 +8,7 @@
  * @since August-30-2020
  */
 
-import { Ty_Image, Ty_Sprite } from "../commons/stTypes";
+import { Ty_Image } from "../commons/stTypes";
 
 /**
  * Preload test assets and start pilot level.
@@ -29,7 +29,9 @@ extends Phaser.Scene
 
     this.load.path = "./game/assets/";
 
-    // TODO
+    /****************************************************/
+    /* Animation                                        */
+    /****************************************************/
 
     this.load.animation
     (
@@ -49,12 +51,30 @@ extends Phaser.Scene
       'images/button.png'
     );
 
+    /****************************************************/
+    /* Images                                           */
+    /****************************************************/
+
+    this.load.image
+    (
+      "bg_space_01",
+      "images/bg_space_01.png"
+    )
+
+    /****************************************************/
+    /* Atlas                                            */
+    /****************************************************/
+
     this.load.atlas
     (
       'game_art',
       "images/game_art/game_art.png",
       "images/game_art/game_art.js"
     );
+
+    /****************************************************/
+    /* Bitmap Fonts                                     */
+    /****************************************************/
 
     this.load.bitmapFont
     (
@@ -68,6 +88,22 @@ extends Phaser.Scene
       'supercomputer',
       'images/supercomputer_bitmapfont.png',
       'images/supercomputer_bitmapfont.xml'
+    );
+
+    /****************************************************/
+    /* Tile Maps                                        */
+    /****************************************************/
+
+    this.load.tilemapTiledJSON
+    (
+      "ambience_01",
+      "tiledMaps/ambience_01.json"
+    );
+
+    this.load.tilemapTiledJSON
+    (
+      "simulation_ui",
+      "tiledMaps/simulation_ui.json"
     );
 
     ///////////////////////////////////

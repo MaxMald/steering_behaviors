@@ -11,6 +11,7 @@
 import { ST_COMPONENT_ID, ST_MANAGER_ID, ST_MESSAGE_ID } from "../../commons/stEnums";
 import { CmpForceController } from "../../components/cmpforceController";
 import { ShipFactory } from "../../factories/shipFactory";
+import { SceneUIFactory } from "../../factories/uiSceneFactory";
 import { SimulationManager } from "../../managers/simulationManager/simulationManager";
 import { UIButtonImg } from "../../managers/uiManager/uiButtonImg";
 import { UIForceController } from "../../managers/uiManager/uiControllers/UIForceController";
@@ -56,33 +57,7 @@ import { FleeForce } from "../../steeringBehavior/forceFlee";
     let canvas = this.game.canvas;
   
     let width : number = canvas.width;
-    let height : number = canvas.height;
-
-    ///////////////////////////////////
-    // Create scene buttons
-
-    let mainMenuButton : UIButtonImg = UIButtonImg.CreateHomeButtonImg
-    (
-      width * 0.9,
-      height * 0.1,
-      this
-    );
-
-    mainMenuButton.subscribe
-    (
-      "buttonReleased",
-      "button",
-      function(_sender : UIObject, _args)
-      {
-
-        const button = _sender as UIButtonImg;
-
-        master.onSimulationSceneDestroy(this);
-    
-        this.scene.start('main_menu');
-      },
-      this
-    );
+    let height : number = canvas.height;    
     
     ///////////////////////////////////
     // Create SpaceShip Actor
@@ -169,33 +144,21 @@ import { FleeForce } from "../../steeringBehavior/forceFlee";
 
     shipController.addForce('flee_1', flee);
     
-    ///////////////////////////////////
-    // UI
-    const uiForceController = new UIForceController
-    (
-      20,
-      20,
-      this
-    );
+    /****************************************************/
+     /* UI                                               */
+     /****************************************************/    
+    
+    // Get UI Manager
+    
+    const uiManager = master.getManager<UIManager>(ST_MANAGER_ID.kUIManager);
 
-   const uiSimController = UISimulationController.CreateSimControlBox
-   (
-     width * 0.5,
-     20,
-     this
-   );
-   
-   // Add UI force controller to the UI Manager.
-   
-   const uiManager = master.getManager<UIManager>(ST_MANAGER_ID.kUIManager);
-   
-   uiManager.addUIController("forceUI", uiForceController);
+    // Create the Simulation Map Scene
 
-   uiManager.addUIController("mediaSimUI", uiSimController);
-   
-   // Set the active actor of the UI Manager.
-   
-   uiManager.setTarget(shipActor);
+    SceneUIFactory.CreateSimulationUIScene("simulation_ui", this, uiManager);
+
+    // Set the active actor of the UI Manager.
+
+    uiManager.setTarget(shipActor);
     
     ///////////////////////////////////
     // Active Debugging

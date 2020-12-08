@@ -42,7 +42,8 @@ import { UIObject } from "./uiObject";
     _scene: Phaser.Scene,
     _idleFrame ?: string | number,
     _hoverFrame ?: string | number,
-    _pressedFrame ?: string | number
+    _pressedFrame ?: string | number,
+    _texture?: string
   )
   {
 
@@ -84,13 +85,20 @@ import { UIObject } from "./uiObject";
       this._m_pressedFrame = _pressedFrame;
     }
 
+    let texture: string = "game_art";
+
+    if(_texture !== undefined)
+    {
+      texture = _texture;
+    }
+
     // Create button sprite.
 
     const button = _scene.add.image
     (
       _x,
       _y,
-      "game_art",
+      texture,
       this._m_idleFrame
     );
 
