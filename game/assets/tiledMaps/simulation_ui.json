@@ -68,8 +68,8 @@
                  "type":"image",
                  "visible":true,
                  "width":211,
-                 "x":30.1666666666667,
-                 "y":271.333333333333
+                 "x":30.1667,
+                 "y":271.333
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -127,8 +127,8 @@
                  "type":"uiImageButton",
                  "visible":true,
                  "width":42,
-                 "x":660,
-                 "y":134
+                 "x":634.5,
+                 "y":134.318181818182
                 }, 
                 {
                  "gid":16,
@@ -175,8 +175,8 @@
                  "type":"uiImageButton",
                  "visible":true,
                  "width":42,
-                 "x":710.167,
-                 "y":133.5
+                 "x":684.667,
+                 "y":133.818181818182
                 }, 
                 {
                  "gid":15,
@@ -223,8 +223,8 @@
                  "type":"uiImageButton",
                  "visible":true,
                  "width":42,
-                 "x":757,
-                 "y":132.833
+                 "x":731.5,
+                 "y":133.151181818182
                 }, 
                 {
                  "gid":11,
@@ -271,8 +271,8 @@
                  "type":"uiImageButton",
                  "visible":true,
                  "width":42,
-                 "x":709,
-                 "y":182.333
+                 "x":683.5,
+                 "y":182.651181818182
                 }, 
                 {
                  "gid":20,
@@ -317,8 +317,8 @@
                  "type":"uiLabel",
                  "visible":true,
                  "width":83,
-                 "x":106.666666666667,
-                 "y":131.666666666667
+                 "x":106.667,
+                 "y":131.667
                 }, 
                 {
                  "gid":19,
@@ -340,8 +340,8 @@
                  "type":"uiSlider",
                  "visible":true,
                  "width":207,
-                 "x":106.666666666667,
-                 "y":184.416666666667
+                 "x":106.667,
+                 "y":184.417
                 }, 
                 {
                  "height":19,
@@ -374,8 +374,8 @@
                  "type":"uiLabel",
                  "visible":true,
                  "width":83,
-                 "x":106.333333333333,
-                 "y":69.7500333333333
+                 "x":106.333,
+                 "y":69.75
                 }, 
                 {
                  "gid":19,
@@ -397,8 +397,8 @@
                  "type":"uiSlider",
                  "visible":true,
                  "width":207,
-                 "x":106.333333333333,
-                 "y":123.750033333333
+                 "x":106.333,
+                 "y":123.75
                 }, 
                 {
                  "height":38,
@@ -444,7 +444,7 @@
                  "visible":true,
                  "width":26.1667,
                  "x":25.0833,
-                 "y":260.582666666667
+                 "y":260.583
                 }, 
                 {
                  "height":38,
@@ -477,9 +477,9 @@
                     },
                  "type":"bitmapText",
                  "visible":true,
-                 "width":169,
-                 "x":866.167,
-                 "y":58.1667
+                 "width":65.2499999999999,
+                 "x":876.292,
+                 "y":57.5417
                 }, 
                 {
                  "height":38,
@@ -513,8 +513,43 @@
                  "type":"bitmapText",
                  "visible":true,
                  "width":169,
-                 "x":686.667,
-                 "y":55.3333
+                 "x":660.917,
+                 "y":57.4014818181818
+                }, 
+                {
+                 "height":38,
+                 "id":37,
+                 "name":"",
+                 "properties":[
+                        {
+                         "name":"font_color",
+                         "type":"color",
+                         "value":"#ffffe033"
+                        }, 
+                        {
+                         "name":"font_key",
+                         "type":"string",
+                         "value":"odin_rounded"
+                        }, 
+                        {
+                         "name":"font_size",
+                         "type":"int",
+                         "value":25
+                        }],
+                 "rotation":0,
+                 "text":
+                    {
+                     "color":"#ffe033",
+                     "fontfamily":"Odin Rounded",
+                     "pixelsize":27,
+                     "text":"Info",
+                     "wrap":true
+                    },
+                 "type":"bitmapText",
+                 "visible":true,
+                 "width":48.3333333333334,
+                 "x":809.375,
+                 "y":58.0568181818182
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -572,8 +607,8 @@
                  "type":"uiImageButton",
                  "visible":true,
                  "width":42,
-                 "x":871.334,
-                 "y":134.167
+                 "x":879.834,
+                 "y":134.417
                 }, 
                 {
                  "height":34.3333,
@@ -609,6 +644,54 @@
                  "width":83,
                  "x":389.167,
                  "y":49
+                }, 
+                {
+                 "gid":13,
+                 "height":42,
+                 "id":36,
+                 "name":"infoButton",
+                 "properties":[
+                        {
+                         "name":"frame",
+                         "type":"string",
+                         "value":"info_idle.png"
+                        }, 
+                        {
+                         "name":"frame_hover",
+                         "type":"string",
+                         "value":"info_hover.png"
+                        }, 
+                        {
+                         "name":"frame_hover_idx",
+                         "type":"int",
+                         "value":0
+                        }, 
+                        {
+                         "name":"frame_idx",
+                         "type":"int",
+                         "value":0
+                        }, 
+                        {
+                         "name":"frame_press",
+                         "type":"string",
+                         "value":"info_press.png"
+                        }, 
+                        {
+                         "name":"frame_press_idx",
+                         "type":"int",
+                         "value":0
+                        }, 
+                        {
+                         "name":"texture",
+                         "type":"string",
+                         "value":"game_art"
+                        }],
+                 "rotation":0,
+                 "type":"uiImageButton",
+                 "visible":true,
+                 "width":42,
+                 "x":805.424242424242,
+                 "y":134.393939393939
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -617,7 +700,7 @@
          "y":0
         }],
  "nextlayerid":6,
- "nextobjectid":35,
+ "nextobjectid":38,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.4.2",
@@ -635,7 +718,7 @@
          "margin":0,
          "name":"space_art",
          "spacing":0,
-         "tilecount":23,
+         "tilecount":24,
          "tileheight":768,
          "tiles":[
                 {
@@ -775,6 +858,12 @@
                  "image":"..\/images\/game_art\/force_box.png",
                  "imageheight":45,
                  "imagewidth":211
+                }, 
+                {
+                 "id":26,
+                 "image":"..\/images\/game_art\/info_hover.png",
+                 "imageheight":42,
+                 "imagewidth":42
                 }],
          "tilewidth":1024
         }],

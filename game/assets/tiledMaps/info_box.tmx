@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.4" tiledversion="1.4.2" orientation="orthogonal" renderorder="right-down" width="64" height="48" tilewidth="16" tileheight="16" infinite="0" nextlayerid="3" nextobjectid="8">
+ <editorsettings>
+  <export target="info_box.json" format="json"/>
+ </editorsettings>
+ <tileset firstgid="1" name="game_art" tilewidth="196" tileheight="224" tilecount="4" columns="0">
+  <grid orientation="orthogonal" width="1" height="1"/>
+  <tile id="0">
+   <image width="196" height="224" source="../images/game_art/android.png"/>
+  </tile>
+  <tile id="1">
+   <image width="134" height="54" source="../images/game_art/back_normal.png"/>
+  </tile>
+  <tile id="2">
+   <image width="134" height="54" source="../images/game_art/close_normal.png"/>
+  </tile>
+  <tile id="3">
+   <image width="134" height="54" source="../images/game_art/next_normal.png"/>
+  </tile>
+ </tileset>
+ <objectgroup id="2" name="elements">
+  <object id="1" name="android" type="image" gid="1" x="793.132" y="688.752" width="196" height="224">
+   <properties>
+    <property name="frame" value="android.png"/>
+   </properties>
+  </object>
+  <object id="2" name="back" type="uiImageButton" gid="2" x="448" y="687" width="134" height="54">
+   <properties>
+    <property name="frame" value="back_normal.png"/>
+    <property name="frame_hover" value="back_hover.png"/>
+    <property name="frame_press" value="back_hover.png"/>
+    <property name="texture" value="game_art"/>
+   </properties>
+  </object>
+  <object id="3" name="next" type="uiImageButton" gid="4" x="608" y="687" width="134" height="54">
+   <properties>
+    <property name="frame" value="next_normal.png"/>
+    <property name="frame_hover" value="next_hover.png"/>
+    <property name="frame_press" value="next_hover.png"/>
+    <property name="texture" value="game_art"/>
+   </properties>
+  </object>
+  <object id="5" name="close" type="uiImageButton" gid="3" x="288" y="687" width="134" height="54">
+   <properties>
+    <property name="frame" value="close_normal.png"/>
+    <property name="frame_hover" value="close_hover.png"/>
+    <property name="frame_press" value="close_hover.png"/>
+    <property name="texture" value="game_art"/>
+   </properties>
+  </object>
+  <object id="6" name="textPosition" type="point" x="511" y="437">
+   <point/>
+  </object>
+  <object id="7" name="imagePosition" type="point" x="511" y="211">
+   <point/>
+  </object>
+ </objectgroup>
+</map>

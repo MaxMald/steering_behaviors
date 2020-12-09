@@ -8,7 +8,10 @@
  * @since August-30-2020
  */
 
+import { ST_MANAGER_ID } from "../commons/stEnums";
 import { Ty_Image } from "../commons/stTypes";
+import { UIManager } from "../managers/uiManager/uiManager";
+import { Master } from "../master/master";
 
 /**
  * Preload test assets and start pilot level.
@@ -104,6 +107,22 @@ extends Phaser.Scene
     (
       "simulation_ui",
       "tiledMaps/simulation_ui.json"
+    );
+
+    this.load.tilemapTiledJSON
+    (
+      "info_box",
+      "tiledMaps/info_box.json"
+    );
+
+    /****************************************************/
+    /* Text                                             */
+    /****************************************************/
+
+    this.load.text
+    (
+      "infoBox",
+      "infoBox/infoBox.json"
     );
 
     ///////////////////////////////////
@@ -208,6 +227,8 @@ extends Phaser.Scene
   : void
   {
 
+    this.onLoadComplete();
+
     this.loadingBar.setVisible(false);
     this.loadingBar.setActive(false);
 
@@ -246,6 +267,21 @@ extends Phaser.Scene
   {
 
     this.startButton.setScale(0.8, 0.8);
+
+    return;
+
+  }
+
+  onLoadComplete()
+  : void
+  {
+
+    const master = Master.GetInstance();
+
+    // UI Manager callback
+
+    const uiManager = master.getManager<UIManager>(ST_MANAGER_ID.kUIManager);
+    uiManager.onAssetLoadingComplete(this.game);
 
     return;
 

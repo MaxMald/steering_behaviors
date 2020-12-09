@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.4" tiledversion="1.4.2" orientation="orthogonal" renderorder="right-down" width="64" height="48" tilewidth="16" tileheight="16" infinite="0" nextlayerid="6" nextobjectid="35">
+<map version="1.4" tiledversion="1.4.2" orientation="orthogonal" renderorder="right-down" width="64" height="48" tilewidth="16" tileheight="16" infinite="0" nextlayerid="6" nextobjectid="38">
  <editorsettings>
   <export target="simulation_ui.json" format="json"/>
  </editorsettings>
- <tileset firstgid="1" name="space_art" tilewidth="1024" tileheight="768" tilecount="23" columns="0">
+ <tileset firstgid="1" name="space_art" tilewidth="1024" tileheight="768" tilecount="24" columns="0">
   <grid orientation="orthogonal" width="1" height="1"/>
   <tile id="0">
    <image width="1024" height="768" source="../images/bg_space_01.png"/>
@@ -74,6 +74,9 @@
   <tile id="25">
    <image width="211" height="45" source="../images/game_art/force_box.png"/>
   </tile>
+  <tile id="26">
+   <image width="42" height="42" source="../images/game_art/info_hover.png"/>
+  </tile>
  </tileset>
  <objectgroup id="5" name="BG">
   <object id="31" type="image" gid="23" x="21" y="218" width="978" height="212">
@@ -88,7 +91,7 @@
   </object>
  </objectgroup>
  <objectgroup id="3" name="SimulationButtons">
-  <object id="6" name="simStop" type="uiImageButton" gid="17" x="660" y="134" width="42" height="42">
+  <object id="6" name="simStop" type="uiImageButton" gid="17" x="634.5" y="134.318" width="42" height="42">
    <properties>
     <property name="frame" value="stop_but_normal.png"/>
     <property name="frame_hover" value="stop_but_hover.png"/>
@@ -96,7 +99,7 @@
     <property name="texture" value="game_art"/>
    </properties>
   </object>
-  <object id="7" name="simPlay" type="uiImageButton" gid="16" x="710.167" y="133.5" width="42" height="42">
+  <object id="7" name="simPlay" type="uiImageButton" gid="16" x="684.667" y="133.818" width="42" height="42">
    <properties>
     <property name="frame" value="play_but_normal.png"/>
     <property name="frame_hover" value="play_but_hover.png"/>
@@ -104,7 +107,7 @@
     <property name="texture" value="game_art"/>
    </properties>
   </object>
-  <object id="8" name="simPause" type="uiImageButton" gid="15" x="757" y="132.833" width="42" height="42">
+  <object id="8" name="simPause" type="uiImageButton" gid="15" x="731.5" y="133.151" width="42" height="42">
    <properties>
     <property name="frame" value="pause_but_normal.png"/>
     <property name="frame_hover" value="pause_but_hover.png"/>
@@ -112,7 +115,7 @@
     <property name="texture" value="game_art"/>
    </properties>
   </object>
-  <object id="9" name="simDebug" type="uiImageButton" gid="11" x="709" y="182.333" width="42" height="42">
+  <object id="9" name="simDebug" type="uiImageButton" gid="11" x="683.5" y="182.651" width="42" height="42">
    <properties>
     <property name="frame" value="debug_idle.png"/>
     <property name="frame_hover" value="debug_hover.png"/>
@@ -158,7 +161,7 @@
    <text fontfamily="Supercomputer" pixelsize="24" wrap="1" color="#ffe033">Ship Name</text>
   </object>
   <object id="25" name="force_area" type="rectangle" x="25.0833" y="260.583" width="26.1667" height="17.6667"/>
-  <object id="27" type="bitmapText" x="866.167" y="58.1667" width="169" height="38">
+  <object id="27" type="bitmapText" x="876.292" y="57.5417" width="65.25" height="38">
    <properties>
     <property name="font_color" type="color" value="#ffffe033"/>
     <property name="font_key" value="odin_rounded"/>
@@ -166,7 +169,7 @@
    </properties>
    <text fontfamily="Odin Rounded" pixelsize="27" wrap="1" color="#ffe033">Menu</text>
   </object>
-  <object id="28" type="bitmapText" x="686.667" y="55.3333" width="169" height="38">
+  <object id="28" type="bitmapText" x="660.917" y="57.4015" width="169" height="38">
    <properties>
     <property name="font_color" type="color" value="#ffffe033"/>
     <property name="font_key" value="odin_rounded"/>
@@ -174,9 +177,17 @@
    </properties>
    <text fontfamily="Odin Rounded" pixelsize="27" wrap="1" color="#ffe033">Simulation</text>
   </object>
+  <object id="37" type="bitmapText" x="809.375" y="58.0568" width="48.3333" height="38">
+   <properties>
+    <property name="font_color" type="color" value="#ffffe033"/>
+    <property name="font_key" value="odin_rounded"/>
+    <property name="font_size" type="int" value="25"/>
+   </properties>
+   <text fontfamily="Odin Rounded" pixelsize="27" wrap="1" color="#ffe033">Info</text>
+  </object>
  </objectgroup>
  <objectgroup id="4" name="SceneButtons">
-  <object id="12" name="menuButton" type="uiImageButton" gid="12" x="871.334" y="134.167" width="42" height="42">
+  <object id="12" name="menuButton" type="uiImageButton" gid="12" x="879.834" y="134.417" width="42" height="42">
    <properties>
     <property name="frame" value="home_idle.png"/>
     <property name="frame_hover" value="home_hover.png"/>
@@ -191,6 +202,14 @@
     <property name="font_size" type="int" value="18"/>
    </properties>
    <text fontfamily="Odin Rounded" pixelsize="19" wrap="1" color="#a7edeb">Speed</text>
+  </object>
+  <object id="36" name="infoButton" type="uiImageButton" gid="13" x="805.424" y="134.394" width="42" height="42">
+   <properties>
+    <property name="frame" value="info_idle.png"/>
+    <property name="frame_hover" value="info_hover.png"/>
+    <property name="frame_press" value="info_press.png"/>
+    <property name="texture" value="game_art"/>
+   </properties>
   </object>
  </objectgroup>
 </map>

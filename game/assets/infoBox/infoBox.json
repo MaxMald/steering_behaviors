@@ -1,0 +1,34 @@
+{
+
+  "books": [
+
+    {
+
+      "name": "seek",
+      "pages": [
+
+        {
+          "text": "Hello darkness my old friend.",
+          "texture": "",
+          "frame": "blueShip.png"
+        },
+
+        {
+          "text": "I've come to talk with you again",
+          "texture": "game_art",
+          "frame": "redShip.png"
+        },
+
+        {
+          "text": "Because a vision softly creeping",
+          "texture": "game_art",
+          "frame": "planetAsset 5.png"
+        }
+
+      ]
+
+    }
+
+  ]
+
+}

@@ -492,6 +492,16 @@ import { UIObject } from "./uiObject";
 
   }
 
+  setZ(_z: number)
+  : void
+  {
+
+    this._m_button.setDepth(_z);
+
+    return;
+
+  }
+
   /**
    * Move the UI Object an amount.
    * 

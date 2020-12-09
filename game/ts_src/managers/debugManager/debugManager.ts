@@ -219,7 +219,7 @@ implements IManager
 
     this._m_graphic = _scene.add.graphics();
 
-    this._m_graphic.setDepth(1000);
+    this._m_graphic.setDepth(2);
 
     return;
   }  
