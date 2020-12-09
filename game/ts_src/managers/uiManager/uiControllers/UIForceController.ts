@@ -307,6 +307,25 @@ export class UIForceController
 
   }
 
+  /**
+   * Triggered whe the simulation had been stop. Called by the UIManager.
+   */
+  onSimulationStop()
+  : void 
+  {
+
+    // Actor Mass.
+
+    this._ui_massSlider.setValue(this._m_forceController.getInitMass());
+
+    // Actor Max Speed.
+
+    this._ui_maxSpeedSlider.setValue(this._m_forceController.getInitMaxSpeed());
+    
+    return;
+
+  }
+
   disableUI()
   : void
   {
