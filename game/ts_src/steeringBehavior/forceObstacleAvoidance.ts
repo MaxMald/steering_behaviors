@@ -180,7 +180,7 @@ implements IForce
       sprite.x,
       sprite.y,
       this._m_avoidanceRadius,
-      2,
+      DebugManager.FORCE_CIRCLE_WIDTH,
       ST_COLOR_ID.kPurple
     );
   }

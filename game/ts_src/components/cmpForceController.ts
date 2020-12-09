@@ -15,6 +15,7 @@ import { DebugManager } from "../managers/debugManager/debugManager";
 import { SimulationManager } from "../managers/simulationManager/simulationManager";
 import { Master } from "../master/master";
 import { IForce } from "../steeringBehavior/iForce";
+import { ActorInitState } from "./actorInitState";
 import { IBaseComponent } from "./iBaseComponent";
 
 /**
@@ -30,6 +31,16 @@ implements IBaseComponent<Ty_Sprite>
 
   constructor()
   {
+
+    // Get Managers
+
+    const master = Master.GetInstance();
+
+    this._m_simulationManager = master.getManager<SimulationManager>
+    (
+      ST_MANAGER_ID.kSimManager
+    );
+    
     // No actor attached.
 
     this._m_actor = null;
@@ -59,6 +70,8 @@ implements IBaseComponent<Ty_Sprite>
     this._m_debug = false;
 
     this._m_maxSpeed = 1.0;
+
+    this._m_actorInitState = new ActorInitState();
     
     return;
   }
@@ -100,10 +113,7 @@ implements IBaseComponent<Ty_Sprite>
     ////////////////////////////////////
     // Simulation State
 
-    const simulationManager = this._m_master.getManager<SimulationManager>
-    (
-      ST_MANAGER_ID.kSimManager
-    );
+    const simulationManager = this._m_simulationManager;
 
     if(simulationManager.getState() === ST_SIM_SATE.kRunning)
     {
@@ -280,6 +290,7 @@ implements IBaseComponent<Ty_Sprite>
       case ST_MESSAGE_ID.kSetMass:
 
       this.setMass(_obj as number);
+
       return;
 
       case ST_MESSAGE_ID.kSetSpeed:
@@ -290,6 +301,7 @@ implements IBaseComponent<Ty_Sprite>
       case ST_MESSAGE_ID.kSetMaxSpeed:
 
       this.setMaxSpeed(_obj as number);
+
       return;
     }
     return;
@@ -346,6 +358,10 @@ implements IBaseComponent<Ty_Sprite>
     this._m_totalForceStepped.reset();
 
     this._m_direction.set(0.0, -1.0);
+
+    this.setMaxSpeed(this._m_actorInitState._m_initMaxSpeed);
+
+    this.setMass(this._m_actorInitState._m_initMass);
 
     return;
   }
@@ -515,6 +531,11 @@ implements IBaseComponent<Ty_Sprite>
 
       this._m_maxSpeed *= (_maxSpeed > 0 ? 1 : -1);
     }
+
+    if(this._m_simulationManager.getState() === ST_SIM_SATE.kStopped)
+    {
+      this._m_actorInitState._m_initMaxSpeed = this._m_maxSpeed;
+    }
     return;
   }
 
@@ -525,6 +546,15 @@ implements IBaseComponent<Ty_Sprite>
   : number
   {
     return this._m_maxSpeed;
+  }
+
+  /**
+   * Get the actor's initial max speed (pixels per second).
+   */
+  getInitMaxSpeed()
+  : number
+  {
+    return this._m_actorInitState._m_initMaxSpeed;
   }
 
   /**
@@ -549,6 +579,15 @@ implements IBaseComponent<Ty_Sprite>
   }
 
   /**
+   * Get the actor's initial mass.
+   */
+  getInitMass()
+  : number
+  {
+    return this._m_actorInitState._m_initMass;
+  }
+
+  /**
    * Set the actor's mass. If the given mass is equal to 0, it will be
    * overwritten by the value of 0.001.
    * 
@@ -567,6 +606,12 @@ implements IBaseComponent<Ty_Sprite>
     {
       this._m_mass = 0.001;
     }
+
+    if(this._m_simulationManager.getState() === ST_SIM_SATE.kStopped)
+    {
+      this._m_actorInitState._m_initMass = this._m_mass;
+    }
+
     return;
   }
 
@@ -817,4 +862,14 @@ implements IBaseComponent<Ty_Sprite>
    * Reference to the debug manager.
    */
   private _m_debugManager : DebugManager;
+
+  /**
+   * Reference to the simulation manager.
+   */
+  private _m_simulationManager: SimulationManager;
+
+  /**
+   * TODO Accurate description
+   */
+  private _m_actorInitState : ActorInitState;
 }

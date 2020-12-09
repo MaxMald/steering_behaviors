@@ -9,8 +9,11 @@
  */
 
 import { BaseActor } from "../actors/baseActor";
-import { ST_COMPONENT_ID, ST_MESSAGE_ID } from "../commons/stEnums";
+import { ST_COMPONENT_ID, ST_MANAGER_ID, ST_MESSAGE_ID, ST_SIM_SATE } from "../commons/stEnums";
 import { Ty_Sprite, V2 } from "../commons/stTypes";
+import { SimulationManager } from "../managers/simulationManager/simulationManager";
+import { Master } from "../master/master";
+import { ActorInitState } from "./actorInitState";
 import { IBaseComponent } from "./iBaseComponent";
 
 export class CmpSpriteController
@@ -29,6 +32,17 @@ implements IBaseComponent<Ty_Sprite>
   : void 
   {
     this._m_sprite = _actor.getWrappedInstance();
+
+    // Get Managers
+
+    const master = Master.GetInstance();
+
+    this._m_simulationManager = master.getManager<SimulationManager>
+    (
+      ST_MANAGER_ID.kSimManager
+    );
+
+    this._m_actorInitState = new ActorInitState();
     
     return;
   }
@@ -56,6 +70,11 @@ implements IBaseComponent<Ty_Sprite>
       {
         let v2 : V2 = _obj as V2;
         this.setPosition(v2.x, v2.y);
+      }
+
+      if(this._m_simulationManager.getState() === ST_SIM_SATE.kStopped)
+      {
+        this._m_actorInitState._m_initPosition = _obj as V2;
       }
       return;
 
@@ -193,6 +212,11 @@ implements IBaseComponent<Ty_Sprite>
   onSimulationStop()
   : void 
   {
+    this.setPosition
+    (
+      this._m_actorInitState._m_initPosition.x,
+      this._m_actorInitState._m_initPosition.y
+    );
     return;
   }
 
@@ -233,4 +257,14 @@ implements IBaseComponent<Ty_Sprite>
    * Attached sprite.
    */
   private _m_sprite : Ty_Sprite;
+
+  /**
+   * TODO Accurate description
+   */
+  private _m_actorInitState : ActorInitState;
+
+  /**
+   * Reference to the simulation manager.
+   */
+  private _m_simulationManager: SimulationManager;
 }

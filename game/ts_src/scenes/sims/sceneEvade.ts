@@ -185,6 +185,11 @@ export class SceneEvade
 
     uiManager.setTarget(blueShip);
 
+    ///////////////////////////////////
+    // Set simulation to stop state
+ 
+    this._m_master.stopSimulation();
+
     return;
 
   }
