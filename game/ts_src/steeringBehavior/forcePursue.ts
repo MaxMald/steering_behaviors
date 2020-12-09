@@ -191,7 +191,7 @@ implements IForce
       self.y,
       self.x + desireVelocity.x,
       self.y + desireVelocity.y,
-      1,
+      DebugManager.FORCE_LINE_WIDTH,
       ST_COLOR_ID.kBlack
     );
 
@@ -205,7 +205,7 @@ implements IForce
       self.y + actualVelocity.y,
       self.x + desireVelocity.x,
       self.y + desireVelocity.y,
-      1,
+      DebugManager.FORCE_LINE_WIDTH,
       ST_COLOR_ID.kRed 
     );
 
@@ -216,7 +216,7 @@ implements IForce
       this._m_targetPosition.x,
       this._m_targetPosition.y,
       5,
-      5,
+      DebugManager.FORCE_CIRCLE_WIDTH,
       ST_COLOR_ID.kOrange 
     );
 
