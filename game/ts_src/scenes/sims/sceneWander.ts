@@ -116,9 +116,9 @@ extends Phaser.Scene
     uiManager.setTarget(shipActor);
     
     ///////////////////////////////////
-    // Active Debugging
-    
-    this._m_master.enableDebugging();
+    // Set simulation to stop state
+ 
+    this._m_master.stopSimulation();
     
     return;
 

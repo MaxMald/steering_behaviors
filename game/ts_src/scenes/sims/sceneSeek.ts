@@ -193,7 +193,7 @@ import { SeekForce } from "../../steeringBehavior/forceSeek";
     uiManager.setTarget(blueShip);
 
     ///////////////////////////////////
-     // Active Debugging
+    // Set simulation to stop state
  
      this._m_master.stopSimulation();
  

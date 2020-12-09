@@ -150,9 +150,9 @@ import { FollowPathForce } from "../../steeringBehavior/forceFollowPath";
     uiManager.setTarget(blueShip);
 
     ///////////////////////////////////
-     // Active Debugging
+    // Set simulation to stop state
  
-     this._m_master.enableDebugging();
+    this._m_master.stopSimulation();
  
      return;
    }
