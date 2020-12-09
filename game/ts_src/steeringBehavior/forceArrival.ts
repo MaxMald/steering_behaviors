@@ -193,7 +193,7 @@ implements IForce
       this._m_controller.getVelocity().y + sprite.y,
       this._m_v2_desiredVelocity.x + sprite.x,
       this._m_v2_desiredVelocity.y + sprite.y,
-      3,
+      DebugManager.FORCE_LINE_WIDTH,
       ST_COLOR_ID.kRed
     );
 
@@ -205,7 +205,7 @@ implements IForce
       sprite.y,
       this._m_v2_desiredVelocity.x + sprite.x,
       this._m_v2_desiredVelocity.y + sprite.y,
-      3,
+      DebugManager.FORCE_LINE_WIDTH,
       ST_COLOR_ID.kBlack
     );
 
@@ -216,7 +216,7 @@ implements IForce
       target.x,
       target.y,
       this._m_slowingRadius,
-      2,
+      DebugManager.FORCE_CIRCLE_WIDTH,
       ST_COLOR_ID.kPurple
     );
 

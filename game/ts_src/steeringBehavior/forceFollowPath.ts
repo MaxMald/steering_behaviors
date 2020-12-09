@@ -247,7 +247,7 @@ implements IForce
       self.y + actualVelocity.y,
       self.x + actualVelocity.x + forceToPath.x,
       self.y + actualVelocity.y + forceToPath.y,
-      2,
+      DebugManager.FORCE_LINE_WIDTH,
       ST_COLOR_ID.kYellow 
     );
 
@@ -258,7 +258,7 @@ implements IForce
       self.x,
       self.y,
       this._m_radius,
-      1,
+      DebugManager.FORCE_CIRCLE_WIDTH,
       ST_COLOR_ID.kWhite
     );
     

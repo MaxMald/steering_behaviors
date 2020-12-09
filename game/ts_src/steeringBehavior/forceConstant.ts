@@ -209,8 +209,8 @@ implements IForce
       self.y,
       self.x + desireVelocity.x,
       self.y + desireVelocity.y,
-      1,
-      ST_COLOR_ID.kBlack
+      DebugManager.FORCE_LINE_WIDTH,
+      ST_COLOR_ID.kOrange
     );
 
     // Debug steer force.
@@ -223,7 +223,7 @@ implements IForce
       self.y + actualVelocity.y,
       self.x + desireVelocity.x,
       self.y + desireVelocity.y,
-      1,
+      DebugManager.FORCE_LINE_WIDTH,
       ST_COLOR_ID.kRed 
     );
 
