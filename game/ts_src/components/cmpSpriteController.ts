@@ -42,7 +42,7 @@ implements IBaseComponent<Ty_Sprite>
       ST_MANAGER_ID.kSimManager
     );
 
-    this._m_actorInitState = new ActorInitState;
+    this._m_actorInitState = new ActorInitState();
     
     return;
   }

@@ -71,7 +71,7 @@ implements IBaseComponent<Ty_Sprite>
 
     this._m_maxSpeed = 1.0;
 
-    this._m_actorInitState = new ActorInitState;
+    this._m_actorInitState = new ActorInitState();
     
     return;
   }
