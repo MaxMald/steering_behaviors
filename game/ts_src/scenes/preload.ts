@@ -138,41 +138,21 @@ extends Phaser.Scene
       "infoBox/infoBox.json"
     );
 
-    ///////////////////////////////////
-    // Scene
+    /****************************************************/
+    /* Loading Scene                                    */
+    /****************************************************/
 
     const hWidth = this.game.canvas.width * 0.5;
 
     const hHeight = this.game.canvas.height * 0.5;
 
-    // Space Background
+    ///////////////////////////////////
+    // Background
     
     this.add.image(hWidth, hHeight,'loading_bg');
 
-    // Space Ship
-
-    const spaceShip = this.add.image
-    (
-      hWidth, 
-      300, 
-      "loading_ui", 
-      "loading_ship.png"
-    );
-
-    this.add.tween
-    (
-      {
-        targets: spaceShip,
-        y: 250,
-        ease: "Quad.easeInOut",
-        duration: 3000,
-        yoyo: true,
-        repeat: -1
-      }
-    );
-
-
-    // Loading Bar
+    ///////////////////////////////////
+    // Loading Bar BG
 
     const barBG = this.add.image
     (
@@ -184,6 +164,9 @@ extends Phaser.Scene
 
     this.loadingBarBG = barBG;
 
+    ///////////////////////////////////
+    // Loading Bar
+
     const bar = this.add.image
     (
       hWidth,
@@ -192,9 +175,13 @@ extends Phaser.Scene
       "loading_bar.png"
     );
 
-    bar.scaleX = 0.0;
-
     this.loadingBar = bar;
+
+    // Loading Bar Rectangle
+
+    this.loadingCropRect = new Phaser.Geom.Rectangle(0, 0, 0, bar.height);
+
+    bar.setCrop(this.loadingCropRect);
 
     // Start Button
 
@@ -217,6 +204,8 @@ extends Phaser.Scene
 
     this.startButton = start;
 
+    this.onOutStart();
+
     // Callbacks
 
     this.load.on('progress', this.updateBar, this);
@@ -230,7 +219,13 @@ extends Phaser.Scene
   : void
   {
 
-    this.loadingBarBG.scaleX = this.load.progress;
+    const rect = this.loadingCropRect;
+
+    const bar = this.loadingBar;
+
+    rect.width = this.load.progress * bar.width;
+
+    bar.setCrop(rect);
 
     return;
 
@@ -299,6 +294,8 @@ extends Phaser.Scene
     return;
 
   }
+
+  loadingCropRect: Phaser.Geom.Rectangle;
 
   loadingBarBG: Ty_Image;
 

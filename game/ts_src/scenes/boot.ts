@@ -39,7 +39,7 @@ extends Phaser.Scene
     this.load.image
     (
       'loading_bg',
-      'images/loading/loading_bg.jpg'
+      'images/loading/loading_bg.png'
     );
 
     return;
