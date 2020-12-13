@@ -66,8 +66,8 @@
    </properties>
   </object>
  </objectgroup>
- <objectgroup id="4" name="Logo" locked="1">
-  <object id="3" type="image" gid="3" x="292.5" y="256" width="429" height="229">
+ <objectgroup id="4" name="Logo">
+  <object id="3" name="game_logo" type="image" gid="3" x="292.5" y="256" width="429" height="229">
    <properties>
     <property name="frame" value="game_logo.png"/>
     <property name="texture" value="menu_art"/>

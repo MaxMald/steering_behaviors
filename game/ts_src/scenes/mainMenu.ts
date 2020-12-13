@@ -14,7 +14,6 @@ import { MapScene } from "../gameScene/mapScene";
 import { MotionImage } from "../gameScene/motionImage";
 import { AmbienceManager } from "../managers/ambienceManager/ambienceManager";
 import { UIGroup } from "../managers/uiManager/uiGroup";
-import { UIManager } from "../managers/uiManager/uiManager";
 import { UIMenuButton } from "../managers/uiManager/uiMenuButton";
 import { UIObject } from "../managers/uiManager/uiObject";
 import { Master } from "../master/master";
@@ -44,7 +43,23 @@ extends Phaser.Scene
 
     // Create assets from tiled map
 
-    const mapScene : MapScene = MapScene.CreateFromTiledMap("main_menu", this);    
+    const mapScene : MapScene = MapScene.CreateFromTiledMap("main_menu", this);
+
+    /****************************************************/
+    /* Game Logo Animation                              */
+    /****************************************************/
+
+    const gameLogo: Ty_Image = mapScene.getObject<Ty_Image>("game_logo");
+
+    this.tweens.add
+    (
+      {
+        targets: gameLogo,
+        y: {from: -gameLogo.height * 0.5, to: gameLogo.y},
+        ease: "Cubic.easeOut",
+        duration: 2500
+      }
+    );
 
     /****************************************************/
     /* Scene Particles                                  */
@@ -512,7 +527,7 @@ extends Phaser.Scene
         {
 
           // Es necesario llamar el callback del Ambience Manager, pues los
-          // motion images Se registran dentro del UI Manager.
+          // motion images Se registran dentro del UI Ambience.
 
           this._m_ambienceManager.onSimulationSceneDestroy(this);
 
@@ -526,18 +541,6 @@ extends Phaser.Scene
 
     }
     
-    return;
-
-  }
-
-  private _updateMotionImage(_image: MotionImage)
-  : void
-  {
-
-    _image.update();
-
-    
-
     return;
 
   }
