@@ -15,10 +15,8 @@ import { SceneUIFactory } from "../../factories/uiSceneFactory";
 import { MapScene } from "../../gameScene/mapScene";
 import { AmbienceManager } from "../../managers/ambienceManager/ambienceManager";
 import { SimulationManager } from "../../managers/simulationManager/simulationManager";
-import { UIButtonImg } from "../../managers/uiManager/uiButtonImg";
 import { UIInfoBox } from "../../managers/uiManager/uiControllers/UIInfoBox";
 import { UIManager } from "../../managers/uiManager/uiManager";
-import { UIObject } from "../../managers/uiManager/uiObject";
 import { Master } from "../../master/master";
 import { ForceConstant } from "../../steeringBehavior/forceConstant";
 import { SeekForce } from "../../steeringBehavior/forceSeek";
@@ -34,6 +32,10 @@ import { SeekForce } from "../../steeringBehavior/forceSeek";
    create()
    : void
    {    
+
+    // Camera fade in
+
+    this.cameras.main.fadeIn(500, 0, 0, 0, );
  
      ///////////////////////////////////
      // Master Manager

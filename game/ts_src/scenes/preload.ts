@@ -75,6 +75,13 @@ extends Phaser.Scene
       "images/game_art/game_art.js"
     );
 
+    this.load.atlas
+    (
+      'menu_art',
+      "images/game_menu/menu_art.png",
+      "images/game_menu/menu_art.js"
+    );
+
     /****************************************************/
     /* Bitmap Fonts                                     */
     /****************************************************/
@@ -113,6 +120,12 @@ extends Phaser.Scene
     (
       "info_box",
       "tiledMaps/info_box.json"
+    );
+
+    this.load.tilemapTiledJSON
+    (
+      "main_menu",
+      "tiledMaps/main_menu.json"
     );
 
     /****************************************************/
@@ -246,7 +259,7 @@ extends Phaser.Scene
   : void
   {
     
-    this.scene.start('main_menu');
+    this.scene.start('logo');
 
     return;
 

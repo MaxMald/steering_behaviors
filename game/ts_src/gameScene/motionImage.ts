@@ -26,7 +26,7 @@ extends Phaser.GameObjects.Image
     return;
 
   }
-
+  
   update()
   : void
   {

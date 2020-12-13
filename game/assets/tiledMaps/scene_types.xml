@@ -40,6 +40,13 @@
   <property name="font_key" type="string"/>
   <property name="font_size" type="int" default="16"/>
  </objecttype>
+ <objecttype name="uiMenuButton" color="#a0a0a4">
+  <property name="fill_color" type="color" default="#ffffffff"/>
+  <property name="font_color" type="color" default="#ffffffff"/>
+  <property name="frame" type="string"/>
+  <property name="label" type="string"/>
+  <property name="texture" type="string"/>
+ </objecttype>
  <objecttype name="uiSlider" color="#a0a0a4">
   <property name="max_value" type="float" default="0"/>
   <property name="min_value" type="float" default="0"/>
