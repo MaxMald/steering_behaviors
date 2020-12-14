@@ -8,19 +8,19 @@
       "pages": [
 
         {
-          "text": "Hello darkness my old friend.",
+          "text": "Texto 1.",
           "texture": "",
           "frame": "blueShip.png"
         },
 
         {
-          "text": "I've come to talk with you again",
+          "text": "Texto 2",
           "texture": "game_art",
           "frame": "redShip.png"
         },
 
         {
-          "text": "Because a vision softly creeping",
+          "text": "Texto 3",
           "texture": "game_art",
           "frame": "planetAsset 5.png"
         }

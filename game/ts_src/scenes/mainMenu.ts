@@ -11,7 +11,6 @@
 import { ST_MANAGER_ID } from "../commons/stEnums";
 import { Ty_Image } from "../commons/stTypes";
 import { MapScene } from "../gameScene/mapScene";
-import { MotionImage } from "../gameScene/motionImage";
 import { AmbienceManager } from "../managers/ambienceManager/ambienceManager";
 import { UIGroup } from "../managers/uiManager/uiGroup";
 import { UIMenuButton } from "../managers/uiManager/uiMenuButton";
