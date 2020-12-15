@@ -14,11 +14,14 @@ import
 {
   ST_COLOR_ID, 
   ST_MANAGER_ID, 
+  ST_SIM_SATE, 
   ST_STEER_FORCE 
 } from "../commons/stEnums";
 import { Ty_Sprite, V2 } from "../commons/stTypes";
 import { CmpForceController } from "../components/cmpForceController";
 import { IForce } from "./iForce";
+import { SimulationManager } from "../managers/simulationManager/simulationManager";
+import { forceInitState } from "./forceInitState";
 
 /**
  * 
@@ -64,6 +67,17 @@ implements IForce
     this._m_v2_desiredVelocity = new Phaser.Math.Vector2(0.0, 0.0);
 
     this._m_v2_arrivalForce = new Phaser.Math.Vector2(0.0, 0.0);
+
+    // Get Managers
+
+    const master = Master.GetInstance();
+
+    this._m_simulationManager = master.getManager<SimulationManager>
+    (
+      ST_MANAGER_ID.kSimManager
+    );
+
+    this._m_arrivalInitState = new forceInitState();
 
     // Get debug manager
 
@@ -263,6 +277,12 @@ implements IForce
 
   }
 
+  getInitMaxMagnitude()
+  : number
+  {
+    return this._m_arrivalInitState.m_initMaxMagnitude;
+  }
+
   getMaxMagnitude()
   : number
   {
@@ -271,9 +291,22 @@ implements IForce
 
   }
 
+  setInitMaxMagnitude()
+  : void
+  {
+    this._m_forceMagnitude = this.getInitMaxMagnitude();
+
+    return;
+  }
+
   setMaxMagnitude(_magnitude: number)
   : void
   {
+
+    if(this._m_simulationManager.getState() === ST_SIM_SATE.kStopped)
+    {
+      this._m_arrivalInitState.m_initMaxMagnitude = _magnitude;
+    }
 
     this._m_forceMagnitude = _magnitude;
 
@@ -316,6 +349,13 @@ implements IForce
   * Reference to the debug manager.
   */
   private _m_debugManager : DebugManager;
+
+  /**
+   * Reference to the simulation manager.
+   */
+  private _m_simulationManager: SimulationManager;
+
+  private _m_arrivalInitState : forceInitState;
 
   /**
    * Reference to the force controller.
