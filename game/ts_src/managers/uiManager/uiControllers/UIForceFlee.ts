@@ -148,6 +148,14 @@ extends UIForce
 
   }
 
+  onSimulationStop()
+  : void
+  {
+    this._m_flee.setInitMaxMagnitude();
+
+    this._m_forceSlider.setValue(this._m_flee.getInitMaxMagnitude());
+  }
+
   setMaximumMagnitudeLabel(_maxForce: number)
   : void
   {
