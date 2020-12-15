@@ -154,6 +154,8 @@ extends UIForce
     this._m_flee.setInitMaxMagnitude();
 
     this._m_forceSlider.setValue(this._m_flee.getInitMaxMagnitude());
+
+    return;
   }
 
   setMaximumMagnitudeLabel(_maxForce: number)

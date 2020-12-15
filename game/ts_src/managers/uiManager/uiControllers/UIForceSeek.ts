@@ -158,6 +158,8 @@ extends UIForce
     this._m_seek.setInitMaxMagnitude();
     
     this._m_forceSlider.setValue(this._m_seek.getInitMaxMagnitude());
+
+    return;
   }
 
   setMaximumMagnitudeLabel(_maxForce: number)
