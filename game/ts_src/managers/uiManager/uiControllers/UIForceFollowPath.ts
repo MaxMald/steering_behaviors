@@ -38,7 +38,7 @@ extends UIForce
 
     // Title
 
-    const title = UILabel.CreateStyleA(0, 0, _scene, "Follow Path", 25);
+    const title = UILabel.CreateStyleB(0, 0, _scene, "Follow Path Force", 25);
 
     title.setTint(ST_COLOR_ID.kGold);
 
@@ -50,11 +50,15 @@ extends UIForce
 
     this._m_labelForce = UILabel.CreateStyleB(0, 0, _scene, "#");
 
+    this._m_labelForce.setTint(ST_COLOR_ID.kSkyBlueNeon);
+
     box.add(this._m_labelForce);
 
     // Maximum Force Label.
 
     this._m_maxMagnitude = UILabel.CreateStyleB(0, 0, _scene, "#");
+
+    this._m_maxMagnitude.setTint(ST_COLOR_ID.kSkyBlueNeon);
 
     box.add(this._m_maxMagnitude);
 
@@ -100,6 +104,8 @@ extends UIForce
     // Radius of vision label
 
     const visionLabel = UILabel.CreateStyleB(0, 0, _scene, "#");
+
+    visionLabel.setTint(ST_COLOR_ID.kSkyBlueNeon);
 
     this._m_visionLabel = visionLabel;
 
@@ -147,6 +153,8 @@ extends UIForce
     // Force To Path Label
 
     const forcePathLabel = UILabel.CreateStyleB(0, 0, _scene, "Force to Path Scale");
+
+    forcePathLabel.setTint(ST_COLOR_ID.kSkyBlueNeon);
 
     this._m_forceToPathLabel = forcePathLabel;
 
