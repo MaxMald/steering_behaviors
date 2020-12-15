@@ -154,6 +154,16 @@ extends UIForce
 
   }
 
+  onSimulationStop()
+  : void
+  {
+    this._m_pursuitForce.setInitMaxMagnitude();
+    
+    this._m_forceSlider.setValue(this._m_pursuitForce.getInitMaxMagnitude());
+
+    return;
+  }
+
   setMaximumMagnitudeLabel(_maxForce: number)
   : void
   {
