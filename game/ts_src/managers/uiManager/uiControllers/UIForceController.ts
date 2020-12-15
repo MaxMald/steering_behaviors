@@ -321,6 +321,10 @@ export class UIForceController
     // Actor Max Speed.
 
     this._ui_maxSpeedSlider.setValue(this._m_forceController.getInitMaxSpeed());
+
+    this._m_aUIForce.forEach(uiForce => {
+      uiForce.onSimulationStop();
+    });
     
     return;
 

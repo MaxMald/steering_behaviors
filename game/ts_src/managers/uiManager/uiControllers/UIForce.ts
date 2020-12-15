@@ -46,4 +46,10 @@ export class UIForce
 
   }
 
+  onSimulationStop()
+  : void
+  {
+    return;
+  }
+
 }
