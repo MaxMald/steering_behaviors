@@ -288,6 +288,10 @@ implements IForce
     this._m_self = null;
 
     this._m_debugManager = null;
+
+    this._m_seekInitState = null;
+
+    this._m_simulationManager = null;
     
     return;
     

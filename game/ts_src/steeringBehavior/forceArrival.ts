@@ -337,6 +337,10 @@ implements IForce
 
     this._m_target = null;
     this._m_self = null;
+
+    this._m_arrivalInitState = null;
+
+    this._m_simulationManager = null;
     
     return;
   }
