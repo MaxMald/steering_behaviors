@@ -8,7 +8,7 @@
  * @since December-14-2020
  */
 
- export class forceInitState 
+ export class ForceInitState 
  {
 
    /****************************************************/
