@@ -10,10 +10,12 @@
 
 import { Master } from "../master/master";
 import { DebugManager } from "../managers/debugManager/debugManager";
-import { ST_COLOR_ID, ST_COMPONENT_ID, ST_MANAGER_ID, ST_MESSAGE_ID, ST_STEER_FORCE } from "../commons/stEnums";
+import { ST_COLOR_ID, ST_COMPONENT_ID, ST_MANAGER_ID, ST_MESSAGE_ID, ST_SIM_SATE, ST_STEER_FORCE } from "../commons/stEnums";
 import { Ty_Sprite, V2 } from "../commons/stTypes";
 import { CmpForceController } from "../components/cmpForceController";
 import { IForce } from "./iForce";
+import { SimulationManager } from "../managers/simulationManager/simulationManager";
+import { ForceInitState } from "./forceInitState";
 
 /**
  * 
@@ -79,6 +81,17 @@ implements IForce
     this._m_v2_displacement = new Phaser.Math.Vector2(0.0, -1.0);
 
     this._m_v2p_circleCenter = new Phaser.Math.Vector2(0.0, 0.0);
+
+     // Get Managers
+
+     const master = Master.GetInstance();
+
+     this._m_simulationManager = master.getManager<SimulationManager>
+     (
+       ST_MANAGER_ID.kSimManager
+     );
+ 
+     this._m_wanderInitState = new ForceInitState();
 
     // Get Debug Manager
     
@@ -292,6 +305,34 @@ implements IForce
 
   }
 
+  setInitMaxMagnitude()
+  : void
+  {
+    this._m_forceMagnitude = this.getInitMaxMagnitude();
+
+    return;
+  }
+
+  setMaxMagnitude(_magnitude: number)
+  : void
+  {
+
+    if(this._m_simulationManager.getState() === ST_SIM_SATE.kStopped)
+    {
+      this._m_wanderInitState.m_initMaxMagnitude = _magnitude;
+    }
+    this._m_forceMagnitude = _magnitude;
+
+    return;
+
+  }
+
+  getInitMaxMagnitude()
+  : number
+  {
+    return this._m_wanderInitState.m_initMaxMagnitude;
+  }
+
   getMaxMagnitude()
   : number
   {
@@ -324,6 +365,10 @@ implements IForce
 
     this._m_debugManager = null;
 
+    this._m_wanderInitState = null;
+
+    this._m_simulationManager = null;
+
     this._m_self = null;
     return;
   }
@@ -336,6 +381,13 @@ implements IForce
   * Reference to the debug manager.
   */
   private _m_debugManager : DebugManager;
+
+    /**
+   * Reference to the simulation manager.
+   */
+  private _m_simulationManager: SimulationManager;
+
+  private _m_wanderInitState : ForceInitState;
 
   /**
    * Reference to the force controller.

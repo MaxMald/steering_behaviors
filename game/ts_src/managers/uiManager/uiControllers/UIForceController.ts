@@ -314,13 +314,29 @@ export class UIForceController
   : void 
   {
 
+    // Get the force controller.
+
+    const forceController = this._m_forceController;
+
+    // Get all forces the force controller has.
+
+    const forces = forceController.getForces();
+
+    // Get all the UI forces.
+
+    const uiForces = this._m_aUIForce;
+
     // Actor Mass.
 
-    this._ui_massSlider.setValue(this._m_forceController.getInitMass());
+    this._ui_massSlider.setValue(forceController.getInitMass());
 
     // Actor Max Speed.
 
-    this._ui_maxSpeedSlider.setValue(this._m_forceController.getInitMaxSpeed());
+    this._ui_maxSpeedSlider.setValue(forceController.getInitMaxSpeed());
+
+    forces.forEach(force => {
+      uiForces.get(force.getType() as ST_STEER_FORCE).onSimulationStop();
+    });
     
     return;
 
@@ -354,7 +370,7 @@ export class UIForceController
   : void
   {
 
-    this._ui_actualSpeed.setText("Speed: " + _speed.toPrecision(3) + " km/secs. ");
+    this._ui_actualSpeed.setText("Speed: " + _speed.toFixed(3) + " km/secs. ");
 
     return;
 
@@ -364,7 +380,7 @@ export class UIForceController
   : void
   {
 
-    this._ui_maxSpeed.setText("Max. Speed: " + _speed.toPrecision(3) + " km/secs. ");
+    this._ui_maxSpeed.setText("Max. Speed: " + _speed.toFixed(3) + " km/secs. ");
 
     return;
 
@@ -374,7 +390,7 @@ export class UIForceController
   : void
   {
 
-    this._ui_mass.setText("Mass: " + _mass.toPrecision(3) + " tg.");
+    this._ui_mass.setText("Mass: " + _mass.toFixed(3) + " tg.");
 
     return;
 

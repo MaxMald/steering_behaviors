@@ -254,7 +254,9 @@ extends Phaser.Scene
   : void
   {
     
-    this.scene.start('logo');
+    //this.scene.start('logo');
+    this.scene.start('main_menu');
+
 
     return;
 

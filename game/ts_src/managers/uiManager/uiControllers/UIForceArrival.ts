@@ -38,7 +38,7 @@ extends UIForce
 
     // Title
 
-    const title = UILabel.CreateStyleA(0, 0, _scene, "Arrive Force", 25);
+    const title = UILabel.CreateStyleB(0, 0, _scene, "Arrive Force", 25);
 
     title.setTint(ST_COLOR_ID.kGold);
 
@@ -48,11 +48,15 @@ extends UIForce
 
     this._m_labelForce = UILabel.CreateStyleB(0, 0, _scene, "#");
 
+    this._m_labelForce.setTint(ST_COLOR_ID.kSkyBlueNeon);
+
     box.add(this._m_labelForce);
 
     // Maximum Force Label.
 
     this._m_maxMagnitude = UILabel.CreateStyleB(0, 0, _scene, "#");
+
+    this._m_maxMagnitude.setTint(ST_COLOR_ID.kSkyBlueNeon);
 
     box.add(this._m_maxMagnitude);
 
@@ -150,11 +154,21 @@ extends UIForce
 
   }
 
+  onSimulationStop()
+  : void
+  {
+    this._m_arrival.setInitMaxMagnitude();
+    
+    this._m_forceSlider.setValue(this._m_arrival.getInitMaxMagnitude());
+
+    return;
+  }
+
   setMaximumMagnitudeLabel(_maxForce: number)
   : void
   {
 
-    this._m_maxMagnitude.setText("Max. Magnitude: " + _maxForce.toPrecision(3) + " uN.");
+    this._m_maxMagnitude.setText("Max. Magnitude: " + _maxForce.toFixed(3) + " uN.");
 
     return;
 
@@ -164,7 +178,7 @@ extends UIForce
   :void
   {
 
-    this._m_labelForce.setText("Force Magnitude: " + _force.toPrecision(3) + " uN.");
+    this._m_labelForce.setText("Force Magnitude: " + _force.toFixed(3) + " uN.");
 
     return;
 

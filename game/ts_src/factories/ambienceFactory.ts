@@ -74,6 +74,12 @@ export class AmbienceFactory
       new Phaser.Math.Vector2(_x, _y)
     );
 
+    actor.sendMessage
+     (
+       ST_MESSAGE_ID.kSetMass,
+       1
+     );
+
    return actor;
 
   }
