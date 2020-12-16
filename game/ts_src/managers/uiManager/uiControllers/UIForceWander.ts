@@ -84,10 +84,10 @@ extends UIForce
 
         this.setMaximumMagnitudeLabel(maxMagnitude);
 
-        if(this._m_arrival !== undefined)
+        if(this._m_wander !== undefined)
         {
 
-          this._m_arrival.setMaxMagnitude(maxMagnitude);
+          this._m_wander.setMaxMagnitude(maxMagnitude);          
 
         }
 
