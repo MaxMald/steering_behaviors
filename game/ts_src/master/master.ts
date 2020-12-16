@@ -376,6 +376,16 @@ export class Master
     return this._m_bDebugEnable;
   }
 
+  setSimulationScene(_scene : Phaser.Scene)
+  : void
+  {
+
+    this._m_simulationScene = _scene;
+
+    return;
+
+  }
+
   /****************************************************/
   /* Public                                           */
   /****************************************************/

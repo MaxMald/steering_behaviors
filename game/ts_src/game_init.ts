@@ -20,6 +20,7 @@ import { ScnObstacleAvoidance } from "./scenes/sims/sceneObstacleAvoidance";
 import { ScnFlee } from "./scenes/sims/sceneFlee";
 import { ScenePursuit } from "./scenes/sims/scenePursuit";
 import { SceneFollowPath } from "./scenes/sims/sceneFollowPath";
+import { ScnLogo } from "./scenes/logo";
 /**
  * Starts Application.
  */
@@ -88,20 +89,23 @@ class GameInit
     this.m_game = new Phaser.Game(config);
     
     ///////////////////////////////////
-    // Create Scenes        
+    // Create Scenes      
+    
+    const sceneManager = this.m_game.scene;
 
-    this.m_game.scene.add('boot', Boot);
-    this.m_game.scene.add('preload', Preload);
-    this.m_game.scene.add('main_menu', MainMenu);
+    sceneManager.add('boot', Boot);
+    sceneManager.add('preload', Preload);
+    sceneManager.add("logo", ScnLogo);
+    sceneManager.add('main_menu', MainMenu);
 
-    this.m_game.scene.add('sceneSeek', ScnSeek);
-    this.m_game.scene.add('sceneFlee', ScnFlee);
-    this.m_game.scene.add('sceneArrival', ScnArrival);
-    this.m_game.scene.add('scenePursuit', ScenePursuit);
-    this.m_game.scene.add('sceneEvade', SceneEvade);
-    this.m_game.scene.add('sceneWander', ScnWander);
-    this.m_game.scene.add('sceneFollowPath', SceneFollowPath);
-    this.m_game.scene.add('sceneObstacleAvoidance', ScnObstacleAvoidance);
+    sceneManager.add('sceneSeek', ScnSeek);
+    sceneManager.add('sceneFlee', ScnFlee);
+    sceneManager.add('sceneArrival', ScnArrival);
+    sceneManager.add('scenePursuit', ScenePursuit);
+    sceneManager.add('sceneEvade', SceneEvade);
+    sceneManager.add('sceneWander', ScnWander);
+    sceneManager.add('sceneFollowPath', SceneFollowPath);
+    sceneManager.add('sceneObstacleAvoidance', ScnObstacleAvoidance);
 
     ///////////////////////////////////
     // Start BOOT    

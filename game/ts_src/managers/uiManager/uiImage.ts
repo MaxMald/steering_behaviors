@@ -94,6 +94,16 @@ export class UIImage
 
   }
 
+  setZ(_z : number)
+  : void
+  {
+
+    this._m_image.setDepth(_z);
+
+    return;
+
+  }
+
   /**
    * Move the UI Object an amount.
    * 

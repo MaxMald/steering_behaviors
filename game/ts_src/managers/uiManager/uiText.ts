@@ -237,6 +237,16 @@ export class UIText
 
   }
 
+  setZ(_z : number)
+  : void
+  {
+
+    this._m_text.setDepth(_z);
+
+    return;
+
+  }
+
   /**
    * Move the UI Object an amount.
    * 

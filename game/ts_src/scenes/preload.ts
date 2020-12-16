@@ -8,7 +8,10 @@
  * @since August-30-2020
  */
 
+import { ST_MANAGER_ID } from "../commons/stEnums";
 import { Ty_Image } from "../commons/stTypes";
+import { UIManager } from "../managers/uiManager/uiManager";
+import { Master } from "../master/master";
 
 /**
  * Preload test assets and start pilot level.
@@ -72,6 +75,13 @@ extends Phaser.Scene
       "images/game_art/game_art.js"
     );
 
+    this.load.atlas
+    (
+      'menu_art',
+      "images/game_menu/menu_art.png",
+      "images/game_menu/menu_art.js"
+    );
+
     /****************************************************/
     /* Bitmap Fonts                                     */
     /****************************************************/
@@ -106,41 +116,43 @@ extends Phaser.Scene
       "tiledMaps/simulation_ui.json"
     );
 
-    ///////////////////////////////////
-    // Scene
+    this.load.tilemapTiledJSON
+    (
+      "info_box",
+      "tiledMaps/info_box.json"
+    );
+
+    this.load.tilemapTiledJSON
+    (
+      "main_menu",
+      "tiledMaps/main_menu.json"
+    );
+
+    /****************************************************/
+    /* Text                                             */
+    /****************************************************/
+
+    this.load.text
+    (
+      "infoBox",
+      "infoBox/infoBox.json"
+    );
+
+    /****************************************************/
+    /* Loading Scene                                    */
+    /****************************************************/
 
     const hWidth = this.game.canvas.width * 0.5;
 
     const hHeight = this.game.canvas.height * 0.5;
 
-    // Space Background
+    ///////////////////////////////////
+    // Background
     
     this.add.image(hWidth, hHeight,'loading_bg');
 
-    // Space Ship
-
-    const spaceShip = this.add.image
-    (
-      hWidth, 
-      300, 
-      "loading_ui", 
-      "loading_ship.png"
-    );
-
-    this.add.tween
-    (
-      {
-        targets: spaceShip,
-        y: 250,
-        ease: "Quad.easeInOut",
-        duration: 3000,
-        yoyo: true,
-        repeat: -1
-      }
-    );
-
-
-    // Loading Bar
+    ///////////////////////////////////
+    // Loading Bar BG
 
     const barBG = this.add.image
     (
@@ -152,6 +164,9 @@ extends Phaser.Scene
 
     this.loadingBarBG = barBG;
 
+    ///////////////////////////////////
+    // Loading Bar
+
     const bar = this.add.image
     (
       hWidth,
@@ -160,9 +175,13 @@ extends Phaser.Scene
       "loading_bar.png"
     );
 
-    bar.scaleX = 0.0;
-
     this.loadingBar = bar;
+
+    // Loading Bar Rectangle
+
+    this.loadingCropRect = new Phaser.Geom.Rectangle(0, 0, 0, bar.height);
+
+    bar.setCrop(this.loadingCropRect);
 
     // Start Button
 
@@ -185,6 +204,8 @@ extends Phaser.Scene
 
     this.startButton = start;
 
+    this.onOutStart();
+
     // Callbacks
 
     this.load.on('progress', this.updateBar, this);
@@ -198,7 +219,13 @@ extends Phaser.Scene
   : void
   {
 
-    this.loadingBarBG.scaleX = this.load.progress;
+    const rect = this.loadingCropRect;
+
+    const bar = this.loadingBar;
+
+    rect.width = this.load.progress * bar.width;
+
+    bar.setCrop(rect);
 
     return;
 
@@ -207,6 +234,8 @@ extends Phaser.Scene
   onComplete()
   : void
   {
+
+    this.onLoadComplete();
 
     this.loadingBar.setVisible(false);
     this.loadingBar.setActive(false);
@@ -225,7 +254,7 @@ extends Phaser.Scene
   : void
   {
     
-    this.scene.start('main_menu');
+    this.scene.start('logo');
 
     return;
 
@@ -250,6 +279,23 @@ extends Phaser.Scene
     return;
 
   }
+
+  onLoadComplete()
+  : void
+  {
+
+    const master = Master.GetInstance();
+
+    // UI Manager callback
+
+    const uiManager = master.getManager<UIManager>(ST_MANAGER_ID.kUIManager);
+    uiManager.onAssetLoadingComplete(this.game);
+
+    return;
+
+  }
+
+  loadingCropRect: Phaser.Geom.Rectangle;
 
   loadingBarBG: Ty_Image;
 

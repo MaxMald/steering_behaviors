@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.4" tiledversion="1.4.2" orientation="orthogonal" renderorder="right-down" width="64" height="48" tilewidth="16" tileheight="16" infinite="0" nextlayerid="9" nextobjectid="25">
+ <editorsettings>
+  <export target="main_menu.json" format="json"/>
+ </editorsettings>
+ <tileset firstgid="1" name="assets" tilewidth="1025" tileheight="769" tilecount="9" columns="0">
+  <grid orientation="orthogonal" width="1" height="1"/>
+  <tile id="0">
+   <image width="1024" height="768" source="../images/bg_space_01.png"/>
+  </tile>
+  <tile id="1">
+   <image width="1025" height="769" source="../images/game_menu/cabin.png"/>
+  </tile>
+  <tile id="2">
+   <image width="429" height="229" source="../images/game_menu/game_logo.png"/>
+  </tile>
+  <tile id="3">
+   <image width="249" height="98" source="../images/game_menu/menu_btn_border.png"/>
+  </tile>
+  <tile id="5">
+   <image width="356" height="84" source="../images/game_menu/design_credits.png"/>
+  </tile>
+  <tile id="6">
+   <image width="357" height="123" source="../images/game_menu/humming_credits.png"/>
+  </tile>
+  <tile id="7">
+   <image width="357" height="84" source="../images/game_menu/progra_credits.png"/>
+  </tile>
+  <tile id="8">
+   <image width="1024" height="503" source="../images/game_menu/clouds.png"/>
+  </tile>
+  <tile id="9">
+   <image width="512" height="326" source="../images/game_menu/clouds_2.png"/>
+  </tile>
+ </tileset>
+ <objectgroup id="2" name="background" locked="1">
+  <object id="1" type="image" gid="1" x="0" y="768" width="1024" height="768">
+   <properties>
+    <property name="texture" value="bg_space_01"/>
+   </properties>
+  </object>
+ </objectgroup>
+ <objectgroup id="8" name="Clouds">
+  <object id="23" name="cloud_1" type="motionImage" gid="9" x="0" y="560" width="1024" height="503">
+   <properties>
+    <property name="frame" value="clouds.png"/>
+    <property name="texture" value="menu_art"/>
+    <property name="tint" type="color" value="#ffd97eff"/>
+    <property name="velocity" type="float" value="-10"/>
+   </properties>
+  </object>
+  <object id="24" name="cloud_2" type="motionImage" gid="9" x="1024" y="560" width="1024" height="503">
+   <properties>
+    <property name="frame" value="clouds.png"/>
+    <property name="texture" value="menu_art"/>
+    <property name="tint" type="color" value="#ffd97eff"/>
+    <property name="velocity" type="float" value="-10"/>
+   </properties>
+  </object>
+ </objectgroup>
+ <objectgroup id="3" name="Cabin" locked="1">
+  <object id="2" type="image" gid="2" x="0" y="768" width="1025" height="769">
+   <properties>
+    <property name="frame" value="cabin.png"/>
+    <property name="texture" value="menu_art"/>
+   </properties>
+  </object>
+ </objectgroup>
+ <objectgroup id="4" name="Logo">
+  <object id="3" name="game_logo" type="image" gid="3" x="292.5" y="256" width="429" height="229">
+   <properties>
+    <property name="frame" value="game_logo.png"/>
+    <property name="texture" value="menu_art"/>
+   </properties>
+  </object>
+ </objectgroup>
+ <objectgroup id="5" name="Main_Page">
+  <object id="5" name="btn_select_mission" type="uiMenuButton" gid="4" x="384" y="496" width="249" height="98">
+   <properties>
+    <property name="fill_color" type="color" value="#ff9a4694"/>
+    <property name="font_color" type="color" value="#ffffffff"/>
+    <property name="frame" value="main_btn_bg.png"/>
+    <property name="label" value="SELECCIONAR MISIÓN"/>
+    <property name="texture" value="menu_art"/>
+   </properties>
+  </object>
+  <object id="16" name="btn_credits" type="uiMenuButton" gid="4" x="384" y="608" width="249" height="98">
+   <properties>
+    <property name="fill_color" type="color" value="#ff9a4694"/>
+    <property name="font_color" type="color" value="#ffffffff"/>
+    <property name="frame" value="main_btn_bg.png"/>
+    <property name="label" value="CRÉDITOS"/>
+    <property name="texture" value="menu_art"/>
+   </properties>
+  </object>
+  <object id="17" name="btn_manual" type="uiMenuButton" gid="4" x="384" y="384" width="249" height="98">
+   <properties>
+    <property name="fill_color" type="color" value="#ff00aa00"/>
+    <property name="font_color" type="color" value="#ffffffff"/>
+    <property name="frame" value="main_btn_bg.png"/>
+    <property name="label" value="MANUAL DE USUARIO"/>
+    <property name="texture" value="menu_art"/>
+   </properties>
+  </object>
+ </objectgroup>
+ <objectgroup id="6" name="Missions_Page" visible="0">
+  <object id="6" name="btn_flee" type="uiMenuButton" gid="4" x="384" y="384" width="249" height="98">
+   <properties>
+    <property name="fill_color" type="color" value="#ff9a4694"/>
+    <property name="font_color" type="color" value="#ffffffff"/>
+    <property name="frame" value="main_btn_bg.png"/>
+    <property name="label" value="FLEE"/>
+    <property name="texture" value="menu_art"/>
+   </properties>
+  </object>
+  <object id="7" name="btn_seek" type="uiMenuButton" gid="4" x="96" y="384" width="249" height="98">
+   <properties>
+    <property name="fill_color" type="color" value="#ff9a4694"/>
+    <property name="font_color" type="color" value="#ffffffff"/>
+    <property name="frame" value="main_btn_bg.png"/>
+    <property name="label" value="SEEK"/>
+    <property name="texture" value="menu_art"/>
+   </properties>
+  </object>
+  <object id="8" name="btn_arrive" type="uiMenuButton" gid="4" x="672" y="384" width="249" height="98">
+   <properties>
+    <property name="fill_color" type="color" value="#ff9a4694"/>
+    <property name="font_color" type="color" value="#ffffffff"/>
+    <property name="frame" value="main_btn_bg.png"/>
+    <property name="label" value="ARRIVE"/>
+    <property name="texture" value="menu_art"/>
+   </properties>
+  </object>
+  <object id="9" name="btn_evade" type="uiMenuButton" gid="4" x="384" y="496" width="249" height="98">
+   <properties>
+    <property name="fill_color" type="color" value="#ff9a4694"/>
+    <property name="font_color" type="color" value="#ffffffff"/>
+    <property name="frame" value="main_btn_bg.png"/>
+    <property name="label" value="EVADE"/>
+    <property name="texture" value="menu_art"/>
+   </properties>
+  </object>
+  <object id="10" name="btn_pursuit" type="uiMenuButton" gid="4" x="96" y="496" width="249" height="98">
+   <properties>
+    <property name="fill_color" type="color" value="#ff9a4694"/>
+    <property name="font_color" type="color" value="#ffffffff"/>
+    <property name="frame" value="main_btn_bg.png"/>
+    <property name="label" value="PURSUIT"/>
+    <property name="texture" value="menu_art"/>
+   </properties>
+  </object>
+  <object id="11" name="btn_follow_path" type="uiMenuButton" gid="4" x="672" y="496" width="249" height="98">
+   <properties>
+    <property name="fill_color" type="color" value="#ff9a4694"/>
+    <property name="font_color" type="color" value="#ffffffff"/>
+    <property name="frame" value="main_btn_bg.png"/>
+    <property name="label" value="FOLLOW PATH"/>
+    <property name="texture" value="menu_art"/>
+   </properties>
+  </object>
+  <object id="12" name="btn_obstacle_avoidance" type="uiMenuButton" gid="4" x="384" y="608" width="249" height="98">
+   <properties>
+    <property name="fill_color" type="color" value="#ff9a4694"/>
+    <property name="font_color" type="color" value="#ffffffff"/>
+    <property name="frame" value="main_btn_bg.png"/>
+    <property name="label" value="OBSTACLE AVOIDANCE"/>
+    <property name="texture" value="menu_art"/>
+   </properties>
+  </object>
+  <object id="13" name="btn_wander" type="uiMenuButton" gid="4" x="96" y="608" width="249" height="98">
+   <properties>
+    <property name="fill_color" type="color" value="#ff9a4694"/>
+    <property name="font_color" type="color" value="#ffffffff"/>
+    <property name="frame" value="main_btn_bg.png"/>
+    <property name="label" value="WANDER"/>
+    <property name="texture" value="menu_art"/>
+   </properties>
+  </object>
+  <object id="14" name="btn_mission_back" type="uiMenuButton" gid="4" x="672" y="608" width="249" height="98">
+   <properties>
+    <property name="fill_color" type="color" value="#ffff0000"/>
+    <property name="font_color" type="color" value="#ffffffff"/>
+    <property name="frame" value="main_btn_bg.png"/>
+    <property name="label" value="BACK"/>
+    <property name="texture" value="menu_art"/>
+   </properties>
+  </object>
+ </objectgroup>
+ <objectgroup id="7" name="Credits_Page" visible="0">
+  <object id="19" name="btn_credits_back" type="uiMenuButton" gid="4" x="592" y="534" width="249" height="98">
+   <properties>
+    <property name="fill_color" type="color" value="#ffff0000"/>
+    <property name="font_color" type="color" value="#ffffffff"/>
+    <property name="frame" value="main_btn_bg.png"/>
+    <property name="label" value="BACK"/>
+    <property name="texture" value="menu_art"/>
+   </properties>
+  </object>
+  <object id="20" name="credit_design" type="image" gid="6" x="544" y="368" width="356" height="84">
+   <properties>
+    <property name="frame" value="design_credits.png"/>
+    <property name="texture" value="menu_art"/>
+   </properties>
+  </object>
+  <object id="21" name="credit_progra" type="image" gid="8" x="128" y="368" width="357" height="84">
+   <properties>
+    <property name="frame" value="progra_credits.png"/>
+    <property name="texture" value="menu_art"/>
+   </properties>
+  </object>
+  <object id="22" name="credit_humming" type="image" gid="7" x="128" y="544" width="357" height="123">
+   <properties>
+    <property name="frame" value="humming_credits.png"/>
+    <property name="texture" value="menu_art"/>
+   </properties>
+  </object>
+ </objectgroup>
+</map>

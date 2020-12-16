@@ -1,0 +1,34 @@
+{
+
+  "books": [
+
+    {
+
+      "name": "seek",
+      "pages": [
+
+        {
+          "text": "Texto 1.",
+          "texture": "",
+          "frame": "blueShip.png"
+        },
+
+        {
+          "text": "Texto 2",
+          "texture": "game_art",
+          "frame": "redShip.png"
+        },
+
+        {
+          "text": "Texto 3",
+          "texture": "game_art",
+          "frame": "planetAsset 5.png"
+        }
+
+      ]
+
+    }
+
+  ]
+
+}

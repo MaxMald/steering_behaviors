@@ -11,6 +11,9 @@
 import { BaseActor } from "../../actors/baseActor";
 import { ST_COLOR_ID, ST_MANAGER_ID } from "../../commons/stEnums";
 import { Ty_Image, Ty_Sprite } from "../../commons/stTypes";
+import { InfoBook } from "../../gameScene/infoBook";
+import { InfoLibrary } from "../../gameScene/infoLibrary";
+import { InfoPage } from "../../gameScene/infoPage";
 import { Master } from "../../master/master";
 import { DebugManager } from "../debugManager/debugManager";
 import { IManager } from "../iManager";
@@ -31,6 +34,8 @@ export class UIManager
   init()
   : void 
   {
+
+    this._m_infoBooks = new Map<string, InfoBook>();
 
     this._m_aControllers = new Map<string, UIController>();
 
@@ -296,6 +301,51 @@ export class UIManager
 
   }
 
+  onAssetLoadingComplete(_game: Phaser.Game)
+  : void
+  {
+
+    const infoBooksStr: string = _game.cache.text.get("infoBox");
+
+    const lib : InfoLibrary = JSON.parse(infoBooksStr);
+
+    const size = lib.books.length;
+
+    for(let i = 0; i < size; ++i)
+    {
+
+      const book = lib.books[i];
+
+      const infoBook = new InfoBook();
+
+      infoBook.name = book.name;
+      infoBook.pages = book.pages;
+
+      this._m_infoBooks.set(book.name, infoBook);
+
+    }
+
+    return;
+
+  }
+
+  getBook(_name: string)
+  : InfoBook
+  {
+
+    if(this._m_infoBooks.has(_name))
+    {
+
+      return this._m_infoBooks.get(_name);
+
+    }
+
+    console.error("Info Book: " + _name + " doesn't exists.");
+
+    return null;
+
+  }
+
   /**
    * Set the target of this UIManager. 
    * 
@@ -475,5 +525,10 @@ export class UIManager
    * Reference to the master manager.
    */
   private _m_master: Master;  
+
+  /**
+   * Information books.
+   */
+  private _m_infoBooks: Map<string, InfoBook>;
 
  }

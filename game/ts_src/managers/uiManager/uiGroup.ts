@@ -221,6 +221,25 @@ extends UIObject
 
   }
 
+  setZ(_z: number)
+  : void
+  {
+
+    this._m_aObjects.forEach
+    (
+      function(_object: UIObject)
+      : void
+      {
+
+        _object.setZ(_z);
+
+        return;
+
+      }
+    );
+  
+  }
+
   /**
    * Enable the UI Element.
    */

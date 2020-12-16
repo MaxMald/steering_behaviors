@@ -15,9 +15,8 @@ import { SceneUIFactory } from "../../factories/uiSceneFactory";
 import { MapScene } from "../../gameScene/mapScene";
 import { AmbienceManager } from "../../managers/ambienceManager/ambienceManager";
 import { SimulationManager } from "../../managers/simulationManager/simulationManager";
-import { UIButtonImg } from "../../managers/uiManager/uiButtonImg";
+import { UIInfoBox } from "../../managers/uiManager/uiControllers/UIInfoBox";
 import { UIManager } from "../../managers/uiManager/uiManager";
-import { UIObject } from "../../managers/uiManager/uiObject";
 import { Master } from "../../master/master";
 import { ForceConstant } from "../../steeringBehavior/forceConstant";
 import { SeekForce } from "../../steeringBehavior/forceSeek";
@@ -33,6 +32,10 @@ import { SeekForce } from "../../steeringBehavior/forceSeek";
    create()
    : void
    {    
+
+    // Camera fade in
+
+    this.cameras.main.fadeIn(500, 0, 0, 0, );
  
      ///////////////////////////////////
      // Master Manager
@@ -180,20 +183,31 @@ import { SeekForce } from "../../steeringBehavior/forceSeek";
      /* UI                                               */
      /****************************************************/    
     
-    // Get UI Manager
+     // Get UI Manager
     
-    const uiManager = master.getManager<UIManager>(ST_MANAGER_ID.kUIManager);
+     const uiManager = master.getManager<UIManager>(ST_MANAGER_ID.kUIManager);
 
-    // Create the Simulation Map Scene
+     // Create the Simulation Map Scene
 
-    SceneUIFactory.CreateSimulationUIScene("simulation_ui", this, uiManager);
+     const uiMapScene: MapScene = SceneUIFactory.CreateSimulationUIScene
+     (
+       "simulation_ui", 
+       this, 
+       uiManager,
+       this._openSceneInfo,
+       this
+      );
 
-    // Set the active actor of the UI Manager.
+     // Set the active actor of the UI Manager.
 
-    uiManager.setTarget(blueShip);
+     uiManager.setTarget(blueShip);
 
-    ///////////////////////////////////
-    // Set simulation to stop state
+     // Display Info
+
+     this._openSceneInfo();
+
+     ///////////////////////////////////
+     // Stop Simulation
  
      this._m_master.stopSimulation();
  
@@ -212,7 +226,43 @@ import { SeekForce } from "../../steeringBehavior/forceSeek";
  
    /****************************************************/
    /* Private                                          */
-   /****************************************************/ 
+   /****************************************************/
+
+   /**
+    * Open the scene information box.
+    */
+   private _openSceneInfo()
+   : void
+   {
+
+    // Pause Simulation.
+
+    const master = this._m_master;
+
+    master.pauseSimulation();
+
+    // Get the UI Manager.
+
+    const uiManger = master.getManager<UIManager>
+    (
+      ST_MANAGER_ID.kUIManager
+    );
+
+    // Get the info box.
+
+    const infoBox = uiManger.getUIController("infoBox") as UIInfoBox;
+
+    // Set the book.
+
+    infoBox.setBook("seek");
+
+    // Open info box.
+
+    infoBox.open();
+
+    return;
+
+   }
  
    private _m_master : Master;
  }

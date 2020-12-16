@@ -18,6 +18,7 @@ import { AmbienceManager } from "../managers/ambienceManager/ambienceManager";
 import { UIButtonImg } from "../managers/uiManager/uiButtonImg";
 import { UIComboBox } from "../managers/uiManager/uiComboBox";
 import { UILabel } from "../managers/uiManager/uiLabel";
+import { UIMenuButton } from "../managers/uiManager/uiMenuButton";
 import { UIObject } from "../managers/uiManager/uiObject";
 import { UISlider } from "../managers/uiManager/uiSlider";
 import { UISpeedometer } from "../managers/uiManager/uiSpeedometer";
@@ -347,6 +348,36 @@ export class TiledMapFactory
 
   }
 
+  static CreateUIMenuButton
+  (
+    _object: Ty_TiledObject,
+    _scene: Phaser.Scene
+  )
+  : UIMenuButton
+  {
+
+    // Get custom properties.
+
+    const hProperties = TiledMapFactory.CreatePropertiesMap(_object.properties);
+
+    // properties
+
+    const uiMenuButton = new UIMenuButton
+    (
+      _object.x + _object.width * 0.5,
+      _object.y - _object.height * 0.5,
+      _scene,
+      hProperties.get("label").value,
+      TiledMapFactory.GetColorFromString(hProperties.get("font_color").value),
+      hProperties.get("texture").value,
+      hProperties.get("frame").value,
+      TiledMapFactory.GetColorFromString(hProperties.get("fill_color").value)
+    );
+
+    return uiMenuButton;
+
+  }
+
   static CreateUIComboBox
   (
     _object: Ty_TiledObject,
@@ -404,15 +435,8 @@ export class TiledMapFactory
 
     // Get font color.
 
-    let colorString: string = hProperties.get("font_color").value;
-
-    // Remove # character and alpha values (three first characters).
-
-    colorString = colorString.substring(3, colorString.length);    
-
-    // Convert to Hex number
-
-    const color: number = parseInt(colorString, 16);
+    const color 
+      = TiledMapFactory.GetColorFromString(hProperties.get("font_color").value);
 
     // Create bitmap text
 
@@ -476,6 +500,22 @@ export class TiledMapFactory
     return button;
 
   }  
+
+  static GetColorFromString(_color: string)
+  : number
+  {
+
+    // Remove # character and alpha values (three first characters).
+
+    _color = _color.substring(3, _color.length);    
+
+    // Convert to Hex number
+
+    const color: number = parseInt(_color, 16);
+
+    return color;
+
+  }
 
   /**
    * Set common properties of a tiled object to a phaser game object.
