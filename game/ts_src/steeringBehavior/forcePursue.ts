@@ -15,7 +15,7 @@ import { CmpForceController } from "../components/cmpforceController";
 import { DebugManager } from "../managers/debugManager/debugManager";
 import { SimulationManager } from "../managers/simulationManager/simulationManager";
 import { Master } from "../master/master";
-import { forceInitState } from "./forceInitState";
+import { ForceInitState } from "./forceInitState";
 import { IForce } from "./iForce";
 
 /**
@@ -63,7 +63,7 @@ implements IForce
 
     this._m_steerForce = new Phaser.Math.Vector2();
 
-    this._m_pursueInitState = new forceInitState();
+    this._m_pursueInitState = new ForceInitState();
 
     // Get Managers
 
@@ -393,5 +393,5 @@ implements IForce
    */
   private _m_simulationManager: SimulationManager;
 
-  private _m_pursueInitState : forceInitState;
+  private _m_pursueInitState : ForceInitState;
 }

@@ -15,7 +15,7 @@ import { CmpForceController } from "../components/cmpforceController";
 import { DebugManager } from "../managers/debugManager/debugManager";
 import { SimulationManager } from "../managers/simulationManager/simulationManager";
 import { Master } from "../master/master";
-import { forceInitState } from "./forceInitState";
+import { ForceInitState } from "./forceInitState";
 import { IForce } from "./iForce";
 
 /**
@@ -58,7 +58,7 @@ implements IForce
       ST_MANAGER_ID.kSimManager
     );
 
-    this._m_evadeInitState = new forceInitState();
+    this._m_evadeInitState = new ForceInitState();
 
     this._m_maxForceMagnitude = _maxForceMagnitude;
 
@@ -392,5 +392,5 @@ implements IForce
    */
   private _m_simulationManager: SimulationManager;
 
-  private _m_evadeInitState : forceInitState;
+  private _m_evadeInitState : ForceInitState;
 }

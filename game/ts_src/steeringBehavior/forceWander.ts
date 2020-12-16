@@ -15,7 +15,7 @@ import { Ty_Sprite, V2 } from "../commons/stTypes";
 import { CmpForceController } from "../components/cmpForceController";
 import { IForce } from "./iForce";
 import { SimulationManager } from "../managers/simulationManager/simulationManager";
-import { forceInitState } from "./forceInitState";
+import { ForceInitState } from "./forceInitState";
 
 /**
  * 
@@ -91,7 +91,7 @@ implements IForce
        ST_MANAGER_ID.kSimManager
      );
  
-     this._m_wanderInitState = new forceInitState();
+     this._m_wanderInitState = new ForceInitState();
 
     // Get Debug Manager
     
@@ -387,7 +387,7 @@ implements IForce
    */
   private _m_simulationManager: SimulationManager;
 
-  private _m_wanderInitState : forceInitState;
+  private _m_wanderInitState : ForceInitState;
 
   /**
    * Reference to the force controller.
