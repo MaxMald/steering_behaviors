@@ -154,6 +154,16 @@ extends UIForce
 
   }
 
+  onSimulationStop()
+  : void
+  {
+    this._m_obstacleAvoidance.setInitMaxMagnitude();
+    
+    this._m_forceSlider.setValue(this._m_obstacleAvoidance.getInitMaxMagnitude());
+
+    return;
+  }
+
   setMaximumMagnitudeLabel(_maxForce: number)
   : void
   {
