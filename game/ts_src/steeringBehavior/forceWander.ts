@@ -365,6 +365,10 @@ implements IForce
 
     this._m_debugManager = null;
 
+    this._m_wanderInitState = null;
+
+    this._m_simulationManager = null;
+
     this._m_self = null;
     return;
   }
