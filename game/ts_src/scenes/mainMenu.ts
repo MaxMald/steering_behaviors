@@ -121,7 +121,7 @@ extends Phaser.Scene
       function(_btn : UIObject, _args: any)
       {
 
-        
+        this._startScene('tutorial');
 
         return;
 

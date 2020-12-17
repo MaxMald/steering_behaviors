@@ -8,9 +8,7 @@ import { SimulationManager } from "../../managers/simulationManager/simulationMa
 import { UIInfoBox } from "../../managers/uiManager/uiControllers/UIInfoBox";
 import { UIManager } from "../../managers/uiManager/uiManager";
 import { Master } from "../../master/master";
-import { ForceConstant } from "../../steeringBehavior/forceConstant";
-import { SeekForce } from "../../steeringBehavior/forceSeek";
- 
+import { ForceConstant } from "../../steeringBehavior/forceConstant"; 
   
  export class ScnTutorial 
  extends Phaser.Scene
@@ -208,7 +206,7 @@ import { SeekForce } from "../../steeringBehavior/forceSeek";
 
     // Set the book.
 
-    infoBox.setBook("seek");
+    infoBox.setBook("tutorial");
 
     // Open info box.
 

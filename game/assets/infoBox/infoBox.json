@@ -27,6 +27,146 @@
 
       ]
 
+    },
+
+    {
+
+      "name": "tutorial",
+      "pages": [
+
+        {
+          "text": "¡Hola! Mi nombre es Steeria y soy la capitana del ISS Nexus, la nave interplanetaria más azul de toda la galaxia.",
+          "texture": "tutorial_book",
+          "frame": "nexus.png"
+        },
+
+        {
+          "text": "Ya habrás notado que soy un se artificial.",
+          "texture": "tutorial_book",
+          "frame": "nexus.png"
+        },
+
+        {
+          "text": "La libertad para los seres artificiales, como yo, está lejos de agendarse en el senado intergaláctico, por lo tanto requiero de un supervisor humano para controlar completamente al Nexus.",
+          "texture": "tutorial_book",
+          "frame": "nexus.png"
+        },
+
+        {
+          "text": "Nos tocará trabajar juntos en la navegación de esta nave, pero primero debes aprender los controles básicos.",
+          "texture": "tutorial_book",
+          "frame": "nexus.png"
+        },
+
+        {
+          "text": "En la parte superior del visor bidimensional, se encuentra la interfaz de control de la nave.",
+          "texture": "tutorial_book",
+          "frame": "scene_shipMng.png"
+        },
+
+        {
+          "text": "Desde esta interfaz puedes controlar la velocidad máxima de la nave y la masa.",
+          "texture": "tutorial_book",
+          "frame": "shipCntrl_maxSpeed.png"
+        },
+
+        {
+          "text": "En el centro se encuentra el velocímetro, que indica la velocidad actual del Nexus.",
+          "texture": "tutorial_book",
+          "frame": "shipCntrl_speed.png"
+        },
+
+        {
+          "text": "Seguido, se encuentran los controles de simulación. Estos controles te permiten detener y correr el tiempo a tu antojo.",
+          "texture": "tutorial_book",
+          "frame": "shipCntrl_sim.png"
+        },
+
+        {
+          "text": "Siempre que presiones el botón “Stop”, regresaremos en el tiempo, al momento en el que empezamos la sesión.",
+          "texture": "tutorial_book",
+          "frame": "shipCntrl_sim.png"
+        },
+
+        {
+          "text": "El botón con símbolo de “bicho”, despliega haces de luz que permiten visualizar la dirección y magnitud de las fuerzas que interactúan en nuestra nave y todas las naves cercanas.",
+          "texture": "tutorial_book",
+          "frame": "shipCntrl_sim.png"
+        },
+
+        {
+          "text": "El botón de información presionalo cada vez que necesites ayuda sobre el tema que estamos tratando.",
+          "texture": "tutorial_book",
+          "frame": "shipCntrl_info.png"
+        },
+
+        {
+          "text": "Por último, tienes el botón para regresar al puente de la nave.",
+          "texture": "tutorial_book",
+          "frame": "shipCntrl_menu.png"
+        },
+
+        {
+          "text": "Debajo de la interfaz de control de la nave, tienes otra más pequeña. Esta es la interfaz de control de las fuerzas.",
+          "texture": "tutorial_book",
+          "frame": "scene_forceMng.png"
+        },
+
+        {
+          "text": "Las naves se mueven por la interacción de una o varias fuerzas.",
+          "texture": "tutorial_book",
+          "frame": "scene_forceMng.png"
+        },
+
+        {
+          "text": "Lo interesante es que la combinación de dichas fuerzas puede generar comportamientos aparentemente inteligentes en las naves. Pero, esto es tema para otro día.",
+          "texture": "tutorial_book",
+          "frame": "scene_forceMng.png"
+        },
+
+        {
+          "text": "En la interfaz de control de las fuerzas, puedes seleccionar una fuerza que se encuentra dentro de la nave y modificar sus propiedades.",
+          "texture": "tutorial_book",
+          "frame": "forceMng_forceSelect.png"
+        },
+
+        {
+          "text": "Estas propiedades pueden variar según la fuerza que haz seleccionado. En este ejemplo mostramos las propiedades del Seek Force.",
+          "texture": "tutorial_book",
+          "frame": "forceMng_force.png"
+        },
+
+        {
+          "text": "También puedes controlar las propiedades de otras naves. Notarás que un pequeño marcador circular de color verde posa sobre la nave selecionada.",
+          "texture": "tutorial_book",
+          "frame": "blue_ship_click"
+        },
+
+        {
+          "text": "Puedes seleccionar otra nave clickeando sobre ella con el puntero. De esta forma podrás controlar sus propiedades.",
+          "texture": "tutorial_book",
+          "frame": "ship_click.png"
+        },
+
+        {
+          "text": "Puedes cambiar la posición de una nave si mantienes presionado el puntero sobre una de ellas y lo arrastras por el visor.",
+          "texture": "tutorial_book",
+          "frame": "drag_ship.png"
+        },
+
+        {
+          "text": "Siempre recuerda que esta opción sólo está disponible si la simulación se encuentra completamente detenida, es decir en “stop”.",
+          "texture": "tutorial_book",
+          "frame": "drag_ship.png"
+        },
+
+        {
+          "text": "Bueno! Es todo por esta sesión. Nos vemos en las misiones de aprendizaje.",
+          "texture": "",
+          "frame": ""
+        }
+      ]
+
     }
 
   ]
