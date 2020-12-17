@@ -13,7 +13,6 @@ import { ST_COLOR_ID, ST_MANAGER_ID } from "../../commons/stEnums";
 import { Ty_Image, Ty_Sprite } from "../../commons/stTypes";
 import { InfoBook } from "../../gameScene/infoBook";
 import { InfoLibrary } from "../../gameScene/infoLibrary";
-import { InfoPage } from "../../gameScene/infoPage";
 import { Master } from "../../master/master";
 import { DebugManager } from "../debugManager/debugManager";
 import { IManager } from "../iManager";
