@@ -8,6 +8,8 @@
  * @since September-09-2020
  */
 
+import { MxListener } from "listeners/mxListener";
+import { MxListenerManager } from "listeners/mxListenerManager";
 import { BaseActor } from "../../actors/baseActor";
 import { IActor } from "../../actors/iActor";
 import { ST_MANAGER_ID, ST_SIM_SATE } from "../../commons/stEnums";
@@ -16,6 +18,12 @@ import { IManager } from "../iManager";
 
 /**
  * Simulation Manager.
+ * Events:
+ * 
+ * * onSimulationStop:
+ * * onSimulationPause:
+ * * onSimulationStart:
+ * * onSimulationResume:
  */
 export class SimulationManager
 implements IManager
@@ -30,7 +38,16 @@ implements IManager
   static Create()
   : SimulationManager
   {
+
     let manager = new SimulationManager();
+    
+    manager._m_listeners = new MxListenerManager<SimulationManager, any>();
+
+    manager._m_listeners.addEvent("onSimulationStop");
+    manager._m_listeners.addEvent("onSimulationPause");
+    manager._m_listeners.addEvent("onSimulationStart");
+    manager._m_listeners.addEvent("onSimulationResume");
+
     return manager;
   }
   
@@ -227,6 +244,8 @@ implements IManager
       }
     );
 
+    this._m_listeners.call("onSimulationStart", this, undefined);
+
     return;
 
   }
@@ -246,6 +265,8 @@ implements IManager
       }
     );
 
+    this._m_listeners.call("onSimulationPause", this, undefined);
+
     return;
 
   }
@@ -264,6 +285,8 @@ implements IManager
         return;
       }
     );
+
+    this._m_listeners.call("onSimulationResume", this, undefined);
 
     return;
 
@@ -286,6 +309,8 @@ implements IManager
         return;
       }
     );
+
+    this._m_listeners.call("onSimulationStop", this, undefined);
 
     return;
 
@@ -351,6 +376,45 @@ implements IManager
   {
 
     return this._m_state;
+
+  }
+
+  subscribe
+  (
+    _event: string, 
+    _username: string,
+    _fn: (_simulationManager: SimulationManager, _args: any) => void,
+    _context: any
+  )
+  : void
+  {
+
+    this._m_listeners.suscribe
+    (
+      _event, 
+      _username,
+      new MxListener<SimulationManager, any>(_fn, _context), 
+    );
+
+    return;
+
+  }
+
+  unsubscribe
+  (
+    _event: string,
+    _username: string
+  )
+  : void
+  {
+
+    this._m_listeners.unsuscribe
+    (
+      _event,
+      _username
+    );
+
+    return;
 
   }
 
@@ -431,4 +495,9 @@ implements IManager
    * The state of the simulation manager.
    */
   private _m_state: ST_SIM_SATE;
+
+  /**
+   * Listeners manager.
+   */
+  private _m_listeners: MxListenerManager<SimulationManager, any>;
 }
