@@ -24,6 +24,8 @@ import { IManager } from "../iManager";
  * * onSimulationPause:
  * * onSimulationStart:
  * * onSimulationResume:
+ * * onDebugEnable:
+ * * onDebugDisable:
  */
 export class SimulationManager
 implements IManager
@@ -47,6 +49,8 @@ implements IManager
     manager._m_listeners.addEvent("onSimulationPause");
     manager._m_listeners.addEvent("onSimulationStart");
     manager._m_listeners.addEvent("onSimulationResume");
+    manager._m_listeners.addEvent("onDebugEnable");
+    manager._m_listeners.addEvent("onDebugDisable");
 
     return manager;
   }
@@ -322,12 +326,17 @@ implements IManager
   onDebugEnable()
   : void
   {
+    
     this._m_actors.forEach
     (
       this._actorDebugEnable,
       this
     );
+
+    this._m_listeners.call("onDebugEnable", this, undefined);
+
     return;
+    
   }
 
   /**
@@ -336,12 +345,17 @@ implements IManager
   onDebugDisable()
   : void
   {
+
     this._m_actors.forEach
     (
       this._actorDebugDisable,
       this
     );
+
+    this._m_listeners.call("onDebugDisable", this, undefined);
+
     return;
+
   }
 
   /**
