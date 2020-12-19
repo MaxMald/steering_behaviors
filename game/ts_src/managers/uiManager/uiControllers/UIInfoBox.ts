@@ -84,9 +84,37 @@ extends UIController
 
     uiGroup.add(uiImage);
 
-    // UI Text
+    ///////////////////////////////////
+    // Text Globe
 
     const textPos = map.getObject<STPoint>("textPosition");
+
+    // Text Globe
+
+    this._m_minGlobleSize = new Phaser.Geom.Point
+    (
+      91,
+      91
+    );
+
+    const globe = _scene.add.nineslice
+    (
+      textPos.x,
+      textPos.y + 7,
+      this._m_minGlobleSize.x,
+      this._m_minGlobleSize.y,
+      {
+        key: "game_art",
+        frame: "dialogue_text_bg.png"
+      },
+      [25]
+    );
+
+    this._m_textGlobe = globe;
+
+    globe.setOrigin(0.5, 0.5);
+
+    group.add(globe);
 
     const uiText = UIText.CreateStyleB
     (
@@ -249,6 +277,9 @@ extends UIController
     this._m_contentGroup.destroy();
     this._m_contentGroup = null;
 
+    this._m_textGlobe.destroy();
+    this._m_textGlobe = null;
+
     return;
 
   }
@@ -297,7 +328,27 @@ extends UIController
 
     const bookPage: InfoPage = this._m_book.getActivePage();
 
-    this._m_text.setText(bookPage.text);
+    // Set Message text
+
+    const text = this._m_text;
+
+    text.setText(bookPage.text);
+
+    // Set globe size
+
+    const minSizeX = this._m_minGlobleSize.x;
+    const minSizeY = this._m_minGlobleSize.y;
+
+    const textWidth = text.getWidth() + 35;
+    const textHeight = text.getHeight() + 35;    
+
+    this._m_textGlobe.resize
+    (
+      (textWidth > minSizeX ? textWidth : minSizeX),
+      (textHeight > minSizeY ? textHeight : minSizeY)
+    )
+
+    // Set Message Image
 
     if(bookPage.texture !== "")
     {
@@ -344,5 +395,9 @@ extends UIController
   private _m_next: UIButtonImg;
 
   private _m_book: InfoBook;
+
+  private _m_textGlobe: Phaser.GameObjects.RenderTexture;
+
+  private _m_minGlobleSize: Phaser.Geom.Point;
 
 }
