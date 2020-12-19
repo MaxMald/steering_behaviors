@@ -35,6 +35,11 @@
                          "name":"texture",
                          "type":"string",
                          "value":"bg_space_01"
+                        }, 
+                        {
+                         "name":"tint",
+                         "type":"color",
+                         "value":"#ffffffff"
                         }],
                  "rotation":0,
                  "type":"image",
@@ -161,6 +166,11 @@
                          "name":"texture",
                          "type":"string",
                          "value":"menu_art"
+                        }, 
+                        {
+                         "name":"tint",
+                         "type":"color",
+                         "value":"#ffffffff"
                         }],
                  "rotation":0,
                  "type":"image",
@@ -200,6 +210,11 @@
                          "name":"texture",
                          "type":"string",
                          "value":"menu_art"
+                        }, 
+                        {
+                         "name":"tint",
+                         "type":"color",
+                         "value":"#ffffffff"
                         }],
                  "rotation":0,
                  "type":"image",
@@ -755,6 +770,11 @@
                          "name":"texture",
                          "type":"string",
                          "value":"menu_art"
+                        }, 
+                        {
+                         "name":"tint",
+                         "type":"color",
+                         "value":"#ffffffff"
                         }],
                  "rotation":0,
                  "type":"image",
@@ -783,6 +803,11 @@
                          "name":"texture",
                          "type":"string",
                          "value":"menu_art"
+                        }, 
+                        {
+                         "name":"tint",
+                         "type":"color",
+                         "value":"#ffffffff"
                         }],
                  "rotation":0,
                  "type":"image",
@@ -811,6 +836,11 @@
                          "name":"texture",
                          "type":"string",
                          "value":"menu_art"
+                        }, 
+                        {
+                         "name":"tint",
+                         "type":"color",
+                         "value":"#ffffffff"
                         }],
                  "rotation":0,
                  "type":"image",
@@ -829,7 +859,7 @@
  "nextobjectid":25,
  "orientation":"orthogonal",
  "renderorder":"right-down",
- "tiledversion":"1.4.2",
+ "tiledversion":"1.4.3",
  "tileheight":16,
  "tilesets":[
         {

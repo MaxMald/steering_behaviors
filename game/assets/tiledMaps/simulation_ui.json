@@ -35,6 +35,11 @@
                          "name":"texture",
                          "type":"string",
                          "value":"game_art"
+                        }, 
+                        {
+                         "name":"tint",
+                         "type":"color",
+                         "value":"#ffffffff"
                         }],
                  "rotation":0,
                  "type":"image",
@@ -63,6 +68,11 @@
                          "name":"texture",
                          "type":"string",
                          "value":"game_art"
+                        }, 
+                        {
+                         "name":"tint",
+                         "type":"color",
+                         "value":"#ffffffff"
                         }],
                  "rotation":0,
                  "type":"image",
@@ -128,7 +138,7 @@
                  "visible":true,
                  "width":42,
                  "x":634.5,
-                 "y":134.318181818182
+                 "y":134.318
                 }, 
                 {
                  "gid":16,
@@ -176,7 +186,7 @@
                  "visible":true,
                  "width":42,
                  "x":684.667,
-                 "y":133.818181818182
+                 "y":133.818
                 }, 
                 {
                  "gid":15,
@@ -224,7 +234,7 @@
                  "visible":true,
                  "width":42,
                  "x":731.5,
-                 "y":133.151181818182
+                 "y":133.151
                 }, 
                 {
                  "gid":11,
@@ -272,7 +282,7 @@
                  "visible":true,
                  "width":42,
                  "x":683.5,
-                 "y":182.651181818182
+                 "y":182.651
                 }, 
                 {
                  "gid":20,
@@ -477,7 +487,7 @@
                     },
                  "type":"bitmapText",
                  "visible":true,
-                 "width":65.2499999999999,
+                 "width":65.25,
                  "x":876.292,
                  "y":57.5417
                 }, 
@@ -514,7 +524,7 @@
                  "visible":true,
                  "width":169,
                  "x":660.917,
-                 "y":57.4014818181818
+                 "y":57.4015
                 }, 
                 {
                  "height":38,
@@ -547,9 +557,9 @@
                     },
                  "type":"bitmapText",
                  "visible":true,
-                 "width":48.3333333333334,
+                 "width":48.3333,
                  "x":809.375,
-                 "y":58.0568181818182
+                 "y":58.0568
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -690,8 +700,8 @@
                  "type":"uiImageButton",
                  "visible":true,
                  "width":42,
-                 "x":805.424242424242,
-                 "y":134.393939393939
+                 "x":805.424,
+                 "y":134.394
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -703,7 +713,7 @@
  "nextobjectid":38,
  "orientation":"orthogonal",
  "renderorder":"right-down",
- "tiledversion":"1.4.2",
+ "tiledversion":"1.4.3",
  "tileheight":16,
  "tilesets":[
         {

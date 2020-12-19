@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.4" tiledversion="1.4.2" orientation="orthogonal" renderorder="right-down" width="64" height="48" tilewidth="16" tileheight="16" infinite="0" nextlayerid="6" nextobjectid="38">
+<map version="1.4" tiledversion="1.4.3" orientation="orthogonal" renderorder="right-down" width="64" height="48" tilewidth="16" tileheight="16" infinite="0" nextlayerid="6" nextobjectid="38">
  <editorsettings>
   <export target="simulation_ui.json" format="json"/>
  </editorsettings>
@@ -82,11 +82,13 @@
   <object id="31" type="image" gid="23" x="21" y="218" width="978" height="212">
    <properties>
     <property name="frame" value="ui_bg.png"/>
+    <property name="tint" type="color" value="#ffffffff"/>
    </properties>
   </object>
   <object id="34" type="image" gid="26" x="30.1667" y="271.333" width="211" height="45">
    <properties>
     <property name="frame" value="force_box.png"/>
+    <property name="tint" type="color" value="#ffffffff"/>
    </properties>
   </object>
  </objectgroup>

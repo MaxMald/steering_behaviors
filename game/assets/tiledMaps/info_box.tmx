@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.4" tiledversion="1.4.2" orientation="orthogonal" renderorder="right-down" width="64" height="48" tilewidth="16" tileheight="16" infinite="0" nextlayerid="3" nextobjectid="8">
+<map version="1.4" tiledversion="1.4.3" orientation="orthogonal" renderorder="right-down" width="64" height="48" tilewidth="16" tileheight="16" infinite="0" nextlayerid="3" nextobjectid="8">
  <editorsettings>
   <export target="info_box.json" format="json"/>
  </editorsettings>
@@ -22,6 +22,7 @@
   <object id="1" name="android" type="image" gid="1" x="793.132" y="688.752" width="196" height="224">
    <properties>
     <property name="frame" value="android.png"/>
+    <property name="tint" type="color" value="#ffffffff"/>
    </properties>
   </object>
   <object id="2" name="back" type="uiImageButton" gid="2" x="448" y="687" width="134" height="54">
