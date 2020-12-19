@@ -263,6 +263,22 @@ export class TiledMapFactory
       image
     );
 
+    // Get font color.
+
+    let colorString: string = hProperties.get("tint").value;
+
+    // Remove # character and alpha values (three first characters).
+
+    colorString = colorString.substring(3, colorString.length);    
+
+    // Convert to Hex number
+
+    const color: number = parseInt(colorString, 16);
+
+    // Set font color.
+
+    image.setTint(color)
+
     return image;
 
   }
