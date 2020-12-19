@@ -155,6 +155,27 @@ export class TiledMapFactory
 
   }
 
+  static CreateVideo
+  (
+    _object: Ty_TiledObject,
+    _scene: Phaser.Scene
+  )
+  : Phaser.GameObjects.Video
+  {
+
+    // Get properties
+
+    const hProperties = TiledMapFactory.CreatePropertiesMap(_object.properties);
+
+    return _scene.add.video
+    (
+      _object.x,
+      _object.y,
+      hProperties.get("key").value as string
+    );
+
+  }
+
   /**
    * Creates a phaser Bitmap Text game object, from a tiled object. Returns the phaser
    * game object.
