@@ -21,6 +21,7 @@ import { ScnFlee } from "./scenes/sims/sceneFlee";
 import { ScenePursuit } from "./scenes/sims/scenePursuit";
 import { SceneFollowPath } from "./scenes/sims/sceneFollowPath";
 import { ScnLogo } from "./scenes/logo";
+import { ScnTutorial } from "./scenes/sims/sceneTutorial";
 /**
  * Starts Application.
  */
@@ -97,6 +98,7 @@ class GameInit
     sceneManager.add('preload', Preload);
     sceneManager.add("logo", ScnLogo);
     sceneManager.add('main_menu', MainMenu);
+    sceneManager.add('tutorial', ScnTutorial);
 
     sceneManager.add('sceneSeek', ScnSeek);
     sceneManager.add('sceneFlee', ScnFlee);

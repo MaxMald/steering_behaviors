@@ -37,7 +37,11 @@ import { FleeForce } from "../../steeringBehavior/forceFlee";
 
     this._m_master = Master.GetInstance();
 
-    let master = this._m_master;
+    const master = this._m_master;
+
+    // Master callback: "onSceneCreate" for each manager.
+
+    master.onSceneCreate(this);
 
     // On simulation scene create.
 

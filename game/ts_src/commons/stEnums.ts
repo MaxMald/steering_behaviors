@@ -19,7 +19,9 @@ export const ST_MANAGER_ID = Object.freeze
 
   kDebugManager : 3 as 3,
 
-  kAmbienceManager : 4 as 4
+  kAmbienceManager : 4 as 4,
+
+  kAudioManager : 5 as 5
 });
 
 /**
@@ -243,5 +245,86 @@ export const ST_SIM_SATE = Object.freeze
    * The simulation is paused.
    */
   kPaused: 2 as 2
+
+});
+
+/**
+ * Audio clip
+ */
+
+export type ST_AUDIO_CLIP = EnumLiteralsOf<typeof ST_AUDIO_CLIP>;
+
+export const ST_AUDIO_CLIP = Object.freeze
+({
+  
+  /**
+   * Positive click A.
+   */
+  kPositiveA: "click_positive_A" as "click_positive_A",
+
+  /**
+   * Positive click B.
+   */
+  kPositiveB: "click_positive_B" as "click_positive_B",
+
+  /**
+   * Positive click C.
+   */
+  kPositiveC: "click_positive_C" as "click_positive_C",
+
+  /**
+   * Positive click D.
+   */
+  kPositiveD: "click_positive_D" as "click_positive_D",
+
+  /**
+   * Positive click E.
+   */
+  kPositiveE: "click_positive_E" as "click_positive_E",
+
+  /**
+   * Positive click F.
+   */
+  kPositiveF: "click_positive_F" as "click_positive_F",
+
+  /**
+   * Negative click A
+   */
+  kNegativeA: "click_negative" as "click_negative",
+
+  /**
+   * Negative click B
+   */
+  kNegativeB: "click_negative_B" as "click_negative_B",
+
+  /**
+   * Simulation play sound
+   */
+  kPlay: "click_play" as "click_play",
+
+   /**
+   * Simulation stop sound
+   */
+  kStop: "click_stop" as "click_stop",
+
+  /**
+   * Open book sound.
+   */
+  kOpenBook: "open_book" as "open_book",
+
+  /**
+   * Machine sound
+   */
+  kMachine: "robotic" as "robotic",
+
+  /**
+   * BGM: Milky Way
+   */
+  kBGM_MilkyWay: "milky_way" as "milky_way",
+
+  /**
+   * BGM: Space Ambient
+   */
+  kBGM_Space: "space_ambient_loop" as "space_ambient_loop"
 
 });

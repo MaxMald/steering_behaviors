@@ -49,7 +49,7 @@
     <property name="texture" value="game_art"/>
    </properties>
   </object>
-  <object id="6" name="textPosition" type="point" x="511" y="437">
+  <object id="6" name="textPosition" type="point" x="512" y="478">
    <point/>
   </object>
   <object id="7" name="imagePosition" type="point" x="511" y="211">

@@ -33,6 +33,8 @@ import { SeekForce } from "../../steeringBehavior/forceSeek";
    : void
    {    
 
+    
+
     // Camera fade in
 
     this.cameras.main.fadeIn(500, 0, 0, 0, );
@@ -43,6 +45,10 @@ import { SeekForce } from "../../steeringBehavior/forceSeek";
      this._m_master = Master.GetInstance();
  
      let master = this._m_master;
+
+     // Master callback: "onSceneCreate" for each manager.
+
+     master.onSceneCreate(this);
  
      // on simulation scene create.
  
@@ -78,7 +84,7 @@ import { SeekForce } from "../../steeringBehavior/forceSeek";
      ///////////////////////////////////
      // Create SpaceShip Actor
      
-     const blueShip = ShipFactory.CreateBlueShip(this, "Blue Ship");
+     const blueShip = ShipFactory.CreateBlueShip(this, "ISS Nexus");
  
      // Add ship to simulation manager.
  

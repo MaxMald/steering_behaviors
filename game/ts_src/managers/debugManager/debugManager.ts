@@ -208,6 +208,30 @@ implements IManager
     return;
   }
 
+  /**
+   * Called by Master when a game scene is been created.
+   * @param _scene 
+   */
+  onSceneCreate(_scene: Phaser.Scene)
+  : void
+  {
+
+    return;
+
+  }
+
+  /**
+   * Called by Master when a game scene is been destroyed.
+   * @param _scene 
+   */
+  onSceneDestroy(_scene: Phaser.Scene)
+  : void
+  {
+
+    return;
+
+  }
+
   onSimulationSceneCreate(_scene: Phaser.Scene)
   : void 
   {

@@ -27,6 +27,315 @@
 
       ]
 
+    },
+
+    {
+
+      "name": "tutorial_intro",
+      "pages": [
+
+        {
+          "text": "¡Hola!",
+          "texture": "tutorial_book",
+          "frame": "nexus.png"
+        },
+
+        {
+          "text": "Mi nombre es Steeria y soy la capitana del ISS Nexus, una de las naves interplanetarias más experimentadas de la galaxia.",
+          "texture": "tutorial_book",
+          "frame": "nexus.png"
+        },
+
+        {
+          "text": "Ya habrás notado que soy un ser artificial. Estoy hecha de metal y silicio; y mi mente... pues es una inteligencia artificial.", 
+          "texture": "tutorial_book",
+          "frame": "nexus.png"
+        },
+
+        {
+          "text": "Una inteligencia artificial aparenta ser inteligente, pero no lo es.",
+          "texture": "tutorial_book",
+          "frame": "nexus.png"
+        },
+
+        {
+          "text": "Por lo tanto, requiero de supervisión humana para realizar mis actividades... y eso es lo que nos trae aquí.",
+          "texture": "tutorial_book",
+          "frame": "nexus.png"
+        },
+
+        {
+          "text": "Trabajaremos juntos para navegar con el Nexus por toda la galaxia, pero...",
+          "texture": "tutorial_book",
+          "frame": "nexus.png"
+        },
+
+        {
+          "text": "... primero debes aprender algunos conceptos sobre nuestras naves interplanetarias.",
+          "texture": "tutorial_book",
+          "frame": "nexus.png"
+        },
+
+        {
+          "text": "El ISS Nexus es un armatoste metálico que, al igual que yo, aparenta comportarse de forma inteligente.",
+          "texture": "tutorial_book",
+          "frame": "nexus.png"
+        },
+
+        {
+          "text": "Sus movimientos supuestamente inteligentes no son más que el resultado de una combinación de fuerzas.",
+          "texture": "tutorial_book",
+          "frame": "nexus.png"
+        },
+
+        {
+          "text": "Revisaremos algunas de estas fuerzas y como afectan al ISS Nexus en cada una de las misiones de aprendizaje que trae el programa, ...",
+          "texture": "tutorial_book",
+          "frame": "nexus.png"
+        },
+
+        {
+          "text": "... no obstante en este tutorial revisaremos unicamente el avanzado panel de control de una nave interplanetaria",
+          "texture": "tutorial_book",
+          "frame": "nexus.png"
+        },
+
+        {
+          "text": "En la parte superior del visor bidimensional, se encuentra la interfaz de control de la nave.",
+          "texture": "tutorial_book",
+          "frame": "scene_shipMng.png"
+        },
+
+        {
+          "text": "Desde esta interfaz puedes controlar la velocidad máxima y la masa de la nave",
+          "texture": "tutorial_book",
+          "frame": "shipCntrl_maxSpeed.png"
+        },
+
+        {
+          "text": "En el centro se encuentra el velocímetro, que indica la velocidad actual de la nave.",
+          "texture": "tutorial_book",
+          "frame": "shipCntrl_speed.png"
+        },
+
+        {
+          "text": "Seguido, se encuentran los controles de simulación. Estos controles te permiten detener y correr el tiempo a tu antojo por medio de los botones -stop-, -play- y -pause-.",
+          "texture": "tutorial_book",
+          "frame": "shipCntrl_sim.png"
+        },
+
+        {
+          "text": "Cada vez que presiones el botón -stop-, regresaremos en el tiempo, al momento exacto en que inició la simulación.",
+          "texture": "tutorial_book",
+          "frame": "shipCntrl_sim.png"
+        },
+
+        {
+          "text": "Prueba estos botones ahora mismo.",
+          "texture": "tutorial_book",
+          "frame": "shipCntrl_sim.png"
+        }
+      ]
+    },
+
+    {
+      "name": "tutorial_debugging",
+      "pages": [
+
+        {
+          "text": "¡Super!",
+          "texture": "tutorial_book",
+          "frame": "shipCntrl_sim.png"
+        },
+
+        {
+          "text": "Debajo de estos botones se encuentra el botón de -debugging-.",
+          "texture": "tutorial_book",
+          "frame": "shipCntrl_sim.png"
+        },
+        
+        {
+          "text": "Este botón despliega haces de luz que permiten visualizar la dirección y magnitud de las fuerzas que interactúan en todas las naves en pantalla.",
+          "texture": "tutorial_book",
+          "frame": "shipCntrl_sim.png"
+        },
+
+        {
+          "text": "El haz de luz de color verde representa la dirección y magnitud de la velocidad actual de la nave...",
+          "texture": "tutorial_book",
+          "frame": "velocity_vector.png"
+        },
+
+        {
+          "text": "... la longitud representa la proporción de la velocidad actual con respecto a la velocidad máxima.",
+          "texture": "tutorial_book",
+          "frame": "velocity_vector.png"
+        },
+
+        {
+          "text": "Además del haz de luz verde, puede que observes otros haces de luz en pantalla...",
+          "texture": "tutorial_book",
+          "frame": "random_forces.png"
+        },
+
+        {
+          "text": "... estos varían en forma, color y significado según la fuerza activa.",
+          "texture": "tutorial_book",
+          "frame": "random_forces.png"
+        },
+
+        {
+          "text": "En este tutorial, el ISS Nexus sólo posee una fuerza: -constant force-.",
+          "texture": "tutorial_book",
+          "frame": "forces_0.png"
+        },
+
+        {
+          "text": "El -constant force- está compuesto por dos vectores, representado por sus haces de luz correspondientes.",
+          "texture": "tutorial_book",
+          "frame": "forces_0.png"
+        },
+
+        {
+          "text": "El vector de -velocidad deseada- cuyo haz de luz es de color naranja...",
+          "texture": "tutorial_book",
+          "frame": "forces_1.png"
+        },
+
+        {
+          "text": "... y el vector de steer o giro, que representa el steer force o fuerza de giro y cuyo haz de luz es de color rojo.",
+          "texture": "tutorial_book",
+          "frame": "forces_2.png"
+        },
+
+        {
+          "text": "El vector de giro o -steer force- se calcula a partir de la resta de la velocidad deseada con respecto al vector de la velocidad actual.",
+          "texture": "tutorial_book",
+          "frame": "forces_2.png"
+        },
+
+        {
+          "text": "Finalmente esta es la fuerza que influye sobre el ISS Nexus y lo hace girar y avanzar hacia una dirección y velocidad deseada.",
+          "texture": "tutorial_book",
+          "frame": "forces_2.png"
+        },
+
+        {
+          "text": "¡Es hora de verlo por ti mismo!",
+          "texture": "tutorial_book",
+          "frame": "forces_2.png"
+        },
+
+        {
+          "text": "Activa la simulación con el botón de -play- y después presiona el botón de -debugging-.",
+          "texture": "tutorial_book",
+          "frame": "forces_2.png"
+        }
+      ]
+    },
+
+    {
+      
+      "name": "tutorial_force_manager",
+      "pages": 
+      [
+        {
+          "text": "¡Excelente!",
+          "texture": "",
+          "frame": ""
+        },
+
+        {
+          "text": "El botón de información despliega ayuda sobre el tema que estamos revisando en la misión de aprendizaje.",
+          "texture": "tutorial_book",
+          "frame": "shipCntrl_info.png"
+        },
+
+        {
+          "text": "Por último, tienes el botón que te llevará de regreso al menú principal.",
+          "texture": "tutorial_book",
+          "frame": "shipCntrl_menu.png"
+        },
+
+        {
+          "text": "¡Muy bien! Estos son todos los controles de la interfaz superior, pero no hemos terminado todavía.",
+          "texture": "tutorial_book",
+          "frame": "shipCntrl_menu.png"
+        },
+
+        {
+          "text": "Debajo de la interfaz de control de la nave, se despliega otro panel de control más pequeño. Esta es la interfaz de control de las fuerzas.",
+          "texture": "tutorial_book",
+          "frame": "scene_forceMng.png"
+        },
+
+        {
+          "text": "Por medio de esta interfaz puedes seleccionar una fuerza que influye actualmente sobre la nave seleccionada y modificar sus propiedades.",
+          "texture": "tutorial_book",
+          "frame": "forceMng_forceSelect.png"
+        },
+
+        {
+          "text": "Los controles del panel pueden variar según la fuerza que se ha seleccionado.",
+          "texture": "tutorial_book",
+          "frame": "forceMng_force.png"
+        },
+
+        {
+          "text": "Prueba el panel de control ahora mismo.",
+          "texture": "tutorial_book",
+          "frame": "forceMng_force.png"
+        }
+      ]
+    },
+
+    {
+      "name": "tutorial_select_drag",
+      "pages": 
+      [
+        {
+          "text": "Tambien puedes seleccionar diferentes naves y cambiar sus propiedades.",
+          "texture": "",
+          "frame": ""
+        },
+
+        {
+          "text": "Notarás que un pequeño marcador circular de color verde posa sobre la nave selecionada.",
+          "texture": "tutorial_book",
+          "frame": "blue_ship_click"
+        },
+
+        {
+          "text": "Puedes seleccionar otra nave clickeando sobre ella con el puntero.",
+          "texture": "tutorial_book",
+          "frame": "ship_click.png"
+        },
+
+        {
+          "text": "Puedes cambiar la posición de una nave si mantienes presionado el puntero sobre una de ellas y lo arrastras por el visor.",
+          "texture": "tutorial_book",
+          "frame": "drag_ship.png"
+        },
+
+        {
+          "text": "Siempre recuerda que esta opción sólo está disponible si la simulación se encuentra completamente detenida, es decir en “stop”.",
+          "texture": "tutorial_book",
+          "frame": "drag_ship.png"
+        },
+
+        {
+          "text": "¡Bueno! Con esto hemos terminado el tutorial. Ya estas listo para las siguientes sesiones de aprendizaje.",
+          "texture": "",
+          "frame": ""
+        },
+
+        {
+          "text": "Puedes regresar al menú principal, presionando el botón de menú en el panel de control superior. ¡Nos vemos allá!",
+          "texture": "",
+          "frame": ""
+        }
+      ]
+
     }
 
   ]

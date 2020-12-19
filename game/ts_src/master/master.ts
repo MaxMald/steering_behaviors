@@ -10,6 +10,7 @@
 
 import { ST_MANAGER_ID } from "../commons/stEnums";
 import { AmbienceManager } from "../managers/ambienceManager/ambienceManager";
+import { AudioManager } from "../managers/audioManager/audioManager";
 import { DebugManager } from "../managers/debugManager/debugManager";
 import { IManager } from "../managers/iManager";
 import { NullManager } from "../managers/nullManager";
@@ -259,6 +260,50 @@ export class Master
     return;
   }
 
+  onSceneCreate(_scene: Phaser.Scene)
+  : void
+  {
+
+    this._m_hManagers.forEach
+    (
+      function(_manager : IManager)
+      : void
+      {
+
+        _manager.onSceneCreate(_scene);
+        
+        return;
+
+      },
+      this
+    );
+
+    return;
+
+  }
+
+  onSceneDestroy(_scene: Phaser.Scene)
+  : void
+  {
+
+    this._m_hManagers.forEach
+    (
+      function(_manager : IManager)
+      : void
+      {
+
+        _manager.onSceneDestroy(_scene);
+        
+        return;
+        
+      },
+      this
+    );
+
+    return;
+
+  }
+
   /**
    * Call the 'onSimulationSceneCreate' of each Manager.
    *  
@@ -283,7 +328,9 @@ export class Master
       },
       this
     );
+
     return;
+
   }
 
   /**
@@ -410,6 +457,7 @@ export class Master
     this.addManager(SimulationManager.Create());
     this.addManager(UIManager.Create());
     this.addManager(AmbienceManager.Create());
+    this.addManager(AudioManager.Create());
     
     // onPrepare Callback.
 

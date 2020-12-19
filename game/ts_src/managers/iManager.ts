@@ -60,13 +60,27 @@ export interface IManager
   : void;
 
   /**
-   * Called by Master when the game is been created.
+   * Called by Master when a game scene is been created.
+   * @param _scene 
+   */
+  onSceneCreate(_scene: Phaser.Scene)
+  : void;
+
+  /**
+   * Called by Master when a game scene is been destroyed.
+   * @param _scene 
+   */
+  onSceneDestroy(_scene: Phaser.Scene)
+  : void;
+
+  /**
+   * Called by Master when the simulation scene  is been created.
    */
   onSimulationSceneCreate(_scene : Phaser.Scene)
   : void;
 
   /**
-   * Called by Master when the game is been created.
+   * Called by Master when the simulation scene is been destroyed.
    */
   onSimulationSceneDestroy(_scene : Phaser.Scene)
   : void;
