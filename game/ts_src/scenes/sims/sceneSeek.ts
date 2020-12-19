@@ -78,7 +78,7 @@ import { SeekForce } from "../../steeringBehavior/forceSeek";
      ///////////////////////////////////
      // Create SpaceShip Actor
      
-     const blueShip = ShipFactory.CreateBlueShip(this, "Blue Ship");
+     const blueShip = ShipFactory.CreateBlueShip(this, "ISS Nexus");
  
      // Add ship to simulation manager.
  

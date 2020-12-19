@@ -5,10 +5,14 @@ import { SceneUIFactory } from "../../factories/uiSceneFactory";
 import { MapScene } from "../../gameScene/mapScene";
 import { AmbienceManager } from "../../managers/ambienceManager/ambienceManager";
 import { SimulationManager } from "../../managers/simulationManager/simulationManager";
-import { UIInfoBox } from "../../managers/uiManager/uiControllers/UIInfoBox";
 import { UIManager } from "../../managers/uiManager/uiManager";
 import { Master } from "../../master/master";
 import { ForceConstant } from "../../steeringBehavior/forceConstant"; 
+import { TutorialManager } from "../../tutorialManager/tutorialManager";
+import { SttTutDebug } from "../../tutorialManager/tutState/sttTutDebug";
+import { SttTutForceMng } from "../../tutorialManager/tutState/sttTutForceMng";
+import { SttTutIntro } from "../../tutorialManager/tutState/sttTutIntro";
+import { SttTutSelectDrag } from "../../tutorialManager/tutState/sttTutSelectDrag";
   
  export class ScnTutorial 
  extends Phaser.Scene
@@ -60,22 +64,22 @@ import { ForceConstant } from "../../steeringBehavior/forceConstant";
     let height : number = canvas.height;
 
      /****************************************************/
-     /* Target                                           */
+     /* ISS Nexus                                        */
      /****************************************************/
 
-     const targetActor =  ShipFactory.CreateBlueShip
+     const nexus =  ShipFactory.CreateBlueShip
      (
        this,
-       "Blue Ship"
+       "ISS Nexus"
      );
  
      // Add target to simulation manager.
  
-     simManager.addActor(targetActor);
+     simManager.addActor(nexus);
 
      // Create the target force controller.
 
-     const targetFController = targetActor.getComponent<CmpForceController>
+     const targetFController = nexus.getComponent<CmpForceController>
      (
        ST_COMPONENT_ID.kForceController
      );
@@ -86,7 +90,7 @@ import { ForceConstant } from "../../steeringBehavior/forceConstant";
 
      constantForce.init
      (
-       targetActor.getWrappedInstance(),
+      nexus.getWrappedInstance(),
        new Phaser.Math.Vector2(0.4, 0.85),
        300,
        true 
@@ -96,29 +100,90 @@ import { ForceConstant } from "../../steeringBehavior/forceConstant";
 
      // Set target scale.
 
-    targetActor.sendMessage
+     nexus.sendMessage
     (
       ST_MESSAGE_ID.kSetMass,
       3.0
     );
 
-    targetActor.sendMessage
+    nexus.sendMessage
     (
       ST_MESSAGE_ID.kSetMaxSpeed,
       300
     );
     
-    targetActor.sendMessage
+    nexus.sendMessage
     (
       ST_MESSAGE_ID.kSetScale,
       new Phaser.Math.Vector2(0.5, 0.5)
     );
  
-     targetActor.sendMessage
+    nexus.sendMessage
      (
        ST_MESSAGE_ID.kSetPosition,
-       new Phaser.Math.Vector2(width * 0.5, height * 0.5)
+       new Phaser.Math.Vector2(width * 0.5, height * 0.6)
      );     
+
+     /****************************************************/
+     /* Scarlet Mist                                     */
+     /****************************************************/
+
+     const scarletMist =  ShipFactory.CreateRedShip
+     (
+       this,
+       "Scarlet Mist"
+     );
+ 
+     // Add target to simulation manager.
+ 
+     simManager.addActor(scarletMist);
+
+     // Create the target force controller.
+
+     const scarletForceController = scarletMist.getComponent<CmpForceController>
+     (
+       ST_COMPONENT_ID.kForceController
+     );
+
+     // Create Constant force.
+
+     const scarletConstantForce = new ForceConstant();
+
+     scarletConstantForce.init
+     (
+       scarletMist.getWrappedInstance(),
+       new Phaser.Math.Vector2(0.4, 0.85),
+       300,
+       true 
+     );
+
+      scarletForceController.addForce("constant", scarletConstantForce);
+
+     // Set target scale.
+
+     scarletMist.sendMessage
+    (
+      ST_MESSAGE_ID.kSetMass,
+      3.0
+    );
+
+    scarletMist.sendMessage
+    (
+      ST_MESSAGE_ID.kSetMaxSpeed,
+      300
+    );
+    
+    scarletMist.sendMessage
+    (
+      ST_MESSAGE_ID.kSetScale,
+      new Phaser.Math.Vector2(0.5, 0.5)
+    );
+ 
+    scarletMist.sendMessage
+     (
+       ST_MESSAGE_ID.kSetPosition,
+       new Phaser.Math.Vector2(width * 0.7, height * 0.6)
+     );
 
      /****************************************************/
      /* Foreground Ambience                              */
@@ -152,18 +217,39 @@ import { ForceConstant } from "../../steeringBehavior/forceConstant";
 
      // Set the active actor of the UI Manager.
 
-     uiManager.setTarget(targetActor);
+     uiManager.setTarget(nexus);
 
-     // Display Info
+     /****************************************************/
+     /* Tutorial Manager                                 */
+     /****************************************************/
+     
+     // Create Tutorial.
+
+     const tutorialManager = new TutorialManager(master, this);
+
+     this._m_tutorialManager = tutorialManager;
+
+     // Add Tutorial States.
+
+     tutorialManager.addState("intro", new SttTutIntro());
+     tutorialManager.addState("debug", new SttTutDebug());
+     tutorialManager.addState("forceMng", new SttTutForceMng());
+     tutorialManager.addState("selectDrag", new SttTutSelectDrag());
+
+     // Initialize tutorial manager.
+
+     tutorialManager.init();
+
+     // Set active state.
+
+     tutorialManager.setActive("intro");
+
+     // Open Tutorial Book.
 
      this._openSceneInfo();
-
-     ///////////////////////////////////
-     // Stop Simulation
- 
-     this._m_master.stopSimulation();
  
      return;
+
    }
  
    update(_time : number, _delta : number)
@@ -187,34 +273,13 @@ import { ForceConstant } from "../../steeringBehavior/forceConstant";
    : void
    {
 
-    // Pause Simulation.
-
-    const master = this._m_master;
-
-    master.pauseSimulation();
-
-    // Get the UI Manager.
-
-    const uiManger = master.getManager<UIManager>
-    (
-      ST_MANAGER_ID.kUIManager
-    );
-
-    // Get the info box.
-
-    const infoBox = uiManger.getUIController("infoBox") as UIInfoBox;
-
-    // Set the book.
-
-    infoBox.setBook("tutorial");
-
-    // Open info box.
-
-    infoBox.open();
+    this._m_tutorialManager.openBook();
 
     return;
 
    }
  
    private _m_master : Master;
+
+   private _m_tutorialManager: TutorialManager;
  }

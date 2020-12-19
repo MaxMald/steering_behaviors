@@ -133,6 +133,8 @@ export class TutorialManager
   : void
   {
 
+    this.m_master.pauseSimulation();
+    
     this._m_activeState.openBook();
 
     return;
