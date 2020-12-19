@@ -302,7 +302,7 @@
         {
           "text": "Notarás que un pequeño marcador circular de color verde posa sobre la nave selecionada.",
           "texture": "tutorial_book",
-          "frame": "blue_ship_click"
+          "frame": "blue_ship_click.png"
         },
 
         {
