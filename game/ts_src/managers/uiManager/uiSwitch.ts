@@ -28,11 +28,26 @@ export class UISwitch
     _x: number,
     _y: number,
     _scene: Phaser.Scene, 
-    _isActive: boolean = true
+    _isActive: boolean,
+    _enable_texture: string,
+    _enable_frame: string | number,
+    _disable_texture: string,
+    _disable_frame: string | number,
+    _hover_texture: string,
+    _hover_frame: string | number
   )
   {
 
     super();
+
+    // Set properties
+
+    this._m_enable_texture = _enable_texture;
+    this._m_enable_frame = _enable_frame;
+    this._m_disable_texture = _disable_texture;
+    this._m_disable_frame = _disable_frame;
+    this._m_hover_texture = _hover_texture;
+    this._m_hover_frame = _hover_frame;
 
     // Add Events
 
@@ -45,13 +60,16 @@ export class UISwitch
     (
       _x,
       _y, 
-      "game_art", 
-      "toggle_off.png"
+      _enable_texture, 
+      _enable_frame
     );
 
     button.setInteractive();
 
-    button.on('pointerdown', this._onClick, this);
+    button.on('pointerdown', this._onPointerDown, this);
+    button.on('pointerup', this._onPointerUp, this);
+    button.on("pointerover", this._onPointerEnter, this);
+    button.on("pointerout", this._onPointerOut, this);
 
     this._m_button = button;
 
@@ -81,7 +99,11 @@ export class UISwitch
   : void
   {
 
-    this._m_button.setFrame("toggle_on.png");
+    this._m_button.setTexture
+    (
+      this._m_enable_texture,
+      this._m_enable_frame
+    );
 
     this._isActive = true;
 
@@ -100,7 +122,11 @@ export class UISwitch
   : void
   {
 
-    this._m_button.setFrame("toggle_off.png");
+    this._m_button.setTexture
+    (
+      this._m_disable_texture,
+      this._m_disable_frame
+    );
 
     this._isActive = false;
 
@@ -201,7 +227,21 @@ export class UISwitch
 
   }
 
-  private _onClick()
+  private _onPointerDown()
+  : void
+  {
+
+    this._m_button.setTexture
+    (
+      this._m_disable_texture,
+      this._m_disable_frame
+    );
+
+    return;
+
+  }
+
+  private _onPointerUp()
   : void
   {
 
@@ -218,6 +258,57 @@ export class UISwitch
 
     }
 
+    this._m_button.setTexture
+    (
+      this._m_hover_texture,
+      this._m_hover_frame
+    );
+
+    return;
+
+  }
+
+  private _onPointerEnter()
+  : void
+  {
+
+    this._m_button.setTexture
+    (
+      this._m_hover_texture,
+      this._m_hover_frame
+    );
+
+    return;
+
+  }
+
+  private _onPointerOut()
+  : void
+  {
+
+    if(this._isActive)
+    {
+
+      this._m_button.setTexture
+      (
+        this._m_enable_texture,
+        this._m_enable_frame
+      );
+
+    }
+    else
+    {
+
+      this._m_button.setTexture
+      (
+        this._m_disable_texture,
+        this._m_disable_frame
+      );
+
+    }
+
+    
+
     return;
 
   }
@@ -225,5 +316,17 @@ export class UISwitch
   private _isActive : boolean;
 
   private _m_button: Ty_Image;
+
+  private _m_enable_texture: string;
+
+  private _m_enable_frame: string | number;
+
+  private _m_disable_texture: string;
+
+  private _m_disable_frame: string | number;
+
+  private _m_hover_texture: string;
+
+  private _m_hover_frame: string | number;
 
  }

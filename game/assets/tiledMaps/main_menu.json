@@ -143,6 +143,44 @@
         }, 
         {
          "draworder":"topdown",
+         "id":9,
+         "name":"Worm Hole",
+         "objects":[
+                {
+                 "height":768,
+                 "id":25,
+                 "name":"worm_hole_video",
+                 "properties":[
+                        {
+                         "name":"autoPlay",
+                         "type":"bool",
+                         "value":true
+                        }, 
+                        {
+                         "name":"key",
+                         "type":"string",
+                         "value":"wormHole"
+                        }, 
+                        {
+                         "name":"loop",
+                         "type":"bool",
+                         "value":true
+                        }],
+                 "rotation":0,
+                 "type":"video",
+                 "visible":true,
+                 "width":1024,
+                 "x":0,
+                 "y":0
+                }],
+         "opacity":1,
+         "type":"objectgroup",
+         "visible":true,
+         "x":0,
+         "y":0
+        }, 
+        {
+         "draworder":"topdown",
          "id":3,
          "name":"Cabin",
          "objects":[
@@ -347,6 +385,54 @@
                  "width":249,
                  "x":384,
                  "y":384
+                }, 
+                {
+                 "gid":11,
+                 "height":64,
+                 "id":26,
+                 "name":"sound_switch",
+                 "properties":[
+                        {
+                         "name":"disable_frame",
+                         "type":"string",
+                         "value":"disable_music_button.png"
+                        }, 
+                        {
+                         "name":"disable_texture",
+                         "type":"string",
+                         "value":"menu_art"
+                        }, 
+                        {
+                         "name":"enable_frame",
+                         "type":"string",
+                         "value":"active_music_button.png"
+                        }, 
+                        {
+                         "name":"enable_texture",
+                         "type":"string",
+                         "value":"menu_art"
+                        }, 
+                        {
+                         "name":"hover_frame",
+                         "type":"string",
+                         "value":"hover_music_button.png"
+                        }, 
+                        {
+                         "name":"hover_texture",
+                         "type":"string",
+                         "value":"menu_art"
+                        }, 
+                        {
+                         "name":"isActive",
+                         "type":"bool",
+                         "value":true
+                        }],
+                 "rotation":0,
+                 "type":"uiSwitch",
+                 "visible":true,
+                 "width":64,
+                 "x":909.333333333333,
+                 "y":150.666666666667
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -855,8 +941,8 @@
          "x":0,
          "y":0
         }],
- "nextlayerid":9,
- "nextobjectid":25,
+ "nextlayerid":10,
+ "nextobjectid":27,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.4.3",
@@ -874,7 +960,7 @@
          "margin":0,
          "name":"assets",
          "spacing":0,
-         "tilecount":9,
+         "tilecount":10,
          "tileheight":769,
          "tiles":[
                 {
@@ -930,6 +1016,12 @@
                  "image":"..\/images\/game_menu\/clouds_2.png",
                  "imageheight":326,
                  "imagewidth":512
+                }, 
+                {
+                 "id":10,
+                 "image":"..\/images\/game_menu\/active_music_button.png",
+                 "imageheight":64,
+                 "imagewidth":64
                 }],
          "tilewidth":1025
         }],
