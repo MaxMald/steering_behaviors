@@ -1,0 +1,80 @@
+{
+  "resources": [
+    "gamesounds.ogg",
+    "gamesounds.m4a",
+    "gamesounds.mp3",
+    "gamesounds.ac3"
+  ],
+  "spritemap": {
+    "click_negative_B": {
+      "start": 0,
+      "end": 0.7697052154195011,
+      "loop": false
+    },
+    "click_negative": {
+      "start": 2,
+      "end": 4.24907029478458,
+      "loop": false
+    },
+    "click_play": {
+      "start": 6,
+      "end": 9.044603174603175,
+      "loop": false
+    },
+    "click_positive_A": {
+      "start": 11,
+      "end": 12.5,
+      "loop": false
+    },
+    "click_positive_B": {
+      "start": 14,
+      "end": 14.71562358276644,
+      "loop": false
+    },
+    "click_positive_C": {
+      "start": 16,
+      "end": 16.559410430839,
+      "loop": false
+    },
+    "click_positive_D": {
+      "start": 18,
+      "end": 19,
+      "loop": false
+    },
+    "click_positive_E": {
+      "start": 20,
+      "end": 24,
+      "loop": false
+    },
+    "click_positive_F": {
+      "start": 25,
+      "end": 26.45863945578231,
+      "loop": false
+    },
+    "click_stop": {
+      "start": 28,
+      "end": 31.80204081632653,
+      "loop": false
+    },
+    "open_book": {
+      "start": 33,
+      "end": 34.356258503401364,
+      "loop": false
+    },
+    "robotic": {
+      "start": 36,
+      "end": 43.8290022675737,
+      "loop": false
+    },
+    "milky_way": {
+      "start": 45,
+      "end": 115.51052154195011,
+      "loop": false
+    },
+    "space_ambient_loop": {
+      "start": 117,
+      "end": 226.37374149659865,
+      "loop": false
+    }
+  }
+}

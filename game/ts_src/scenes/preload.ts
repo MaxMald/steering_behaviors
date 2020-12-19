@@ -148,6 +148,22 @@ extends Phaser.Scene
     );
 
     /****************************************************/
+    /* Audio                                            */
+    /****************************************************/
+
+    loader.audioSprite
+    (
+      "gameAudio",
+      "audio/gamesounds.json",
+      [
+        "audio/gamesounds.ogg",
+        "audio/gamesounds.m4a",
+        "audio/gamesounds.mp3",
+        "audio/gamesounds.ac3"
+      ]
+    );
+
+    /****************************************************/
     /* Loading Scene                                    */
     /****************************************************/
 

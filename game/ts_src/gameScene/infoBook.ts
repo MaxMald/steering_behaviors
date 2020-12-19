@@ -8,6 +8,9 @@
  * @since December-08-2020
  */
 
+import { ST_MANAGER_ID } from "../commons/stEnums";
+import { AudioManager } from "../managers/audioManager/audioManager";
+import { Master } from "../master/master";
 import { InfoPage } from "./infoPage";
 
 export class InfoBook
@@ -18,7 +21,7 @@ export class InfoBook
 
     this.name = "";
     this.activePage = 0;
-    this.pages = new Array<InfoPage>();
+    this.pages = new Array<InfoPage>();    
 
     return;
 
@@ -43,7 +46,7 @@ export class InfoBook
   }
 
   nextPage()
-  : void
+  : boolean
   {
 
     let activePage = this.activePage;    
@@ -53,16 +56,18 @@ export class InfoBook
 
       ++activePage;
 
-    }
+      this.activePage = activePage;
 
-    this.activePage = activePage;
+      return true;
 
-    return;
+    }    
+
+    return false;
 
   }
 
   prevPage()
-  : void
+  : boolean
   {
 
     let activePage = this.activePage;    
@@ -72,11 +77,13 @@ export class InfoBook
 
       --activePage;
 
-    }
+      this.activePage = activePage;
 
-    this.activePage = activePage;
+      return true;
 
-    return;
+    }    
+
+    return false;
 
   }
 
@@ -96,6 +103,6 @@ export class InfoBook
   /* Private                                          */
   /****************************************************/
 
-  private activePage: number = 0;
+  private activePage: number = 0;  
 
 }

@@ -8,12 +8,13 @@
  * @since December-08-2020
  */
 
-import { ST_MANAGER_ID } from "../../../commons/stEnums";
+import { ST_AUDIO_CLIP, ST_MANAGER_ID } from "../../../commons/stEnums";
 import { STPoint } from "../../../commons/stPoint";
 import { InfoBook } from "../../../gameScene/infoBook";
 import { InfoPage } from "../../../gameScene/infoPage";
 import { MapScene } from "../../../gameScene/mapScene";
 import { Master } from "../../../master/master";
+import { AudioManager } from "../../audioManager/audioManager";
 import { UIButtonImg } from "../uiButtonImg";
 import { UIGroup } from "../uiGroup";
 import { UIImage } from "../uiImage";
@@ -144,6 +145,10 @@ extends UIController
       : void
       {
 
+        // Play Open sound
+
+        this._m_audioManager.playClip(ST_AUDIO_CLIP.kNegativeB);
+
         this.close();
 
         return;
@@ -214,6 +219,19 @@ extends UIController
 
     this._m_text.setZ(3);
 
+    /****************************************************/
+    /* Audio Manager                                    */
+    /****************************************************/
+
+    // Get Audio Manager
+
+    const master = Master.GetInstance();
+
+    this._m_audioManager = master.getManager<AudioManager>
+    (
+      ST_MANAGER_ID.kAudioManager
+    );
+
     return;
 
   }
@@ -228,6 +246,10 @@ extends UIController
     this._m_contentGroup.enable();
 
     this._displayPage();
+
+    // Play Open sound
+
+    this._m_audioManager.playClip(ST_AUDIO_CLIP.kOpenBook);
 
     return;
 
@@ -280,6 +302,8 @@ extends UIController
     this._m_textGlobe.destroy();
     this._m_textGlobe = null;
 
+    this._m_audioManager = null;
+
     return;
 
   }
@@ -291,10 +315,24 @@ extends UIController
     if(this._m_book !== undefined)
     {
 
-      this._m_book.nextPage();
+      if(this._m_book.nextPage())
+      {
 
-      this._displayPage();
+        this._displayPage();
 
+        // Play positive sound
+
+        this._m_audioManager.playClip(ST_AUDIO_CLIP.kPositiveC);
+
+      }
+      else
+      {
+
+        // Play negative sound
+
+        this._m_audioManager.playClip(ST_AUDIO_CLIP.kNegativeA);
+
+      }
     }    
 
     return;
@@ -308,10 +346,24 @@ extends UIController
     if(this._m_book !== undefined)
     {
 
-      this._m_book.prevPage();
+      if(this._m_book.prevPage())
+      {
 
-      this._displayPage();
+        this._displayPage();
 
+        // Play positive sound
+
+        this._m_audioManager.playClip(ST_AUDIO_CLIP.kPositiveC);
+
+      }
+      else
+      {
+
+        // Play negative sound
+
+        this._m_audioManager.playClip(ST_AUDIO_CLIP.kNegativeA);
+
+      }
     }    
 
     return;
@@ -399,5 +451,7 @@ extends UIController
   private _m_textGlobe: Phaser.GameObjects.RenderTexture;
 
   private _m_minGlobleSize: Phaser.Geom.Point;
+
+  private _m_audioManager: AudioManager;
 
 }

@@ -8,10 +8,11 @@
   * @since August-30-2020
   */
 
-import { ST_MANAGER_ID } from "../commons/stEnums";
+import { ST_AUDIO_CLIP, ST_MANAGER_ID } from "../commons/stEnums";
 import { Ty_Image } from "../commons/stTypes";
 import { MapScene } from "../gameScene/mapScene";
 import { AmbienceManager } from "../managers/ambienceManager/ambienceManager";
+import { AudioManager } from "../managers/audioManager/audioManager";
 import { UIGroup } from "../managers/uiManager/uiGroup";
 import { UIMenuButton } from "../managers/uiManager/uiMenuButton";
 import { UIObject } from "../managers/uiManager/uiObject";
@@ -35,6 +36,19 @@ extends Phaser.Scene
 
     master.onSceneCreate(this);
 
+    /****************************************************/
+    /* Sound Effects                                    */
+    /****************************************************/
+
+    const audioManager = master.getManager<AudioManager>
+    (
+      ST_MANAGER_ID.kAudioManager
+    );
+
+    audioManager.playClip(ST_AUDIO_CLIP.kMachine);
+
+    audioManager.playClip(ST_AUDIO_CLIP.kBGM_MilkyWay, false, 0.6);
+
     // Get Ambience Manager
 
     this._m_ambienceManager = master.getManager<AmbienceManager>
@@ -44,7 +58,7 @@ extends Phaser.Scene
 
     // Camera fade in
 
-    this.cameras.main.fadeIn(500, 0, 0, 0, );
+    this.cameras.main.fadeIn(500, 0, 0, 0 );
 
     // Create assets from tiled map
 
@@ -155,6 +169,10 @@ extends Phaser.Scene
         this._m_mainPage.disable();        
         this._m_missionPage.enable();
 
+        // Play Click sound
+
+        audioManager.playClip(ST_AUDIO_CLIP.kPositiveB);
+
         return;
 
       },
@@ -183,6 +201,10 @@ extends Phaser.Scene
         this._m_creditsPage.enable();
         this._m_creditsPagePhaser.setActive(true);
         this._m_creditsPagePhaser.setVisible(true);
+
+        // Play Click sound
+
+        audioManager.playClip(ST_AUDIO_CLIP.kPositiveB);
       
         return;
 
@@ -418,6 +440,10 @@ extends Phaser.Scene
         this._m_mainPage.enable();        
         this._m_missionPage.disable();
 
+        // Play Click sound
+
+        audioManager.playClip(ST_AUDIO_CLIP.kPositiveB);
+
         return;
 
       },
@@ -459,6 +485,10 @@ extends Phaser.Scene
         this._m_creditsPagePhaser.setActive(false);
         this._m_creditsPagePhaser.setVisible(false);
 
+        // Play Click sound
+
+        audioManager.playClip(ST_AUDIO_CLIP.kPositiveB);
+
         return;
 
       },
@@ -483,7 +513,7 @@ extends Phaser.Scene
     creditsPagePhaser.add
     (
       mapScene.getObject<Ty_Image>("credit_design")
-    );
+    );    
 
     /****************************************************/
     /*                                                  */
@@ -523,9 +553,20 @@ extends Phaser.Scene
     // Ignore if the scene is already closing.
 
     if(!this._m_closing)
-    {      
+    { 
 
-      this.cameras.main.fadeOut(500, 0, 0, 0);      
+      this.cameras.main.fadeOut(500, 0, 0, 0);
+      
+      // Play Positive Click Sound
+
+      const master = Master.GetInstance();
+
+      const audioManager = master.getManager<AudioManager>
+      (
+        ST_MANAGER_ID.kAudioManager
+      );
+
+      audioManager.playClip(ST_AUDIO_CLIP.kPositiveA);
 
       this.cameras.main.once
       (
@@ -533,9 +574,7 @@ extends Phaser.Scene
         function()
         {
 
-          // Master callback: "onSceneDestroy"
-
-          const master = Master.GetInstance();
+          // Master callback: "onSceneDestroy"          
 
           master.onSceneDestroy(this);
 
