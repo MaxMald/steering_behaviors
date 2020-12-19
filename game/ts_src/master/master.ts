@@ -259,6 +259,50 @@ export class Master
     return;
   }
 
+  onSceneCreate(_scene: Phaser.Scene)
+  : void
+  {
+
+    this._m_hManagers.forEach
+    (
+      function(_manager : IManager)
+      : void
+      {
+
+        _manager.onSceneCreate(_scene);
+        
+        return;
+
+      },
+      this
+    );
+
+    return;
+
+  }
+
+  onSceneDestroy(_scene: Phaser.Scene)
+  : void
+  {
+
+    this._m_hManagers.forEach
+    (
+      function(_manager : IManager)
+      : void
+      {
+
+        _manager.onSceneDestroy(_scene);
+        
+        return;
+        
+      },
+      this
+    );
+
+    return;
+
+  }
+
   /**
    * Call the 'onSimulationSceneCreate' of each Manager.
    *  
@@ -283,7 +327,9 @@ export class Master
       },
       this
     );
+
     return;
+
   }
 
   /**

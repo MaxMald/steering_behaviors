@@ -29,9 +29,15 @@ extends Phaser.Scene
   : void
   {    
 
+    // Master callback: "onSceneCreate" for each manager.
+
+    const master = Master.GetInstance();
+
+    master.onSceneCreate(this);
+
     // Get Ambience Manager
 
-    this._m_ambienceManager = Master.GetInstance().getManager<AmbienceManager>
+    this._m_ambienceManager = master.getManager<AmbienceManager>
     (
       ST_MANAGER_ID.kAmbienceManager
     );
@@ -514,6 +520,8 @@ extends Phaser.Scene
   : void
   {
 
+    // Ignore if the scene is already closing.
+
     if(!this._m_closing)
     {      
 
@@ -525,10 +533,17 @@ extends Phaser.Scene
         function()
         {
 
-          // Es necesario llamar el callback del Ambience Manager, pues los
-          // motion images Se registran dentro del UI Ambience.
+          // Master callback: "onSceneDestroy"
+
+          const master = Master.GetInstance();
+
+          master.onSceneDestroy(this);
+
+          // Ambience Manager callback: "onSimulationSceneDestroy"
 
           this._m_ambienceManager.onSimulationSceneDestroy(this);
+
+          // Start Scene
 
           this.scene.start(_key);
 
