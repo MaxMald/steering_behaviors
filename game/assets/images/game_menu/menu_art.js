@@ -1,5 +1,10 @@
 {
 "frames": {
+	"active_music_button.png": {
+		"frame": {"x":359, "y":1382, "w":64, "h":64},
+		"spriteSourceSize": {"x":0,"y":0,"w":64,"h":64},
+		"sourceSize": {"w":64,"h":64}
+	},
 	"cabin.png": {
 		"frame": {"x":0, "y":0, "w":1025, "h":769},
 		"spriteSourceSize": {"x":0,"y":0,"w":1025,"h":769},
@@ -20,10 +25,20 @@
 		"spriteSourceSize": {"x":0,"y":0,"w":356,"h":84},
 		"sourceSize": {"w":356,"h":84}
 	},
+	"disable_music_button.png": {
+		"frame": {"x":717, "y":1507, "w":63, "h":63},
+		"spriteSourceSize": {"x":0,"y":0,"w":63,"h":63},
+		"sourceSize": {"w":63,"h":63}
+	},
 	"game_logo.png": {
 		"frame": {"x":552, "y":1276, "w":429, "h":229},
 		"spriteSourceSize": {"x":0,"y":0,"w":429,"h":229},
 		"sourceSize": {"w":429,"h":229}
+	},
+	"hover_music_button.png": {
+		"frame": {"x":425, "y":1382, "w":63, "h":63},
+		"spriteSourceSize": {"x":0,"y":0,"w":63,"h":63},
+		"sourceSize": {"w":63,"h":63}
 	},
 	"humming_credits.png": {
 		"frame": {"x":0, "y":1468, "w":357, "h":123},
@@ -31,12 +46,12 @@
 		"sourceSize": {"w":357,"h":123}
 	},
 	"main_btn_bg.png": {
-		"frame": {"x":1265, "y":604, "w":236, "h":86},
+		"frame": {"x":1277, "y":1099, "w":236, "h":86},
 		"spriteSourceSize": {"x":0,"y":0,"w":236,"h":86},
 		"sourceSize": {"w":236,"h":86}
 	},
 	"menu_btn_bg.png": {
-		"frame": {"x":1277, "y":1099, "w":236, "h":86},
+		"frame": {"x":1265, "y":604, "w":236, "h":86},
 		"spriteSourceSize": {"x":0,"y":0,"w":236,"h":86},
 		"sourceSize": {"w":236,"h":86}
 	},

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.4" tiledversion="1.4.2" orientation="orthogonal" renderorder="right-down" width="64" height="48" tilewidth="16" tileheight="16" infinite="0" nextlayerid="9" nextobjectid="25">
+<map version="1.4" tiledversion="1.4.2" orientation="orthogonal" renderorder="right-down" width="64" height="48" tilewidth="16" tileheight="16" infinite="0" nextlayerid="10" nextobjectid="27">
  <editorsettings>
   <export target="main_menu.json" format="json"/>
  </editorsettings>
- <tileset firstgid="1" name="assets" tilewidth="1025" tileheight="769" tilecount="9" columns="0">
+ <tileset firstgid="1" name="assets" tilewidth="1025" tileheight="769" tilecount="10" columns="0">
   <grid orientation="orthogonal" width="1" height="1"/>
   <tile id="0">
    <image width="1024" height="768" source="../images/bg_space_01.png"/>
@@ -32,6 +32,9 @@
   <tile id="9">
    <image width="512" height="326" source="../images/game_menu/clouds_2.png"/>
   </tile>
+  <tile id="10">
+   <image width="64" height="64" source="../images/game_menu/active_music_button.png"/>
+  </tile>
  </tileset>
  <objectgroup id="2" name="background" locked="1">
   <object id="1" type="image" gid="1" x="0" y="768" width="1024" height="768">
@@ -40,7 +43,7 @@
    </properties>
   </object>
  </objectgroup>
- <objectgroup id="8" name="Clouds">
+ <objectgroup id="8" name="Clouds" locked="1">
   <object id="23" name="cloud_1" type="motionImage" gid="9" x="0" y="560" width="1024" height="503">
    <properties>
     <property name="frame" value="clouds.png"/>
@@ -58,6 +61,15 @@
    </properties>
   </object>
  </objectgroup>
+ <objectgroup id="9" name="Worm Hole">
+  <object id="25" name="worm_hole_video" type="video" x="0" y="0" width="1024" height="768">
+   <properties>
+    <property name="autoPlay" type="bool" value="true"/>
+    <property name="key" value="wormHole"/>
+    <property name="loop" type="bool" value="true"/>
+   </properties>
+  </object>
+ </objectgroup>
  <objectgroup id="3" name="Cabin" locked="1">
   <object id="2" type="image" gid="2" x="0" y="768" width="1025" height="769">
    <properties>
@@ -66,7 +78,7 @@
    </properties>
   </object>
  </objectgroup>
- <objectgroup id="4" name="Logo">
+ <objectgroup id="4" name="Logo" locked="1">
   <object id="3" name="game_logo" type="image" gid="3" x="292.5" y="256" width="429" height="229">
    <properties>
     <property name="frame" value="game_logo.png"/>
@@ -102,8 +114,19 @@
     <property name="texture" value="menu_art"/>
    </properties>
   </object>
+  <object id="26" name="sound_switch" type="uiSwitch" gid="11" x="909.333" y="150.667" width="64" height="64">
+   <properties>
+    <property name="disable_frame" value="disable_music_button.png"/>
+    <property name="disable_texture" value="menu_art"/>
+    <property name="enable_frame" value="active_music_button.png"/>
+    <property name="enable_texture" value="menu_art"/>
+    <property name="hover_frame" value="hover_music_button.png"/>
+    <property name="hover_texture" value="menu_art"/>
+    <property name="isActive" type="bool" value="true"/>
+   </properties>
+  </object>
  </objectgroup>
- <objectgroup id="6" name="Missions_Page" visible="0">
+ <objectgroup id="6" name="Missions_Page" visible="0" locked="1">
   <object id="6" name="btn_flee" type="uiMenuButton" gid="4" x="384" y="384" width="249" height="98">
    <properties>
     <property name="fill_color" type="color" value="#ff9a4694"/>
@@ -186,7 +209,7 @@
    </properties>
   </object>
  </objectgroup>
- <objectgroup id="7" name="Credits_Page" visible="0">
+ <objectgroup id="7" name="Credits_Page" visible="0" locked="1">
   <object id="19" name="btn_credits_back" type="uiMenuButton" gid="4" x="592" y="534" width="249" height="98">
    <properties>
     <property name="fill_color" type="color" value="#ffff0000"/>

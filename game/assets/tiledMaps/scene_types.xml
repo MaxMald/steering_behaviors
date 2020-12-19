@@ -52,4 +52,18 @@
   <property name="min_value" type="float" default="0"/>
  </objecttype>
  <objecttype name="uiSpeedometer" color="#a0a0a4"/>
+ <objecttype name="uiSwitch" color="#a0a0a4">
+  <property name="disable_frame" type="string"/>
+  <property name="disable_texture" type="string"/>
+  <property name="enable_frame" type="string"/>
+  <property name="enable_texture" type="string"/>
+  <property name="hover_frame" type="string"/>
+  <property name="hover_texture" type="string"/>
+  <property name="isActive" type="bool" default="false"/>
+ </objecttype>
+ <objecttype name="video" color="#a0a0a4">
+  <property name="autoPlay" type="bool" default="false"/>
+  <property name="key" type="string"/>
+  <property name="loop" type="bool" default="false"/>
+ </objecttype>
 </objecttypes>

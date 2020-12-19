@@ -16,6 +16,7 @@ import { AudioManager } from "../managers/audioManager/audioManager";
 import { UIGroup } from "../managers/uiManager/uiGroup";
 import { UIMenuButton } from "../managers/uiManager/uiMenuButton";
 import { UIObject } from "../managers/uiManager/uiObject";
+import { UISwitch } from "../managers/uiManager/uiSwitch";
 import { Master } from "../master/master";
 
  
@@ -213,6 +214,57 @@ extends Phaser.Scene
     );
 
     mainPage.add(credits);
+
+    ///////////////////////////////////
+    // Sound Switch
+
+    const soundSwitch = mapScene.getObject<UISwitch>
+    (
+      "sound_switch"
+    );
+
+    // Check audio manager status
+
+    if(this.sound.mute)
+    {
+
+      soundSwitch.setOff();
+
+    }
+
+    // Callbacks
+
+    soundSwitch.subscribe
+    (
+      "toggleOn",
+      "mainMenu",
+      function()
+      : void
+      {
+
+        audioManager.unmute();
+
+        return;
+
+      },
+      this
+    );
+
+    soundSwitch.subscribe
+    (
+      "toggleOff",
+      "mainMenu",
+      function()
+      : void
+      {
+
+        audioManager.mute();
+
+        return;
+
+      },
+      this
+    );    
 
     /****************************************************/
     /* Mission Page                                     */
