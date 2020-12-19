@@ -9,6 +9,7 @@
   <property name="frame" type="string"/>
   <property name="frame_idx" type="int" default="0"/>
   <property name="texture" type="string" default="game_art"/>
+  <property name="tint" type="color" default="#ffffffff"/>
  </objecttype>
  <objecttype name="motionImage" color="#a0a0a4">
   <property name="frame" type="string"/>
