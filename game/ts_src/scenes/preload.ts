@@ -131,6 +131,12 @@ extends Phaser.Scene
       "tiledMaps/ambience_03.json"
     );
 
+    loader.tilemapTiledJSON
+    (
+      "ambience_04",
+      "tiledMaps/ambience_04.json"
+    );
+
     this.load.tilemapTiledJSON
     (
       "simulation_ui",

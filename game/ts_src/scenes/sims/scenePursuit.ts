@@ -12,6 +12,8 @@ import { ST_COMPONENT_ID, ST_MANAGER_ID, ST_MESSAGE_ID } from "../../commons/stE
 import { CmpForceController } from "../../components/cmpforceController";
 import { ShipFactory } from "../../factories/shipFactory";
 import { SceneUIFactory } from "../../factories/uiSceneFactory";
+import { MapScene } from "../../gameScene/mapScene";
+import { AmbienceManager } from "../../managers/ambienceManager/ambienceManager";
 import { SimulationManager } from "../../managers/simulationManager/simulationManager";
 import { UIManager } from "../../managers/uiManager/uiManager";
 import { Master } from "../../master/master";
@@ -40,6 +42,16 @@ export class ScenePursuit
     // on simulation scene create.
  
     master.onSimulationSceneCreate(this);
+
+    /****************************************************/
+     /* Ambient                                          */
+     /****************************************************/
+
+     const ambienceMap = MapScene.CreateFromTiledMap("ambience_04", this);
+
+     ambienceMap.clear();
+     ambienceMap.destroy();
+
 
     // Get simulation manager.
  
@@ -143,7 +155,18 @@ export class ScenePursuit
       300
     );
 
-    blueFController.addForce("pursuit", pursuitForce);    
+    blueFController.addForce("pursuit", pursuitForce);
+    
+     /****************************************************/
+     /* Foreground Ambience                              */
+     /****************************************************/
+
+     const ambienceMng = master.getManager<AmbienceManager>
+     (
+       ST_MANAGER_ID.kAmbienceManager
+     );
+
+     ambienceMng.createStarDust(this);
 
     /****************************************************/
     /* UI                                               */
