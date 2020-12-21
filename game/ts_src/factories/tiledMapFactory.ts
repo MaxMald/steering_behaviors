@@ -22,6 +22,7 @@ import { UIMenuButton } from "../managers/uiManager/uiMenuButton";
 import { UIObject } from "../managers/uiManager/uiObject";
 import { UISlider } from "../managers/uiManager/uiSlider";
 import { UISpeedometer } from "../managers/uiManager/uiSpeedometer";
+import { UISwitch } from "../managers/uiManager/uiSwitch";
 import { Master } from "../master/master";
 
 /**
@@ -155,6 +156,40 @@ export class TiledMapFactory
 
   }
 
+  static CreateVideo
+  (
+    _object: Ty_TiledObject,
+    _scene: Phaser.Scene
+  )
+  : Phaser.GameObjects.Video
+  {
+
+    // Get properties
+
+    const hProperties = TiledMapFactory.CreatePropertiesMap(_object.properties);
+
+    const video = _scene.add.video
+    (
+      _object.x,
+      _object.y,
+      hProperties.get("key").value as string
+    );
+
+    video.setOrigin(0.0, 0.0);
+    
+    video.setLoop(hProperties.get("loop").value);
+
+    if(hProperties.get("autoPlay").value as boolean)
+    {
+
+      video.play();
+
+    }
+
+    return video;
+
+  }
+
   /**
    * Creates a phaser Bitmap Text game object, from a tiled object. Returns the phaser
    * game object.
@@ -263,6 +298,22 @@ export class TiledMapFactory
       image
     );
 
+    // Get font color.
+
+    let colorString: string = hProperties.get("tint").value;
+
+    // Remove # character and alpha values (three first characters).
+
+    colorString = colorString.substring(3, colorString.length);    
+
+    // Convert to Hex number
+
+    const color: number = parseInt(colorString, 16);
+
+    // Set font color.
+
+    image.setTint(color)
+
     return image;
 
   }
@@ -345,6 +396,36 @@ export class TiledMapFactory
     );
 
     return speedometer;
+
+  }
+
+  static CreateUISwitch
+  (
+    _object: Ty_TiledObject,
+    _scene: Phaser.Scene
+  )
+  : UISwitch
+  {
+
+     // Get custom properties.
+
+     const hProperties = TiledMapFactory.CreatePropertiesMap(_object.properties);
+
+     // properties
+
+     return new UISwitch
+     (
+      _object.x + _object.width * 0.5,
+      _object.y - _object.height * 0.5,
+      _scene,
+      hProperties.get("isActive").value,
+      hProperties.get("enable_texture").value,
+      hProperties.get("enable_frame").value,
+      hProperties.get("disable_texture").value,
+      hProperties.get("disable_frame").value,
+      hProperties.get("hover_texture").value,
+      hProperties.get("hover_frame").value
+     );
 
   }
 

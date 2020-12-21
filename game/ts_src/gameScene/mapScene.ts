@@ -51,6 +51,8 @@ export class MapScene
     hFactories.set("point", TiledMapFactory.CreatePoint);
     hFactories.set("motionImage", TiledMapFactory.CreateMotionImage);
     hFactories.set("uiMenuButton", TiledMapFactory.CreateUIMenuButton);
+    hFactories.set("video", TiledMapFactory.CreateVideo);
+    hFactories.set("uiSwitch", TiledMapFactory.CreateUISwitch);
 
     /****************************************************/
     /* Scene Instance                                   */

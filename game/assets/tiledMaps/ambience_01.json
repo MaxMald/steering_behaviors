@@ -22,6 +22,11 @@
                  "name":"",
                  "properties":[
                         {
+                         "name":"Rojo",
+                         "type":"int",
+                         "value":255
+                        }, 
+                        {
                          "name":"frame",
                          "type":"string",
                          "value":""
@@ -35,6 +40,11 @@
                          "name":"texture",
                          "type":"string",
                          "value":"bg_space_01"
+                        }, 
+                        {
+                         "name":"tint",
+                         "type":"color",
+                         "value":"#ffffffff"
                         }],
                  "rotation":0,
                  "type":"image",
@@ -188,6 +198,11 @@
                          "name":"texture",
                          "type":"string",
                          "value":"game_art"
+                        }, 
+                        {
+                         "name":"tint",
+                         "type":"color",
+                         "value":"#ffffffff"
                         }],
                  "rotation":287.416,
                  "type":"image",
@@ -303,6 +318,11 @@
                          "name":"texture",
                          "type":"string",
                          "value":"game_art"
+                        }, 
+                        {
+                         "name":"tint",
+                         "type":"color",
+                         "value":"#ffffffff"
                         }],
                  "rotation":0,
                  "type":"image",
@@ -332,7 +352,7 @@
  "nextobjectid":27,
  "orientation":"orthogonal",
  "renderorder":"right-down",
- "tiledversion":"1.4.2",
+ "tiledversion":"1.4.3",
  "tileheight":16,
  "tilesets":[
         {
@@ -473,7 +493,7 @@
                 {
                  "id":20,
                  "image":"..\/images\/game_art\/ui_bg.png",
-                 "imageheight":190,
+                 "imageheight":212,
                  "imagewidth":978
                 }],
          "tilewidth":1024

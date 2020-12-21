@@ -24,7 +24,15 @@ import { MapScene } from "../../../gameScene/mapScene";
 import { UIGroup } from "../uiGroup";
 import { STRectangle } from "../../../commons/stRectangle";
 import { UIImage } from "../uiImage";
+import { MxListener } from "listeners/mxListener";
+import { MxListenerManager } from "listeners/mxListenerManager";
 
+/**
+ * Events:
+ * 
+ * * targetChanged:
+ * * forceChanged:
+ */
 export class UIForceController
   extends UIController
 {
@@ -37,6 +45,14 @@ export class UIForceController
   {
 
     super();    
+
+    ///////////////////////////////////
+    // Listeners
+
+    this._m_listeners = new MxListenerManager<UIForceController, any>();
+
+    this._m_listeners.addEvent("targetChanged");
+    this._m_listeners.addEvent("forceChanged");
 
     ///////////////////////////////////
     // UI
@@ -303,6 +319,11 @@ export class UIForceController
 
     this._ui_box.updateBox();
 
+    ////////////////////////////////////
+    // Callback
+
+    this._m_listeners.call("targetChanged", this, undefined);
+
     return;
 
   }
@@ -314,13 +335,29 @@ export class UIForceController
   : void 
   {
 
+    // Get the force controller.
+
+    const forceController = this._m_forceController;
+
+    // Get all forces the force controller has.
+
+    const forces = forceController.getForces();
+
+    // Get all the UI forces.
+
+    const uiForces = this._m_aUIForce;
+
     // Actor Mass.
 
-    this._ui_massSlider.setValue(this._m_forceController.getInitMass());
+    this._ui_massSlider.setValue(forceController.getInitMass());
 
     // Actor Max Speed.
 
-    this._ui_maxSpeedSlider.setValue(this._m_forceController.getInitMaxSpeed());
+    this._ui_maxSpeedSlider.setValue(forceController.getInitMaxSpeed());
+
+    forces.forEach(force => {
+      uiForces.get(force.getType() as ST_STEER_FORCE).onSimulationStop();
+    });
     
     return;
 
@@ -354,7 +391,7 @@ export class UIForceController
   : void
   {
 
-    this._ui_actualSpeed.setText("Speed: " + _speed.toPrecision(3) + " km/secs. ");
+    this._ui_actualSpeed.setText("Speed: " + _speed.toFixed(3) + " km/secs. ");
 
     return;
 
@@ -364,7 +401,7 @@ export class UIForceController
   : void
   {
 
-    this._ui_maxSpeed.setText("Max. Speed: " + _speed.toPrecision(3) + " km/secs. ");
+    this._ui_maxSpeed.setText("Max. Speed: " + _speed.toFixed(3) + " km/secs. ");
 
     return;
 
@@ -374,7 +411,7 @@ export class UIForceController
   : void
   {
 
-    this._ui_mass.setText("Mass: " + _mass.toPrecision(3) + " tg.");
+    this._ui_mass.setText("Mass: " + _mass.toFixed(3) + " tg.");
 
     return;
 
@@ -433,6 +470,47 @@ export class UIForceController
 
     this._ui_box.updateBox();
 
+    this._m_listeners.call("forceChanged", this, undefined);
+
+    return;
+
+  }
+
+  subscribe
+  (
+    _event: string, 
+    _username: string,
+    _fn: (_simulationManager: UIForceController, _args: any) => void,
+    _context: any
+  )
+  : void
+  {
+
+    this._m_listeners.suscribe
+    (
+      _event, 
+      _username,
+      new MxListener<UIForceController, any>(_fn, _context), 
+    );
+
+    return;
+
+  }
+
+  unsubscribe
+  (
+    _event: string,
+    _username: string
+  )
+  : void
+  {
+
+    this._m_listeners.unsuscribe
+    (
+      _event,
+      _username
+    );
+
     return;
 
   }
@@ -443,6 +521,8 @@ export class UIForceController
   destroy()
   : void  
   {
+
+    this._m_listeners.destroy();
 
     this._m_target = undefined;
     
@@ -613,5 +693,7 @@ export class UIForceController
   private _ui_actualSpeed: UILabel;
 
   private _ui_group: UIGroup;
+
+  private _m_listeners: MxListenerManager<UIForceController, any>;
 
 }

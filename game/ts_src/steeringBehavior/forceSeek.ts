@@ -8,11 +8,13 @@
  * @since September-07-2020
  */
 
-import { ST_COLOR_ID, ST_MANAGER_ID, ST_STEER_FORCE } from "../commons/stEnums";
+import { ST_COLOR_ID, ST_MANAGER_ID, ST_SIM_SATE, ST_STEER_FORCE } from "../commons/stEnums";
 import { Ty_Sprite, V2 } from "../commons/stTypes";
 import { CmpForceController } from "../components/cmpForceController";
 import { DebugManager } from "../managers/debugManager/debugManager";
+import { SimulationManager } from "../managers/simulationManager/simulationManager";
 import { Master } from "../master/master";
+import { ForceInitState } from "./forceInitState";
 import { IForce } from "./iForce";
 
 /**
@@ -56,10 +58,16 @@ implements IForce
 
     this._m_desireVelocity = new Phaser.Math.Vector2();
 
-    // Get Master Manager.
+    // Get Managers
 
-    let master = Master.GetInstance();
+    const master = Master.GetInstance();
 
+    this._m_simulationManager = master.getManager<SimulationManager>
+    (
+      ST_MANAGER_ID.kSimManager
+    );
+
+    this._m_seekInitState = new ForceInitState();
     // Get Debug Manager.
 
     this._m_debugManager = master.getManager<DebugManager>
@@ -80,10 +88,22 @@ implements IForce
   : void
   {
 
+    if(this._m_simulationManager.getState() === ST_SIM_SATE.kStopped)
+    {
+      this._m_seekInitState.m_initMaxMagnitude = _magnitude;
+    }
     this._m_seekMaxLength = _magnitude;
 
     return;
 
+  }
+
+  setInitMaxMagnitude()
+  : void
+  {
+    this._m_seekMaxLength = this.getInitMaxMagnitude();
+
+    return;
   }
 
   getMaxMagnitude()
@@ -92,6 +112,12 @@ implements IForce
 
     return this._m_seekMaxLength;
 
+  }
+
+  getInitMaxMagnitude()
+  : number
+  {
+    return this._m_seekInitState.m_initMaxMagnitude;
   }
 
   getActualForce()
@@ -262,6 +288,10 @@ implements IForce
     this._m_self = null;
 
     this._m_debugManager = null;
+
+    this._m_seekInitState = null;
+
+    this._m_simulationManager = null;
     
     return;
     
@@ -313,4 +343,11 @@ implements IForce
    * Reference to the debug manager.
    */
   private _m_debugManager : DebugManager;
+
+  /**
+   * Reference to the simulation manager.
+   */
+  private _m_simulationManager: SimulationManager;
+
+  private _m_seekInitState : ForceInitState;
 }

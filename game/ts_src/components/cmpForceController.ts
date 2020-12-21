@@ -359,9 +359,9 @@ implements IBaseComponent<Ty_Sprite>
 
     this._m_direction.set(0.0, -1.0);
 
-    this.setMaxSpeed(this._m_actorInitState._m_initMaxSpeed);
+    this.setMaxSpeed(this._m_actorInitState.m_initMaxSpeed);
 
-    this.setMass(this._m_actorInitState._m_initMass);
+    this.setMass(this._m_actorInitState.m_initMass);
 
     return;
   }
@@ -534,7 +534,7 @@ implements IBaseComponent<Ty_Sprite>
 
     if(this._m_simulationManager.getState() === ST_SIM_SATE.kStopped)
     {
-      this._m_actorInitState._m_initMaxSpeed = this._m_maxSpeed;
+      this._m_actorInitState.m_initMaxSpeed = this._m_maxSpeed;
     }
     return;
   }
@@ -554,7 +554,7 @@ implements IBaseComponent<Ty_Sprite>
   getInitMaxSpeed()
   : number
   {
-    return this._m_actorInitState._m_initMaxSpeed;
+    return this._m_actorInitState.m_initMaxSpeed;
   }
 
   /**
@@ -584,7 +584,7 @@ implements IBaseComponent<Ty_Sprite>
   getInitMass()
   : number
   {
-    return this._m_actorInitState._m_initMass;
+    return this._m_actorInitState.m_initMass;
   }
 
   /**
@@ -609,7 +609,7 @@ implements IBaseComponent<Ty_Sprite>
 
     if(this._m_simulationManager.getState() === ST_SIM_SATE.kStopped)
     {
-      this._m_actorInitState._m_initMass = this._m_mass;
+      this._m_actorInitState.m_initMass = this._m_mass;
     }
 
     return;

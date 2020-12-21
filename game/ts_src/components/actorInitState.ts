@@ -16,9 +16,9 @@ export class ActorInitState {
   /* Public                                           */
   /****************************************************/
   
-  public _m_initMass : number;
+  public m_initMass : number;
 
-  public _m_initMaxSpeed : number;
+  public m_initMaxSpeed : number;
 
-  public _m_initPosition : V2;
+  public m_initPosition : V2;
 }

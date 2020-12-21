@@ -12,6 +12,8 @@ import { ST_COMPONENT_ID, ST_MANAGER_ID, ST_MESSAGE_ID } from "../../commons/stE
 import { CmpForceController } from "../../components/cmpforceController";
 import { ShipFactory } from "../../factories/shipFactory";
 import { SceneUIFactory } from "../../factories/uiSceneFactory";
+import { MapScene } from "../../gameScene/mapScene";
+import { AmbienceManager } from "../../managers/ambienceManager/ambienceManager";
 import { SimulationManager } from "../../managers/simulationManager/simulationManager";
 import { UIManager } from "../../managers/uiManager/uiManager";
 import { Master } from "../../master/master";
@@ -33,11 +35,24 @@ extends Phaser.Scene
 
     this._m_master = Master.GetInstance();
 
-    let master = this._m_master;
+    const master = this._m_master;
+
+    // Master callback: "onSceneCreate" for each manager.
+
+    master.onSceneCreate(this);
 
     // On simulation scene create.
 
     master.onSimulationSceneCreate(this);
+
+    /****************************************************/
+    /* Ambient                                          */
+    /****************************************************/
+
+     const ambienceMap = MapScene.CreateFromTiledMap("ambience_03", this);
+
+     ambienceMap.clear();
+     ambienceMap.destroy();
 
     // Get simulation manager.
 
@@ -138,6 +153,17 @@ extends Phaser.Scene
     );
 
     shipController.addForce('arrival_1', arrival);
+
+    /****************************************************/
+     /* Foreground Ambience                              */
+     /****************************************************/
+
+     const ambienceMng = master.getManager<AmbienceManager>
+     (
+       ST_MANAGER_ID.kAmbienceManager
+     );
+
+     ambienceMng.createStarDust(this);
 
     /****************************************************/
     /* UI                                               */

@@ -8,7 +8,7 @@
  * @since September-28-2020
  */
 
-import { ST_COLOR_ID, ST_MANAGER_ID, ST_STEER_FORCE } from "../commons/stEnums";
+import { ST_COLOR_ID, ST_MANAGER_ID, ST_SIM_SATE, ST_STEER_FORCE } from "../commons/stEnums";
 import { Ty_Sprite, V2 } from "../commons/stTypes";
 import { CmpForceController } from "../components/cmpforceController";
 import { DebugManager } from "../managers/debugManager/debugManager";
@@ -16,6 +16,8 @@ import { IForce } from "./iForce";
 import { SeekForce } from "./forceSeek";
 import { BaseActor } from "../actors/baseActor";
 import { Master } from "../master/master";
+import { SimulationManager } from "../managers/simulationManager/simulationManager";
+import { FollowPathInitState } from "./followPathInitState";
 
 /**
  * 
@@ -49,9 +51,18 @@ implements IForce
 
     this._m_forceToPathScale = 1.0;
 
-    // Get Debug Manager
+     // Get Managers
 
-    const master = Master.GetInstance();
+     const master = Master.GetInstance();
+
+     this._m_simulationManager = master.getManager<SimulationManager>
+     (
+       ST_MANAGER_ID.kSimManager
+     );
+ 
+     this._m_followPathInitState = new FollowPathInitState();
+
+    // Get Debug Manager
 
     this._m_debugManager = master.getManager<DebugManager>
     (
@@ -315,6 +326,14 @@ implements IForce
 
   }
 
+  setInitMaxMagnitude()
+  : void
+  {
+    this._m_seek.setInitMaxMagnitude();
+
+    return;
+  }
+
   setMaxMagnitude(_magnitude: number)
   : void
   {
@@ -323,6 +342,12 @@ implements IForce
 
     return;
 
+  }
+
+  getInitMaxMagnitude()
+  : number
+  {
+    return this._m_seek.getInitMaxMagnitude();
   }
 
   getMaxMagnitude()
@@ -337,14 +362,33 @@ implements IForce
 
   }
 
+  setInitForceToPathScale()
+  : void
+  {
+    this._m_forceToPathScale = this.getInitForceToPathScale();
+
+    return;
+  }
+
   setForceToPathScale(_scale: number)
   : void
   {
+
+    if(this._m_simulationManager.getState() === ST_SIM_SATE.kStopped)
+    {
+      this._m_followPathInitState.m_initForceToPathScale = _scale;
+    }
 
     this._m_forceToPathScale = _scale;
 
     return;
 
+  }
+
+  getInitForceToPathScale()
+  : number
+  {
+    return this._m_followPathInitState.m_initForceToPathScale;
   }
 
   getForceToPathScale()
@@ -380,6 +424,14 @@ implements IForce
 
   }
 
+  setInitVisionRadius()
+  : void
+  {
+    this._m_radius = this.getInitVisionRadius();
+
+    return;
+  }
+
   /**
    * Set the vision radius of this agent.
    * 
@@ -389,10 +441,21 @@ implements IForce
   : void
   {
 
+    if(this._m_simulationManager.getState() === ST_SIM_SATE.kStopped)
+    {
+      this._m_followPathInitState.m_initVisionRadius = _radius;
+    }
+
     this._m_radius = _radius;
 
     return;
 
+  }
+
+  getInitVisionRadius()
+  : number
+  {
+    return this._m_followPathInitState.m_initVisionRadius;
   }
 
   /**
@@ -437,6 +500,10 @@ implements IForce
     this._m_vToSelf = null;
     this._m_vPath = null;
     this._m_forceToPath = null;
+
+    this._m_simulationManager = null;
+
+    this._m_followPathInitState = null;
     
     return;
 
@@ -531,6 +598,13 @@ implements IForce
   * Reference to the debug manager.
   */
   private _m_debugManager : DebugManager;
+
+    /**
+   * Reference to the simulation manager.
+   */
+  private _m_simulationManager: SimulationManager;
+
+  private _m_followPathInitState : FollowPathInitState;
 
   /**
    * Scale of the force to path.

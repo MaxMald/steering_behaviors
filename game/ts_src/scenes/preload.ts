@@ -30,35 +30,37 @@ extends Phaser.Scene
     ///////////////////////////////////
     // Load Assets
 
-    this.load.path = "./game/assets/";
+    const loader = this.load;
+
+    loader.path = "./game/assets/";
 
     /****************************************************/
     /* Animation                                        */
     /****************************************************/
 
-    this.load.animation
+    loader.animation
     (
       'afireBack',
       'animations/backFireAnimation.json'
     );
 
-    this.load.animation
+    loader.animation
     (
       "satellite_a",
       "animations/ambienceAnimations.json"
     );
 
-    this.load.image
+    loader.animation
     (
-      'button',
-      'images/button.png'
+      "menu_animations",
+      "animations/menuAnimations.json"
     );
 
     /****************************************************/
     /* Images                                           */
     /****************************************************/
 
-    this.load.image
+    loader.image
     (
       "bg_space_01",
       "images/bg_space_01.png"
@@ -68,32 +70,39 @@ extends Phaser.Scene
     /* Atlas                                            */
     /****************************************************/
 
-    this.load.atlas
+    loader.atlas
     (
       'game_art',
       "images/game_art/game_art.png",
       "images/game_art/game_art.js"
     );
 
-    this.load.atlas
+    loader.atlas
     (
       'menu_art',
       "images/game_menu/menu_art.png",
       "images/game_menu/menu_art.js"
     );
 
+    loader.atlas
+    (
+      'tutorial_book',
+      "images/tutorial_book/tutorial_book.png",
+      "images/tutorial_book/tutorial_book.js"
+    );
+
     /****************************************************/
     /* Bitmap Fonts                                     */
     /****************************************************/
 
-    this.load.bitmapFont
+    loader.bitmapFont
     (
       'odin_rounded',
       'images/odin_rounded_bitmapfont.png',
       'images/odin_rounded_bitmapfont.xml'
     );
 
-    this.load.bitmapFont
+    loader.bitmapFont
     (
       'supercomputer',
       'images/supercomputer_bitmapfont.png',
@@ -104,10 +113,22 @@ extends Phaser.Scene
     /* Tile Maps                                        */
     /****************************************************/
 
-    this.load.tilemapTiledJSON
+    loader.tilemapTiledJSON
     (
       "ambience_01",
       "tiledMaps/ambience_01.json"
+    );
+
+    loader.tilemapTiledJSON
+    (
+      "ambience_02",
+      "tiledMaps/ambience_02.json"
+    );
+
+    loader.tilemapTiledJSON
+    (
+      "ambience_03",
+      "tiledMaps/ambience_03.json"
     );
 
     this.load.tilemapTiledJSON
@@ -116,13 +137,13 @@ extends Phaser.Scene
       "tiledMaps/simulation_ui.json"
     );
 
-    this.load.tilemapTiledJSON
+    loader.tilemapTiledJSON
     (
       "info_box",
       "tiledMaps/info_box.json"
     );
 
-    this.load.tilemapTiledJSON
+    loader.tilemapTiledJSON
     (
       "main_menu",
       "tiledMaps/main_menu.json"
@@ -132,10 +153,42 @@ extends Phaser.Scene
     /* Text                                             */
     /****************************************************/
 
-    this.load.text
+    loader.text
     (
       "infoBox",
       "infoBox/infoBox.json"
+    );
+
+    /****************************************************/
+    /* Audio                                            */
+    /****************************************************/
+
+    loader.audioSprite
+    (
+      "gameAudio",
+      "audio/gamesounds.json",
+      [
+        "audio/gamesounds.ogg",
+        "audio/gamesounds.m4a",
+        "audio/gamesounds.mp3",
+        "audio/gamesounds.ac3"
+      ]
+    );
+
+    /****************************************************/
+    /* Video                                            */
+    /****************************************************/
+
+    loader.video
+    (
+      "wormHole",
+      [
+        "video/worm_hole.mp4",
+        "video/worm_hole.mov"
+      ],
+      undefined,
+      undefined,
+      true
     );
 
     /****************************************************/
@@ -208,9 +261,9 @@ extends Phaser.Scene
 
     // Callbacks
 
-    this.load.on('progress', this.updateBar, this);
+    loader.on('progress', this.updateBar, this);
 
-    this.load.on('complete', this.onComplete, this);
+    loader.on('complete', this.onComplete, this);
 
     return;
   }
@@ -255,6 +308,8 @@ extends Phaser.Scene
   {
     
     this.scene.start('logo');
+    //this.scene.start('main_menu');
+
 
     return;
 

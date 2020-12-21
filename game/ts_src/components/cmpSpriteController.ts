@@ -74,7 +74,7 @@ implements IBaseComponent<Ty_Sprite>
 
       if(this._m_simulationManager.getState() === ST_SIM_SATE.kStopped)
       {
-        this._m_actorInitState._m_initPosition = _obj as V2;
+        this._m_actorInitState.m_initPosition = _obj as V2;
       }
       return;
 
@@ -214,8 +214,8 @@ implements IBaseComponent<Ty_Sprite>
   {
     this.setPosition
     (
-      this._m_actorInitState._m_initPosition.x,
-      this._m_actorInitState._m_initPosition.y
+      this._m_actorInitState.m_initPosition.x,
+      this._m_actorInitState.m_initPosition.y
     );
     return;
   }

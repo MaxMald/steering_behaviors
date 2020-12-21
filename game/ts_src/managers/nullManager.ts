@@ -17,7 +17,25 @@ import { IManager } from "./iManager";
  */
 export class NullManager 
 implements IManager
-{  
+{
+
+  onSceneCreate(_scene: Phaser.Scene)
+  : void 
+  {
+
+    console.warn('Null Manager : Scene Created');
+    return;
+  
+  }
+
+  onSceneDestroy(_scene: Phaser.Scene)
+  : void 
+  {
+
+    console.warn('Null Manager : Scene Destroy');
+    return;
+  }
+
   setMasterManager(_master: Master)
   : void 
   {

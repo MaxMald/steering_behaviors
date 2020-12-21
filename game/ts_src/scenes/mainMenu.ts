@@ -8,13 +8,15 @@
   * @since August-30-2020
   */
 
-import { ST_MANAGER_ID } from "../commons/stEnums";
+import { ST_AUDIO_CLIP, ST_MANAGER_ID } from "../commons/stEnums";
 import { Ty_Image } from "../commons/stTypes";
 import { MapScene } from "../gameScene/mapScene";
 import { AmbienceManager } from "../managers/ambienceManager/ambienceManager";
+import { AudioManager } from "../managers/audioManager/audioManager";
 import { UIGroup } from "../managers/uiManager/uiGroup";
 import { UIMenuButton } from "../managers/uiManager/uiMenuButton";
 import { UIObject } from "../managers/uiManager/uiObject";
+import { UISwitch } from "../managers/uiManager/uiSwitch";
 import { Master } from "../master/master";
 
  
@@ -29,16 +31,35 @@ extends Phaser.Scene
   : void
   {    
 
+    // Master callback: "onSceneCreate" for each manager.
+
+    const master = Master.GetInstance();
+
+    master.onSceneCreate(this);
+
+    /****************************************************/
+    /* Sound Effects                                    */
+    /****************************************************/
+
+    const audioManager = master.getManager<AudioManager>
+    (
+      ST_MANAGER_ID.kAudioManager
+    );
+
+    audioManager.playClip(ST_AUDIO_CLIP.kMachine);
+
+    audioManager.playClip(ST_AUDIO_CLIP.kBGM_MilkyWay, false, 0.6);
+
     // Get Ambience Manager
 
-    this._m_ambienceManager = Master.GetInstance().getManager<AmbienceManager>
+    this._m_ambienceManager = master.getManager<AmbienceManager>
     (
       ST_MANAGER_ID.kAmbienceManager
     );
 
     // Camera fade in
 
-    this.cameras.main.fadeIn(500, 0, 0, 0, );
+    this.cameras.main.fadeIn(500, 0, 0, 0 );
 
     // Create assets from tiled map
 
@@ -121,7 +142,7 @@ extends Phaser.Scene
       function(_btn : UIObject, _args: any)
       {
 
-        
+        this._startScene('tutorial');
 
         return;
 
@@ -148,6 +169,10 @@ extends Phaser.Scene
 
         this._m_mainPage.disable();        
         this._m_missionPage.enable();
+
+        // Play Click sound
+
+        audioManager.playClip(ST_AUDIO_CLIP.kPositiveB);
 
         return;
 
@@ -177,6 +202,10 @@ extends Phaser.Scene
         this._m_creditsPage.enable();
         this._m_creditsPagePhaser.setActive(true);
         this._m_creditsPagePhaser.setVisible(true);
+
+        // Play Click sound
+
+        audioManager.playClip(ST_AUDIO_CLIP.kPositiveB);
       
         return;
 
@@ -185,6 +214,57 @@ extends Phaser.Scene
     );
 
     mainPage.add(credits);
+
+    ///////////////////////////////////
+    // Sound Switch
+
+    const soundSwitch = mapScene.getObject<UISwitch>
+    (
+      "sound_switch"
+    );
+
+    // Check audio manager status
+
+    if(this.sound.mute)
+    {
+
+      soundSwitch.setOff();
+
+    }
+
+    // Callbacks
+
+    soundSwitch.subscribe
+    (
+      "toggleOn",
+      "mainMenu",
+      function()
+      : void
+      {
+
+        audioManager.unmute();
+
+        return;
+
+      },
+      this
+    );
+
+    soundSwitch.subscribe
+    (
+      "toggleOff",
+      "mainMenu",
+      function()
+      : void
+      {
+
+        audioManager.mute();
+
+        return;
+
+      },
+      this
+    );    
 
     /****************************************************/
     /* Mission Page                                     */
@@ -412,6 +492,10 @@ extends Phaser.Scene
         this._m_mainPage.enable();        
         this._m_missionPage.disable();
 
+        // Play Click sound
+
+        audioManager.playClip(ST_AUDIO_CLIP.kPositiveB);
+
         return;
 
       },
@@ -453,6 +537,10 @@ extends Phaser.Scene
         this._m_creditsPagePhaser.setActive(false);
         this._m_creditsPagePhaser.setVisible(false);
 
+        // Play Click sound
+
+        audioManager.playClip(ST_AUDIO_CLIP.kPositiveB);
+
         return;
 
       },
@@ -477,7 +565,7 @@ extends Phaser.Scene
     creditsPagePhaser.add
     (
       mapScene.getObject<Ty_Image>("credit_design")
-    );
+    );    
 
     /****************************************************/
     /*                                                  */
@@ -514,10 +602,23 @@ extends Phaser.Scene
   : void
   {
 
-    if(!this._m_closing)
-    {      
+    // Ignore if the scene is already closing.
 
-      this.cameras.main.fadeOut(500, 0, 0, 0);      
+    if(!this._m_closing)
+    { 
+
+      this.cameras.main.fadeOut(500, 0, 0, 0);
+      
+      // Play Positive Click Sound
+
+      const master = Master.GetInstance();
+
+      const audioManager = master.getManager<AudioManager>
+      (
+        ST_MANAGER_ID.kAudioManager
+      );
+
+      audioManager.playClip(ST_AUDIO_CLIP.kPositiveA);
 
       this.cameras.main.once
       (
@@ -525,10 +626,15 @@ extends Phaser.Scene
         function()
         {
 
-          // Es necesario llamar el callback del Ambience Manager, pues los
-          // motion images Se registran dentro del UI Ambience.
+          // Master callback: "onSceneDestroy"          
+
+          master.onSceneDestroy(this);
+
+          // Ambience Manager callback: "onSimulationSceneDestroy"
 
           this._m_ambienceManager.onSimulationSceneDestroy(this);
+
+          // Start Scene
 
           this.scene.start(_key);
 

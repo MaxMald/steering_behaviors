@@ -9,11 +9,13 @@
  */
 
 import { BaseActor } from "../actors/baseActor";
-import { ST_COLOR_ID, ST_COMPONENT_ID, ST_MANAGER_ID, ST_STEER_FORCE } from "../commons/stEnums";
+import { ST_COLOR_ID, ST_COMPONENT_ID, ST_MANAGER_ID, ST_SIM_SATE, ST_STEER_FORCE } from "../commons/stEnums";
 import { Ty_Sprite, V2 } from "../commons/stTypes";
 import { CmpForceController } from "../components/cmpforceController";
 import { DebugManager } from "../managers/debugManager/debugManager";
+import { SimulationManager } from "../managers/simulationManager/simulationManager";
 import { Master } from "../master/master";
+import { ForceInitState } from "./forceInitState";
 import { IForce } from "./iForce";
 
 /**
@@ -46,6 +48,17 @@ implements IForce
     (
       ST_COMPONENT_ID.kForceController
     );
+
+    // Get Managers
+
+    const master = Master.GetInstance();
+
+    this._m_simulationManager = master.getManager<SimulationManager>
+    (
+      ST_MANAGER_ID.kSimManager
+    );
+
+    this._m_evadeInitState = new ForceInitState();
 
     this._m_maxForceMagnitude = _maxForceMagnitude;
 
@@ -255,6 +268,12 @@ implements IForce
 
   }
 
+  getInitMaxMagnitude()
+  : number
+  {
+    return this._m_evadeInitState.m_initMaxMagnitude;
+  }
+
   getMaxMagnitude()
   : number
   {
@@ -263,10 +282,22 @@ implements IForce
 
   }
 
+  setInitMaxMagnitude()
+  : void
+  {
+    this._m_maxForceMagnitude = this.getInitMaxMagnitude();
+
+    return;
+  }
+
   setMaxMagnitude(_maxMagnitude: number)
   : void
   {
 
+    if(this._m_simulationManager.getState() === ST_SIM_SATE.kStopped)
+    {
+      this._m_evadeInitState.m_initMaxMagnitude = _maxMagnitude;
+    }
     this._m_maxForceMagnitude = _maxMagnitude;
 
     return;
@@ -301,6 +332,10 @@ implements IForce
 
     this._m_target = null;
     this._m_self = null;
+
+    this._m_evadeInitState = null;
+
+    this._m_simulationManager = null;
 
     return;
 
@@ -351,4 +386,11 @@ implements IForce
   * Reference to the debug manager.
   */
   private _m_debugManager : DebugManager;
+
+  /**
+   * Reference to the simulation manager.
+   */
+  private _m_simulationManager: SimulationManager;
+
+  private _m_evadeInitState : ForceInitState;
 }

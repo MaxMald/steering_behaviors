@@ -35,6 +35,11 @@
                          "name":"texture",
                          "type":"string",
                          "value":"bg_space_01"
+                        }, 
+                        {
+                         "name":"tint",
+                         "type":"color",
+                         "value":"#ffffffff"
                         }],
                  "rotation":0,
                  "type":"image",
@@ -51,84 +56,35 @@
         }, 
         {
          "draworder":"topdown",
-         "id":8,
-         "name":"Clouds",
+         "id":9,
+         "name":"Worm Hole",
          "objects":[
                 {
-                 "gid":9,
-                 "height":503,
-                 "id":23,
-                 "name":"cloud_1",
+                 "height":768,
+                 "id":25,
+                 "name":"worm_hole_video",
                  "properties":[
                         {
-                         "name":"frame",
+                         "name":"autoPlay",
+                         "type":"bool",
+                         "value":true
+                        }, 
+                        {
+                         "name":"key",
                          "type":"string",
-                         "value":"clouds.png"
+                         "value":"wormHole"
                         }, 
                         {
-                         "name":"frame_idx",
-                         "type":"int",
-                         "value":0
-                        }, 
-                        {
-                         "name":"texture",
-                         "type":"string",
-                         "value":"menu_art"
-                        }, 
-                        {
-                         "name":"tint",
-                         "type":"color",
-                         "value":"#ffd97eff"
-                        }, 
-                        {
-                         "name":"velocity",
-                         "type":"float",
-                         "value":-10
+                         "name":"loop",
+                         "type":"bool",
+                         "value":true
                         }],
                  "rotation":0,
-                 "type":"motionImage",
+                 "type":"video",
                  "visible":true,
                  "width":1024,
                  "x":0,
-                 "y":560
-                }, 
-                {
-                 "gid":9,
-                 "height":503,
-                 "id":24,
-                 "name":"cloud_2",
-                 "properties":[
-                        {
-                         "name":"frame",
-                         "type":"string",
-                         "value":"clouds.png"
-                        }, 
-                        {
-                         "name":"frame_idx",
-                         "type":"int",
-                         "value":0
-                        }, 
-                        {
-                         "name":"texture",
-                         "type":"string",
-                         "value":"menu_art"
-                        }, 
-                        {
-                         "name":"tint",
-                         "type":"color",
-                         "value":"#ffd97eff"
-                        }, 
-                        {
-                         "name":"velocity",
-                         "type":"float",
-                         "value":-10
-                        }],
-                 "rotation":0,
-                 "type":"motionImage",
-                 "visible":true,
-                 "width":1024,
-                 "x":1024,
-                 "y":560
+                 "y":0
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -161,6 +117,11 @@
                          "name":"texture",
                          "type":"string",
                          "value":"menu_art"
+                        }, 
+                        {
+                         "name":"tint",
+                         "type":"color",
+                         "value":"#ffffffff"
                         }],
                  "rotation":0,
                  "type":"image",
@@ -168,6 +129,50 @@
                  "width":1025,
                  "x":0,
                  "y":768
+                }],
+         "opacity":1,
+         "type":"objectgroup",
+         "visible":true,
+         "x":0,
+         "y":0
+        }, 
+        {
+         "draworder":"topdown",
+         "id":10,
+         "name":"ShipPanel",
+         "objects":[
+                {
+                 "gid":13,
+                 "height":95,
+                 "id":28,
+                 "name":"",
+                 "properties":[
+                        {
+                         "name":"animation",
+                         "type":"string",
+                         "value":"ship_panel"
+                        }, 
+                        {
+                         "name":"frame",
+                         "type":"string",
+                         "value":"ship_panel_0.png"
+                        }, 
+                        {
+                         "name":"frame_idx",
+                         "type":"int",
+                         "value":0
+                        }, 
+                        {
+                         "name":"texture",
+                         "type":"string",
+                         "value":"menu_art"
+                        }],
+                 "rotation":0,
+                 "type":"sprite",
+                 "visible":true,
+                 "width":493,
+                 "x":279.950757575758,
+                 "y":768.325757575758
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -200,6 +205,11 @@
                          "name":"texture",
                          "type":"string",
                          "value":"menu_art"
+                        }, 
+                        {
+                         "name":"tint",
+                         "type":"color",
+                         "value":"#ffffffff"
                         }],
                  "rotation":0,
                  "type":"image",
@@ -332,6 +342,54 @@
                  "width":249,
                  "x":384,
                  "y":384
+                }, 
+                {
+                 "gid":11,
+                 "height":64,
+                 "id":26,
+                 "name":"sound_switch",
+                 "properties":[
+                        {
+                         "name":"disable_frame",
+                         "type":"string",
+                         "value":"disable_music_button.png"
+                        }, 
+                        {
+                         "name":"disable_texture",
+                         "type":"string",
+                         "value":"menu_art"
+                        }, 
+                        {
+                         "name":"enable_frame",
+                         "type":"string",
+                         "value":"active_music_button.png"
+                        }, 
+                        {
+                         "name":"enable_texture",
+                         "type":"string",
+                         "value":"menu_art"
+                        }, 
+                        {
+                         "name":"hover_frame",
+                         "type":"string",
+                         "value":"hover_music_button.png"
+                        }, 
+                        {
+                         "name":"hover_texture",
+                         "type":"string",
+                         "value":"menu_art"
+                        }, 
+                        {
+                         "name":"isActive",
+                         "type":"bool",
+                         "value":true
+                        }],
+                 "rotation":0,
+                 "type":"uiSwitch",
+                 "visible":true,
+                 "width":64,
+                 "x":909.333,
+                 "y":150.667
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -755,6 +813,11 @@
                          "name":"texture",
                          "type":"string",
                          "value":"menu_art"
+                        }, 
+                        {
+                         "name":"tint",
+                         "type":"color",
+                         "value":"#ffffffff"
                         }],
                  "rotation":0,
                  "type":"image",
@@ -783,6 +846,11 @@
                          "name":"texture",
                          "type":"string",
                          "value":"menu_art"
+                        }, 
+                        {
+                         "name":"tint",
+                         "type":"color",
+                         "value":"#ffffffff"
                         }],
                  "rotation":0,
                  "type":"image",
@@ -811,6 +879,11 @@
                          "name":"texture",
                          "type":"string",
                          "value":"menu_art"
+                        }, 
+                        {
+                         "name":"tint",
+                         "type":"color",
+                         "value":"#ffffffff"
                         }],
                  "rotation":0,
                  "type":"image",
@@ -825,11 +898,11 @@
          "x":0,
          "y":0
         }],
- "nextlayerid":9,
- "nextobjectid":25,
+ "nextlayerid":11,
+ "nextobjectid":29,
  "orientation":"orthogonal",
  "renderorder":"right-down",
- "tiledversion":"1.4.2",
+ "tiledversion":"1.4.3",
  "tileheight":16,
  "tilesets":[
         {
@@ -890,16 +963,16 @@
                  "imagewidth":357
                 }, 
                 {
-                 "id":8,
-                 "image":"..\/images\/game_menu\/clouds.png",
-                 "imageheight":503,
-                 "imagewidth":1024
+                 "id":10,
+                 "image":"..\/images\/game_menu\/active_music_button.png",
+                 "imageheight":64,
+                 "imagewidth":64
                 }, 
                 {
-                 "id":9,
-                 "image":"..\/images\/game_menu\/clouds_2.png",
-                 "imageheight":326,
-                 "imagewidth":512
+                 "id":12,
+                 "image":"..\/images\/game_menu\/ship_panel_0.png",
+                 "imageheight":95,
+                 "imagewidth":493
                 }],
          "tilewidth":1025
         }],

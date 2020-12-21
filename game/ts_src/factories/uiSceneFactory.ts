@@ -78,10 +78,18 @@ export class SceneUIFactory
 
         const master = Master.GetInstance();
 
+        // Master callback: "onSceneDestroy"
+
+        master.onSceneDestroy(this);
+
+        // on simulation scene destroy
+
         const scene = master.getSimulationScene();
 
         master.onSimulationSceneDestroy(scene);
     
+        // TO Main Menu
+
         scene.scene.start('main_menu');
 
         return;
