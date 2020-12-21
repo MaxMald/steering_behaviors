@@ -56,93 +56,6 @@
         }, 
         {
          "draworder":"topdown",
-         "id":8,
-         "name":"Clouds",
-         "objects":[
-                {
-                 "gid":9,
-                 "height":503,
-                 "id":23,
-                 "name":"cloud_1",
-                 "properties":[
-                        {
-                         "name":"frame",
-                         "type":"string",
-                         "value":"clouds.png"
-                        }, 
-                        {
-                         "name":"frame_idx",
-                         "type":"int",
-                         "value":0
-                        }, 
-                        {
-                         "name":"texture",
-                         "type":"string",
-                         "value":"menu_art"
-                        }, 
-                        {
-                         "name":"tint",
-                         "type":"color",
-                         "value":"#ffd97eff"
-                        }, 
-                        {
-                         "name":"velocity",
-                         "type":"float",
-                         "value":-10
-                        }],
-                 "rotation":0,
-                 "type":"motionImage",
-                 "visible":true,
-                 "width":1024,
-                 "x":0,
-                 "y":560
-                }, 
-                {
-                 "gid":9,
-                 "height":503,
-                 "id":24,
-                 "name":"cloud_2",
-                 "properties":[
-                        {
-                         "name":"frame",
-                         "type":"string",
-                         "value":"clouds.png"
-                        }, 
-                        {
-                         "name":"frame_idx",
-                         "type":"int",
-                         "value":0
-                        }, 
-                        {
-                         "name":"texture",
-                         "type":"string",
-                         "value":"menu_art"
-                        }, 
-                        {
-                         "name":"tint",
-                         "type":"color",
-                         "value":"#ffd97eff"
-                        }, 
-                        {
-                         "name":"velocity",
-                         "type":"float",
-                         "value":-10
-                        }],
-                 "rotation":0,
-                 "type":"motionImage",
-                 "visible":true,
-                 "width":1024,
-                 "x":1024,
-                 "y":560
-                }],
-         "opacity":1,
-         "type":"objectgroup",
-         "visible":true,
-         "x":0,
-         "y":0
-        }, 
-        {
-         "draworder":"topdown",
          "id":9,
          "name":"Worm Hole",
          "objects":[
@@ -216,6 +129,50 @@
                  "width":1025,
                  "x":0,
                  "y":768
+                }],
+         "opacity":1,
+         "type":"objectgroup",
+         "visible":true,
+         "x":0,
+         "y":0
+        }, 
+        {
+         "draworder":"topdown",
+         "id":10,
+         "name":"ShipPanel",
+         "objects":[
+                {
+                 "gid":13,
+                 "height":95,
+                 "id":28,
+                 "name":"",
+                 "properties":[
+                        {
+                         "name":"animation",
+                         "type":"string",
+                         "value":"ship_panel"
+                        }, 
+                        {
+                         "name":"frame",
+                         "type":"string",
+                         "value":"ship_panel_0.png"
+                        }, 
+                        {
+                         "name":"frame_idx",
+                         "type":"int",
+                         "value":0
+                        }, 
+                        {
+                         "name":"texture",
+                         "type":"string",
+                         "value":"menu_art"
+                        }],
+                 "rotation":0,
+                 "type":"sprite",
+                 "visible":true,
+                 "width":493,
+                 "x":279.950757575758,
+                 "y":768.325757575758
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -431,8 +388,8 @@
                  "type":"uiSwitch",
                  "visible":true,
                  "width":64,
-                 "x":909.333333333333,
-                 "y":150.666666666667
+                 "x":909.333,
+                 "y":150.667
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -941,8 +898,8 @@
          "x":0,
          "y":0
         }],
- "nextlayerid":10,
- "nextobjectid":27,
+ "nextlayerid":11,
+ "nextobjectid":29,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.4.3",
@@ -960,7 +917,7 @@
          "margin":0,
          "name":"assets",
          "spacing":0,
-         "tilecount":10,
+         "tilecount":9,
          "tileheight":769,
          "tiles":[
                 {
@@ -1006,22 +963,16 @@
                  "imagewidth":357
                 }, 
                 {
-                 "id":8,
-                 "image":"..\/images\/game_menu\/clouds.png",
-                 "imageheight":503,
-                 "imagewidth":1024
-                }, 
-                {
-                 "id":9,
-                 "image":"..\/images\/game_menu\/clouds_2.png",
-                 "imageheight":326,
-                 "imagewidth":512
-                }, 
-                {
                  "id":10,
                  "image":"..\/images\/game_menu\/active_music_button.png",
                  "imageheight":64,
                  "imagewidth":64
+                }, 
+                {
+                 "id":12,
+                 "image":"..\/images\/game_menu\/ship_panel_0.png",
+                 "imageheight":95,
+                 "imagewidth":493
                 }],
          "tilewidth":1025
         }],

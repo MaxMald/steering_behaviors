@@ -46,8 +46,8 @@ extends Phaser.Scene
     master.onSimulationSceneCreate(this);
 
     /****************************************************/
-     /* Ambient                                          */
-     /****************************************************/
+    /* Ambient                                          */
+    /****************************************************/
 
      const ambienceMap = MapScene.CreateFromTiledMap("ambience_03", this);
 

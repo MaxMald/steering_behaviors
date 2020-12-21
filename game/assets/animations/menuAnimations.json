@@ -1,0 +1,38 @@
+{
+  "anims": [
+    {
+      "key": "ship_panel",
+      "type": "frame",
+      "frames": [
+        {
+          "key": "menu_art",
+          "frame": "ship_panel_0.png",
+          "duration": 0,
+          "visible": false
+        },
+        {
+          "key": "menu_art",
+          "frame": "ship_panel_1.png",
+          "duration": 0,
+          "visible": false
+        },
+        {
+          "key": "menu_art",
+          "frame": "ship_panel_2.png",
+          "duration": 0,
+          "visible": false
+        }
+      ],
+      "frameRate": 4,
+      "duration": 1,
+      "skipMissedFrames": true,
+      "delay": 0,
+      "repeat": -1,
+      "repeatDelay": 0,
+      "yoyo": false,
+      "showOnStart": false,
+      "hideOnComplete": false
+    }
+  ],
+  "globalTimeScale": 1
+}

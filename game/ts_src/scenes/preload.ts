@@ -50,10 +50,10 @@ extends Phaser.Scene
       "animations/ambienceAnimations.json"
     );
 
-    loader.image
+    loader.animation
     (
-      'button',
-      'images/button.png'
+      "menu_animations",
+      "animations/menuAnimations.json"
     );
 
     /****************************************************/
