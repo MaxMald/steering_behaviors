@@ -183,7 +183,8 @@ extends Phaser.Scene
     (
       "wormHole",
       [
-        "video/worm_hole.mp4"
+        "video/worm_hole.mp4",
+        "video/worm_hole.mov"
       ],
       undefined,
       undefined,
@@ -306,8 +307,8 @@ extends Phaser.Scene
   : void
   {
     
-    //this.scene.start('logo');
-    this.scene.start('main_menu');
+    this.scene.start('logo');
+    //this.scene.start('main_menu');
 
 
     return;
