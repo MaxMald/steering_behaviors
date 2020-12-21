@@ -13,6 +13,8 @@ import { Ty_Sprite } from "../../commons/stTypes";
 import { CmpForceController } from "../../components/cmpforceController";
 import { ShipFactory } from "../../factories/shipFactory";
 import { SceneUIFactory } from "../../factories/uiSceneFactory";
+import { MapScene } from "../../gameScene/mapScene";
+import { AmbienceManager } from "../../managers/ambienceManager/ambienceManager";
 import { SimulationManager } from "../../managers/simulationManager/simulationManager";
 import { UIManager } from "../../managers/uiManager/uiManager";
 import { Master } from "../../master/master";
@@ -44,6 +46,16 @@ extends Phaser.Scene
     // On simulation scene create.
 
     master.onSimulationSceneCreate(this);
+
+    /****************************************************/
+     /* Ambient                                          */
+     /****************************************************/
+
+     const ambienceMap = MapScene.CreateFromTiledMap("ambience_08", this);
+
+     ambienceMap.clear();
+     ambienceMap.destroy();
+
 
     // Get simulation manager.
 
@@ -200,6 +212,17 @@ extends Phaser.Scene
     obstacle5Controller.addForce('obstacleWander_5', obstacleWander5);
     obstacle6Controller.addForce('obstacleWander_6', obstacleWander6);
     obstacle7Controller.addForce('obstacleWander_7', obstacleWander7);
+
+    /****************************************************/
+     /* Foreground Ambience                              */
+     /****************************************************/
+
+     const ambienceMng = master.getManager<AmbienceManager>
+     (
+       ST_MANAGER_ID.kAmbienceManager
+     );
+
+     ambienceMng.createStarDust(this);
 
     /****************************************************/
     /* UI                                               */
