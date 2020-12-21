@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.4" tiledversion="1.4.3" orientation="orthogonal" renderorder="right-down" width="64" height="48" tilewidth="16" tileheight="16" infinite="0" nextlayerid="11" nextobjectid="29">
+<map version="1.4" tiledversion="1.4.3" orientation="orthogonal" renderorder="right-down" width="64" height="48" tilewidth="16" tileheight="16" infinite="0" nextlayerid="11" nextobjectid="30">
  <editorsettings>
   <export target="main_menu.json" format="json"/>
  </editorsettings>
- <tileset firstgid="1" name="assets" tilewidth="1025" tileheight="769" tilecount="9" columns="0">
+ <tileset firstgid="1" name="assets" tilewidth="1025" tileheight="769" tilecount="10" columns="0">
   <grid orientation="orthogonal" width="1" height="1"/>
   <tile id="0">
    <image width="1024" height="768" source="../images/bg_space_01.png"/>
@@ -31,6 +31,9 @@
   </tile>
   <tile id="12">
    <image width="493" height="95" source="../images/game_menu/ship_panel_0.png"/>
+  </tile>
+  <tile id="13">
+   <image width="64" height="63" source="../images/game_menu/full_screen_hover.png"/>
   </tile>
  </tileset>
  <objectgroup id="2" name="background" locked="1">
@@ -105,7 +108,7 @@
     <property name="texture" value="menu_art"/>
    </properties>
   </object>
-  <object id="26" name="sound_switch" type="uiSwitch" gid="11" x="909.333" y="150.667" width="64" height="64">
+  <object id="26" name="sound_switch" type="uiSwitch" gid="11" x="912.25" y="151.75" width="64" height="64">
    <properties>
     <property name="disable_frame" value="disable_music_button.png"/>
     <property name="disable_texture" value="menu_art"/>
@@ -114,6 +117,14 @@
     <property name="hover_frame" value="hover_music_button.png"/>
     <property name="hover_texture" value="menu_art"/>
     <property name="isActive" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="29" name="full_screen_btn" type="uiImageButton" gid="14" x="912" y="224" width="64" height="63">
+   <properties>
+    <property name="frame" value="full_screen_normal.png"/>
+    <property name="frame_hover" value="full_screen_hover.png"/>
+    <property name="frame_press" value="full_screen_normal.png"/>
+    <property name="texture" value="menu_art"/>
    </properties>
   </object>
  </objectgroup>
