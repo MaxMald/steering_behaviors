@@ -171,8 +171,8 @@
                  "type":"sprite",
                  "visible":true,
                  "width":493,
-                 "x":279.950757575758,
-                 "y":768.325757575758
+                 "x":279.951,
+                 "y":768.326
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -388,8 +388,56 @@
                  "type":"uiSwitch",
                  "visible":true,
                  "width":64,
-                 "x":909.333,
-                 "y":150.667
+                 "x":912.25,
+                 "y":151.75
+                }, 
+                {
+                 "gid":14,
+                 "height":63,
+                 "id":29,
+                 "name":"full_screen_btn",
+                 "properties":[
+                        {
+                         "name":"frame",
+                         "type":"string",
+                         "value":"full_screen_normal.png"
+                        }, 
+                        {
+                         "name":"frame_hover",
+                         "type":"string",
+                         "value":"full_screen_hover.png"
+                        }, 
+                        {
+                         "name":"frame_hover_idx",
+                         "type":"int",
+                         "value":0
+                        }, 
+                        {
+                         "name":"frame_idx",
+                         "type":"int",
+                         "value":0
+                        }, 
+                        {
+                         "name":"frame_press",
+                         "type":"string",
+                         "value":"full_screen_normal.png"
+                        }, 
+                        {
+                         "name":"frame_press_idx",
+                         "type":"int",
+                         "value":0
+                        }, 
+                        {
+                         "name":"texture",
+                         "type":"string",
+                         "value":"menu_art"
+                        }],
+                 "rotation":0,
+                 "type":"uiImageButton",
+                 "visible":true,
+                 "width":64,
+                 "x":912,
+                 "y":224
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -899,7 +947,7 @@
          "y":0
         }],
  "nextlayerid":11,
- "nextobjectid":29,
+ "nextobjectid":30,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.4.3",
@@ -917,7 +965,7 @@
          "margin":0,
          "name":"assets",
          "spacing":0,
-         "tilecount":9,
+         "tilecount":10,
          "tileheight":769,
          "tiles":[
                 {
@@ -973,6 +1021,12 @@
                  "image":"..\/images\/game_menu\/ship_panel_0.png",
                  "imageheight":95,
                  "imagewidth":493
+                }, 
+                {
+                 "id":13,
+                 "image":"..\/images\/game_menu\/full_screen_hover.png",
+                 "imageheight":63,
+                 "imagewidth":64
                 }],
          "tilewidth":1025
         }],
