@@ -14,6 +14,8 @@ import { CmpForceController } from "../../components/cmpforceController";
 import { AmbienceFactory } from "../../factories/ambienceFactory";
 import { ShipFactory } from "../../factories/shipFactory";
 import { SceneUIFactory } from "../../factories/uiSceneFactory";
+import { MapScene } from "../../gameScene/mapScene";
+import { AmbienceManager } from "../../managers/ambienceManager/ambienceManager";
 import { SimulationManager } from "../../managers/simulationManager/simulationManager";
 import { UIButtonImg } from "../../managers/uiManager/uiButtonImg";
 import { UIManager } from "../../managers/uiManager/uiManager";
@@ -47,6 +49,15 @@ import { FollowPathForce } from "../../steeringBehavior/forceFollowPath";
      // on simulation scene create.
  
      master.onSimulationSceneCreate(this);
+
+     /****************************************************/
+     /* Ambient                                          */
+     /****************************************************/
+
+     const ambienceMap = MapScene.CreateFromTiledMap("ambience_06", this);
+
+     ambienceMap.clear();
+     ambienceMap.destroy();
  
      // Get simulation manager.
  
@@ -136,6 +147,17 @@ import { FollowPathForce } from "../../steeringBehavior/forceFollowPath";
      );
 
      blueShipFController.addForce("Follow Path", followPath);
+     
+     /****************************************************/
+     /* Foreground Ambience                              */
+     /****************************************************/
+
+     const ambienceMng = master.getManager<AmbienceManager>
+     (
+       ST_MANAGER_ID.kAmbienceManager
+     );
+
+     ambienceMng.createStarDust(this);
 
     /****************************************************/
      /* UI                                               */
