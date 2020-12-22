@@ -117,7 +117,7 @@ extends UIForce
       0,
       _scene,
       10,
-      50
+      100
     );
 
     this._m_arrivalSlider.subscribe
@@ -239,11 +239,11 @@ extends UIForce
 
   }
 
-  setArrivalRadiusLabel(_vision: number)
+  setArrivalRadiusLabel(_radius: number)
   : void
   {
 
-    this._m_arrivalLabel.setText("Radius of Arrival: " + _vision.toFixed(2) + " km. ");
+    this._m_arrivalLabel.setText("Radius of Arrival: " + _radius.toFixed(2) + " km. ");
 
     return;
 
