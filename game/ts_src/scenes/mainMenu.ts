@@ -13,6 +13,7 @@ import { Ty_Image } from "../commons/stTypes";
 import { MapScene } from "../gameScene/mapScene";
 import { AmbienceManager } from "../managers/ambienceManager/ambienceManager";
 import { AudioManager } from "../managers/audioManager/audioManager";
+import { UIButtonImg } from "../managers/uiManager/uiButtonImg";
 import { UIGroup } from "../managers/uiManager/uiGroup";
 import { UIMenuButton } from "../managers/uiManager/uiMenuButton";
 import { UIObject } from "../managers/uiManager/uiObject";
@@ -265,6 +266,22 @@ extends Phaser.Scene
       },
       this
     );    
+
+    ///////////////////////////////////
+    // Full Screen
+
+    const fullScreen = mapScene.getObject<UIButtonImg>
+    (
+      "full_screen_btn"
+    );
+
+    fullScreen.subscribe
+    (
+      "buttonReleased",
+      "mainMenu",
+      this._onClick_fullScreen,
+      this
+    );
 
     /****************************************************/
     /* Mission Page                                     */
@@ -598,6 +615,16 @@ extends Phaser.Scene
   /* Private                                          */
   /****************************************************/
 
+  private _onClick_fullScreen()
+  : void
+  {
+
+    this.scale.toggleFullscreen();
+
+    return;
+
+  }
+
   private _startScene(_key: string)
   : void
   {
@@ -670,4 +697,5 @@ extends Phaser.Scene
   private _m_closing: boolean;
 
   private _m_ambienceManager: AmbienceManager;
+
 }

@@ -79,6 +79,8 @@ implements IForce
 
     this._m_forceMaxMagnitude = _forceMagnitude;
 
+    
+
     // Get Managers
 
     const master = Master.GetInstance();
@@ -88,7 +90,14 @@ implements IForce
       ST_MANAGER_ID.kSimManager
     );
 
+    ///////////////////////////////////
+    // Force State
+
+    // Crear e inicializar las variables
+
     this._m_constantInitState = new ForceInitState();
+
+    this._m_constantInitState.m_initMaxMagnitude = _forceMagnitude;
 
     // Get Debug Manager.
 

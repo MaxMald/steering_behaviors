@@ -70,7 +70,7 @@ extends UIForce
       0,
       _scene,
       1,
-      300
+      9999
     );
 
     this._m_forceSlider.subscribe
@@ -276,7 +276,7 @@ extends UIForce
   : void
   {
 
-    this._m_maxMagnitude.setText("Max. Magnitude: " + _maxForce.toFixed(3) + " uN.");
+    this._m_maxMagnitude.setText("Max. Magnitude: " + _maxForce.toFixed(2) + " uN.");
 
     return;
 
@@ -296,7 +296,7 @@ extends UIForce
   : void
   {
 
-    this._m_visionLabel.setText("Radius of Vision: " + _vision.toFixed(2) + " km. ");
+    this._m_visionLabel.setText("Radius of Vision: " + _vision.toFixed(2) + " m. ");
 
     return;
 
@@ -306,7 +306,7 @@ extends UIForce
   :void
   {
 
-    this._m_labelForce.setText("Force Magnitude: " + _force.toFixed(3) + " uN.");
+    this._m_labelForce.setText("Force Magnitude: " + _force.toFixed(2) + " uN.");
 
     return;
 

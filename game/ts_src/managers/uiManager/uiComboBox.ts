@@ -58,6 +58,8 @@ export class UIComboBox
 
     button.setInteractive();
 
+    // Drop-down button events
+
     button.on
     (
       "pointerdown", 
@@ -461,6 +463,7 @@ export class UIComboBox
         _value.destroy();
       }
     );
+    
     this._m_aOptions = null;
 
     this._m_aOptionsStr = null;
@@ -519,10 +522,12 @@ export class UIComboBox
 
     const aOptionLabels = this._m_aOptions;
 
+    let poolSize = aOptionLabels.length; 
+
     for(let i = 0; i < size; ++i)
     {
 
-      if(aOptionLabels.length <= size)
+      if(i >= poolSize)
       {
 
         // Create option label.
@@ -578,6 +583,8 @@ export class UIComboBox
         optionLabel.disable();
 
         aOptionLabels.push(optionLabel);
+
+        ++poolSize;
 
       }
       else

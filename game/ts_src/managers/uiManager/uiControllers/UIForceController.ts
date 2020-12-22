@@ -391,7 +391,7 @@ export class UIForceController
   : void
   {
 
-    this._ui_actualSpeed.setText("Speed: " + _speed.toFixed(3) + " km/secs. ");
+    this._ui_actualSpeed.setText("Speed: " + _speed.toFixed(2) + " m/secs. ");
 
     return;
 
@@ -401,7 +401,7 @@ export class UIForceController
   : void
   {
 
-    this._ui_maxSpeed.setText("Max. Speed: " + _speed.toFixed(3) + " km/secs. ");
+    this._ui_maxSpeed.setText("Max. Speed: " + _speed.toFixed(2) + " m/secs. ");
 
     return;
 
@@ -411,7 +411,7 @@ export class UIForceController
   : void
   {
 
-    this._ui_mass.setText("Mass: " + _mass.toFixed(3) + " tg.");
+    this._ui_mass.setText("Mass: " + _mass.toFixed(2) + " kg.");
 
     return;
 

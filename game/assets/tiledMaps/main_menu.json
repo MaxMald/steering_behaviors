@@ -18,7 +18,7 @@
                 {
                  "gid":1,
                  "height":768,
-                 "id":1,
+                 "id":37,
                  "name":"",
                  "properties":[
                         {
@@ -56,19 +56,29 @@
         }, 
         {
          "draworder":"topdown",
-         "id":8,
-         "name":"Clouds",
+         "id":12,
+         "name":"CloundsA",
          "objects":[
                 {
-                 "gid":9,
-                 "height":503,
-                 "id":23,
-                 "name":"cloud_1",
+                 "gid":36,
+                 "height":326,
+                 "id":33,
+                 "name":"",
                  "properties":[
+                        {
+                         "name":"Blue",
+                         "type":"int",
+                         "value":255
+                        }, 
+                        {
+                         "name":"Red",
+                         "type":"int",
+                         "value":78
+                        }, 
                         {
                          "name":"frame",
                          "type":"string",
-                         "value":"clouds.png"
+                         "value":"clouds_2.png"
                         }, 
                         {
                          "name":"frame_idx",
@@ -78,12 +88,12 @@
                         {
                          "name":"texture",
                          "type":"string",
-                         "value":"menu_art"
+                         "value":"game_art"
                         }, 
                         {
                          "name":"tint",
                          "type":"color",
-                         "value":"#ffd97eff"
+                         "value":"#ffffffff"
                         }, 
                         {
                          "name":"velocity",
@@ -93,20 +103,30 @@
                  "rotation":0,
                  "type":"motionImage",
                  "visible":true,
-                 "width":1024,
+                 "width":512,
                  "x":0,
-                 "y":560
+                 "y":544
                 }, 
                 {
-                 "gid":9,
-                 "height":503,
-                 "id":24,
-                 "name":"cloud_2",
+                 "gid":36,
+                 "height":326,
+                 "id":34,
+                 "name":"",
                  "properties":[
+                        {
+                         "name":"Blue",
+                         "type":"int",
+                         "value":255
+                        }, 
+                        {
+                         "name":"Red",
+                         "type":"int",
+                         "value":78
+                        }, 
                         {
                          "name":"frame",
                          "type":"string",
-                         "value":"clouds.png"
+                         "value":"clouds_2.png"
                         }, 
                         {
                          "name":"frame_idx",
@@ -116,12 +136,12 @@
                         {
                          "name":"texture",
                          "type":"string",
-                         "value":"menu_art"
+                         "value":"game_art"
                         }, 
                         {
                          "name":"tint",
                          "type":"color",
-                         "value":"#ffd97eff"
+                         "value":"#ffffffff"
                         }, 
                         {
                          "name":"velocity",
@@ -131,9 +151,57 @@
                  "rotation":0,
                  "type":"motionImage",
                  "visible":true,
-                 "width":1024,
+                 "width":512,
+                 "x":512,
+                 "y":544
+                }, 
+                {
+                 "gid":36,
+                 "height":326,
+                 "id":36,
+                 "name":"",
+                 "properties":[
+                        {
+                         "name":"Blue",
+                         "type":"int",
+                         "value":255
+                        }, 
+                        {
+                         "name":"Red",
+                         "type":"int",
+                         "value":78
+                        }, 
+                        {
+                         "name":"frame",
+                         "type":"string",
+                         "value":"clouds_2.png"
+                        }, 
+                        {
+                         "name":"frame_idx",
+                         "type":"int",
+                         "value":0
+                        }, 
+                        {
+                         "name":"texture",
+                         "type":"string",
+                         "value":"game_art"
+                        }, 
+                        {
+                         "name":"tint",
+                         "type":"color",
+                         "value":"#ffffffff"
+                        }, 
+                        {
+                         "name":"velocity",
+                         "type":"float",
+                         "value":-10
+                        }],
+                 "rotation":0,
+                 "type":"motionImage",
+                 "visible":true,
+                 "width":512,
                  "x":1024,
-                 "y":560
+                 "y":544
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -143,35 +211,128 @@
         }, 
         {
          "draworder":"topdown",
-         "id":9,
-         "name":"Worm Hole",
+         "id":13,
+         "name":"Planet",
          "objects":[
                 {
-                 "height":768,
-                 "id":25,
-                 "name":"worm_hole_video",
+                 "gid":16,
+                 "height":477,
+                 "id":38,
+                 "name":"",
                  "properties":[
                         {
-                         "name":"autoPlay",
-                         "type":"bool",
-                         "value":true
-                        }, 
-                        {
-                         "name":"key",
+                         "name":"frame",
                          "type":"string",
-                         "value":"wormHole"
+                         "value":"menu_planet.png"
                         }, 
                         {
-                         "name":"loop",
-                         "type":"bool",
-                         "value":true
+                         "name":"frame_idx",
+                         "type":"int",
+                         "value":0
+                        }, 
+                        {
+                         "name":"texture",
+                         "type":"string",
+                         "value":"menu_art"
+                        }, 
+                        {
+                         "name":"tint",
+                         "type":"color",
+                         "value":"#ffffffff"
                         }],
                  "rotation":0,
-                 "type":"video",
+                 "type":"image",
+                 "visible":true,
+                 "width":500,
+                 "x":631,
+                 "y":697
+                }],
+         "opacity":1,
+         "type":"objectgroup",
+         "visible":true,
+         "x":0,
+         "y":0
+        }, 
+        {
+         "draworder":"topdown",
+         "id":11,
+         "name":"CloudsB",
+         "objects":[
+                {
+                 "gid":35,
+                 "height":503,
+                 "id":31,
+                 "name":"",
+                 "properties":[
+                        {
+                         "name":"frame",
+                         "type":"string",
+                         "value":"clouds.png"
+                        }, 
+                        {
+                         "name":"frame_idx",
+                         "type":"int",
+                         "value":0
+                        }, 
+                        {
+                         "name":"texture",
+                         "type":"string",
+                         "value":"game_art"
+                        }, 
+                        {
+                         "name":"tint",
+                         "type":"color",
+                         "value":"#ff49aaff"
+                        }, 
+                        {
+                         "name":"velocity",
+                         "type":"float",
+                         "value":10
+                        }],
+                 "rotation":0,
+                 "type":"motionImage",
+                 "visible":true,
+                 "width":1024,
+                 "x":-1024,
+                 "y":800
+                }, 
+                {
+                 "gid":35,
+                 "height":503,
+                 "id":32,
+                 "name":"",
+                 "properties":[
+                        {
+                         "name":"frame",
+                         "type":"string",
+                         "value":"clouds.png"
+                        }, 
+                        {
+                         "name":"frame_idx",
+                         "type":"int",
+                         "value":0
+                        }, 
+                        {
+                         "name":"texture",
+                         "type":"string",
+                         "value":"game_art"
+                        }, 
+                        {
+                         "name":"tint",
+                         "type":"color",
+                         "value":"#ff49aaff"
+                        }, 
+                        {
+                         "name":"velocity",
+                         "type":"float",
+                         "value":10
+                        }],
+                 "rotation":0,
+                 "type":"motionImage",
                  "visible":true,
                  "width":1024,
                  "x":0,
-                 "y":0
+                 "y":800
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -216,6 +377,50 @@
                  "width":1025,
                  "x":0,
                  "y":768
+                }],
+         "opacity":1,
+         "type":"objectgroup",
+         "visible":true,
+         "x":0,
+         "y":0
+        }, 
+        {
+         "draworder":"topdown",
+         "id":10,
+         "name":"ShipPanel",
+         "objects":[
+                {
+                 "gid":13,
+                 "height":95,
+                 "id":28,
+                 "name":"",
+                 "properties":[
+                        {
+                         "name":"animation",
+                         "type":"string",
+                         "value":"ship_panel"
+                        }, 
+                        {
+                         "name":"frame",
+                         "type":"string",
+                         "value":"ship_panel_0.png"
+                        }, 
+                        {
+                         "name":"frame_idx",
+                         "type":"int",
+                         "value":0
+                        }, 
+                        {
+                         "name":"texture",
+                         "type":"string",
+                         "value":"menu_art"
+                        }],
+                 "rotation":0,
+                 "type":"sprite",
+                 "visible":true,
+                 "width":493,
+                 "x":279.951,
+                 "y":768.326
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -372,7 +577,7 @@
                         {
                          "name":"label",
                          "type":"string",
-                         "value":"MANUAL DE USUARIO"
+                         "value":"TUTORIAL"
                         }, 
                         {
                          "name":"texture",
@@ -431,8 +636,56 @@
                  "type":"uiSwitch",
                  "visible":true,
                  "width":64,
-                 "x":909.333333333333,
-                 "y":150.666666666667
+                 "x":912,
+                 "y":229.666666666667
+                }, 
+                {
+                 "gid":14,
+                 "height":63,
+                 "id":29,
+                 "name":"full_screen_btn",
+                 "properties":[
+                        {
+                         "name":"frame",
+                         "type":"string",
+                         "value":"full_screen_normal.png"
+                        }, 
+                        {
+                         "name":"frame_hover",
+                         "type":"string",
+                         "value":"full_screen_hover.png"
+                        }, 
+                        {
+                         "name":"frame_hover_idx",
+                         "type":"int",
+                         "value":0
+                        }, 
+                        {
+                         "name":"frame_idx",
+                         "type":"int",
+                         "value":0
+                        }, 
+                        {
+                         "name":"frame_press",
+                         "type":"string",
+                         "value":"full_screen_normal.png"
+                        }, 
+                        {
+                         "name":"frame_press_idx",
+                         "type":"int",
+                         "value":0
+                        }, 
+                        {
+                         "name":"texture",
+                         "type":"string",
+                         "value":"menu_art"
+                        }],
+                 "rotation":0,
+                 "type":"uiImageButton",
+                 "visible":true,
+                 "width":64,
+                 "x":912,
+                 "y":149.666666666667
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -941,8 +1194,8 @@
          "x":0,
          "y":0
         }],
- "nextlayerid":10,
- "nextobjectid":27,
+ "nextlayerid":14,
+ "nextobjectid":39,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.4.3",
@@ -960,7 +1213,7 @@
          "margin":0,
          "name":"assets",
          "spacing":0,
-         "tilecount":10,
+         "tilecount":11,
          "tileheight":769,
          "tiles":[
                 {
@@ -1006,24 +1259,173 @@
                  "imagewidth":357
                 }, 
                 {
-                 "id":8,
-                 "image":"..\/images\/game_menu\/clouds.png",
-                 "imageheight":503,
-                 "imagewidth":1024
-                }, 
-                {
-                 "id":9,
-                 "image":"..\/images\/game_menu\/clouds_2.png",
-                 "imageheight":326,
-                 "imagewidth":512
-                }, 
-                {
                  "id":10,
                  "image":"..\/images\/game_menu\/active_music_button.png",
                  "imageheight":64,
                  "imagewidth":64
+                }, 
+                {
+                 "id":12,
+                 "image":"..\/images\/game_menu\/ship_panel_0.png",
+                 "imageheight":95,
+                 "imagewidth":493
+                }, 
+                {
+                 "id":13,
+                 "image":"..\/images\/game_menu\/full_screen_hover.png",
+                 "imageheight":63,
+                 "imagewidth":64
+                }, 
+                {
+                 "id":15,
+                 "image":"..\/images\/game_menu\/menu_planet.png",
+                 "imageheight":477,
+                 "imagewidth":500
                 }],
          "tilewidth":1025
+        }, 
+        {
+         "columns":0,
+         "firstgid":17,
+         "grid":
+            {
+             "height":1,
+             "orientation":"orthogonal",
+             "width":1
+            },
+         "margin":0,
+         "name":"space_art",
+         "spacing":0,
+         "tilecount":21,
+         "tileheight":768,
+         "tiles":[
+                {
+                 "id":0,
+                 "image":"..\/images\/bg_space_01.png",
+                 "imageheight":768,
+                 "imagewidth":1024
+                }, 
+                {
+                 "id":1,
+                 "image":"..\/images\/game_art\/planetAsset 2.png",
+                 "imageheight":198,
+                 "imagewidth":207
+                }, 
+                {
+                 "id":2,
+                 "image":"..\/images\/game_art\/planetAsset 5.png",
+                 "imageheight":234,
+                 "imagewidth":237
+                }, 
+                {
+                 "id":3,
+                 "image":"..\/images\/game_art\/planetAsset 6.png",
+                 "imageheight":321,
+                 "imagewidth":281
+                }, 
+                {
+                 "id":4,
+                 "image":"..\/images\/game_art\/planetAsset 7.png",
+                 "imageheight":238,
+                 "imagewidth":250
+                }, 
+                {
+                 "id":5,
+                 "image":"..\/images\/game_art\/planetAsset 8.png",
+                 "imageheight":210,
+                 "imagewidth":208
+                }, 
+                {
+                 "id":6,
+                 "image":"..\/images\/game_art\/planetAsset 9.png",
+                 "imageheight":298,
+                 "imagewidth":271
+                }, 
+                {
+                 "id":7,
+                 "image":"..\/images\/game_art\/planetAsset 10.png",
+                 "imageheight":266,
+                 "imagewidth":225
+                }, 
+                {
+                 "id":8,
+                 "image":"..\/images\/game_art\/planetAsset 11.png",
+                 "imageheight":232,
+                 "imagewidth":237
+                }, 
+                {
+                 "id":9,
+                 "image":"..\/images\/game_art\/planetAsset 12.png",
+                 "imageheight":276,
+                 "imagewidth":262
+                }, 
+                {
+                 "id":10,
+                 "image":"..\/images\/game_art\/debug_hover.png",
+                 "imageheight":42,
+                 "imagewidth":42
+                }, 
+                {
+                 "id":11,
+                 "image":"..\/images\/game_art\/home_hover.png",
+                 "imageheight":42,
+                 "imagewidth":42
+                }, 
+                {
+                 "id":12,
+                 "image":"..\/images\/game_art\/info_hover.png",
+                 "imageheight":42,
+                 "imagewidth":42
+                }, 
+                {
+                 "id":13,
+                 "image":"..\/images\/game_art\/no_hover.png",
+                 "imageheight":42,
+                 "imagewidth":42
+                }, 
+                {
+                 "id":14,
+                 "image":"..\/images\/game_art\/pause_but_hover.png",
+                 "imageheight":42,
+                 "imagewidth":42
+                }, 
+                {
+                 "id":15,
+                 "image":"..\/images\/game_art\/play_but_hover.png",
+                 "imageheight":42,
+                 "imagewidth":42
+                }, 
+                {
+                 "id":16,
+                 "image":"..\/images\/game_art\/stop_but_hover.png",
+                 "imageheight":42,
+                 "imagewidth":42
+                }, 
+                {
+                 "id":17,
+                 "image":"..\/images\/game_art\/yes_hover.png",
+                 "imageheight":42,
+                 "imagewidth":42
+                }, 
+                {
+                 "id":18,
+                 "image":"..\/images\/game_art\/clouds.png",
+                 "imageheight":503,
+                 "imagewidth":1024
+                }, 
+                {
+                 "id":19,
+                 "image":"..\/images\/game_art\/clouds_2.png",
+                 "imageheight":326,
+                 "imagewidth":512
+                }, 
+                {
+                 "id":20,
+                 "image":"..\/images\/game_art\/ui_bg.png",
+                 "imageheight":212,
+                 "imagewidth":978
+                }],
+         "tilewidth":1024
         }],
  "tilewidth":16,
  "type":"map",

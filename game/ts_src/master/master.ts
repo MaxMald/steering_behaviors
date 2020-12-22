@@ -329,6 +329,8 @@ export class Master
       this
     );
 
+    this.stopSimulation();
+
     return;
 
   }

@@ -50,10 +50,10 @@ extends Phaser.Scene
       "animations/ambienceAnimations.json"
     );
 
-    loader.image
+    loader.animation
     (
-      'button',
-      'images/button.png'
+      "menu_animations",
+      "animations/menuAnimations.json"
     );
 
     /****************************************************/
@@ -64,8 +64,8 @@ extends Phaser.Scene
     (
       "bg_space_01",
       "images/bg_space_01.png"
-    )
-
+    );
+    
     /****************************************************/
     /* Atlas                                            */
     /****************************************************/
@@ -206,21 +206,6 @@ extends Phaser.Scene
     );
 
     /****************************************************/
-    /* Video                                            */
-    /****************************************************/
-
-    loader.video
-    (
-      "wormHole",
-      [
-        "video/worm_hole.mp4"
-      ],
-      undefined,
-      undefined,
-      true
-    );
-
-    /****************************************************/
     /* Loading Scene                                    */
     /****************************************************/
 
@@ -336,8 +321,8 @@ extends Phaser.Scene
   : void
   {
     
-    //this.scene.start('logo');
-    this.scene.start('main_menu');
+    this.scene.start('logo');
+    //this.scene.start('main_menu');
 
 
     return;
