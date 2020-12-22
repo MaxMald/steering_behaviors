@@ -58,6 +58,8 @@ export class UIComboBox
 
     button.setInteractive();
 
+    // Drop-down button events
+
     button.on
     (
       "pointerdown", 
@@ -461,6 +463,7 @@ export class UIComboBox
         _value.destroy();
       }
     );
+    
     this._m_aOptions = null;
 
     this._m_aOptionsStr = null;

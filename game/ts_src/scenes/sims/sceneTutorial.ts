@@ -251,6 +251,9 @@ import { SttTutSelectDrag } from "../../tutorialManager/tutState/sttTutSelectDra
      // Open Tutorial Book.
 
      this._openSceneInfo();
+
+     // Stop Simulation.
+     master.stopSimulation();
  
      return;
 
