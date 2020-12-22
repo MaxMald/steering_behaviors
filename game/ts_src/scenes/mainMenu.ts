@@ -697,4 +697,5 @@ extends Phaser.Scene
   private _m_closing: boolean;
 
   private _m_ambienceManager: AmbienceManager;
+
 }

@@ -64,8 +64,8 @@ extends Phaser.Scene
     (
       "bg_space_01",
       "images/bg_space_01.png"
-    )
-
+    );
+    
     /****************************************************/
     /* Atlas                                            */
     /****************************************************/
@@ -173,22 +173,6 @@ extends Phaser.Scene
         "audio/gamesounds.mp3",
         "audio/gamesounds.ac3"
       ]
-    );
-
-    /****************************************************/
-    /* Video                                            */
-    /****************************************************/
-
-    loader.video
-    (
-      "wormHole",
-      [
-        "video/worm_hole.mp4",
-        "video/worm_hole.mov"
-      ],
-      undefined,
-      undefined,
-      true
     );
 
     /****************************************************/
