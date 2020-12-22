@@ -22,6 +22,7 @@ import { CmpForceController } from "../components/cmpForceController";
 import { IForce } from "./iForce";
 import { SimulationManager } from "../managers/simulationManager/simulationManager";
 import { ForceInitState } from "./forceInitState";
+import { ArrivalInitState } from "./arrivalInitState";
 
 /**
  * 
@@ -38,7 +39,7 @@ implements IForce
    * 
    * @param _self The sprite of the agent.
    * @param _target The sprite of the target.
-   * @param _slowingRadius The limit radius to start slowing down the force.
+   * @param _arrivalRadius The limit radius to start slowing down the force.
    * @param _force The magnitude of the force.
    * @param _controller [optional] The controller of this force.
    */
@@ -46,7 +47,7 @@ implements IForce
   (
     _self : Ty_Sprite,
     _target : Ty_Sprite,
-    _slowingRadius : number,
+    _arrivalRadius : number,
     _force : number,
     _controller ?: CmpForceController
   )
@@ -56,7 +57,7 @@ implements IForce
 
     this._m_self = _self;
     this._m_target = _target;
-    this._m_slowingRadius = _slowingRadius;
+    this._m_arrivalRadius = _arrivalRadius;
     this._m_forceMagnitude = _force;
 
     if(this._m_controller !== undefined)
@@ -77,7 +78,7 @@ implements IForce
       ST_MANAGER_ID.kSimManager
     );
 
-    this._m_arrivalInitState = new ForceInitState();
+    this._m_arrivalInitState = new ArrivalInitState();
 
     // Get debug manager
 
@@ -142,11 +143,11 @@ implements IForce
 
     this._m_distance = desiredVelocity.length();
 
-    let slowingRadius = this._m_slowingRadius;
+    let arrivalRadius = this._m_arrivalRadius;
 
-    let arrivalMultiplier = this._m_distance / slowingRadius;
+    let arrivalMultiplier = this._m_distance / arrivalRadius;
 
-    if(this._m_distance < slowingRadius) 
+    if(this._m_distance < arrivalRadius) 
     {
 
       desiredVelocity.setLength(forceMagnitude * arrivalMultiplier);
@@ -229,12 +230,12 @@ implements IForce
     (
       target.x,
       target.y,
-      this._m_slowingRadius,
+      this._m_arrivalRadius,
       DebugManager.FORCE_CIRCLE_WIDTH,
       ST_COLOR_ID.kPurple
     );
 
-    if(this._m_distance < this._m_slowingRadius) 
+    if(this._m_distance < this._m_arrivalRadius) 
     {
       sprite.setTint(0x3D85C6);
     } 
@@ -314,6 +315,43 @@ implements IForce
 
   }
 
+  setInitArrivalRadius()
+  : void
+  {
+    this._m_arrivalRadius = this.getInitArrivalRadius();
+
+    return;
+  }
+
+  setArrivalRadius(_radius: number)
+  : void
+  {
+
+    if(this._m_simulationManager.getState() === ST_SIM_SATE.kStopped)
+    {
+      this._m_arrivalInitState.m_initArrivalRadius = _radius;
+    }
+
+    this._m_arrivalRadius = _radius;
+
+    return;
+
+  }
+
+  getInitArrivalRadius()
+  : number
+  {
+    return this._m_arrivalInitState.m_initArrivalRadius;
+  }
+
+  getArrivalRadius()
+  : number
+  {
+
+    return this._m_arrivalRadius;
+
+  }
+
   getActualForce()
   : number
   {
@@ -359,7 +397,7 @@ implements IForce
    */
   private _m_simulationManager: SimulationManager;
 
-  private _m_arrivalInitState : ForceInitState;
+  private _m_arrivalInitState : ArrivalInitState;
 
   /**
    * Reference to the force controller.
@@ -374,7 +412,7 @@ implements IForce
   /**
    * The limit radius to start slowing down the force.
    */
-  private _m_slowingRadius : number;
+  private _m_arrivalRadius : number;
 
   /**
    * The magnitude of the applied force.
