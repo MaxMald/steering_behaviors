@@ -252,6 +252,38 @@ import { SttTutSelectDrag } from "../../tutorialManager/tutState/sttTutSelectDra
 
      tutorialManager.setActive("intro");
 
+     // Subscribe to simulation events
+
+     simManager.subscribe
+     (
+       "onSimulationSceneDestroyed",
+       "tutorial",
+       function()
+       {
+
+        // Destroy tutorial.
+
+        tutorialManager.destroy();
+
+        // Unsubscribe from event.
+
+        const master = Master.GetInstance();
+
+        const simManager = master.getManager<SimulationManager>
+        (
+          ST_MANAGER_ID.kSimManager
+        );
+
+        simManager.unsubscribe
+        (
+          "onSimulationSceneDestroyed",
+          "tutorial"
+        );
+
+       },
+       this
+     );
+
      // Open Tutorial Book.
 
      this._openSceneInfo();     
