@@ -16,6 +16,7 @@ import { CmpForceController } from "../components/cmpForceController";
 import { IForce } from "./iForce";
 import { SimulationManager } from "../managers/simulationManager/simulationManager";
 import { ForceInitState } from "./forceInitState";
+import { ObstacleAvoidanceInitState } from "./obstacleAvoidanceInitState";
 
 /**
  *
@@ -67,7 +68,7 @@ implements IForce
       ST_MANAGER_ID.kSimManager
     );
 
-    this._m_obstacleAvoidanceInitState = new ForceInitState();
+    this._m_obstacleAvoidanceInitState = new ObstacleAvoidanceInitState();
 
     // Get Debug Manager
 
@@ -263,6 +264,43 @@ implements IForce
 
   }
 
+  setInitAvoidanceRadius()
+  : void
+  {
+    this._m_avoidanceRadius = this.getInitAvoidanceRadius();
+
+    return;
+  }
+
+  setAvoidanceRadius(_radius: number)
+  : void
+  {
+
+    if(this._m_simulationManager.getState() === ST_SIM_SATE.kStopped)
+    {
+      this._m_obstacleAvoidanceInitState.m_initAvoidanceRadius = _radius;
+    }
+
+    this._m_avoidanceRadius = _radius;
+
+    return;
+
+  }
+
+  getInitAvoidanceRadius()
+  : number
+  {
+    return this._m_obstacleAvoidanceInitState.m_initAvoidanceRadius;
+  }
+
+  getAvoidanceRadius()
+  : number
+  {
+
+    return this._m_avoidanceRadius;
+
+  }
+
   getActualForce()
   : number
   {
@@ -310,7 +348,7 @@ implements IForce
    */
   private _m_simulationManager: SimulationManager;
 
-  private _m_obstacleAvoidanceInitState : ForceInitState;
+  private _m_obstacleAvoidanceInitState : ObstacleAvoidanceInitState;
 
   /**
    * Reference to the force controller.
