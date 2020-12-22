@@ -223,6 +223,10 @@ import { SttTutSelectDrag } from "../../tutorialManager/tutState/sttTutSelectDra
 
      uiManager.setTarget(nexus);
 
+     // Stop Simulation.
+     
+     master.stopSimulation();
+
      /****************************************************/
      /* Tutorial Manager                                 */
      /****************************************************/
@@ -250,10 +254,7 @@ import { SttTutSelectDrag } from "../../tutorialManager/tutState/sttTutSelectDra
 
      // Open Tutorial Book.
 
-     this._openSceneInfo();
-
-     // Stop Simulation.
-     master.stopSimulation();
+     this._openSceneInfo();     
  
      return;
 
