@@ -66,6 +66,11 @@
                  "name":"",
                  "properties":[
                         {
+                         "name":"Blue",
+                         "type":"int",
+                         "value":255
+                        }, 
+                        {
                          "name":"Red",
                          "type":"int",
                          "value":78
@@ -88,7 +93,7 @@
                         {
                          "name":"tint",
                          "type":"color",
-                         "value":"#ffec19ff"
+                         "value":"#ffffffff"
                         }, 
                         {
                          "name":"velocity",
@@ -109,6 +114,11 @@
                  "name":"",
                  "properties":[
                         {
+                         "name":"Blue",
+                         "type":"int",
+                         "value":255
+                        }, 
+                        {
                          "name":"Red",
                          "type":"int",
                          "value":78
@@ -131,7 +141,7 @@
                         {
                          "name":"tint",
                          "type":"color",
-                         "value":"#ffec19ff"
+                         "value":"#ffffffff"
                         }, 
                         {
                          "name":"velocity",
@@ -152,6 +162,11 @@
                  "name":"",
                  "properties":[
                         {
+                         "name":"Blue",
+                         "type":"int",
+                         "value":255
+                        }, 
+                        {
                          "name":"Red",
                          "type":"int",
                          "value":78
@@ -174,7 +189,7 @@
                         {
                          "name":"tint",
                          "type":"color",
-                         "value":"#ffec19ff"
+                         "value":"#ffffffff"
                         }, 
                         {
                          "name":"velocity",
@@ -190,7 +205,7 @@
                 }],
          "opacity":1,
          "type":"objectgroup",
-         "visible":false,
+         "visible":true,
          "x":0,
          "y":0
         }, 
@@ -267,7 +282,7 @@
                         {
                          "name":"tint",
                          "type":"color",
-                         "value":"#ffcc14ff"
+                         "value":"#ff49aaff"
                         }, 
                         {
                          "name":"velocity",
@@ -279,7 +294,7 @@
                  "visible":true,
                  "width":1024,
                  "x":-1024,
-                 "y":672
+                 "y":800
                 }, 
                 {
                  "gid":35,
@@ -305,7 +320,7 @@
                         {
                          "name":"tint",
                          "type":"color",
-                         "value":"#ffcc14ff"
+                         "value":"#ff49aaff"
                         }, 
                         {
                          "name":"velocity",
@@ -317,7 +332,7 @@
                  "visible":true,
                  "width":1024,
                  "x":0,
-                 "y":672
+                 "y":800
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -562,7 +577,7 @@
                         {
                          "name":"label",
                          "type":"string",
-                         "value":"MANUAL DE USUARIO"
+                         "value":"TUTORIAL"
                         }, 
                         {
                          "name":"texture",
@@ -621,8 +636,8 @@
                  "type":"uiSwitch",
                  "visible":true,
                  "width":64,
-                 "x":912.25,
-                 "y":151.75
+                 "x":912,
+                 "y":229.666666666667
                 }, 
                 {
                  "gid":14,
@@ -670,7 +685,7 @@
                  "visible":true,
                  "width":64,
                  "x":912,
-                 "y":224
+                 "y":149.666666666667
                 }],
          "opacity":1,
          "type":"objectgroup",
