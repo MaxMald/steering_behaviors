@@ -70,7 +70,7 @@ extends UIForce
       0,
       _scene,
       1,
-      300
+      9999
     );
 
     this._m_forceSlider.subscribe
@@ -296,7 +296,7 @@ extends UIForce
   : void
   {
 
-    this._m_visionLabel.setText("Radius of Vision: " + _vision.toFixed(2) + " km. ");
+    this._m_visionLabel.setText("Radius of Vision: " + _vision.toFixed(2) + " m. ");
 
     return;
 

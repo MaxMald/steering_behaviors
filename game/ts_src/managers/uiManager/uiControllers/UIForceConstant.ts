@@ -70,7 +70,7 @@ extends UIForce
       0,
       _scene,
       1,
-      300
+      9999
     );
 
     this._m_forceSlider.subscribe
@@ -160,6 +160,7 @@ extends UIForce
     this._m_forceSlider.setValue(this._m_force.getInitMaxMagnitude());
 
     return;
+
   }
 
   setMaximumMagnitudeLabel(_maxForce: number)
