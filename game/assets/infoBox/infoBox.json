@@ -8,21 +8,75 @@
       "pages": [
 
         {
-          "text": "Texto 1.",
+          "text": "¡Hola!",
           "texture": "",
           "frame": "blueShip.png"
         },
 
         {
-          "text": "Texto 2",
-          "texture": "game_art",
-          "frame": "redShip.png"
+          "text": "En esta sesión revisaremos el Seek Force.",
+          "texture": "",
+          "frame": ""
         },
 
         {
-          "text": "Texto 3",
-          "texture": "game_art",
-          "frame": "planetAsset 5.png"
+          "text": "Paso I: Obtener el vector de velocidad actual.",
+          "texture": "seek_book",
+          "frame": "seek_base.png"
+        },
+
+        {
+          "text": "El vector de velocidad actual es la representación de la dirección y velocidad que posee la nave en ése instante.",
+          "texture": "seek_book",
+          "frame": "seek_actual_velocity.png"
+        },
+
+        {
+          "text": "Paso II: Calcular la velocidad deseada.",
+          "texture": "seek_book",
+          "frame": "seek_actual_velocity.png"
+        },
+
+        {
+          "text": "Se resta a la posición del objetivo, la posición de la nave; y así obtener el vector.",
+          "texture": "seek_book",
+          "frame": "seek_desire_velocity.png"
+        },
+
+        {
+          "text": "Se establece la magnitud del vector resultante a la fuerza máxima del Seek Force.",
+          "texture": "seek_book",
+          "frame": "seek_desire_trunc.png"
+        },
+
+        {
+          "text": "Paso III: Calcular Seek Force.",
+          "texture": "seek_book",
+          "frame": "seek_desire_trunc.png"
+        },
+
+        {
+          "text": "Este vector se obtiene al restar la velocidad actual a la velocidad deseada.",
+          "texture": "seek_book",
+          "frame": "seek_seek_force.png"
+        },
+
+        {
+          "text": "Finalmente este vector es truncado a la fuerza máxima del seek force, si sobrepasa dicho valor.",
+          "texture": "seek_book",
+          "frame": "seek_seek_force.png"
+        },
+
+        {
+          "text": "Listo, hemos calculado el Seek Force.",
+          "texture": "seek_book",
+          "frame": "seek_seek_force.png"
+        },
+
+        {
+          "text": "Recuerda consultar con tu profesor de inteligencia artificial para una explicación más detallada.",
+          "texture": "seek_book",
+          "frame": "seek_seek_force.png"
         }
 
       ]

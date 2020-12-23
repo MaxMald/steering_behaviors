@@ -217,4 +217,5 @@ extends Phaser.Scene
   /****************************************************/
   
   private _m_master : Master;
+  
 }
