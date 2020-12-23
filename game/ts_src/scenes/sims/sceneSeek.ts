@@ -14,6 +14,7 @@ import { ShipFactory } from "../../factories/shipFactory";
 import { SceneUIFactory } from "../../factories/uiSceneFactory";
 import { MapScene } from "../../gameScene/mapScene";
 import { AmbienceManager } from "../../managers/ambienceManager/ambienceManager";
+import { DebugManager } from "../../managers/debugManager/debugManager";
 import { SimulationManager } from "../../managers/simulationManager/simulationManager";
 import { UIInfoBox } from "../../managers/uiManager/uiControllers/UIInfoBox";
 import { UIManager } from "../../managers/uiManager/uiManager";
@@ -184,6 +185,17 @@ import { SeekForce } from "../../steeringBehavior/forceSeek";
       );
 
       ambienceMng.createStarDust(this);
+
+      /****************************************************/
+      /* Debug Manager                                    */
+      /****************************************************/
+
+      const debugManager = master.getManager<DebugManager>
+      (
+        ST_MANAGER_ID.kDebugManager
+      );
+
+      debugManager.prepareDebugManager(this);
 
      /****************************************************/
      /* UI                                               */

@@ -4,6 +4,7 @@ import { ShipFactory } from "../../factories/shipFactory";
 import { SceneUIFactory } from "../../factories/uiSceneFactory";
 import { MapScene } from "../../gameScene/mapScene";
 import { AmbienceManager } from "../../managers/ambienceManager/ambienceManager";
+import { DebugManager } from "../../managers/debugManager/debugManager";
 import { SimulationManager } from "../../managers/simulationManager/simulationManager";
 import { UIManager } from "../../managers/uiManager/uiManager";
 import { Master } from "../../master/master";
@@ -161,11 +162,11 @@ import { SttTutSelectDrag } from "../../tutorialManager/tutState/sttTutSelectDra
        true 
      );
 
-      scarletForceController.addForce("constant", scarletConstantForce);
+    scarletForceController.addForce("constant", scarletConstantForce);
 
      // Set target scale.
 
-     scarletMist.sendMessage
+    scarletMist.sendMessage
     (
       ST_MESSAGE_ID.kSetMass,
       3.0
@@ -199,6 +200,17 @@ import { SttTutSelectDrag } from "../../tutorialManager/tutState/sttTutSelectDra
       );
 
       ambienceMng.createStarDust(this);
+
+      /****************************************************/
+      /* Debug Manager                                    */
+      /****************************************************/
+
+      const debugManager = master.getManager<DebugManager>
+      (
+        ST_MANAGER_ID.kDebugManager
+      );
+
+      debugManager.prepareDebugManager(this);
 
      /****************************************************/
      /* UI                                               */
