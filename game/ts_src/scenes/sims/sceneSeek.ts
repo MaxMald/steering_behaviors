@@ -34,8 +34,6 @@ import { SeekForce } from "../../steeringBehavior/forceSeek";
    : void
    {    
 
-    
-
     // Camera fade in
 
     this.cameras.main.fadeIn(500, 0, 0, 0, );
@@ -91,6 +89,12 @@ import { SeekForce } from "../../steeringBehavior/forceSeek";
  
      simManager.addActor(blueShip);
 
+     blueShip.sendMessage
+     (
+      ST_MESSAGE_ID.kSetPosition,
+      new Phaser.Math.Vector2(width * 0.5, height * 0.6)
+     );
+
      /****************************************************/
      /* Target                                           */
      /****************************************************/
@@ -98,7 +102,7 @@ import { SeekForce } from "../../steeringBehavior/forceSeek";
      const targetActor =  ShipFactory.CreateRedShip
      (
        this,
-       "Red Ship"
+       "Scarlet Mist"
      );
  
      // Add target to simulation manager.
@@ -149,7 +153,7 @@ import { SeekForce } from "../../steeringBehavior/forceSeek";
      targetActor.sendMessage
      (
        ST_MESSAGE_ID.kSetPosition,
-       new Phaser.Math.Vector2(width * 0.5, height * 0.5)
+       new Phaser.Math.Vector2(width * 0.7, height * 0.6)
      );
  
      ///////////////////////////////////
