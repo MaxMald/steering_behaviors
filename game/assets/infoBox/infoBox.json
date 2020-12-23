@@ -10,7 +10,7 @@
         {
           "text": "¡Hola!",
           "texture": "",
-          "frame": "blueShip.png"
+          "frame": ""
         },
 
         {
@@ -77,6 +77,81 @@
           "text": "Recuerda consultar con tu profesor de inteligencia artificial para una explicación más detallada.",
           "texture": "seek_book",
           "frame": "seek_seek_force.png"
+        }
+
+      ]
+
+    },
+
+    {
+
+      "name": "path",
+      "pages": [
+
+        {
+          "text": "¡Hola!",
+          "texture": "",
+          "frame": ""
+        },
+
+        {
+          "text": "En esta sesión revisaremos el Path Following.",
+          "texture": "path_book",
+          "frame": "path_base.png"
+        },
+
+        {
+          "text": "Para esta sesión se establece un conjunto de nodos que definen la línea del camino.",
+          "texture": "path_book",
+          "frame": "path_line.png"
+        },
+
+        {
+          "text": "La nave recibirá un seek force, de forma secuencial, hacia la posición de cada uno de estos nodos.",
+          "texture": "path_book",
+          "frame": "path_seek.png"
+        },
+
+        {
+          "text": "De esta forma la nave seguirá el camino trazado",
+          "texture": "path_book",
+          "frame": "path_seek.png"
+        },
+
+        {
+          "text": "Además de la fuerza de seek, existe una fuerza de atracción hacia la línea de camino.",
+          "texture": "path_book",
+          "frame": "path_force_path.png"
+        },
+
+        {
+          "text": "Modificar esta fuerza ayuda a modular la fidelidad de la nave hacia la ruta trazada por los nodos.",
+          "texture": "path_book",
+          "frame": "path_force_path.png"
+        },
+
+        {
+          "text": "Por último se encuentra el radio de visión.",
+          "texture": "path_book",
+          "frame": "path_vision.png"
+        },
+
+        {
+          "text": "Este factor define la distancia en que la nave decide cambiar su dirección hacia el nodo siguiente.",
+          "texture": "path_book",
+          "frame": "path_vision.png"
+        },
+
+        {
+          "text": "¡Listo!",
+          "texture": "path_book",
+          "frame": "path_vision.png"
+        },
+
+        {
+          "text": "Recuerda consultar con tu profesor de inteligencia artificial para una explicación más detallada.",
+          "texture": "path_book",
+          "frame": "path_vision.png"
         }
 
       ]

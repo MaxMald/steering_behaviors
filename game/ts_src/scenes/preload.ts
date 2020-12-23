@@ -98,6 +98,13 @@ extends Phaser.Scene
       "images/seek_book/seek_book.js"
     );
 
+    loader.atlas
+    (
+      'path_book',
+      "images/path_book/path_book.png",
+      "images/path_book/path_book.js"
+    );
+
     /****************************************************/
     /* Bitmap Fonts                                     */
     /****************************************************/

@@ -19,6 +19,7 @@ import { AmbienceManager } from "../../managers/ambienceManager/ambienceManager"
 import { DebugManager } from "../../managers/debugManager/debugManager";
 import { SimulationManager } from "../../managers/simulationManager/simulationManager";
 import { UIButtonImg } from "../../managers/uiManager/uiButtonImg";
+import { UIInfoBox } from "../../managers/uiManager/uiControllers/UIInfoBox";
 import { UIManager } from "../../managers/uiManager/uiManager";
 import { UIObject } from "../../managers/uiManager/uiObject";
 import { Master } from "../../master/master";
@@ -88,8 +89,8 @@ import { FollowPathForce } from "../../steeringBehavior/forceFollowPath";
      /* Nodes                                            */
      /****************************************************/
  
-     const hWidth : number = canvas.width * 0.5;
-     const hHeight : number = canvas.height * 0.5;
+     const x : number = canvas.width * 0.6;
+     const y : number = canvas.height * 0.65;
 
      let startNode : BaseActor<Ty_Sprite> = undefined;
      let prevNode : BaseActor<Ty_Sprite> = undefined;
@@ -101,8 +102,8 @@ import { FollowPathForce } from "../../steeringBehavior/forceFollowPath";
 
       const node = AmbienceFactory.CreateSatellite
       (
-        hWidth + ( Math.sin(t * i) * 200 ),
-        hHeight + ( Math.cos(t * i) * 200),
+        x + ( Math.sin(t * i) * 200 ),
+        y + ( Math.cos(t * i) * 200),
         this,
         "Satellite_" + i.toString() 
       );
@@ -181,11 +182,22 @@ import { FollowPathForce } from "../../steeringBehavior/forceFollowPath";
 
     // Create the Simulation Map Scene
 
-    SceneUIFactory.CreateSimulationUIScene("simulation_ui", this, uiManager);
+    SceneUIFactory.CreateSimulationUIScene
+    (
+      "simulation_ui", 
+      this, 
+      uiManager,
+      this._openSceneInfo,
+      this
+    );
 
     // Set the active actor of the UI Manager.
 
     uiManager.setTarget(blueShip);
+
+    // Display Info
+
+    this._openSceneInfo();
 
     ///////////////////////////////////
     // Set simulation to stop state
@@ -207,7 +219,43 @@ import { FollowPathForce } from "../../steeringBehavior/forceFollowPath";
  
    /****************************************************/
    /* Private                                          */
-   /****************************************************/ 
+   /****************************************************/
+
+   /**
+    * Open the scene information box.
+    */
+   private _openSceneInfo()
+   : void
+   {
+
+    // Pause Simulation.
+
+    const master = this._m_master;
+
+    master.pauseSimulation();
+
+    // Get the UI Manager.
+
+    const uiManger = master.getManager<UIManager>
+    (
+      ST_MANAGER_ID.kUIManager
+    );
+
+    // Get the info box.
+
+    const infoBox = uiManger.getUIController("infoBox") as UIInfoBox;
+
+    // Set the book.
+
+    infoBox.setBook("path");
+
+    // Open info box.
+
+    infoBox.open();
+
+    return;
+
+   }
  
    private _m_master : Master;
  }
