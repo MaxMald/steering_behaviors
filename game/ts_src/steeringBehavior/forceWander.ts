@@ -245,7 +245,7 @@ implements IForce
       this._m_v2_desiredVelocity.x + sprite.x,
       this._m_v2_desiredVelocity.y + sprite.y,
       DebugManager.FORCE_LINE_WIDTH,
-      ST_COLOR_ID.kBlack
+      ST_COLOR_ID.kOrange
     );
 
     // Circle center circle
@@ -255,7 +255,7 @@ implements IForce
       this._m_v2p_circleCenter.y,
       this._m_circleRadius,
       DebugManager.FORCE_CIRCLE_WIDTH,
-      ST_COLOR_ID.kOrange
+      ST_COLOR_ID.kSkyBlueNeon
     );
 
     let displacementVector = this._m_v2_displacement;
@@ -268,7 +268,7 @@ implements IForce
       this._m_v2p_circleCenter.x + displacementVector.x,
       this._m_v2p_circleCenter.y + displacementVector.y,
     DebugManager.FORCE_LINE_WIDTH,
-    ST_COLOR_ID.kRed  
+    ST_COLOR_ID.kYellow  
     );
 
     return;

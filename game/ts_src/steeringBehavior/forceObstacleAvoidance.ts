@@ -195,7 +195,7 @@ implements IForce
       sprite.y,
       this._m_avoidanceRadius,
       DebugManager.FORCE_CIRCLE_WIDTH,
-      ST_COLOR_ID.kPurple
+      ST_COLOR_ID.kSkyBlueNeon
     );
   }
 

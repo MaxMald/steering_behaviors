@@ -221,7 +221,7 @@ implements IForce
       this._m_v2_desiredVelocity.x + sprite.x,
       this._m_v2_desiredVelocity.y + sprite.y,
       DebugManager.FORCE_LINE_WIDTH,
-      ST_COLOR_ID.kBlack
+      ST_COLOR_ID.kOrange
     );
 
     // Slowing radius circle
@@ -232,7 +232,7 @@ implements IForce
       target.y,
       this._m_arrivalRadius,
       DebugManager.FORCE_CIRCLE_WIDTH,
-      ST_COLOR_ID.kPurple
+      ST_COLOR_ID.kSkyBlueNeon
     );
 
     if(this._m_distance < this._m_arrivalRadius) 
