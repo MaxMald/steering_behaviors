@@ -105,6 +105,13 @@ extends Phaser.Scene
       "images/path_book/path_book.js"
     );
 
+    loader.atlas
+    (
+      'pursuit_book',
+      "images/pursuit_book/pursuit_book.png",
+      "images/pursuit_book/pursuit_book.js"
+    );
+
     /****************************************************/
     /* Bitmap Fonts                                     */
     /****************************************************/

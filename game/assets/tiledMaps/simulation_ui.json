@@ -339,7 +339,7 @@
                         {
                          "name":"max_value",
                          "type":"float",
-                         "value":300
+                         "value":15
                         }, 
                         {
                          "name":"min_value",
@@ -729,7 +729,7 @@
          "name":"space_art",
          "spacing":0,
          "tilecount":24,
-         "tileheight":768,
+         "tileheight":788,
          "tiles":[
                 {
                  "id":0,
@@ -746,20 +746,20 @@
                 {
                  "id":2,
                  "image":"..\/images\/game_art\/planetAsset 5.png",
-                 "imageheight":234,
-                 "imagewidth":237
+                 "imageheight":788,
+                 "imagewidth":800
                 }, 
                 {
                  "id":3,
                  "image":"..\/images\/game_art\/planetAsset 6.png",
-                 "imageheight":321,
-                 "imagewidth":281
+                 "imageheight":627,
+                 "imagewidth":549
                 }, 
                 {
                  "id":4,
                  "image":"..\/images\/game_art\/planetAsset 7.png",
-                 "imageheight":238,
-                 "imagewidth":250
+                 "imageheight":615,
+                 "imagewidth":643
                 }, 
                 {
                  "id":5,
@@ -770,26 +770,26 @@
                 {
                  "id":6,
                  "image":"..\/images\/game_art\/planetAsset 9.png",
-                 "imageheight":298,
-                 "imagewidth":271
+                 "imageheight":698,
+                 "imagewidth":635
                 }, 
                 {
                  "id":7,
                  "image":"..\/images\/game_art\/planetAsset 10.png",
-                 "imageheight":266,
-                 "imagewidth":225
+                 "imageheight":322,
+                 "imagewidth":273
                 }, 
                 {
                  "id":8,
                  "image":"..\/images\/game_art\/planetAsset 11.png",
-                 "imageheight":232,
-                 "imagewidth":237
+                 "imageheight":472,
+                 "imagewidth":485
                 }, 
                 {
                  "id":9,
                  "image":"..\/images\/game_art\/planetAsset 12.png",
-                 "imageheight":276,
-                 "imagewidth":262
+                 "imageheight":440,
+                 "imagewidth":417
                 }, 
                 {
                  "id":10,

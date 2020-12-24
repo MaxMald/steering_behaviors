@@ -168,7 +168,7 @@ extends UIForce
       0,
       _scene,
       1,
-      10
+      100
     );
 
     this._m_forceToPathSlider.subscribe

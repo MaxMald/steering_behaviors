@@ -160,6 +160,69 @@
 
     {
 
+      "name": "pursuit",
+      "pages": [
+
+        {
+          "text": "¡Hola!",
+          "texture": "",
+          "frame": ""
+        },
+
+        {
+          "text": "En esta sesión revisaremos el Pursuit.",
+          "texture": "",
+          "frame": ""
+        },
+
+        {
+          "text": "El truco de esta fuerza reside en la predicción de la posición futura del objetivo.",
+          "texture": "pursuit_book",
+          "frame": "pursuit_base.png"
+        },
+
+        {
+          "text": "La posición futura de éste puede calcularse a partir de la posición actual del objetivo y su velocidad.",
+          "texture": "pursuit_book",
+          "frame": "pursuit_pre_pos.png"
+        },
+
+        {
+          "text": "Una vez se conoce la posición futura del objetivo, la nave recibe un Seek Force hacia dicha posición.",
+          "texture": "pursuit_book",
+          "frame": "pursuit_seek.png"
+        },
+
+        {
+          "text": "Además, dicha predicción es relativa a la distancia del objetivo con respecto a la posición de la nave.",
+          "texture": "pursuit_book",
+          "frame": "pursuit_time.png"
+        },
+
+        {
+          "text": "Es decir, a menor distancia, menor será la diferencia entre el tiempo actual y el tiempo en que se realiza la predicción.",
+          "texture": "pursuit_book",
+          "frame": "pursuit_time.png"
+        },
+
+        {
+          "text": "¡Listo!",
+          "texture": "pursuit_book",
+          "frame": "pursuit_time.png"
+        },
+
+        {
+          "text": "Recuerda consultar con tu profesor de inteligencia artificial para una explicación más detallada.",
+          "texture": "pursuit_book",
+          "frame": "pursuit_time.png"
+        }
+
+      ]
+
+    },
+
+    {
+
       "name": "tutorial_intro",
       "pages": [
 

@@ -86,6 +86,69 @@ export class ShipFactory
   }
 
   /**
+   * @summary Creates a yellow ship actor.
+   * 
+   * @param _scene The scene where this actor is gonna be created.
+   * @param _UniqueName The actor's names, used as an identifier.
+   */
+  static CreateYellowShip(_scene : Phaser.Scene, _UniqueName : string)
+  : BaseActor<Phaser.GameObjects.Sprite>
+  {
+
+     // Step I : Create Phaser GameObject
+ 
+     let shipSprite : Ty_Sprite = _scene.add.sprite
+     ( 
+       0, 
+       0, 
+       'game_art', 
+       'yellowShip.png'
+     );
+ 
+     // Set II : create Actor.
+ 
+     let shipActor = BaseActor.Create<Ty_Sprite>(shipSprite, _UniqueName);
+ 
+     // Create and init components.
+
+     let shipPropulsor = new CmpShipPropulsor();
+
+     shipActor.addComponent(new CmpSpriteController());
+     shipActor.addComponent(new CmpForceController());
+     shipActor.addComponent(new cmpInteractiveActor());
+     shipActor.addComponent(shipPropulsor);
+     
+     shipActor.init();
+     
+     shipPropulsor.setAnimation("blueBackFire");
+ 
+     shipActor.sendMessage
+     (
+       ST_MESSAGE_ID.kSetMaxSpeed,
+       500
+     );
+ 
+     let canvas = _scene.game.canvas;
+ 
+     let width : number = canvas.width;
+     let height : number = canvas.height;
+ 
+     shipActor.sendMessage
+     (
+       ST_MESSAGE_ID.kSetPosition,
+       new Phaser.Math.Vector2(width * 0.5, height * 0.5)
+     );
+     
+     shipActor.sendMessage
+     (
+       ST_MESSAGE_ID.kSetMass,
+       1
+     );
+
+    return shipActor;
+  }
+
+  /**
    * @summary Creates a red ship actor.
    * 
    * @param _scene The scene where this actor is gonna be created.
