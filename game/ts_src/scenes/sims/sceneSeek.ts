@@ -8,8 +8,11 @@
   * @since August-30-2020
   */
 
+import { BaseActor } from "../../actors/baseActor";
 import { ST_COMPONENT_ID, ST_MANAGER_ID, ST_MESSAGE_ID } from "../../commons/stEnums";
+import { Ty_Sprite } from "../../commons/stTypes";
 import { CmpForceController } from "../../components/cmpforceController";
+import { AmbienceFactory } from "../../factories/ambienceFactory";
 import { ShipFactory } from "../../factories/shipFactory";
 import { SceneUIFactory } from "../../factories/uiSceneFactory";
 import { MapScene } from "../../gameScene/mapScene";
@@ -20,6 +23,7 @@ import { UIInfoBox } from "../../managers/uiManager/uiControllers/UIInfoBox";
 import { UIManager } from "../../managers/uiManager/uiManager";
 import { Master } from "../../master/master";
 import { ForceConstant } from "../../steeringBehavior/forceConstant";
+import { FollowPathForce } from "../../steeringBehavior/forceFollowPath";
 import { SeekForce } from "../../steeringBehavior/forceSeek";
  
   
@@ -63,7 +67,7 @@ import { SeekForce } from "../../steeringBehavior/forceSeek";
     ambienceMap.destroy();
 
      /****************************************************/
-     /* Blue Ship                                        */
+     /* SS Nexus                                         */
      /****************************************************/
  
      // Get simulation manager.
@@ -83,23 +87,71 @@ import { SeekForce } from "../../steeringBehavior/forceSeek";
      ///////////////////////////////////
      // Create SpaceShip Actor
      
-     const blueShip = ShipFactory.CreateBlueShip(this, "ISS Nexus");
+     const nexus = ShipFactory.CreateBlueShip(this, "ISS Nexus");
  
      // Add ship to simulation manager.
  
-     simManager.addActor(blueShip);
+     simManager.addActor(nexus);
 
-     blueShip.sendMessage
+     nexus.sendMessage
      (
       ST_MESSAGE_ID.kSetPosition,
       new Phaser.Math.Vector2(width * 0.5, height * 0.6)
      );
 
+     nexus.sendMessage
+     (
+       ST_MESSAGE_ID.kSetMass,
+       3.17
+     );
+
+    /****************************************************/
+    /* Scarlet Mist Path                                */
+    /****************************************************/
+ 
+    const x : number = canvas.width * 0.6;
+    const y : number = canvas.height * 0.65;
+
+    let startNode : BaseActor<Ty_Sprite> = undefined;
+    let prevNode : BaseActor<Ty_Sprite> = undefined;
+
+    const t = ( Phaser.Math.PI2 / 3);
+
+    for(let i = 0; i < 3; ++ i )
+    {
+
+     const node = AmbienceFactory.CreateSatellite
+     (
+       x + ( Math.sin(t * i) * 200 ),
+       y + ( Math.cos(t * i) * 200),
+       this,
+       "Satellite_" + i.toString() 
+     );
+
+     if(prevNode === undefined)
+     {
+
+       startNode = node;
+       prevNode = node;
+
+     }
+     else
+     {
+
+       prevNode.setNext(node);
+       node.setPrevious(prevNode);
+
+       prevNode = node;
+
+     }
+
+    }
+
      /****************************************************/
-     /* Target                                           */
+     /* Scarlet Mist                                     */
      /****************************************************/
 
-     const targetActor =  ShipFactory.CreateRedShip
+     const scarletMist =  ShipFactory.CreateRedShip
      (
        this,
        "Scarlet Mist"
@@ -107,54 +159,56 @@ import { SeekForce } from "../../steeringBehavior/forceSeek";
  
      // Add target to simulation manager.
  
-     simManager.addActor(targetActor);
+     simManager.addActor(scarletMist);
 
      // Create the target force controller.
 
-     const targetFController = targetActor.getComponent<CmpForceController>
+     const targetFController = scarletMist.getComponent<CmpForceController>
      (
        ST_COMPONENT_ID.kForceController
      );
 
-     // Create Constant force.
-
-     const constantForce = new ForceConstant();
-
-     constantForce.init
-     (
-       targetActor.getWrappedInstance(),
-       new Phaser.Math.Vector2(0.4, 0.85),
-       300,
-       true 
-      );
-
-      targetFController.addForce("constant", constantForce);
-
-     // Set target scale.
-
-    targetActor.sendMessage
+    scarletMist.sendMessage
     (
       ST_MESSAGE_ID.kSetMass,
       3.0
     );
 
-    targetActor.sendMessage
+    scarletMist.sendMessage
     (
       ST_MESSAGE_ID.kSetMaxSpeed,
-      300
-    );
-    
-    targetActor.sendMessage
-    (
-      ST_MESSAGE_ID.kSetScale,
-      new Phaser.Math.Vector2(0.5, 0.5)
+      203
     );
  
-     targetActor.sendMessage
+    scarletMist.sendMessage
      (
        ST_MESSAGE_ID.kSetPosition,
        new Phaser.Math.Vector2(width * 0.7, height * 0.6)
      );
+
+     ///////////////////////////////////
+     // Scarlet Mist Following
+
+     const followPath = new FollowPathForce();
+
+     followPath.init
+     (
+       scarletMist,
+       2214,
+       24,
+       true
+     );
+
+     followPath.setForceToPathScale(14);
+
+     followPath.setStartNode(startNode);
+
+     const rhapsodyFController = scarletMist.getComponent<CmpForceController>
+    (
+      ST_COMPONENT_ID.kForceController
+    );
+
+     rhapsodyFController.addForce("Follow Path", followPath);
  
      ///////////////////////////////////
      // Create a Force
@@ -165,19 +219,19 @@ import { SeekForce } from "../../steeringBehavior/forceSeek";
  
      seek.init
      (
-      blueShip.getWrappedInstance(),
-       targetActor.getWrappedInstance(),
-       125
+       nexus.getWrappedInstance(),
+       scarletMist.getWrappedInstance(),
+       1940
      );
  
      // Step II : Get Component
  
-     let forceControl = blueShip.getComponent<CmpForceController>
+     let forceControl = nexus.getComponent<CmpForceController>
      (
        ST_COMPONENT_ID.kForceController
      );
  
-     forceControl.addForce('seek_1', seek );
+     forceControl.addForce('Seek', seek );
 
      /****************************************************/
      /* Foreground Ambience                              */
@@ -222,7 +276,7 @@ import { SeekForce } from "../../steeringBehavior/forceSeek";
 
      // Set the active actor of the UI Manager.
 
-     uiManager.setTarget(blueShip);
+     uiManager.setTarget(nexus);
 
      // Display Info
 
