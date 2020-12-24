@@ -230,23 +230,15 @@ implements IManager
 
     return;
 
-  }
+  }  
 
   onSimulationSceneCreate(_scene: Phaser.Scene)
-  : void 
+  : void
   {
-    // Save scene.
-
-    this._m_scene = _scene;
-
-    // Create Graphics
-
-    this._m_graphic = _scene.add.graphics();
-
-    this._m_graphic.setDepth(2);
 
     return;
-  }  
+
+  }
 
   onSimulationSceneDestroy(_scene: Phaser.Scene)
   : void 
@@ -297,6 +289,34 @@ implements IManager
   {
     return;
   }
+
+  /**
+   * Create the graphics object.
+   * 
+   * @param _scene Phaser scene. 
+   */
+  prepareDebugManager(_scene: Phaser.Scene, _depth?: number)
+  : void
+  {
+
+    // Save scene.
+
+    this._m_scene = _scene;
+
+    // Create Graphics
+
+    this._m_graphic = _scene.add.graphics();
+
+    if(_depth !== undefined)
+    {
+
+      this._m_graphic.setDepth(_depth);
+
+    }
+
+    return;
+
+  } 
 
   destroy()
   : void 

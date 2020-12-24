@@ -14,6 +14,7 @@ import { ShipFactory } from "../../factories/shipFactory";
 import { SceneUIFactory } from "../../factories/uiSceneFactory";
 import { MapScene } from "../../gameScene/mapScene";
 import { AmbienceManager } from "../../managers/ambienceManager/ambienceManager";
+import { DebugManager } from "../../managers/debugManager/debugManager";
 import { SimulationManager } from "../../managers/simulationManager/simulationManager";
 import { UIInfoBox } from "../../managers/uiManager/uiControllers/UIInfoBox";
 import { UIManager } from "../../managers/uiManager/uiManager";
@@ -32,8 +33,6 @@ import { SeekForce } from "../../steeringBehavior/forceSeek";
    create()
    : void
    {    
-
-    
 
     // Camera fade in
 
@@ -90,6 +89,12 @@ import { SeekForce } from "../../steeringBehavior/forceSeek";
  
      simManager.addActor(blueShip);
 
+     blueShip.sendMessage
+     (
+      ST_MESSAGE_ID.kSetPosition,
+      new Phaser.Math.Vector2(width * 0.5, height * 0.6)
+     );
+
      /****************************************************/
      /* Target                                           */
      /****************************************************/
@@ -97,7 +102,7 @@ import { SeekForce } from "../../steeringBehavior/forceSeek";
      const targetActor =  ShipFactory.CreateRedShip
      (
        this,
-       "Red Ship"
+       "Scarlet Mist"
      );
  
      // Add target to simulation manager.
@@ -148,7 +153,7 @@ import { SeekForce } from "../../steeringBehavior/forceSeek";
      targetActor.sendMessage
      (
        ST_MESSAGE_ID.kSetPosition,
-       new Phaser.Math.Vector2(width * 0.5, height * 0.5)
+       new Phaser.Math.Vector2(width * 0.7, height * 0.6)
      );
  
      ///////////////////////////////////
@@ -184,6 +189,17 @@ import { SeekForce } from "../../steeringBehavior/forceSeek";
       );
 
       ambienceMng.createStarDust(this);
+
+      /****************************************************/
+      /* Debug Manager                                    */
+      /****************************************************/
+
+      const debugManager = master.getManager<DebugManager>
+      (
+        ST_MANAGER_ID.kDebugManager
+      );
+
+      debugManager.prepareDebugManager(this);
 
      /****************************************************/
      /* UI                                               */
