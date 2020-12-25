@@ -8,8 +8,11 @@
  * @since December-02-2020
  */
 
+import { BaseActor } from "../../actors/baseActor";
 import { ST_COMPONENT_ID, ST_MANAGER_ID, ST_MESSAGE_ID } from "../../commons/stEnums";
+import { Ty_Sprite } from "../../commons/stTypes";
 import { CmpForceController } from "../../components/cmpforceController";
+import { AmbienceFactory } from "../../factories/ambienceFactory";
 import { ShipFactory } from "../../factories/shipFactory";
 import { SceneUIFactory } from "../../factories/uiSceneFactory";
 import { MapScene } from "../../gameScene/mapScene";
@@ -17,11 +20,12 @@ import { AmbienceManager } from "../../managers/ambienceManager/ambienceManager"
 import { DebugManager } from "../../managers/debugManager/debugManager";
 import { SimulationManager } from "../../managers/simulationManager/simulationManager";
 import { UIButtonImg } from "../../managers/uiManager/uiButtonImg";
+import { UIInfoBox } from "../../managers/uiManager/uiControllers/UIInfoBox";
 import { UIManager } from "../../managers/uiManager/uiManager";
 import { UIObject } from "../../managers/uiManager/uiObject";
 import { Master } from "../../master/master";
 import { EvadeForce } from "../../steeringBehavior/forceEvade";
-import { SeekForce } from "../../steeringBehavior/forceSeek";
+import { FollowPathForce } from "../../steeringBehavior/forceFollowPath";
 
 export class SceneEvade
   extends Phaser.Scene
@@ -96,94 +100,151 @@ export class SceneEvade
     );
 
     /****************************************************/
-    /* Red Ship                                         */
+    /* SSE Rhapsody Path                                */
     /****************************************************/
-
-    const targetActor =  ShipFactory.CreateRedShip
-    (
-      this,
-      "Red Ship"
-    );
  
-    // Add target to simulation manager.
- 
-    simManager.addActor(targetActor);
+    const x : number = canvas.width * 0.6;
+    const y : number = canvas.height * 0.65;
 
-    // Create the target force controller.
+    let startNode : BaseActor<Ty_Sprite> = undefined;
+    let prevNode : BaseActor<Ty_Sprite> = undefined;
 
-    const targetFController = targetActor.getComponent<CmpForceController>
-    (
-      ST_COMPONENT_ID.kForceController
-    );
+    const t = ( Phaser.Math.PI2 / 4);
 
-    // Set target scale.
+    for(let i = 0; i < 4; ++ i )
+    {
 
-    targetActor.sendMessage
-    (
-      ST_MESSAGE_ID.kSetMass,
-      3.0
-    );
-
-    targetActor.sendMessage
-    (
-      ST_MESSAGE_ID.kSetMaxSpeed,
-      300
-    );
-    
-    targetActor.sendMessage
-    (
-      ST_MESSAGE_ID.kSetScale,
-      new Phaser.Math.Vector2(0.5, 0.5)
-    );
- 
-     targetActor.sendMessage
+     const node = AmbienceFactory.CreateSatellite
      (
-       ST_MESSAGE_ID.kSetPosition,
-       new Phaser.Math.Vector2(width * 0.75, height * 0.5)
+       x + ( Math.sin(t * i) * 200 ),
+       y + ( Math.cos(t * i) * 200),
+       this,
+       "Satellite_" + i.toString() 
      );
 
-    /****************************************************/
-    /* Blue Ship                                        */
-    /****************************************************/
+     if(prevNode === undefined)
+     {
+
+       startNode = node;
+       prevNode = node;
+
+     }
+     else
+     {
+
+       prevNode.setNext(node);
+       node.setPrevious(prevNode);
+
+       prevNode = node;
+
+     }
+
+    }
+
+   /****************************************************/
+   /* SSE Rhapsody                                     */
+   /****************************************************/
+
+   const rhapsody =  ShipFactory.CreateYellowShip
+   (
+     this,
+     "SSE Rhapsody"
+   );
+
+   // Add target to simulation manager.
+
+   simManager.addActor(rhapsody);        
+
+   // Set target scale.
+
+   rhapsody.sendMessage
+   (
+     ST_MESSAGE_ID.kSetMass,
+     2.84
+   );
+
+   rhapsody.sendMessage
+   (
+     ST_MESSAGE_ID.kSetMaxSpeed,
+     170
+   );
+
+   rhapsody.sendMessage
+    (
+      ST_MESSAGE_ID.kSetPosition,
+      new Phaser.Math.Vector2(width * 0.6, height * 0.85)
+    );
 
     ///////////////////////////////////
-    // Create SpaceShip Actor
-    
-    const blueShip = ShipFactory.CreateBlueShip(this, "Blue Ship");
- 
-    // Add ship to simulation manager.
- 
-    simManager.addActor(blueShip);
+    // Rhapsody Path Following
 
-    const blueFController = blueShip.getComponent<CmpForceController>
+    const followPath = new FollowPathForce();
+
+    followPath.init
     (
-      ST_COMPONENT_ID.kForceController
+      rhapsody,
+      2214,
+      24,
+      true
     );
 
-    const evadeForce = new EvadeForce();
+    followPath.setForceToPathScale(14);
 
-    evadeForce.init
-    (
-      blueShip,
-      targetActor,
-      150
-    );
+    followPath.setStartNode(startNode);
 
-    blueFController.addForce("evade", evadeForce);    
+    const rhapsodyFController = rhapsody.getComponent<CmpForceController>
+   (
+     ST_COMPONENT_ID.kForceController
+   );
 
-    ///////////////////////////////////
-    // Red Ship Seek Blue ship
+    rhapsodyFController.addForce("Follow Path", followPath);
 
-    const redSeek = new SeekForce();
+   /****************************************************/
+   /* SS Nexus                                         */
+   /****************************************************/
 
-    redSeek.init
-    (
-      targetActor.getWrappedInstance(),
-      blueShip.getWrappedInstance(),
-      150
-    );
+   ///////////////////////////////////
+   // Create SpaceShip Actor
+   
+   const nexus = ShipFactory.CreateBlueShip(this, "ISS Nexus");
 
-    targetFController.addForce("seek", redSeek);
+   // Add ship to simulation manager.
+
+   simManager.addActor(nexus);
+
+   nexus.sendMessage
+   (
+     ST_MESSAGE_ID.kSetMass,
+     3.12
+   );
+
+   nexus.sendMessage
+   (
+     ST_MESSAGE_ID.kSetMaxSpeed,
+     116
+   );
+
+   nexus.sendMessage
+   (
+     ST_MESSAGE_ID.kSetPosition,
+     new Phaser.Math.Vector2(width * 0.6, height * 0.65)
+   );
+
+   const blueFController = nexus.getComponent<CmpForceController>
+   (
+     ST_COMPONENT_ID.kForceController
+   );
+
+   const evadeForce = new EvadeForce();
+
+   evadeForce.init
+   (
+     nexus,
+     rhapsody,
+     1700
+   );
+
+   blueFController.addForce("Evade", evadeForce);
 
      /****************************************************/
      /* Foreground Ambience                              */
@@ -217,11 +278,22 @@ export class SceneEvade
 
     // Create the Simulation Map Scene
 
-    SceneUIFactory.CreateSimulationUIScene("simulation_ui", this, uiManager);
+    SceneUIFactory.CreateSimulationUIScene
+    (
+      "simulation_ui", 
+      this, 
+      uiManager,
+      this._openSceneInfo,
+      this
+    );
 
     // Set the active actor of the UI Manager.
 
-    uiManager.setTarget(blueShip);
+    uiManager.setTarget(nexus);
+
+    // Display info
+
+    this._openSceneInfo();
 
     ///////////////////////////////////
     // Set simulation to stop state
@@ -247,6 +319,42 @@ export class SceneEvade
   /****************************************************/
   /* Private                                          */
   /****************************************************/
+
+  /**
+    * Open the scene information box.
+    */
+   private _openSceneInfo()
+   : void
+   {
+
+    // Pause Simulation.
+
+    const master = this._m_master;
+
+    master.pauseSimulation();
+
+    // Get the UI Manager.
+
+    const uiManger = master.getManager<UIManager>
+    (
+      ST_MANAGER_ID.kUIManager
+    );
+
+    // Get the info box.
+
+    const infoBox = uiManger.getUIController("infoBox") as UIInfoBox;
+
+    // Set the book.
+
+    infoBox.setBook("evade");
+
+    // Open info box.
+
+    infoBox.open();
+
+    return;
+
+   }
 
   private _m_master : Master;
 

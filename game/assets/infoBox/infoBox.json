@@ -3,7 +3,6 @@
   "books": [
 
     {
-
       "name": "seek",
       "pages": [
 
@@ -78,9 +77,7 @@
           "texture": "seek_book",
           "frame": "seek_seek_force.png"
         }
-
       ]
-
     },
 
     {
@@ -219,6 +216,55 @@
 
       ]
 
+    },
+
+    {
+
+      "name": "evade",
+      "pages": [
+
+        {
+          "text": "¡Hola!",
+          "texture": "",
+          "frame": ""
+        },
+
+        {
+          "text": "En esta sesión revisaremos el Evade.",
+          "texture": "",
+          "frame": ""
+        },
+
+        {
+          "text": "Este comportamiento es bastante parecido a Pursuit…",
+          "texture": "evade_book",
+          "frame": "evade_base.png"
+        },
+
+        {
+          "text": "… la diferencia es que la nave realiza un Flee (huirá) de la posición futura del objetivo.",
+          "texture": "evade_book",
+          "frame": "evade_flee.png"
+        },
+
+        {
+          "text": "Si desconoces la fuerza Flee y Pursuit, te recomiendo revisar dichas sesiones desde el menú principal.",
+          "texture": "evade_book",
+          "frame": "evade_flee.png"
+        },
+
+        {
+          "text": "¡Listo!",
+          "texture": "evade_book",
+          "frame": "evade_flee.png"
+        },
+
+        {
+          "text": "Recuerda consultar con tu profesor de inteligencia artificial para una explicación más detallada.",
+          "texture": "evade_book",
+          "frame": "evade_flee.png"
+        }
+      ]
     },
 
     {
