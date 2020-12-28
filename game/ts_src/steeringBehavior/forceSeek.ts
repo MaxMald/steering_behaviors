@@ -218,19 +218,22 @@ implements IForce
       self.x + desireVelocity.x,
       self.y + desireVelocity.y,
       DebugManager.FORCE_LINE_WIDTH,
-      ST_COLOR_ID.kBlack
+      ST_COLOR_ID.kOrange
     );
       
     // Debug steer force.    
 
     let actualVelocity = this._m_controller.getVelocity();
 
+    const pX = self.x + actualVelocity.x;
+    const pY = self.y + actualVelocity.y;  
+
     this._m_debugManager.drawLine
     (
-      self.x + actualVelocity.x,
-      self.y + actualVelocity.y,
-      self.x + desireVelocity.x,
-      self.y + desireVelocity.y,
+      pX,
+      pY,
+      pX + this._m_seekForce.x,
+      pY + this._m_seekForce.y,
       DebugManager.FORCE_LINE_WIDTH,
       ST_COLOR_ID.kRed 
     );

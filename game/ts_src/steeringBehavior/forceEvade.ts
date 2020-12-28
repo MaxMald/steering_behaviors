@@ -205,7 +205,7 @@ implements IForce
       self.x + desireVelocity.x,
       self.y + desireVelocity.y,
       DebugManager.FORCE_LINE_WIDTH,
-      ST_COLOR_ID.kBlack
+      ST_COLOR_ID.kOrange
     );
 
     // Debug steer force.
@@ -230,7 +230,7 @@ implements IForce
       this._m_targetPosition.y,
       5,
       DebugManager.FORCE_CIRCLE_WIDTH,
-      ST_COLOR_ID.kOrange 
+      ST_COLOR_ID.kSkyBlueNeon 
     );
 
     return;

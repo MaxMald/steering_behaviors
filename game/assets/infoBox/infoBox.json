@@ -8,21 +8,213 @@
       "pages": [
 
         {
-          "text": "Texto 1.",
+          "text": "¡Hola!",
           "texture": "",
-          "frame": "blueShip.png"
+          "frame": ""
         },
 
         {
-          "text": "Texto 2",
-          "texture": "game_art",
-          "frame": "redShip.png"
+          "text": "En esta sesión revisaremos el Seek Force.",
+          "texture": "",
+          "frame": ""
         },
 
         {
-          "text": "Texto 3",
-          "texture": "game_art",
-          "frame": "planetAsset 5.png"
+          "text": "Paso I: Obtener el vector de velocidad actual.",
+          "texture": "seek_book",
+          "frame": "seek_base.png"
+        },
+
+        {
+          "text": "El vector de velocidad actual es la representación de la dirección y velocidad que posee la nave en ése instante.",
+          "texture": "seek_book",
+          "frame": "seek_actual_velocity.png"
+        },
+
+        {
+          "text": "Paso II: Calcular la velocidad deseada.",
+          "texture": "seek_book",
+          "frame": "seek_actual_velocity.png"
+        },
+
+        {
+          "text": "Se resta a la posición del objetivo, la posición de la nave; y así obtener el vector.",
+          "texture": "seek_book",
+          "frame": "seek_desire_velocity.png"
+        },
+
+        {
+          "text": "Se establece la magnitud del vector resultante a la fuerza máxima del Seek Force.",
+          "texture": "seek_book",
+          "frame": "seek_desire_trunc.png"
+        },
+
+        {
+          "text": "Paso III: Calcular Seek Force.",
+          "texture": "seek_book",
+          "frame": "seek_desire_trunc.png"
+        },
+
+        {
+          "text": "Este vector se obtiene al restar la velocidad actual a la velocidad deseada.",
+          "texture": "seek_book",
+          "frame": "seek_seek_force.png"
+        },
+
+        {
+          "text": "Finalmente este vector es truncado a la fuerza máxima del seek force, si sobrepasa dicho valor.",
+          "texture": "seek_book",
+          "frame": "seek_seek_force.png"
+        },
+
+        {
+          "text": "Listo, hemos calculado el Seek Force.",
+          "texture": "seek_book",
+          "frame": "seek_seek_force.png"
+        },
+
+        {
+          "text": "Recuerda consultar con tu profesor de inteligencia artificial para una explicación más detallada.",
+          "texture": "seek_book",
+          "frame": "seek_seek_force.png"
+        }
+
+      ]
+
+    },
+
+    {
+
+      "name": "path",
+      "pages": [
+
+        {
+          "text": "¡Hola!",
+          "texture": "",
+          "frame": ""
+        },
+
+        {
+          "text": "En esta sesión revisaremos el Path Following.",
+          "texture": "path_book",
+          "frame": "path_base.png"
+        },
+
+        {
+          "text": "Para esta sesión se establece un conjunto de nodos que definen la línea del camino.",
+          "texture": "path_book",
+          "frame": "path_line.png"
+        },
+
+        {
+          "text": "La nave recibirá un seek force, de forma secuencial, hacia la posición de cada uno de estos nodos.",
+          "texture": "path_book",
+          "frame": "path_seek.png"
+        },
+
+        {
+          "text": "De esta forma la nave seguirá el camino trazado",
+          "texture": "path_book",
+          "frame": "path_seek.png"
+        },
+
+        {
+          "text": "Además de la fuerza de seek, existe una fuerza de atracción hacia la línea de camino.",
+          "texture": "path_book",
+          "frame": "path_force_path.png"
+        },
+
+        {
+          "text": "Modificar esta fuerza ayuda a modular la fidelidad de la nave hacia la ruta trazada por los nodos.",
+          "texture": "path_book",
+          "frame": "path_force_path.png"
+        },
+
+        {
+          "text": "Por último se encuentra el radio de visión.",
+          "texture": "path_book",
+          "frame": "path_vision.png"
+        },
+
+        {
+          "text": "Este factor define la distancia en que la nave decide cambiar su dirección hacia el nodo siguiente.",
+          "texture": "path_book",
+          "frame": "path_vision.png"
+        },
+
+        {
+          "text": "¡Listo!",
+          "texture": "path_book",
+          "frame": "path_vision.png"
+        },
+
+        {
+          "text": "Recuerda consultar con tu profesor de inteligencia artificial para una explicación más detallada.",
+          "texture": "path_book",
+          "frame": "path_vision.png"
+        }
+
+      ]
+
+    },
+
+    {
+
+      "name": "pursuit",
+      "pages": [
+
+        {
+          "text": "¡Hola!",
+          "texture": "",
+          "frame": ""
+        },
+
+        {
+          "text": "En esta sesión revisaremos el Pursuit.",
+          "texture": "",
+          "frame": ""
+        },
+
+        {
+          "text": "El truco de esta fuerza reside en la predicción de la posición futura del objetivo.",
+          "texture": "pursuit_book",
+          "frame": "pursuit_base.png"
+        },
+
+        {
+          "text": "La posición futura de éste puede calcularse a partir de la posición actual del objetivo y su velocidad.",
+          "texture": "pursuit_book",
+          "frame": "pursuit_pre_pos.png"
+        },
+
+        {
+          "text": "Una vez se conoce la posición futura del objetivo, la nave recibe un Seek Force hacia dicha posición.",
+          "texture": "pursuit_book",
+          "frame": "pursuit_seek.png"
+        },
+
+        {
+          "text": "Además, dicha predicción es relativa a la distancia del objetivo con respecto a la posición de la nave.",
+          "texture": "pursuit_book",
+          "frame": "pursuit_time.png"
+        },
+
+        {
+          "text": "Es decir, a menor distancia, menor será la diferencia entre el tiempo actual y el tiempo en que se realiza la predicción.",
+          "texture": "pursuit_book",
+          "frame": "pursuit_time.png"
+        },
+
+        {
+          "text": "¡Listo!",
+          "texture": "pursuit_book",
+          "frame": "pursuit_time.png"
+        },
+
+        {
+          "text": "Recuerda consultar con tu profesor de inteligencia artificial para una explicación más detallada.",
+          "texture": "pursuit_book",
+          "frame": "pursuit_time.png"
         }
 
       ]

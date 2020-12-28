@@ -51,6 +51,8 @@ implements IManager
     manager._m_listeners.addEvent("onSimulationResume");
     manager._m_listeners.addEvent("onDebugEnable");
     manager._m_listeners.addEvent("onDebugDisable");
+    manager._m_listeners.addEvent("onSimulationSceneDestroyed");
+
 
     return manager;
   }
@@ -252,6 +254,8 @@ implements IManager
     this._m_state = ST_SIM_SATE.kStopped;
 
     this.clear();
+
+    this._m_listeners.call("onSimulationSceneDestroyed", this, undefined);
 
     return;
 

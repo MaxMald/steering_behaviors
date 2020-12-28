@@ -66,6 +66,11 @@
                  "name":"",
                  "properties":[
                         {
+                         "name":"Blue",
+                         "type":"int",
+                         "value":255
+                        }, 
+                        {
                          "name":"Red",
                          "type":"int",
                          "value":78
@@ -88,7 +93,7 @@
                         {
                          "name":"tint",
                          "type":"color",
-                         "value":"#ffec19ff"
+                         "value":"#ffffffff"
                         }, 
                         {
                          "name":"velocity",
@@ -109,6 +114,11 @@
                  "name":"",
                  "properties":[
                         {
+                         "name":"Blue",
+                         "type":"int",
+                         "value":255
+                        }, 
+                        {
                          "name":"Red",
                          "type":"int",
                          "value":78
@@ -131,7 +141,7 @@
                         {
                          "name":"tint",
                          "type":"color",
-                         "value":"#ffec19ff"
+                         "value":"#ffffffff"
                         }, 
                         {
                          "name":"velocity",
@@ -152,6 +162,11 @@
                  "name":"",
                  "properties":[
                         {
+                         "name":"Blue",
+                         "type":"int",
+                         "value":255
+                        }, 
+                        {
                          "name":"Red",
                          "type":"int",
                          "value":78
@@ -174,7 +189,7 @@
                         {
                          "name":"tint",
                          "type":"color",
-                         "value":"#ffec19ff"
+                         "value":"#ffffffff"
                         }, 
                         {
                          "name":"velocity",
@@ -190,7 +205,7 @@
                 }],
          "opacity":1,
          "type":"objectgroup",
-         "visible":false,
+         "visible":true,
          "x":0,
          "y":0
         }, 
@@ -267,7 +282,7 @@
                         {
                          "name":"tint",
                          "type":"color",
-                         "value":"#ffcc14ff"
+                         "value":"#ff49aaff"
                         }, 
                         {
                          "name":"velocity",
@@ -279,7 +294,7 @@
                  "visible":true,
                  "width":1024,
                  "x":-1024,
-                 "y":672
+                 "y":800
                 }, 
                 {
                  "gid":35,
@@ -305,7 +320,7 @@
                         {
                          "name":"tint",
                          "type":"color",
-                         "value":"#ffcc14ff"
+                         "value":"#ff49aaff"
                         }, 
                         {
                          "name":"velocity",
@@ -317,7 +332,7 @@
                  "visible":true,
                  "width":1024,
                  "x":0,
-                 "y":672
+                 "y":800
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -562,7 +577,7 @@
                         {
                          "name":"label",
                          "type":"string",
-                         "value":"MANUAL DE USUARIO"
+                         "value":"TUTORIAL"
                         }, 
                         {
                          "name":"texture",
@@ -621,8 +636,8 @@
                  "type":"uiSwitch",
                  "visible":true,
                  "width":64,
-                 "x":912.25,
-                 "y":151.75
+                 "x":912,
+                 "y":229.667
                 }, 
                 {
                  "gid":14,
@@ -670,7 +685,7 @@
                  "visible":true,
                  "width":64,
                  "x":912,
-                 "y":224
+                 "y":149.667
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -897,7 +912,7 @@
                         {
                          "name":"label",
                          "type":"string",
-                         "value":"FOLLOW PATH"
+                         "value":"PATH FOLLOWING"
                         }, 
                         {
                          "name":"texture",
@@ -1282,7 +1297,7 @@
          "name":"space_art",
          "spacing":0,
          "tilecount":21,
-         "tileheight":768,
+         "tileheight":788,
          "tiles":[
                 {
                  "id":0,
@@ -1299,20 +1314,20 @@
                 {
                  "id":2,
                  "image":"..\/images\/game_art\/planetAsset 5.png",
-                 "imageheight":234,
-                 "imagewidth":237
+                 "imageheight":788,
+                 "imagewidth":800
                 }, 
                 {
                  "id":3,
                  "image":"..\/images\/game_art\/planetAsset 6.png",
-                 "imageheight":321,
-                 "imagewidth":281
+                 "imageheight":627,
+                 "imagewidth":549
                 }, 
                 {
                  "id":4,
                  "image":"..\/images\/game_art\/planetAsset 7.png",
-                 "imageheight":238,
-                 "imagewidth":250
+                 "imageheight":615,
+                 "imagewidth":643
                 }, 
                 {
                  "id":5,
@@ -1323,26 +1338,26 @@
                 {
                  "id":6,
                  "image":"..\/images\/game_art\/planetAsset 9.png",
-                 "imageheight":298,
-                 "imagewidth":271
+                 "imageheight":698,
+                 "imagewidth":635
                 }, 
                 {
                  "id":7,
                  "image":"..\/images\/game_art\/planetAsset 10.png",
-                 "imageheight":266,
-                 "imagewidth":225
+                 "imageheight":322,
+                 "imagewidth":273
                 }, 
                 {
                  "id":8,
                  "image":"..\/images\/game_art\/planetAsset 11.png",
-                 "imageheight":232,
-                 "imagewidth":237
+                 "imageheight":472,
+                 "imagewidth":485
                 }, 
                 {
                  "id":9,
                  "image":"..\/images\/game_art\/planetAsset 12.png",
-                 "imageheight":276,
-                 "imagewidth":262
+                 "imageheight":440,
+                 "imagewidth":417
                 }, 
                 {
                  "id":10,

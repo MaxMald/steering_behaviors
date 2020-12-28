@@ -12,6 +12,9 @@ import { ST_COMPONENT_ID, ST_MANAGER_ID, ST_MESSAGE_ID } from "../../commons/stE
 import { CmpForceController } from "../../components/cmpforceController";
 import { ShipFactory } from "../../factories/shipFactory";
 import { SceneUIFactory } from "../../factories/uiSceneFactory";
+import { MapScene } from "../../gameScene/mapScene";
+import { AmbienceManager } from "../../managers/ambienceManager/ambienceManager";
+import { DebugManager } from "../../managers/debugManager/debugManager";
 import { SimulationManager } from "../../managers/simulationManager/simulationManager";
 import { UIManager } from "../../managers/uiManager/uiManager";
 import { Master } from "../../master/master";
@@ -42,6 +45,15 @@ extends Phaser.Scene
     // On simulation scene create.
 
     master.onSimulationSceneCreate(this);
+
+    /****************************************************/
+     /* Ambient                                          */
+     /****************************************************/
+
+     const ambienceMap = MapScene.CreateFromTiledMap("ambience_07", this);
+
+     ambienceMap.clear();
+     ambienceMap.destroy();
 
     // Get simulation manager.
 
@@ -102,6 +114,28 @@ extends Phaser.Scene
     );
 
     shipController.addForce('wander_1', wander);
+
+    /****************************************************/
+     /* Foreground Ambience                              */
+     /****************************************************/
+
+     const ambienceMng = master.getManager<AmbienceManager>
+     (
+       ST_MANAGER_ID.kAmbienceManager
+     );
+
+     ambienceMng.createStarDust(this);
+
+    /****************************************************/
+    /* Debug Manager                                    */
+    /****************************************************/
+
+    const debugManager = master.getManager<DebugManager>
+    (
+      ST_MANAGER_ID.kDebugManager
+    );
+
+    debugManager.prepareDebugManager(this);
 
     /****************************************************/
     /* UI                                               */

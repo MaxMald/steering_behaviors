@@ -68,7 +68,7 @@ extends UIForce
       0,
       _scene,
       1,
-      300
+      9999
     );
 
     this._m_forceSlider.subscribe
@@ -98,6 +98,55 @@ extends UIForce
     );
 
     box.add(this._m_forceSlider);
+
+    // Radius of arrival label
+
+    const arrivalLabel = UILabel.CreateStyleB(0, 0, _scene, "#");
+
+    arrivalLabel.setTint(ST_COLOR_ID.kSkyBlueNeon);
+
+    this._m_arrivalLabel = arrivalLabel;
+
+    box.add(arrivalLabel);
+
+    // Arrival radius Slider.
+
+    this._m_arrivalSlider = new UISlider
+    (
+      0,
+      0,
+      _scene,
+      10,
+      100
+    );
+
+    this._m_arrivalSlider.subscribe
+    (
+      "valueChanged",
+      "UIForceArrival",
+      function(_sender: UIObject, _args: any)
+      {
+
+        const slider = _sender as UISlider;
+
+        const radius = slider.getValue();
+
+        this.setArrivalRadiusLabel(radius);
+
+        if(this._m_arrival !== undefined)
+        {
+
+          this._m_arrival.setArrivalRadius(radius);
+
+        }
+
+        return;
+
+      },
+      this
+    );
+
+    box.add(this._m_arrivalSlider);
 
     // Set target.
 
@@ -148,6 +197,8 @@ extends UIForce
 
       this._m_forceSlider.setValue(arrivalForce.getMaxMagnitude());
 
+      this._m_arrivalSlider.setValue(arrivalForce.getArrivalRadius());
+
     }
 
     return;
@@ -161,6 +212,10 @@ extends UIForce
     
     this._m_forceSlider.setValue(this._m_arrival.getInitMaxMagnitude());
 
+    this._m_arrival.setInitArrivalRadius();
+
+    this._m_arrivalSlider.setValue(this._m_arrival.getInitArrivalRadius());
+
     return;
   }
 
@@ -168,7 +223,7 @@ extends UIForce
   : void
   {
 
-    this._m_maxMagnitude.setText("Max. Magnitude: " + _maxForce.toFixed(3) + " uN.");
+    this._m_maxMagnitude.setText("Max. Magnitude: " + _maxForce.toFixed(2) + " uN.");
 
     return;
 
@@ -178,7 +233,17 @@ extends UIForce
   :void
   {
 
-    this._m_labelForce.setText("Force Magnitude: " + _force.toFixed(3) + " uN.");
+    this._m_labelForce.setText("Force Magnitude: " + _force.toFixed(2) + " uN.");
+
+    return;
+
+  }
+
+  setArrivalRadiusLabel(_radius: number)
+  : void
+  {
+
+    this._m_arrivalLabel.setText("Radius of Arrival: " + _radius.toFixed(2) + " km. ");
 
     return;
 
@@ -212,12 +277,16 @@ extends UIForce
   ////////////////////////////////////
   // UI Elements
 
-  private _m_box: UIBox;
+  private _m_box : UIBox;
 
-  private _m_labelForce: UILabel;
+  private _m_labelForce : UILabel;
 
-  private _m_maxMagnitude: UILabel;
+  private _m_arrivalLabel : UILabel;
 
-  private _m_forceSlider: UISlider;
+  private _m_maxMagnitude : UILabel;
+
+  private _m_forceSlider : UISlider;
+
+  private _m_arrivalSlider : UISlider;
 
 }
