@@ -15,6 +15,6 @@
    /* Public                                           */
    /****************************************************/
    
-   public m_initMaxMagnitude : number;
+   public m_initMaxMagnitude : number = 0;
    
  }

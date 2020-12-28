@@ -13,5 +13,5 @@ import { ForceInitState } from "./forceInitState";
 export class ArrivalInitState
 extends ForceInitState
 {
-  public m_initArrivalRadius : number;
+  public m_initArrivalRadius : number = 0;
 }
