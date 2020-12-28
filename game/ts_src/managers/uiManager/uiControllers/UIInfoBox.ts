@@ -332,6 +332,8 @@ extends UIController
 
         this._m_audioManager.playClip(ST_AUDIO_CLIP.kNegativeA);
 
+        this.close();
+
       }
     }    
 

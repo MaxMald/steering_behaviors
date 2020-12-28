@@ -151,6 +151,23 @@ extends TutState
 
   }
 
+  destroy()
+  : void
+  {
+
+    this.onExit();
+
+    if(this._m_activated_time !== undefined)
+    {
+
+      this._m_activated_time.destroy();
+
+    }
+
+    return;
+
+  }
+
   /****************************************************/
   /* Private                                          */
   /****************************************************/

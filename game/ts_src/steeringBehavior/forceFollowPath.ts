@@ -242,9 +242,42 @@ implements IForce
   : void
   {
 
+    ///////////////////////////////////
+    // Path
+
+    const firstNode = this._m_startNode;
+
+    let activeNode = firstNode;
+    let nextNode = firstNode.getNext();
+
+    while(nextNode !== firstNode && nextNode !== undefined)
+    {
+
+      const activeSpr = activeNode.getWrappedInstance();
+      const nextSpr = nextNode.getWrappedInstance();
+
+      this._m_debugManager.drawLine
+      (
+        activeSpr.x,
+        activeSpr.y,
+        nextSpr.x,
+        nextSpr.y,
+        DebugManager.FORCE_LINE_WIDTH,
+        ST_COLOR_ID.kWhite 
+      );
+
+      activeNode = nextNode;
+      nextNode = activeNode.getNext();
+
+    }
+
+    ////////////////////////////////////
+    // Seek Force
+
     this._m_seek.updateDebug(_dt);
 
-    // Force to Path
+    ///////////////////////////////////
+    // Force to path
 
     const self = this._m_self.getWrappedInstance();
 

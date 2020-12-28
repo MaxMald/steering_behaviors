@@ -13,7 +13,7 @@ import { ForceInitState } from "./forceInitState";
 export class FollowPathInitState
 extends ForceInitState
 {
-  public m_initForceToPathScale : number;
+  public m_initForceToPathScale : number = 0;
 
-  public m_initVisionRadius : number;
+  public m_initVisionRadius : number = 0;
 }

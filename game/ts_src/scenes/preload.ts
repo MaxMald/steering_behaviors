@@ -91,6 +91,27 @@ extends Phaser.Scene
       "images/tutorial_book/tutorial_book.js"
     );
 
+    loader.atlas
+    (
+      'seek_book',
+      "images/seek_book/seek_book.png",
+      "images/seek_book/seek_book.js"
+    );
+
+    loader.atlas
+    (
+      'path_book',
+      "images/path_book/path_book.png",
+      "images/path_book/path_book.js"
+    );
+
+    loader.atlas
+    (
+      'pursuit_book',
+      "images/pursuit_book/pursuit_book.png",
+      "images/pursuit_book/pursuit_book.js"
+    );
+
     /****************************************************/
     /* Bitmap Fonts                                     */
     /****************************************************/
@@ -131,7 +152,37 @@ extends Phaser.Scene
       "tiledMaps/ambience_03.json"
     );
 
-    this.load.tilemapTiledJSON
+    loader.tilemapTiledJSON
+    (
+      "ambience_04",
+      "tiledMaps/ambience_04.json"
+    );
+
+    loader.tilemapTiledJSON
+    (
+      "ambience_05",
+      "tiledMaps/ambience_05.json"
+    );
+
+    loader.tilemapTiledJSON
+    (
+      "ambience_06",
+      "tiledMaps/ambience_06.json"
+    );
+
+    loader.tilemapTiledJSON
+    (
+      "ambience_07",
+      "tiledMaps/ambience_07.json"
+    );
+
+    loader.tilemapTiledJSON
+    (
+      "ambience_08",
+      "tiledMaps/ambience_08.json"
+    );
+
+    loader.tilemapTiledJSON
     (
       "simulation_ui",
       "tiledMaps/simulation_ui.json"

@@ -12,6 +12,9 @@ import { ST_COMPONENT_ID, ST_MANAGER_ID, ST_MESSAGE_ID } from "../../commons/stE
 import { CmpForceController } from "../../components/cmpforceController";
 import { ShipFactory } from "../../factories/shipFactory";
 import { SceneUIFactory } from "../../factories/uiSceneFactory";
+import { MapScene } from "../../gameScene/mapScene";
+import { AmbienceManager } from "../../managers/ambienceManager/ambienceManager";
+import { DebugManager } from "../../managers/debugManager/debugManager";
 import { SimulationManager } from "../../managers/simulationManager/simulationManager";
 import { UIButtonImg } from "../../managers/uiManager/uiButtonImg";
 import { UIManager } from "../../managers/uiManager/uiManager";
@@ -42,6 +45,15 @@ export class SceneEvade
     // on simulation scene create.
  
     master.onSimulationSceneCreate(this);
+
+    /****************************************************/
+     /* Ambient                                          */
+     /****************************************************/
+
+     const ambienceMap = MapScene.CreateFromTiledMap("ambience_05", this);
+
+     ambienceMap.clear();
+     ambienceMap.destroy();
 
     // Get simulation manager.
  
@@ -172,6 +184,28 @@ export class SceneEvade
     );
 
     targetFController.addForce("seek", redSeek);
+
+     /****************************************************/
+     /* Foreground Ambience                              */
+     /****************************************************/
+
+     const ambienceMng = master.getManager<AmbienceManager>
+     (
+       ST_MANAGER_ID.kAmbienceManager
+     );
+
+     ambienceMng.createStarDust(this);
+
+    /****************************************************/
+    /* Debug Manager                                    */
+    /****************************************************/
+
+    const debugManager = master.getManager<DebugManager>
+    (
+      ST_MANAGER_ID.kDebugManager
+    );
+
+    debugManager.prepareDebugManager(this);
 
     /****************************************************/
     /* UI                                               */

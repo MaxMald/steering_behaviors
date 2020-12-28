@@ -68,7 +68,7 @@ extends UIForce
       0,
       _scene,
       1,
-      300
+      9999
     );
 
     this._m_forceSlider.subscribe
@@ -98,6 +98,55 @@ extends UIForce
     );
 
     box.add(this._m_forceSlider);
+
+    // Radius of arrival label
+
+    const avoidanceLabel = UILabel.CreateStyleB(0, 0, _scene, "#");
+
+    avoidanceLabel.setTint(ST_COLOR_ID.kSkyBlueNeon);
+
+    this._m_avoidanceLabel = avoidanceLabel;
+
+    box.add(avoidanceLabel);
+
+    // Arrival radius Slider.
+
+    this._m_avoidanceSlider = new UISlider
+    (
+      0,
+      0,
+      _scene,
+      10,
+      100
+    );
+
+    this._m_avoidanceSlider.subscribe
+    (
+      "valueChanged",
+      "UIForceObstacleAvoidance",
+      function(_sender: UIObject, _args: any)
+      {
+
+        const slider = _sender as UISlider;
+
+        const radius = slider.getValue();
+
+        this.setAvoidanceRadiusLabel(radius);
+
+        if(this._m_obstacleAvoidance !== undefined)
+        {
+
+          this._m_obstacleAvoidance.setAvoidanceRadius(radius);
+
+        }
+
+        return;
+
+      },
+      this
+    );
+
+    box.add(this._m_avoidanceSlider);
 
     // Set target.
 
@@ -130,11 +179,11 @@ extends UIForce
 
     // Save value.
 
-   const arrivalForce = _force as ObstacleAvoidanceForce;
+   const avoidanceForce = _force as ObstacleAvoidanceForce;
 
-   this._m_obstacleAvoidance = arrivalForce;
+   this._m_obstacleAvoidance = avoidanceForce;
 
-    if(arrivalForce !== undefined)
+    if(avoidanceForce !== undefined)
     {
 
       if(_force.getType() !== ST_STEER_FORCE.kObstacleAvoidance)
@@ -144,9 +193,11 @@ extends UIForce
 
       }
 
-      this.setForceLabel(arrivalForce.getActualForce());
+      this.setForceLabel(avoidanceForce.getActualForce());
 
-      this._m_forceSlider.setValue(arrivalForce.getMaxMagnitude());
+      this._m_forceSlider.setValue(avoidanceForce.getMaxMagnitude());
+
+      this._m_avoidanceSlider.setValue(avoidanceForce.getAvoidanceRadius());
 
     }
 
@@ -161,6 +212,10 @@ extends UIForce
     
     this._m_forceSlider.setValue(this._m_obstacleAvoidance.getInitMaxMagnitude());
 
+    this._m_obstacleAvoidance.setInitAvoidanceRadius();
+
+    this._m_avoidanceSlider.setValue(this._m_obstacleAvoidance.getInitAvoidanceRadius());
+
     return;
   }
 
@@ -168,7 +223,17 @@ extends UIForce
   : void
   {
 
-    this._m_maxMagnitude.setText("Max. Magnitude: " + _maxForce.toFixed(3) + " uN.");
+    this._m_maxMagnitude.setText("Max. Magnitude: " + _maxForce.toFixed(2) + " uN.");
+
+    return;
+
+  }
+
+  setAvoidanceRadiusLabel(_radius: number)
+  : void
+  {
+
+    this._m_avoidanceLabel.setText("Radius of Avoidance: " + _radius.toFixed(2) + " km. ");
 
     return;
 
@@ -178,7 +243,7 @@ extends UIForce
   :void
   {
 
-    this._m_labelForce.setText("Force Magnitude: " + _force.toFixed(3) + " uN.");
+    this._m_labelForce.setText("Force Magnitude: " + _force.toFixed(2) + " uN.");
 
     return;
 
@@ -212,12 +277,16 @@ extends UIForce
   ////////////////////////////////////
   // UI Elements
 
-  private _m_box: UIBox;
+  private _m_box : UIBox;
 
-  private _m_labelForce: UILabel;
+  private _m_labelForce : UILabel;
 
-  private _m_maxMagnitude: UILabel;
+  private _m_avoidanceLabel : UILabel;
 
-  private _m_forceSlider: UISlider;
+  private _m_maxMagnitude : UILabel;
+
+  private _m_forceSlider : UISlider;
+
+  private _m_avoidanceSlider : UISlider;
 
 }

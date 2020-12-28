@@ -16,6 +16,7 @@ import { CmpForceController } from "../components/cmpForceController";
 import { IForce } from "./iForce";
 import { SimulationManager } from "../managers/simulationManager/simulationManager";
 import { ForceInitState } from "./forceInitState";
+import { ObstacleAvoidanceInitState } from "./obstacleAvoidanceInitState";
 
 /**
  *
@@ -67,7 +68,7 @@ implements IForce
       ST_MANAGER_ID.kSimManager
     );
 
-    this._m_obstacleAvoidanceInitState = new ForceInitState();
+    this._m_obstacleAvoidanceInitState = new ObstacleAvoidanceInitState();
 
     // Get Debug Manager
 
@@ -188,13 +189,69 @@ implements IForce
     
     let sprite = this._m_self;
 
+    // Debug desire velocity.
+
+    let distanceToObstacle : V2 = new Phaser.Math.Vector2(0.0, 0.0);
+
+    let desiredVelocity : V2 = new Phaser.Math.Vector2(0.0, 0.0);
+
+    this._m_obstaclesArray.forEach(obstacle => {
+
+      // Calculate distance between actor and obstacle
+
+      
+
+      let distance = distanceToObstacle.set
+      (
+        sprite.x - obstacle.x,
+        sprite.y - obstacle.y
+      ).length();
+
+      // On obstacle inside avoidance radius
+
+      if(distance < this._m_avoidanceRadius) {
+
+        desiredVelocity.add(distanceToObstacle.setLength(this._m_forceMagnitude));
+      }
+    });
+
+    // Calculate the avoidance force
+
+    desiredVelocity.subtract(this._m_controller.getVelocity());
+
+    // Truncate the avoidance force if it exceeds the maximum length allowed.
+    
+    desiredVelocity.limit(this._m_forceMagnitude);
+
+    this._m_debugManager.drawLine
+    (
+      sprite.x,
+      sprite.y,
+      sprite.x + desiredVelocity.x,
+      sprite.y + desiredVelocity.y,
+      DebugManager.FORCE_LINE_WIDTH,
+      ST_COLOR_ID.kOrange
+    );
+
+    // Steering force line
+
+    debugManager.drawLine
+    (
+     this._m_controller.getVelocity().x + sprite.x,
+     this._m_controller.getVelocity().y + sprite.y,
+     desiredVelocity.x + sprite.x,
+     desiredVelocity.y + sprite.y,
+     DebugManager.FORCE_LINE_WIDTH,
+     ST_COLOR_ID.kRed
+   );
+
     // Avoidance radius circle
     debugManager.drawCircle(
       sprite.x,
       sprite.y,
       this._m_avoidanceRadius,
       DebugManager.FORCE_CIRCLE_WIDTH,
-      ST_COLOR_ID.kPurple
+      ST_COLOR_ID.kSkyBlueNeon
     );
   }
 
@@ -263,6 +320,43 @@ implements IForce
 
   }
 
+  setInitAvoidanceRadius()
+  : void
+  {
+    this._m_avoidanceRadius = this.getInitAvoidanceRadius();
+
+    return;
+  }
+
+  setAvoidanceRadius(_radius: number)
+  : void
+  {
+
+    if(this._m_simulationManager.getState() === ST_SIM_SATE.kStopped)
+    {
+      this._m_obstacleAvoidanceInitState.m_initAvoidanceRadius = _radius;
+    }
+
+    this._m_avoidanceRadius = _radius;
+
+    return;
+
+  }
+
+  getInitAvoidanceRadius()
+  : number
+  {
+    return this._m_obstacleAvoidanceInitState.m_initAvoidanceRadius;
+  }
+
+  getAvoidanceRadius()
+  : number
+  {
+
+    return this._m_avoidanceRadius;
+
+  }
+
   getActualForce()
   : number
   {
@@ -310,7 +404,7 @@ implements IForce
    */
   private _m_simulationManager: SimulationManager;
 
-  private _m_obstacleAvoidanceInitState : ForceInitState;
+  private _m_obstacleAvoidanceInitState : ObstacleAvoidanceInitState;
 
   /**
    * Reference to the force controller.

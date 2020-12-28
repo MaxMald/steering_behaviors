@@ -16,6 +16,7 @@ import { CmpForceController } from "../components/cmpForceController";
 import { IForce } from "./iForce";
 import { SimulationManager } from "../managers/simulationManager/simulationManager";
 import { ForceInitState } from "./forceInitState";
+import { WanderInitState } from "./wanderInitState";
 
 /**
  * 
@@ -91,7 +92,13 @@ implements IForce
        ST_MANAGER_ID.kSimManager
      );
  
-     this._m_wanderInitState = new ForceInitState();
+     this._m_wanderInitState = new WanderInitState();
+
+     this._m_wanderInitState.m_initMaxMagnitude = _force;
+     this._m_wanderInitState.m_initTargetDistance = _targetDistance;
+     this._m_wanderInitState.m_initCircleRadius = _circleRadius;
+     this._m_wanderInitState.m_initDisplacementAngle = _displacementAngle;
+     this._m_wanderInitState.m_initAngleChange = _angleChange;
 
     // Get Debug Manager
     
@@ -217,11 +224,21 @@ implements IForce
 
     // Sprite to circle center line
 
+    let controller = this._m_controller;
+
+    let circleCenter = new Phaser.Math.Vector2
+    (
+      Math.cos(sprite.rotation),
+      Math.sin(sprite.rotation)
+    );
+    
+    circleCenter.scale(this._m_targetDistance);
+
     debugManager.drawLine(
       sprite.x,
       sprite.y,
-      this._m_v2p_circleCenter.x,
-      this._m_v2p_circleCenter.y,
+      circleCenter.x + sprite.x,
+      circleCenter.y + sprite.y,
       DebugManager.FORCE_LINE_WIDTH,
       ST_COLOR_ID.kPurple
     );
@@ -245,30 +262,34 @@ implements IForce
       this._m_v2_desiredVelocity.x + sprite.x,
       this._m_v2_desiredVelocity.y + sprite.y,
       DebugManager.FORCE_LINE_WIDTH,
-      ST_COLOR_ID.kBlack
+      ST_COLOR_ID.kOrange
     );
 
     // Circle center circle
 
     debugManager.drawCircle(
-      this._m_v2p_circleCenter.x,
-      this._m_v2p_circleCenter.y,
+      circleCenter.x + sprite.x,
+      circleCenter.y + sprite.y,
       this._m_circleRadius,
       DebugManager.FORCE_CIRCLE_WIDTH,
-      ST_COLOR_ID.kOrange
+      ST_COLOR_ID.kSkyBlueNeon
     );
 
-    let displacementVector = this._m_v2_displacement;
+    let displacement = new Phaser.Math.Vector2(circleCenter);
+
+    displacement.setLength(this._m_circleRadius);
+
+    displacement.setAngle(this._m_displacementAngle * Phaser.Math.DEG_TO_RAD);
 
     // Displacement from circle center line
 
     debugManager.drawLine(
-      this._m_v2p_circleCenter.x,
-      this._m_v2p_circleCenter.y,
-      this._m_v2p_circleCenter.x + displacementVector.x,
-      this._m_v2p_circleCenter.y + displacementVector.y,
+      circleCenter.x + sprite.x,
+      circleCenter.y + sprite.y,
+      circleCenter.x + sprite.x + displacement.x,
+      circleCenter.y + sprite.y + displacement.y,
     DebugManager.FORCE_LINE_WIDTH,
-    ST_COLOR_ID.kRed  
+    ST_COLOR_ID.kYellow  
     );
 
     return;
@@ -341,6 +362,138 @@ implements IForce
 
   }
 
+  setInitTargetDistance()
+  : void
+  {
+    this._m_targetDistance = this.getInitTargetDistance();
+
+    return;
+  }
+
+  setTargetDistance(_targetDistance :  number)
+  : void
+  {
+    if(this._m_simulationManager.getState() === ST_SIM_SATE.kStopped)
+    {
+      this._m_wanderInitState.m_initTargetDistance = _targetDistance;
+    }
+
+    this._m_targetDistance = _targetDistance;
+
+    return;
+  }
+
+  getInitTargetDistance()
+  : number
+  {
+    return this._m_wanderInitState.m_initTargetDistance;
+  }
+
+  getTargetDistance()
+  : number
+  {
+    return this._m_targetDistance;
+  }
+
+  setInitCircleRadius()
+  : void
+  {
+    this._m_circleRadius = this.getInitCircleRadius();
+
+    return;
+  }
+
+  setCircleRadius(_circleRadius : number)
+  : void
+  {
+    if(this._m_simulationManager.getState() === ST_SIM_SATE.kStopped)
+    {
+      this._m_wanderInitState.m_initCircleRadius = _circleRadius;
+    }
+
+    this._m_circleRadius = _circleRadius;
+
+    return;
+  }
+
+  getInitCircleRadius()
+  : number
+  {
+    return this._m_wanderInitState.m_initCircleRadius;
+  }
+
+  getCircleRadius()
+  : number
+  {
+    return this._m_circleRadius;
+  }
+
+  setInitDisplacementAngle()
+  : void
+  {
+    this._m_displacementAngle = this.getInitDisplacementAngle();
+
+    return;
+  }
+
+  setDisplacementAngle(_displacementAngle : number)
+  : void
+  {
+    if(this._m_simulationManager.getState() === ST_SIM_SATE.kStopped)
+    {
+      this._m_wanderInitState.m_initDisplacementAngle = _displacementAngle;
+    }
+
+    this._m_displacementAngle = _displacementAngle;
+
+    return;
+  }
+
+  getInitDisplacementAngle()
+  : number
+  {
+    return this._m_wanderInitState.m_initDisplacementAngle;
+  }
+
+  getDisplacementAngle()
+  : number
+  {
+    return this._m_displacementAngle;
+  }
+
+  setInitAngleChange()
+  : void
+  {
+    this._m_angleChange = this.getInitAngleChange();
+
+    return;
+  }
+
+  setAngleChange(_angleChange : number)
+  : void
+  {
+    if(this._m_simulationManager.getState() === ST_SIM_SATE.kStopped)
+    {
+      this._m_wanderInitState.m_initAngleChange = _angleChange;
+    }
+
+    this._m_angleChange = _angleChange;
+
+    return;
+  }
+
+  getInitAngleChange()
+  : number
+  {
+    return this._m_wanderInitState.m_initAngleChange;
+  }
+
+  getAngleChange()
+  : number
+  {
+    return this._m_angleChange;
+  }
+
   getActualForce()
   : number
   {
@@ -387,7 +540,7 @@ implements IForce
    */
   private _m_simulationManager: SimulationManager;
 
-  private _m_wanderInitState : ForceInitState;
+  private _m_wanderInitState : WanderInitState;
 
   /**
    * Reference to the force controller.

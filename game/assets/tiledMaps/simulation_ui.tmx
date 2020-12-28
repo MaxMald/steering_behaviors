@@ -3,7 +3,7 @@
  <editorsettings>
   <export target="simulation_ui.json" format="json"/>
  </editorsettings>
- <tileset firstgid="1" name="space_art" tilewidth="1024" tileheight="768" tilecount="24" columns="0">
+ <tileset firstgid="1" name="space_art" tilewidth="1024" tileheight="788" tilecount="24" columns="0">
   <grid orientation="orthogonal" width="1" height="1"/>
   <tile id="0">
    <image width="1024" height="768" source="../images/bg_space_01.png"/>
@@ -12,28 +12,28 @@
    <image width="207" height="198" source="../images/game_art/planetAsset 2.png"/>
   </tile>
   <tile id="2">
-   <image width="237" height="234" source="../images/game_art/planetAsset 5.png"/>
+   <image width="800" height="788" source="../images/game_art/planetAsset 5.png"/>
   </tile>
   <tile id="3">
-   <image width="281" height="321" source="../images/game_art/planetAsset 6.png"/>
+   <image width="549" height="627" source="../images/game_art/planetAsset 6.png"/>
   </tile>
   <tile id="4">
-   <image width="250" height="238" source="../images/game_art/planetAsset 7.png"/>
+   <image width="643" height="615" source="../images/game_art/planetAsset 7.png"/>
   </tile>
   <tile id="5">
    <image width="208" height="210" source="../images/game_art/planetAsset 8.png"/>
   </tile>
   <tile id="6">
-   <image width="271" height="298" source="../images/game_art/planetAsset 9.png"/>
+   <image width="635" height="698" source="../images/game_art/planetAsset 9.png"/>
   </tile>
   <tile id="7">
-   <image width="225" height="266" source="../images/game_art/planetAsset 10.png"/>
+   <image width="273" height="322" source="../images/game_art/planetAsset 10.png"/>
   </tile>
   <tile id="8">
-   <image width="237" height="232" source="../images/game_art/planetAsset 11.png"/>
+   <image width="485" height="472" source="../images/game_art/planetAsset 11.png"/>
   </tile>
   <tile id="9">
-   <image width="262" height="276" source="../images/game_art/planetAsset 12.png"/>
+   <image width="417" height="440" source="../images/game_art/planetAsset 12.png"/>
   </tile>
   <tile id="10">
    <image width="42" height="42" source="../images/game_art/debug_hover.png"/>
@@ -136,7 +136,7 @@
   </object>
   <object id="20" name="mass_slider" type="uiSlider" gid="19" x="106.667" y="184.417" width="207" height="23">
    <properties>
-    <property name="max_value" type="float" value="300"/>
+    <property name="max_value" type="float" value="15"/>
     <property name="min_value" type="float" value="1"/>
    </properties>
   </object>
