@@ -8,7 +8,7 @@
  * @since December-03-2020
  */
 import { BaseActor } from "../../actors/baseActor";
-import { ST_COMPONENT_ID, ST_MANAGER_ID } from "../../commons/stEnums";
+import { ST_COMPONENT_ID, ST_MANAGER_ID, ST_MESSAGE_ID } from "../../commons/stEnums";
 import { Ty_Sprite } from "../../commons/stTypes";
 import { CmpForceController } from "../../components/cmpforceController";
 import { AmbienceFactory } from "../../factories/ambienceFactory";
@@ -18,10 +18,8 @@ import { MapScene } from "../../gameScene/mapScene";
 import { AmbienceManager } from "../../managers/ambienceManager/ambienceManager";
 import { DebugManager } from "../../managers/debugManager/debugManager";
 import { SimulationManager } from "../../managers/simulationManager/simulationManager";
-import { UIButtonImg } from "../../managers/uiManager/uiButtonImg";
 import { UIInfoBox } from "../../managers/uiManager/uiControllers/UIInfoBox";
 import { UIManager } from "../../managers/uiManager/uiManager";
-import { UIObject } from "../../managers/uiManager/uiObject";
 import { Master } from "../../master/master";
 import { FollowPathForce } from "../../steeringBehavior/forceFollowPath";
  
@@ -71,19 +69,28 @@ import { FollowPathForce } from "../../steeringBehavior/forceFollowPath";
      // Get canvas size.
   
     let canvas = this.game.canvas;
-  
-    let width : number = canvas.width;
-    let height : number = canvas.height;
 
      /****************************************************/
-     /* Space Ship                                       */
+     /* ISS Nexus                                        */
      /****************************************************/
      
-     const blueShip = ShipFactory.CreateBlueShip(this, "Blue Ship");
+     const nexus = ShipFactory.CreateBlueShip(this, "ISS Nexus");
  
      // Add ship to simulation manager.
  
-     simManager.addActor(blueShip);
+     simManager.addActor(nexus);
+
+     nexus.sendMessage
+     (
+       ST_MESSAGE_ID.kSetMass,
+       2.9
+     );
+
+     nexus.sendMessage
+     (
+       ST_MESSAGE_ID.kSetMaxSpeed,
+       216
+     );
 
      /****************************************************/
      /* Nodes                                            */
@@ -135,15 +142,17 @@ import { FollowPathForce } from "../../steeringBehavior/forceFollowPath";
 
      followPath.init
      (
-       blueShip,
-       150,
+      nexus,
+       1352,
        15,
        true
      );
 
+     followPath.setForceToPathScale(14);
+
      followPath.setStartNode(startNode);
 
-     const blueShipFController = blueShip.getComponent<CmpForceController>
+     const blueShipFController = nexus.getComponent<CmpForceController>
      (
        ST_COMPONENT_ID.kForceController
      );
@@ -193,7 +202,7 @@ import { FollowPathForce } from "../../steeringBehavior/forceFollowPath";
 
     // Set the active actor of the UI Manager.
 
-    uiManager.setTarget(blueShip);
+    uiManager.setTarget(nexus);
 
     // Display Info
 
