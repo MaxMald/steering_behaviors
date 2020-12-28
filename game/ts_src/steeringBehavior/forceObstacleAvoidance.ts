@@ -189,6 +189,62 @@ implements IForce
     
     let sprite = this._m_self;
 
+    // Debug desire velocity.
+
+    let distanceToObstacle : V2 = new Phaser.Math.Vector2(0.0, 0.0);
+
+    let desiredVelocity : V2 = new Phaser.Math.Vector2(0.0, 0.0);
+
+    this._m_obstaclesArray.forEach(obstacle => {
+
+      // Calculate distance between actor and obstacle
+
+      
+
+      let distance = distanceToObstacle.set
+      (
+        sprite.x - obstacle.x,
+        sprite.y - obstacle.y
+      ).length();
+
+      // On obstacle inside avoidance radius
+
+      if(distance < this._m_avoidanceRadius) {
+
+        desiredVelocity.add(distanceToObstacle.setLength(this._m_forceMagnitude));
+      }
+    });
+
+    // Calculate the avoidance force
+
+    desiredVelocity.subtract(this._m_controller.getVelocity());
+
+    // Truncate the avoidance force if it exceeds the maximum length allowed.
+    
+    desiredVelocity.limit(this._m_forceMagnitude);
+
+    this._m_debugManager.drawLine
+    (
+      sprite.x,
+      sprite.y,
+      sprite.x + desiredVelocity.x,
+      sprite.y + desiredVelocity.y,
+      DebugManager.FORCE_LINE_WIDTH,
+      ST_COLOR_ID.kOrange
+    );
+
+    // Steering force line
+
+    debugManager.drawLine
+    (
+     this._m_controller.getVelocity().x + sprite.x,
+     this._m_controller.getVelocity().y + sprite.y,
+     desiredVelocity.x + sprite.x,
+     desiredVelocity.y + sprite.y,
+     DebugManager.FORCE_LINE_WIDTH,
+     ST_COLOR_ID.kRed
+   );
+
     // Avoidance radius circle
     debugManager.drawCircle(
       sprite.x,
