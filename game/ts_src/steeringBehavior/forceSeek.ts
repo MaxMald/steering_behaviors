@@ -68,6 +68,7 @@ implements IForce
     );
 
     this._m_seekInitState = new ForceInitState();
+    this._m_seekInitState.m_initMaxMagnitude = _force;
     // Get Debug Manager.
 
     this._m_debugManager = master.getManager<DebugManager>
