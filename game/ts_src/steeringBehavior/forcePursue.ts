@@ -64,6 +64,7 @@ implements IForce
     this._m_steerForce = new Phaser.Math.Vector2();
 
     this._m_pursueInitState = new ForceInitState();
+    this._m_pursueInitState.m_initMaxMagnitude = _maxForceMagnitude;
 
     // Get Managers
 
