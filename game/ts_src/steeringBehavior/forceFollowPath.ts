@@ -62,6 +62,10 @@ implements IForce
  
      this._m_followPathInitState = new FollowPathInitState();
 
+     this._m_followPathInitState.m_initMaxMagnitude = _force;
+     this._m_followPathInitState.m_initVisionRadius = _radius;
+     this._m_followPathInitState.m_initForceToPathScale = this._m_forceToPathScale;
+
     // Get Debug Manager
 
     this._m_debugManager = master.getManager<DebugManager>
