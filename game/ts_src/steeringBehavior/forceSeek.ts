@@ -267,6 +267,8 @@ implements IForce
   {
     this.setInitMaxMagnitude();
 
+    return;
+
   }
 
   /**
