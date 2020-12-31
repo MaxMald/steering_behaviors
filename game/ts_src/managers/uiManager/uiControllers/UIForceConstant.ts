@@ -155,7 +155,6 @@ extends UIForce
   onSimulationStop()
   : void
   {
-    this._m_force.setInitMaxMagnitude();
     
     this._m_forceSlider.setValue(this._m_force.getInitMaxMagnitude());
 
