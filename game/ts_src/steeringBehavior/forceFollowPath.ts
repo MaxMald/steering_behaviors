@@ -348,6 +348,14 @@ implements IForce
 
   }
 
+  onSimulationStop()
+  : void
+  {
+    this.setInitMaxMagnitude();
+    this.setInitForceToPathScale();
+    this.setInitVisionRadius();
+  }
+
   /**
    * Get the type of this force.
    */
