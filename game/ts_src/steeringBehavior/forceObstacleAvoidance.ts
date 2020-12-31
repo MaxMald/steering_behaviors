@@ -282,6 +282,7 @@ implements IForce
     this.setInitAvoidanceRadius();
     this.setInitMaxMagnitude();
 
+    return;
   }
 
   /**

@@ -294,6 +294,8 @@ implements IForce
   : void
   {
     this.setInitMaxMagnitude();
+
+    return;
   }
 
   /**

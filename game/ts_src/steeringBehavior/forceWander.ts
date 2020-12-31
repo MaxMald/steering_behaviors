@@ -323,6 +323,8 @@ implements IForce
     this.setInitCircleRadius();
     this.setInitDisplacementAngle();
     this.setInitAngleChange();
+
+    return;
   }
 
   /**

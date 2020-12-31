@@ -358,6 +358,8 @@ implements IForce
     this.setInitMaxMagnitude();
     this.setInitForceToPathScale();
     this.setInitVisionRadius();
+
+    return;
   }
 
   /**
