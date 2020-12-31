@@ -273,6 +273,14 @@ implements IForce
 
   }
 
+  onSimulationStop()
+  :void
+  {
+    this.setInitAvoidanceRadius();
+    this.setInitMaxMagnitude();
+
+  }
+
   /**
    * Get the type of this force.
    */

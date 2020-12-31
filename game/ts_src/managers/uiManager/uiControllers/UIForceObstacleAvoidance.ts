@@ -208,11 +208,7 @@ extends UIForce
   onSimulationStop()
   : void
   {
-    this._m_obstacleAvoidance.setInitMaxMagnitude();
-    
     this._m_forceSlider.setValue(this._m_obstacleAvoidance.getInitMaxMagnitude());
-
-    this._m_obstacleAvoidance.setInitAvoidanceRadius();
 
     this._m_avoidanceSlider.setValue(this._m_obstacleAvoidance.getInitAvoidanceRadius());
 
