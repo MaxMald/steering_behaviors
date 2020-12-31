@@ -353,23 +353,13 @@ extends UIForce
   onSimulationStop()
   : void
   {
-    this._m_wander.setInitMaxMagnitude();
-    
     this._m_forceSlider.setValue(this._m_wander.getInitMaxMagnitude());
-
-    this._m_wander.setInitTargetDistance();
 
     this._m_targetDistanceSlider.setValue(this._m_wander.getInitTargetDistance());
 
-    this._m_wander.setInitCircleRadius();
-
     this._m_circleRadiusSlider.setValue(this._m_wander.getInitCircleRadius());
 
-    this._m_wander.setInitDisplacementAngle();
-
     this._m_displacementAngleSlider.setValue(this._m_wander.getInitDisplacementAngle());
-
-    this._m_wander.setInitAngleChange();
 
     this._m_angleChangeSlider.setValue(this._m_wander.getInitAngleChange());
 

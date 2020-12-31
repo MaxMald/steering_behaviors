@@ -315,6 +315,16 @@ implements IForce
     return;
   }
 
+  onSimulationStop()
+  : void
+  {
+    this.setInitMaxMagnitude();
+    this.setInitTargetDistance();
+    this.setInitCircleRadius();
+    this.setInitDisplacementAngle();
+    this.setInitAngleChange();
+  }
+
   /**
    * Get the type of this force.
    */
