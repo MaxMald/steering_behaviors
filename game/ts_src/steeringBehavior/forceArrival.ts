@@ -79,6 +79,8 @@ implements IForce
     );
 
     this._m_arrivalInitState = new ArrivalInitState();
+    this._m_arrivalInitState.m_initMaxMagnitude = _force;
+    this._m_arrivalInitState.m_initArrivalRadius = _arrivalRadius;
 
     // Get debug manager
 
