@@ -275,6 +275,16 @@ implements IForce
 
     }
 
+    this._m_debugManager.drawLine
+      (
+        activeNode.getWrappedInstance().x,
+        activeNode.getWrappedInstance().y,
+        this._m_startNode.getWrappedInstance().x,
+        this._m_startNode.getWrappedInstance().y,
+        DebugManager.FORCE_LINE_WIDTH,
+        ST_COLOR_ID.kWhite 
+      );
+
     ////////////////////////////////////
     // Seek Force
 
