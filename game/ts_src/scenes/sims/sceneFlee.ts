@@ -16,6 +16,7 @@ import { MapScene } from "../../gameScene/mapScene";
 import { AmbienceManager } from "../../managers/ambienceManager/ambienceManager";
 import { DebugManager } from "../../managers/debugManager/debugManager";
 import { SimulationManager } from "../../managers/simulationManager/simulationManager";
+import { UIInfoBox } from "../../managers/uiManager/uiControllers/UIInfoBox";
 import { UIManager } from "../../managers/uiManager/uiManager";
 import { Master } from "../../master/master";
 import { FleeForce } from "../../steeringBehavior/forceFlee";
@@ -32,6 +33,10 @@ import { FleeForce } from "../../steeringBehavior/forceFlee";
   create()
   : void
   {
+
+    // Camera fade in
+
+    this.cameras.main.fadeIn(500, 0, 0, 0);
 
     ///////////////////////////////////
     // Master Manager
@@ -104,7 +109,7 @@ import { FleeForce } from "../../steeringBehavior/forceFlee";
     shipActor.sendMessage
     (
       ST_MESSAGE_ID.kSetPosition,
-      new Phaser.Math.Vector2(width * 0.5, height * 0.25)
+      new Phaser.Math.Vector2(width * 0.5, height * 0.45)
     );
 
     ///////////////////////////////////
@@ -129,7 +134,7 @@ import { FleeForce } from "../../steeringBehavior/forceFlee";
     targetActor.sendMessage
     (
       ST_MESSAGE_ID.kSetPosition,
-      new Phaser.Math.Vector2(width * 0.5, height * 0.5)
+      new Phaser.Math.Vector2(width * 0.5, height * 0.65)
     );
 
     ///////////////////////////////////
@@ -189,11 +194,22 @@ import { FleeForce } from "../../steeringBehavior/forceFlee";
 
     // Create the Simulation Map Scene
 
-    SceneUIFactory.CreateSimulationUIScene("simulation_ui", this, uiManager);
+    SceneUIFactory.CreateSimulationUIScene
+    (
+      "simulation_ui",
+      this,
+      uiManager,
+      this._openSceneInfo,
+      this
+    );
 
     // Set the active actor of the UI Manager.
 
     uiManager.setTarget(shipActor);
+
+    // Display info
+
+    this._openSceneInfo();
     
     ///////////////////////////////////
     // Set simulation to stop state
@@ -216,6 +232,42 @@ import { FleeForce } from "../../steeringBehavior/forceFlee";
   /****************************************************/
   /* Private                                          */
   /****************************************************/
+
+  /**
+    * Open the scene information box.
+    */
+   private _openSceneInfo()
+   : void
+   {
+
+    // Pause Simulation.
+
+    const master = this._m_master;
+
+    master.pauseSimulation();
+
+    // Get the UI Manager.
+
+    const uiManger = master.getManager<UIManager>
+    (
+      ST_MANAGER_ID.kUIManager
+    );
+
+    // Get the info box.
+
+    const infoBox = uiManger.getUIController("infoBox") as UIInfoBox;
+
+    // Set the book.
+
+    infoBox.setBook("flee");
+
+    // Open info box.
+
+    infoBox.open();
+
+    return;
+
+   }
   
   private _m_master : Master;
 }
