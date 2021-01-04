@@ -100,6 +100,13 @@ extends Phaser.Scene
 
     loader.atlas
     (
+      'flee_book',
+      "images/flee_book/flee_book.png",
+      "images/flee_book/flee_book.js"
+    );
+
+    loader.atlas
+    (
       'path_book',
       "images/path_book/path_book.png",
       "images/path_book/path_book.js"
