@@ -85,6 +85,87 @@
 
     {
 
+      "name": "flee",
+      "pages": [
+
+        {
+          "text": "¡Hola!",
+          "texture": "",
+          "frame": ""
+        },
+
+        {
+          "text": "En esta sesión revisaremos el Flee Force.",
+          "texture": "",
+          "frame": ""
+        },
+
+        {
+          "text": "Paso I: Obtener el vector de velocidad actual.",
+          "texture": "flee_book",
+          "frame": "flee_base.png"
+        },
+
+        {
+          "text": "El vector de velocidad actual es la representación de la dirección y velocidad que posee la nave en ése instante.",
+          "texture": "flee_book",
+          "frame": "flee_actual_velocity.png"
+        },
+
+        {
+          "text": "Paso II: Calcular la velocidad deseada.",
+          "texture": "flee_book",
+          "frame": "flee_actual_velocity.png"
+        },
+
+        {
+          "text": "A diferencia del Seek Force, se resta a la posición de la nave, la posición del objetivo; y así obtener el vector.",
+          "texture": "flee_book",
+          "frame": "flee_desire_velocity.png"
+        },
+
+        {
+          "text": "Se establece la magnitud del vector resultante a la fuerza máxima del Flee Force.",
+          "texture": "flee_book",
+          "frame": "flee_desire_trunc.png"
+        },
+
+        {
+          "text": "Paso III: Calcular Flee Force.",
+          "texture": "flee_book",
+          "frame": "flee_desire_trunc.png"
+        },
+
+        {
+          "text": "Este vector se obtiene al restar la velocidad actual a la velocidad deseada.",
+          "texture": "flee_book",
+          "frame": "flee_flee_force.png"
+        },
+
+        {
+          "text": "Finalmente este vector es truncado a la fuerza máxima del flee force, si sobrepasa dicho valor.",
+          "texture": "flee_book",
+          "frame": "flee_flee_force.png"
+        },
+
+        {
+          "text": "Listo, hemos calculado el Flee Force.",
+          "texture": "flee_book",
+          "frame": "flee_flee_force.png"
+        },
+
+        {
+          "text": "Recuerda consultar con tu profesor de inteligencia artificial para una explicación más detallada.",
+          "texture": "flee_book",
+          "frame": "flee_flee_force.png"
+        }
+
+      ]
+
+    },
+
+    {
+
       "name": "path",
       "pages": [
 
