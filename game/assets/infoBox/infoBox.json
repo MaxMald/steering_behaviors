@@ -166,6 +166,81 @@
 
     {
 
+      "name": "arrive",
+      "pages": [
+
+        {
+          "text": "¡Hola!",
+          "texture": "",
+          "frame": ""
+        },
+
+        {
+          "text": "En esta sesión revisaremos el Arrive.",
+          "texture": "",
+          "frame": ""
+        },
+
+        {
+          "text": "Al igual que el Seek, esta fuerza empuja la nave hacia su objetivo.",
+          "texture": "arrive_book",
+          "frame": "arrive_base.png"
+        },
+
+        {
+          "text": "Con la diferencia que ahora hay un nuevo elemento a tomar en cuenta.",
+          "texture": "arrive_book",
+          "frame": "arrive_base.png"
+        },
+
+        {
+          "text": "El área de desaceleración.",
+          "texture": "arrive_book",
+          "frame": "arrive_area.png"
+        },
+
+        {
+          "text": "Una vez dentro de esta área, la velocidad de la nave se reducirá linealmente a cero.",
+          "texture": "arrive_book",
+          "frame": "arrive_area.png"
+        },
+
+        {
+          "text": "Este proceso de desaceleración gradual se calcula en función del radio de dicha área y la distancia entre la nave y el objetivo.",
+          "texture": "arrive_book",
+          "frame": "arrive_area_distance.png"
+        },
+
+        {
+          "text": "Si la distancia es mayor al radio de esta área, significa que la nave está lejos del objetivo y su velocidad debe mantenerse al máximo.",
+          "texture": "arrive_book",
+          "frame": "arrive_distance_far.png"
+        },
+
+        {
+          "text": "Pero si la distancia es menor, entonces la nave ha entrado al área de desaceleración y su velocidad debe reducirse.",
+          "texture": "arrive_book",
+          "frame": "arrive_distance_near.png"
+        },
+
+        {
+          "text": "¡Listo!",
+          "texture": "arrive_book",
+          "frame": "arrive_distance_near.png"
+        },
+
+        {
+          "text": "Recuerda consultar con tu profesor de inteligencia artificial para una explicación más detallada.",
+          "texture": "arrive_book",
+          "frame": "arrive_distance_near.png"
+        }
+
+      ]
+
+    },
+
+    {
+
       "name": "path",
       "pages": [
 
