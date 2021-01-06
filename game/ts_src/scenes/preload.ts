@@ -107,6 +107,13 @@ extends Phaser.Scene
 
     loader.atlas
     (
+      'arrive_book',
+      "images/arrive_book/arrive_book.png",
+      "images/arrive_book/arrive_book.js"
+    );
+
+    loader.atlas
+    (
       'path_book',
       "images/path_book/path_book.png",
       "images/path_book/path_book.js"
