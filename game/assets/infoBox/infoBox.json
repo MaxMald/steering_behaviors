@@ -238,81 +238,6 @@
 
     {
 
-      "name": "path",
-      "pages": [
-
-        {
-          "text": "¡Hola!",
-          "texture": "",
-          "frame": ""
-        },
-
-        {
-          "text": "En esta sesión revisaremos el Path Following.",
-          "texture": "path_book",
-          "frame": "path_base.png"
-        },
-
-        {
-          "text": "Para esta sesión se establece un conjunto de nodos que definen la línea del camino.",
-          "texture": "path_book",
-          "frame": "path_line.png"
-        },
-
-        {
-          "text": "La nave recibirá un seek force, de forma secuencial, hacia la posición de cada uno de estos nodos.",
-          "texture": "path_book",
-          "frame": "path_seek.png"
-        },
-
-        {
-          "text": "De esta forma la nave seguirá el camino trazado",
-          "texture": "path_book",
-          "frame": "path_seek.png"
-        },
-
-        {
-          "text": "Además de la fuerza de seek, existe una fuerza de atracción hacia la línea de camino.",
-          "texture": "path_book",
-          "frame": "path_force_path.png"
-        },
-
-        {
-          "text": "Modificar esta fuerza ayuda a modular la fidelidad de la nave hacia la ruta trazada por los nodos.",
-          "texture": "path_book",
-          "frame": "path_force_path.png"
-        },
-
-        {
-          "text": "Por último se encuentra el radio de visión.",
-          "texture": "path_book",
-          "frame": "path_vision.png"
-        },
-
-        {
-          "text": "Este factor define la distancia en que la nave decide cambiar su dirección hacia el nodo siguiente.",
-          "texture": "path_book",
-          "frame": "path_vision.png"
-        },
-
-        {
-          "text": "¡Listo!",
-          "texture": "path_book",
-          "frame": "path_vision.png"
-        },
-
-        {
-          "text": "Recuerda consultar con tu profesor de inteligencia artificial para una explicación más detallada.",
-          "texture": "path_book",
-          "frame": "path_vision.png"
-        }
-
-      ]
-
-    },
-
-    {
-
       "name": "pursuit",
       "pages": [
 
@@ -421,6 +346,156 @@
           "frame": "evade_flee.png"
         }
       ]
+    },
+
+    {
+
+      "name": "path",
+      "pages": [
+
+        {
+          "text": "¡Hola!",
+          "texture": "",
+          "frame": ""
+        },
+
+        {
+          "text": "En esta sesión revisaremos el Path Following.",
+          "texture": "path_book",
+          "frame": "path_base.png"
+        },
+
+        {
+          "text": "Para esta sesión se establece un conjunto de nodos que definen la línea del camino.",
+          "texture": "path_book",
+          "frame": "path_line.png"
+        },
+
+        {
+          "text": "La nave recibirá un seek force, de forma secuencial, hacia la posición de cada uno de estos nodos.",
+          "texture": "path_book",
+          "frame": "path_seek.png"
+        },
+
+        {
+          "text": "De esta forma la nave seguirá el camino trazado",
+          "texture": "path_book",
+          "frame": "path_seek.png"
+        },
+
+        {
+          "text": "Además de la fuerza de seek, existe una fuerza de atracción hacia la línea de camino.",
+          "texture": "path_book",
+          "frame": "path_force_path.png"
+        },
+
+        {
+          "text": "Modificar esta fuerza ayuda a modular la fidelidad de la nave hacia la ruta trazada por los nodos.",
+          "texture": "path_book",
+          "frame": "path_force_path.png"
+        },
+
+        {
+          "text": "Por último se encuentra el radio de visión.",
+          "texture": "path_book",
+          "frame": "path_vision.png"
+        },
+
+        {
+          "text": "Este factor define la distancia en que la nave decide cambiar su dirección hacia el nodo siguiente.",
+          "texture": "path_book",
+          "frame": "path_vision.png"
+        },
+
+        {
+          "text": "¡Listo!",
+          "texture": "path_book",
+          "frame": "path_vision.png"
+        },
+
+        {
+          "text": "Recuerda consultar con tu profesor de inteligencia artificial para una explicación más detallada.",
+          "texture": "path_book",
+          "frame": "path_vision.png"
+        }
+
+      ]
+
+    },
+
+    {
+
+      "name": "wander",
+      "pages": [
+
+        {
+          "text": "¡Hola!",
+          "texture": "",
+          "frame": ""
+        },
+
+        {
+          "text": "En esta sesión revisaremos el Wander.",
+          "texture": "wander_book",
+          "frame": "wander_base.png"
+        },
+
+        {
+          "text": "Esta fuerza reproduce un movimiento 'casual' que aparenta que la nave tiene un movimiento propio sin objetivo alguno.",
+          "texture": "wander_book",
+          "frame": "wander_base.png"
+        },
+
+        {
+          "text": "Para hay que tomar en cuenta varios elementos que permitirán dicho comportamientoa la nave.",
+          "texture": "wander_book",
+          "frame": "wander_base.png"
+        },
+
+        {
+          "text": "Ubicamos un punto a cierta distancia enfrente de la nave y tomaremos un area de circulo alrededor del mismo, llamado circulo de desplazamiento.",
+          "texture": "wander_book",
+          "frame": "wander_displacement_circle.png"
+        },
+
+        {
+          "text": "Ahora se coloca el vector de desplazamiento, creado y escalado a partir del radio de este circulo y un angulo inicial dado.",
+          "texture": "wander_book",
+          "frame": "wander_displacement_vector.png"
+        },
+
+        {
+          "text": "Esta vector cambiará de angulo en relación a un valor escalar que definirá cuánto debe 'inclinarse' dicho vector.",
+          "texture": "wander_book",
+          "frame": "wander_displacement_angle.png"
+        },
+
+        {
+          "text": "Tambien se agrega un valor aleatorio al vector para cada calculo para producir la aleatoriedad del movimiento.",
+          "texture": "wander_book",
+          "frame": "wander_displacement_random.png"
+        },
+
+        {
+          "text": "Por ultimo se aplica un seek al punto final del vector de desplazamiento, danto asi la fuerza del wander.",
+          "texture": "wander_book",
+          "frame": "wander_force.png"
+        },
+
+        {
+          "text": "¡Listo!",
+          "texture": "wander_book",
+          "frame": "wander_force.png"
+        },
+
+        {
+          "text": "Recuerda consultar con tu profesor de inteligencia artificial para una explicación más detallada.",
+          "texture": "wander_book",
+          "frame": "wander_force.png"
+        }
+
+      ]
+
     },
 
     {
