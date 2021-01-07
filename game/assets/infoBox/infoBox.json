@@ -477,7 +477,7 @@
         },
 
         {
-          "text": "Por ultimo se aplica un seek al punto final del vector de desplazamiento, danto asi la fuerza del wander.",
+          "text": "Por ultimo se aplica un seek al punto final del vector de desplazamiento, dando así la fuerza del wander.",
           "texture": "wander_book",
           "frame": "wander_force.png"
         },
