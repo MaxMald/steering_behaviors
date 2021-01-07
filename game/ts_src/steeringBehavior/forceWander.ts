@@ -243,13 +243,19 @@ implements IForce
       ST_COLOR_ID.kPurple
     );
 
+    let displacement = new Phaser.Math.Vector2(circleCenter);
+
+    displacement.setLength(this._m_circleRadius);
+
+    displacement.setAngle(this._m_displacementAngle * Phaser.Math.DEG_TO_RAD);
+
     // Steering force line
 
     debugManager.drawLine(
       this._m_controller.getVelocity().x + sprite.x,
       this._m_controller.getVelocity().y + sprite.y,
-      this._m_v2_desiredVelocity.x + sprite.x,
-      this._m_v2_desiredVelocity.y + sprite.y,
+      circleCenter.x + sprite.x + displacement.x,
+      circleCenter.y + sprite.y + displacement.y,
       DebugManager.FORCE_LINE_WIDTH,
       ST_COLOR_ID.kRed
     );
@@ -259,8 +265,8 @@ implements IForce
     debugManager.drawLine(
       sprite.x,
       sprite.y,
-      this._m_v2_desiredVelocity.x + sprite.x,
-      this._m_v2_desiredVelocity.y + sprite.y,
+      circleCenter.x + sprite.x + displacement.x,
+      circleCenter.y + sprite.y + displacement.y,
       DebugManager.FORCE_LINE_WIDTH,
       ST_COLOR_ID.kOrange
     );
@@ -274,12 +280,6 @@ implements IForce
       DebugManager.FORCE_CIRCLE_WIDTH,
       ST_COLOR_ID.kSkyBlueNeon
     );
-
-    let displacement = new Phaser.Math.Vector2(circleCenter);
-
-    displacement.setLength(this._m_circleRadius);
-
-    displacement.setAngle(this._m_displacementAngle * Phaser.Math.DEG_TO_RAD);
 
     // Displacement from circle center line
 
