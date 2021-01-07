@@ -516,57 +516,45 @@
         },
 
         {
-          "text": "Esta fuerza radica en evadir los obstaculos que se avecinan hacia la nave.",
+          "text": "Existen varios acercamientos para esta fuerza, esta sesión tratará sobre la evasión en vez de la prevención.",
           "texture": "avoidance_book",
           "frame": "avoidance_base.png"
         },
 
         {
-          "text": "Para esto, se toma un area alrededor de la nave, llamada area de evación.",
+          "text": "Este acercamiento radica en evadir los obstáculos que se avecinan hacia la nave.",
           "texture": "avoidance_book",
           "frame": "avoidance_base.png"
         },
 
         {
-          "text": "Ubicamos un punto a cierta distancia enfrente de la nave y tomaremos un area de circulo alrededor del mismo, llamado circulo de desplazamiento.",
+          "text": "Para esto, se toma un área alrededor de la nave, llamada área de evasión.",
           "texture": "avoidance_book",
-          "frame": "avoidance_displacement_circle.png"
+          "frame": "avoidance_circle.png"
         },
 
         {
-          "text": "Ahora se coloca el vector de desplazamiento, creado y escalado a partir del radio de este circulo y un angulo inicial dado.",
+          "text": "Cuando un obstáculo se encuentre dentro de dicha área, se aplicará una fuerza de flee a la nave para dicho obstáculo.",
           "texture": "avoidance_book",
-          "frame": "avoidance_displacement_vector.png"
+          "frame": "avoidance_obstacle.png"
         },
 
         {
-          "text": "Esta vector cambiará de angulo en relación a un valor escalar que definirá cuánto debe 'inclinarse' dicho vector.",
+          "text": "En caso de ser más de un obstáculo, se sumarán todas las fuerzas aplicadas acorde para la evasión.",
           "texture": "avoidance_book",
-          "frame": "avoidance_displacement_angle.png"
-        },
-
-        {
-          "text": "Tambien se agrega un valor aleatorio al vector para cada calculo para producir la aleatoriedad del movimiento.",
-          "texture": "avoidance_book",
-          "frame": "avoidance_displacement_random.png"
-        },
-
-        {
-          "text": "Por ultimo se aplica un seek al punto final del vector de desplazamiento, dando así la fuerza del avoidance.",
-          "texture": "avoidance_book",
-          "frame": "avoidance_force.png"
+          "frame": "avoidance_multiple_obstacle.png"
         },
 
         {
           "text": "¡Listo!",
           "texture": "avoidance_book",
-          "frame": "avoidance_force.png"
+          "frame": "avoidance_multiple_obstacle.png"
         },
 
         {
           "text": "Recuerda consultar con tu profesor de inteligencia artificial para una explicación más detallada.",
           "texture": "avoidance_book",
-          "frame": "avoidance_force.png"
+          "frame": "avoidance_multiple_obstacle.png"
         }
 
       ]
