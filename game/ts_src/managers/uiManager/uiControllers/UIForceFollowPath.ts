@@ -257,15 +257,10 @@ extends UIForce
   onSimulationStop()
   : void
   {
-    this._m_followPath.setInitMaxMagnitude();
     
     this._m_forceSlider.setValue(this._m_followPath.getInitMaxMagnitude());
 
-    this._m_followPath.setInitForceToPathScale();
-
     this._m_forceToPathSlider.setValue(this._m_followPath.getInitForceToPathScale());
-
-    this._m_followPath.setInitVisionRadius();
 
     this._m_visionSlider.setValue(this._m_followPath.getInitVisionRadius());
 

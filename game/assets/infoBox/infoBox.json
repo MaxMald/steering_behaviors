@@ -3,7 +3,6 @@
   "books": [
 
     {
-
       "name": "seek",
       "pages": [
 
@@ -78,9 +77,275 @@
           "texture": "seek_book",
           "frame": "seek_seek_force.png"
         }
+      ]
+    },
+
+    {
+
+      "name": "flee",
+      "pages": [
+
+        {
+          "text": "¡Hola!",
+          "texture": "",
+          "frame": ""
+        },
+
+        {
+          "text": "En esta sesión revisaremos el Flee Force.",
+          "texture": "",
+          "frame": ""
+        },
+
+        {
+          "text": "Paso I: Obtener el vector de velocidad actual.",
+          "texture": "flee_book",
+          "frame": "flee_base.png"
+        },
+
+        {
+          "text": "El vector de velocidad actual es la representación de la dirección y velocidad que posee la nave en ése instante.",
+          "texture": "flee_book",
+          "frame": "flee_actual_velocity.png"
+        },
+
+        {
+          "text": "Paso II: Calcular la velocidad deseada.",
+          "texture": "flee_book",
+          "frame": "flee_actual_velocity.png"
+        },
+
+        {
+          "text": "A diferencia del Seek Force, se resta a la posición de la nave, la posición del objetivo; y así obtener el vector.",
+          "texture": "flee_book",
+          "frame": "flee_desire_velocity.png"
+        },
+
+        {
+          "text": "Se establece la magnitud del vector resultante a la fuerza máxima del Flee Force.",
+          "texture": "flee_book",
+          "frame": "flee_desire_trunc.png"
+        },
+
+        {
+          "text": "Paso III: Calcular Flee Force.",
+          "texture": "flee_book",
+          "frame": "flee_desire_trunc.png"
+        },
+
+        {
+          "text": "Este vector se obtiene al restar la velocidad actual a la velocidad deseada.",
+          "texture": "flee_book",
+          "frame": "flee_flee_force.png"
+        },
+
+        {
+          "text": "Finalmente este vector es truncado a la fuerza máxima del flee force, si sobrepasa dicho valor.",
+          "texture": "flee_book",
+          "frame": "flee_flee_force.png"
+        },
+
+        {
+          "text": "Listo, hemos calculado el Flee Force.",
+          "texture": "flee_book",
+          "frame": "flee_flee_force.png"
+        },
+
+        {
+          "text": "Recuerda consultar con tu profesor de inteligencia artificial para una explicación más detallada.",
+          "texture": "flee_book",
+          "frame": "flee_flee_force.png"
+        }
 
       ]
 
+    },
+
+    {
+
+      "name": "arrive",
+      "pages": [
+
+        {
+          "text": "¡Hola!",
+          "texture": "",
+          "frame": ""
+        },
+
+        {
+          "text": "En esta sesión revisaremos el Arrive.",
+          "texture": "",
+          "frame": ""
+        },
+
+        {
+          "text": "Al igual que el Seek, esta fuerza empuja la nave hacia su objetivo.",
+          "texture": "arrive_book",
+          "frame": "arrive_base.png"
+        },
+
+        {
+          "text": "Con la diferencia que ahora hay un nuevo elemento a tomar en cuenta.",
+          "texture": "arrive_book",
+          "frame": "arrive_base.png"
+        },
+
+        {
+          "text": "El área de desaceleración.",
+          "texture": "arrive_book",
+          "frame": "arrive_area.png"
+        },
+
+        {
+          "text": "Una vez dentro de esta área, la velocidad de la nave se reducirá linealmente a cero.",
+          "texture": "arrive_book",
+          "frame": "arrive_area.png"
+        },
+
+        {
+          "text": "Este proceso de desaceleración gradual se calcula en función del radio de dicha área y la distancia entre la nave y el objetivo.",
+          "texture": "arrive_book",
+          "frame": "arrive_area_distance.png"
+        },
+
+        {
+          "text": "Si la distancia es mayor al radio de esta área, significa que la nave está lejos del objetivo y su velocidad debe mantenerse al máximo.",
+          "texture": "arrive_book",
+          "frame": "arrive_distance_far.png"
+        },
+
+        {
+          "text": "Pero si la distancia es menor, entonces la nave ha entrado al área de desaceleración y su velocidad debe reducirse.",
+          "texture": "arrive_book",
+          "frame": "arrive_distance_near.png"
+        },
+
+        {
+          "text": "¡Listo!",
+          "texture": "arrive_book",
+          "frame": "arrive_distance_near.png"
+        },
+
+        {
+          "text": "Recuerda consultar con tu profesor de inteligencia artificial para una explicación más detallada.",
+          "texture": "arrive_book",
+          "frame": "arrive_distance_near.png"
+        }
+
+      ]
+
+    },
+
+    {
+
+      "name": "pursuit",
+      "pages": [
+
+        {
+          "text": "¡Hola!",
+          "texture": "",
+          "frame": ""
+        },
+
+        {
+          "text": "En esta sesión revisaremos el Pursuit.",
+          "texture": "",
+          "frame": ""
+        },
+
+        {
+          "text": "El truco de esta fuerza reside en la predicción de la posición futura del objetivo.",
+          "texture": "pursuit_book",
+          "frame": "pursuit_base.png"
+        },
+
+        {
+          "text": "La posición futura de éste puede calcularse a partir de la posición actual del objetivo y su velocidad.",
+          "texture": "pursuit_book",
+          "frame": "pursuit_pre_pos.png"
+        },
+
+        {
+          "text": "Una vez se conoce la posición futura del objetivo, la nave recibe un Seek Force hacia dicha posición.",
+          "texture": "pursuit_book",
+          "frame": "pursuit_seek.png"
+        },
+
+        {
+          "text": "Además, dicha predicción es relativa a la distancia del objetivo con respecto a la posición de la nave.",
+          "texture": "pursuit_book",
+          "frame": "pursuit_time.png"
+        },
+
+        {
+          "text": "Es decir, a menor distancia, menor será la diferencia entre el tiempo actual y el tiempo en que se realiza la predicción.",
+          "texture": "pursuit_book",
+          "frame": "pursuit_time.png"
+        },
+
+        {
+          "text": "¡Listo!",
+          "texture": "pursuit_book",
+          "frame": "pursuit_time.png"
+        },
+
+        {
+          "text": "Recuerda consultar con tu profesor de inteligencia artificial para una explicación más detallada.",
+          "texture": "pursuit_book",
+          "frame": "pursuit_time.png"
+        }
+
+      ]
+
+    },
+
+    {
+
+      "name": "evade",
+      "pages": [
+
+        {
+          "text": "¡Hola!",
+          "texture": "",
+          "frame": ""
+        },
+
+        {
+          "text": "En esta sesión revisaremos el Evade.",
+          "texture": "",
+          "frame": ""
+        },
+
+        {
+          "text": "Este comportamiento es bastante parecido a Pursuit…",
+          "texture": "evade_book",
+          "frame": "evade_base.png"
+        },
+
+        {
+          "text": "… la diferencia es que la nave realiza un Flee (huirá) de la posición futura del objetivo.",
+          "texture": "evade_book",
+          "frame": "evade_flee.png"
+        },
+
+        {
+          "text": "Si desconoces la fuerza Flee y Pursuit, te recomiendo revisar dichas sesiones desde el menú principal.",
+          "texture": "evade_book",
+          "frame": "evade_flee.png"
+        },
+
+        {
+          "text": "¡Listo!",
+          "texture": "evade_book",
+          "frame": "evade_flee.png"
+        },
+
+        {
+          "text": "Recuerda consultar con tu profesor de inteligencia artificial para una explicación más detallada.",
+          "texture": "evade_book",
+          "frame": "evade_flee.png"
+        }
+      ]
     },
 
     {
@@ -160,7 +425,7 @@
 
     {
 
-      "name": "pursuit",
+      "name": "wander",
       "pages": [
 
         {
@@ -170,51 +435,126 @@
         },
 
         {
-          "text": "En esta sesión revisaremos el Pursuit.",
+          "text": "En esta sesión revisaremos el Wander.",
+          "texture": "wander_book",
+          "frame": "wander_base.png"
+        },
+
+        {
+          "text": "Esta fuerza produce un movimiento 'casual' que aparenta que la nave tiene un movimiento propio sin objetivo alguno.",
+          "texture": "wander_book",
+          "frame": "wander_base.png"
+        },
+
+        {
+          "text": "Para esto, hay que tomar en cuenta varios elementos que permitirán dicho comportamiento a la nave.",
+          "texture": "wander_book",
+          "frame": "wander_base.png"
+        },
+
+        {
+          "text": "Ubicamos un punto a cierta distancia enfrente de la nave y tomaremos un área de círculo alrededor del mismo, llamado círculo de desplazamiento.",
+          "texture": "wander_book",
+          "frame": "wander_displacement_circle.png"
+        },
+
+        {
+          "text": "Ahora se coloca el vector de desplazamiento, creado y escalado a partir del radio de este círculo y un ángulo inicial dado.",
+          "texture": "wander_book",
+          "frame": "wander_displacement_vector.png"
+        },
+
+        {
+          "text": "Este vector cambiará de angulo en relación a un valor escalar que definirá cuánto debe 'inclinarse' dicho vector.",
+          "texture": "wander_book",
+          "frame": "wander_displacement_angle.png"
+        },
+
+        {
+          "text": "También se agrega un valor aleatorio al vector para cada cálculo para producir la aleatoriedad del movimiento.",
+          "texture": "wander_book",
+          "frame": "wander_displacement_random.png"
+        },
+
+        {
+          "text": "Por último se aplica un seek al punto final del vector de desplazamiento, dando así la fuerza del wander.",
+          "texture": "wander_book",
+          "frame": "wander_force.png"
+        },
+
+        {
+          "text": "¡Listo!",
+          "texture": "wander_book",
+          "frame": "wander_force.png"
+        },
+
+        {
+          "text": "Recuerda consultar con tu profesor de inteligencia artificial para una explicación más detallada.",
+          "texture": "wander_book",
+          "frame": "wander_force.png"
+        }
+
+      ]
+
+    },
+
+    {
+
+      "name": "avoidance",
+      "pages": [
+
+        {
+          "text": "¡Hola!",
           "texture": "",
           "frame": ""
         },
 
         {
-          "text": "El truco de esta fuerza reside en la predicción de la posición futura del objetivo.",
-          "texture": "pursuit_book",
-          "frame": "pursuit_base.png"
+          "text": "En esta sesión revisaremos el Obstacle avoidance.",
+          "texture": "avoidance_book",
+          "frame": "avoidance_base.png"
         },
 
         {
-          "text": "La posición futura de éste puede calcularse a partir de la posición actual del objetivo y su velocidad.",
-          "texture": "pursuit_book",
-          "frame": "pursuit_pre_pos.png"
+          "text": "Existen varios acercamientos para esta fuerza, esta sesión tratará sobre la evasión en vez de la prevención.",
+          "texture": "avoidance_book",
+          "frame": "avoidance_base.png"
         },
 
         {
-          "text": "Una vez se conoce la posición futura del objetivo, la nave recibe un Seek Force hacia dicha posición.",
-          "texture": "pursuit_book",
-          "frame": "pursuit_seek.png"
+          "text": "Este acercamiento radica en evadir los obstáculos que se avecinan hacia la nave.",
+          "texture": "avoidance_book",
+          "frame": "avoidance_base.png"
         },
 
         {
-          "text": "Además, dicha predicción es relativa a la distancia del objetivo con respecto a la posición de la nave.",
-          "texture": "pursuit_book",
-          "frame": "pursuit_time.png"
+          "text": "Para esto, se toma un área alrededor de la nave, llamada área de evasión.",
+          "texture": "avoidance_book",
+          "frame": "avoidance_circle.png"
         },
 
         {
-          "text": "Es decir, a menor distancia, menor será la diferencia entre el tiempo actual y el tiempo en que se realiza la predicción.",
-          "texture": "pursuit_book",
-          "frame": "pursuit_time.png"
+          "text": "Cuando un obstáculo se encuentre dentro de dicha área, se aplicará una fuerza de flee a la nave para dicho obstáculo.",
+          "texture": "avoidance_book",
+          "frame": "avoidance_obstacle.png"
+        },
+
+        {
+          "text": "En caso de ser más de un obstáculo, se sumarán todas las fuerzas aplicadas acorde para la evasión.",
+          "texture": "avoidance_book",
+          "frame": "avoidance_multiple_obstacle.png"
         },
 
         {
           "text": "¡Listo!",
-          "texture": "pursuit_book",
-          "frame": "pursuit_time.png"
+          "texture": "avoidance_book",
+          "frame": "avoidance_multiple_obstacle.png"
         },
 
         {
           "text": "Recuerda consultar con tu profesor de inteligencia artificial para una explicación más detallada.",
-          "texture": "pursuit_book",
-          "frame": "pursuit_time.png"
+          "texture": "avoidance_book",
+          "frame": "avoidance_multiple_obstacle.png"
         }
 
       ]

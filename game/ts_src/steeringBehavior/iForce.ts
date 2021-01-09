@@ -74,5 +74,11 @@ export interface IForce
    * Safely destroys this force.
    */
   destroy()
-  : void;  
+  : void;
+  
+  /**
+   * Called when the simulation had stopped.
+   */
+  onSimulationStop()
+  : void;
 }

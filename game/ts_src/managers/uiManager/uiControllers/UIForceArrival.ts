@@ -207,12 +207,8 @@ extends UIForce
 
   onSimulationStop()
   : void
-  {
-    this._m_arrival.setInitMaxMagnitude();
-    
+  {    
     this._m_forceSlider.setValue(this._m_arrival.getInitMaxMagnitude());
-
-    this._m_arrival.setInitArrivalRadius();
 
     this._m_arrivalSlider.setValue(this._m_arrival.getInitArrivalRadius());
 

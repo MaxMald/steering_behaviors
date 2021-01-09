@@ -17,6 +17,7 @@ import { MapScene } from "../../gameScene/mapScene";
 import { AmbienceManager } from "../../managers/ambienceManager/ambienceManager";
 import { DebugManager } from "../../managers/debugManager/debugManager";
 import { SimulationManager } from "../../managers/simulationManager/simulationManager";
+import { UIInfoBox } from "../../managers/uiManager/uiControllers/UIInfoBox";
 import { UIManager } from "../../managers/uiManager/uiManager";
 import { Master } from "../../master/master";
 import { ObstacleAvoidanceForce } from "../../steeringBehavior/forceObstacleAvoidance";
@@ -32,6 +33,10 @@ extends Phaser.Scene
   create()
   : void
   {
+
+    // Camera fade in
+
+    this.cameras.main.fadeIn(500, 0, 0, 0);
 
     ///////////////////////////////////
     // Master Manager
@@ -199,11 +204,22 @@ extends Phaser.Scene
 
     // Create the Simulation Map Scene
 
-    SceneUIFactory.CreateSimulationUIScene("simulation_ui", this, uiManager);
+    SceneUIFactory.CreateSimulationUIScene
+    (
+      "simulation_ui",
+      this,
+      uiManager,
+      this._openSceneInfo,
+      this
+    );
 
     // Set the active actor of the UI Manager.
 
     uiManager.setTarget(shipActor);
+
+    // Display info
+
+    this._openSceneInfo();
     
     ///////////////////////////////////
     // Set simulation to stop state
@@ -227,6 +243,42 @@ extends Phaser.Scene
   /****************************************************/
   /* Private                                          */
   /****************************************************/
+
+  /**
+    * Open the scene information box.
+    */
+   private _openSceneInfo()
+   : void
+   {
+
+    // Pause Simulation.
+
+    const master = this._m_master;
+
+    master.pauseSimulation();
+
+    // Get the UI Manager.
+
+    const uiManger = master.getManager<UIManager>
+    (
+      ST_MANAGER_ID.kUIManager
+    );
+
+    // Get the info box.
+
+    const infoBox = uiManger.getUIController("infoBox") as UIInfoBox;
+
+    // Set the book.
+
+    infoBox.setBook("avoidance");
+
+    // Open info box.
+
+    infoBox.open();
+
+    return;
+
+   }
   
   private _m_master : Master;
 
