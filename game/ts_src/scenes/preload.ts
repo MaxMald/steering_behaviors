@@ -100,9 +100,16 @@ extends Phaser.Scene
 
     loader.atlas
     (
-      'path_book',
-      "images/path_book/path_book.png",
-      "images/path_book/path_book.js"
+      'flee_book',
+      "images/flee_book/flee_book.png",
+      "images/flee_book/flee_book.js"
+    );
+
+    loader.atlas
+    (
+      'arrive_book',
+      "images/arrive_book/arrive_book.png",
+      "images/arrive_book/arrive_book.js"
     );
 
     loader.atlas
@@ -111,6 +118,35 @@ extends Phaser.Scene
       "images/pursuit_book/pursuit_book.png",
       "images/pursuit_book/pursuit_book.js"
     );
+
+    loader.atlas
+    (
+      'evade_book',
+      "images/evade_book/evade_book.png",
+      "images/evade_book/evade_book.js"
+    );
+
+    loader.atlas
+    (
+      'wander_book',
+      "images/wander_book/wander_book.png",
+      "images/wander_book/wander_book.js"
+    );
+
+    loader.atlas
+    (
+      'avoidance_book',
+      "images/avoidance_book/avoidance_book.png",
+      "images/avoidance_book/avoidance_book.js"
+    );
+
+
+    loader.atlas
+    (
+      'path_book',
+      "images/path_book/path_book.png",
+      "images/path_book/path_book.js"
+    );   
 
     /****************************************************/
     /* Bitmap Fonts                                     */

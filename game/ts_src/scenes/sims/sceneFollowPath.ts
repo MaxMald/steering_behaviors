@@ -33,7 +33,11 @@ import { FollowPathForce } from "../../steeringBehavior/forceFollowPath";
    
    create()
    : void
-   {    
+   {
+     
+    // Camera fade in
+
+    this.cameras.main.fadeIn(500, 0, 0, 0);
  
      ///////////////////////////////////
      // Master Manager

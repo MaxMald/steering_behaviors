@@ -62,6 +62,10 @@ implements IForce
  
      this._m_followPathInitState = new FollowPathInitState();
 
+     this._m_followPathInitState.m_initMaxMagnitude = _force;
+     this._m_followPathInitState.m_initVisionRadius = _radius;
+     this._m_followPathInitState.m_initForceToPathScale = this._m_forceToPathScale;
+
     // Get Debug Manager
 
     this._m_debugManager = master.getManager<DebugManager>
@@ -271,6 +275,16 @@ implements IForce
 
     }
 
+    this._m_debugManager.drawLine
+      (
+        activeNode.getWrappedInstance().x,
+        activeNode.getWrappedInstance().y,
+        this._m_startNode.getWrappedInstance().x,
+        this._m_startNode.getWrappedInstance().y,
+        DebugManager.FORCE_LINE_WIDTH,
+        ST_COLOR_ID.kWhite 
+      );
+
     ////////////////////////////////////
     // Seek Force
 
@@ -346,6 +360,16 @@ implements IForce
 
     return;
 
+  }
+
+  onSimulationStop()
+  : void
+  {
+    this.setInitMaxMagnitude();
+    this.setInitForceToPathScale();
+    this.setInitVisionRadius();
+
+    return;
   }
 
   /**

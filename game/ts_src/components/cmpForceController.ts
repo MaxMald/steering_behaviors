@@ -363,6 +363,10 @@ implements IBaseComponent<Ty_Sprite>
 
     this.setMass(this._m_actorInitState.m_initMass);
 
+    this._m_hForce.forEach(force => {
+      force.onSimulationStop();
+    });
+
     return;
   }
 

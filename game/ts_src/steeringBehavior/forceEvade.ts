@@ -59,6 +59,7 @@ implements IForce
     );
 
     this._m_evadeInitState = new ForceInitState();
+    this._m_evadeInitState.m_initMaxMagnitude = _maxForceMagnitude;
 
     this._m_maxForceMagnitude = _maxForceMagnitude;
 
@@ -254,6 +255,14 @@ implements IForce
   : void 
   {
     // TODO
+    return;
+  }
+
+  onSimulationStop()
+  : void
+  {
+    this.setInitMaxMagnitude();
+
     return;
   }
 

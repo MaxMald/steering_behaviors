@@ -70,6 +70,9 @@ implements IForce
 
     this._m_obstacleAvoidanceInitState = new ObstacleAvoidanceInitState();
 
+    this._m_obstacleAvoidanceInitState.m_initMaxMagnitude = _force;
+    this._m_obstacleAvoidanceInitState.m_initAvoidanceRadius = _avoidanceRadius;
+
     // Get Debug Manager
 
     this._m_debugManager = Master.GetInstance().getManager<DebugManager>
@@ -271,6 +274,15 @@ implements IForce
   : void
   {
 
+  }
+
+  onSimulationStop()
+  :void
+  {
+    this.setInitAvoidanceRadius();
+    this.setInitMaxMagnitude();
+
+    return;
   }
 
   /**

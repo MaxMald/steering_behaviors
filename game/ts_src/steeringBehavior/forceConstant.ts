@@ -290,6 +290,14 @@ implements IForce
 
   }
 
+  onSimulationStop()
+  : void
+  {
+    this.setInitMaxMagnitude();
+
+    return;
+  }
+
   /**
    * Get the type of this force.
    */
