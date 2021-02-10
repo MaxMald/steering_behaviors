@@ -99,19 +99,19 @@ extends UIForce
 
     box.add(this._m_forceSlider);
 
-    // Radius of arrival label
+    // Radius of avoidance ahead label
 
-    const avoidanceLabel = UILabel.CreateStyleB(0, 0, _scene, "#");
+    const avoidanceAheadLabel = UILabel.CreateStyleB(0, 0, _scene, "#");
 
-    avoidanceLabel.setTint(ST_COLOR_ID.kSkyBlueNeon);
+    avoidanceAheadLabel.setTint(ST_COLOR_ID.kSkyBlueNeon);
 
-    this._m_avoidanceLabel = avoidanceLabel;
+    this._m_avoidanceAheadLabel = avoidanceAheadLabel;
 
-    box.add(avoidanceLabel);
+    box.add(avoidanceAheadLabel);
 
-    // Arrival radius Slider.
+    // Avoidance radius Slider.
 
-    this._m_avoidanceSlider = new UISlider
+    this._m_avoidanceAheadSlider = new UISlider
     (
       0,
       0,
@@ -120,7 +120,7 @@ extends UIForce
       100
     );
 
-    this._m_avoidanceSlider.subscribe
+    this._m_avoidanceAheadSlider.subscribe
     (
       "valueChanged",
       "UIForceObstacleAvoidance",
@@ -129,14 +129,14 @@ extends UIForce
 
         const slider = _sender as UISlider;
 
-        const radius = slider.getValue();
+        const distance = slider.getValue();
 
-        this.setAvoidanceRadiusLabel(radius);
+        this.setAvoidanceAheadLabel(distance);
 
         if(this._m_obstacleAvoidance !== undefined)
         {
 
-          this._m_obstacleAvoidance.setAvoidanceRadius(radius);
+          this._m_obstacleAvoidance.setAvoidanceAhead(distance);
 
         }
 
@@ -146,7 +146,7 @@ extends UIForce
       this
     );
 
-    box.add(this._m_avoidanceSlider);
+    box.add(this._m_avoidanceAheadSlider);
 
     // Set target.
 
@@ -197,7 +197,7 @@ extends UIForce
 
       this._m_forceSlider.setValue(avoidanceForce.getMaxMagnitude());
 
-      this._m_avoidanceSlider.setValue(avoidanceForce.getAvoidanceRadius());
+      this._m_avoidanceAheadSlider.setValue(avoidanceForce.getAvoidanceAhead());
 
     }
 
@@ -210,7 +210,7 @@ extends UIForce
   {
     this._m_forceSlider.setValue(this._m_obstacleAvoidance.getInitMaxMagnitude());
 
-    this._m_avoidanceSlider.setValue(this._m_obstacleAvoidance.getInitAvoidanceRadius());
+    this._m_avoidanceAheadSlider.setValue(this._m_obstacleAvoidance.getInitAvoidanceAhead());
 
     return;
   }
@@ -225,11 +225,11 @@ extends UIForce
 
   }
 
-  setAvoidanceRadiusLabel(_radius: number)
+  setAvoidanceAheadLabel(_distance: number)
   : void
   {
 
-    this._m_avoidanceLabel.setText("Radius of Avoidance: " + _radius.toFixed(2) + " km. ");
+    this._m_avoidanceAheadLabel.setText("Avoidance ahead distance: " + _distance.toFixed(2) + " km. ");
 
     return;
 
@@ -277,12 +277,12 @@ extends UIForce
 
   private _m_labelForce : UILabel;
 
-  private _m_avoidanceLabel : UILabel;
+  private _m_avoidanceAheadLabel : UILabel;
 
   private _m_maxMagnitude : UILabel;
 
   private _m_forceSlider : UISlider;
 
-  private _m_avoidanceSlider : UISlider;
+  private _m_avoidanceAheadSlider : UISlider;
 
 }
