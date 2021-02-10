@@ -13,5 +13,5 @@ import { ForceInitState } from "./forceInitState";
 export class ObstacleAvoidanceInitState
 extends ForceInitState
 {
-  public m_initAvoidanceRadius : number = 0;
+  public m_initAvoidanceAhead : number = 0;
 }
