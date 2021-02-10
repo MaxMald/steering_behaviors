@@ -311,6 +311,20 @@ export class UIForceController
     ///////////////////////////////////
     // Forces
 
+    // Get all forces the force controller has.
+
+    const forces = forceController.getForces();
+
+    // Get all the UI forces.
+
+    const uiForces = this._m_aUIForce;
+
+    // Iterate over all the forces
+
+    forces.forEach(force => {
+      uiForces.get(force.getType() as ST_STEER_FORCE).setTarget(force);
+    });
+
     // update Force Combo Box
 
     this._updateForceComboBox(forceController);
@@ -354,6 +368,8 @@ export class UIForceController
     // Actor Max Speed.
 
     this._ui_maxSpeedSlider.setValue(forceController.getInitMaxSpeed());
+
+    // Iterate over all the forces
 
     forces.forEach(force => {
       uiForces.get(force.getType() as ST_STEER_FORCE).onSimulationStop();
@@ -460,7 +476,7 @@ export class UIForceController
 
       activeForce.getBox().enable();
 
-      activeForce.setTarget(_force);
+      //activeForce.setTarget(_force);
 
       this._m_activeUIForce = activeForce;      
 
