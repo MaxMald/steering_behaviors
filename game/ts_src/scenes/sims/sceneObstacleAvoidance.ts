@@ -8,9 +8,11 @@
  * @since October-24-2020
  */
 
+import { BaseActor } from "../../actors/baseActor";
 import { ST_COMPONENT_ID, ST_MANAGER_ID, ST_MESSAGE_ID } from "../../commons/stEnums";
 import { Ty_Sprite } from "../../commons/stTypes";
 import { CmpForceController } from "../../components/cmpforceController";
+import { AmbienceFactory } from "../../factories/ambienceFactory";
 import { ShipFactory } from "../../factories/shipFactory";
 import { SceneUIFactory } from "../../factories/uiSceneFactory";
 import { MapScene } from "../../gameScene/mapScene";
@@ -20,6 +22,8 @@ import { SimulationManager } from "../../managers/simulationManager/simulationMa
 import { UIInfoBox } from "../../managers/uiManager/uiControllers/UIInfoBox";
 import { UIManager } from "../../managers/uiManager/uiManager";
 import { Master } from "../../master/master";
+import { ForceConstant } from "../../steeringBehavior/forceConstant";
+import { FollowPathForce } from "../../steeringBehavior/forceFollowPath";
 import { ObstacleAvoidanceForce } from "../../steeringBehavior/forceObstacleAvoidance";
 import { WanderForce } from "../../steeringBehavior/forceWander";
 
@@ -146,6 +150,68 @@ extends Phaser.Scene
 
     }
 
+    /****************************************************/
+    /* Nodes                                            */
+    /****************************************************/
+
+    let startNode : BaseActor<Ty_Sprite> = undefined;
+    let prevNode : BaseActor<Ty_Sprite> = undefined;
+
+    for(let i = 0; i < 3; ++ i )
+    {
+
+     const node = AmbienceFactory.CreateSatellite
+     (
+       x + ( Math.sin(t * i) * 200 ),
+       y + ( Math.cos(t * i) * 200),
+       this,
+       "Satellite_" + i.toString() 
+     );
+
+     if(prevNode === undefined)
+     {
+
+       startNode = node;
+       prevNode = node;
+
+     }
+     else
+     {
+
+       prevNode.setNext(node);
+       node.setPrevious(prevNode);
+
+       prevNode = node;
+
+     }
+
+    }
+
+    //  /****************************************************/
+    //  /* Forces                                           */
+    //  /****************************************************/
+    
+    // Get Force Actor component.
+    
+    let shipController = shipActor.getComponent<CmpForceController>
+    (
+      ST_COMPONENT_ID.kForceController
+    );
+
+     let followPath : FollowPathForce = new FollowPathForce();
+
+     followPath.init
+     (
+       shipActor,
+       100,
+       15,
+       true
+     );
+
+     followPath.setForceToPathScale(14);
+
+     followPath.setStartNode(startNode);
+
     ///////////////////////////////////
     // Create a Force
 
@@ -163,14 +229,8 @@ extends Phaser.Scene
       100
     );
 
-    // Get Force Actor component.
-    
-    let shipController = shipActor.getComponent<CmpForceController>
-    (
-      ST_COMPONENT_ID.kForceController
-    );
-
     shipController.addForce('obstacleAvoidance_1', obstacleAvoidance);
+    shipController.addForce('Follow_path', followPath);
 
     /****************************************************/
      /* Foreground Ambience                              */
