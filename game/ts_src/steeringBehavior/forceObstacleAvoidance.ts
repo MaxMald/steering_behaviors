@@ -28,10 +28,11 @@ implements IForce
   /* Public                                           */
   /****************************************************/
 
+  
   init
   (
     _self : Ty_Sprite,
-    _avoidanceRadius : number,
+    _avoidanceAhead : number,
     _obstaclesArray : Ty_Sprite[],
     _force : number,
     _controller ?: CmpForceController
@@ -42,7 +43,7 @@ implements IForce
 
     this._m_self = _self;
 
-    this._m_avoidanceRadius = _avoidanceRadius;
+    this._m_avoidanceAhead = _avoidanceAhead;
     
     this._m_obstaclesArray = _obstaclesArray;
     
@@ -56,6 +57,10 @@ implements IForce
     // Initialize vectors and points
 
     this._m_v2_distanceToObstacle = new Phaser.Math.Vector2(0.0, 0.0);
+
+    this._m_v2_avoidanceAhead = new Phaser.Math.Vector2(0.0, 0.0);
+
+    this._m_v2_shadow = new Phaser.Math.Vector2(0.0, 0.0);
     
     this._m_v2_obstacleAvoidanceForce = new Phaser.Math.Vector2(0.0, 0.0);
 
@@ -71,7 +76,6 @@ implements IForce
     this._m_obstacleAvoidanceInitState = new ObstacleAvoidanceInitState();
 
     this._m_obstacleAvoidanceInitState.m_initMaxMagnitude = _force;
-    this._m_obstacleAvoidanceInitState.m_initAvoidanceRadius = _avoidanceRadius;
 
     // Get Debug Manager
 
@@ -115,17 +119,21 @@ implements IForce
 
     let controller = this._m_controller;
 
-    // Current force
-
     let actualVelocity = controller.getVelocity();
+
+    let direction = controller.getDirection();
 
     // Distance in Vector2 between actor and obstacle
 
     let distanceToObstacle : V2 = this._m_v2_distanceToObstacle;
 
-    // Avoidance radius
+    // Avoidance ahead distance
 
-    let avoidanceRadius = this._m_avoidanceRadius;
+    let avoidanceAhead = this._m_avoidanceAhead;
+
+    // Avoidance ahead distance in  Vector2
+
+    let avoidanceAheadVector2 = this._m_v2_avoidanceAhead;
 
     // Force magnitude
 
@@ -135,27 +143,87 @@ implements IForce
 
     let steerForce = this._m_v2_obstacleAvoidanceForce;
 
+    let spriteToProjection : V2 = new Phaser.Math.Vector2(0.0, 0.0);
+
     // Set steering force to zero to calculate avoidance of obstacles
     
     steerForce.set(0, 0);
 
+    // Set the avoidance ahead Vector2
+
+    avoidanceAheadVector2.copy(direction).scale(avoidanceAhead);
+
     // Iterate every obstacle in the array
 
-    obstaclesArray.forEach(obstacle => {
+    obstaclesArray.forEach(obstacle => 
+    {
 
-      // Calculate distance between actor and obstacle
+      // Distance to obstacle vector
 
-      this._m_distance = distanceToObstacle.set
+      distanceToObstacle.set
       (
-        self.x - obstacle.x,
-        self.y - obstacle.y
-      ).length();
+        obstacle.x - self.x,
+        obstacle.y - self.y
+      );
 
-      // On obstacle inside avoidance radius
+      // Calculate the projection magnitude.
 
-      if(this._m_distance < avoidanceRadius) {
+      const projMagnitude = distanceToObstacle.dot
+      (
+        avoidanceAheadVector2
+      ) / avoidanceAheadVector2.length();
 
-        steerForce.add(distanceToObstacle.setLength(forceMagnitude));
+      // Set the collision radius in relation to the display size
+
+      let radius = obstacle.displayHeight > obstacle.displayWidth ?
+      obstacle.displayHeight : obstacle.displayWidth;
+
+      // Set the projection vector
+
+      let projectionVector = this._m_v2_shadow;
+
+      projectionVector.copy(avoidanceAheadVector2).setLength(projMagnitude);
+
+      // Get the ahead vector magnitude
+
+      let aheadMag = avoidanceAheadVector2.length();
+
+      // On projection magnitude is in range of the ahead
+
+      if(projMagnitude <= aheadMag + radius && projMagnitude >= -radius)
+      {
+
+        // Distance between projection and obstacle
+        let obstacleToProjection = projectionVector.clone().subtract(distanceToObstacle);
+
+        // On distance to projection is less than radius
+
+        if(obstacleToProjection.length() < radius)
+        {
+          // On projection vector more threatening
+          if
+          (
+            spriteToProjection.length() === 0 ||
+            spriteToProjection.length() > projectionVector.length()
+          )
+          {
+
+            // Set threatening vector
+            spriteToProjection.copy(projectionVector);
+            
+            // Set the force vector
+            let forceVector = obstacleToProjection.clone();
+
+            avoidanceAheadVector2.set(
+              avoidanceAheadVector2.x + self.x,
+              avoidanceAheadVector2.y + self.y
+            )
+            
+            forceVector.add(avoidanceAheadVector2);
+            
+            steerForce.add(forceVector);
+          }
+        }
       }
     });
 
@@ -165,7 +233,7 @@ implements IForce
 
     // Truncate the avoidance force if it exceeds the maximum length allowed.
     
-    steerForce.limit(this._m_forceMagnitude);
+    steerForce.limit(forceMagnitude);
 
     // Add force to the controller.
 
@@ -196,25 +264,118 @@ implements IForce
 
     let distanceToObstacle : V2 = new Phaser.Math.Vector2(0.0, 0.0);
 
+    let projectionVector : V2 = new Phaser.Math.Vector2(0.0, 0.0);
+
     let desiredVelocity : V2 = new Phaser.Math.Vector2(0.0, 0.0);
 
-    this._m_obstaclesArray.forEach(obstacle => {
+    let spriteToProjection : V2 = new Phaser.Math.Vector2(0.0, 0.0);
 
-      // Calculate distance between actor and obstacle
+    let avoidanceAheadVector2 = new Phaser.Math.Vector2
+    (
+      Math.cos(sprite.rotation),
+      Math.sin(sprite.rotation)
+    );
+    
+    // Set the avoidance ahead Vector2
 
-      
+    avoidanceAheadVector2.scale(this._m_avoidanceAhead);
 
-      let distance = distanceToObstacle.set
+    // Avoidance ahead line
+    this._m_debugManager.drawLine
+    (
+      sprite.x,
+      sprite.y,
+      sprite.x + avoidanceAheadVector2.x,
+      sprite.y + avoidanceAheadVector2.y,
+      DebugManager.FORCE_LINE_WIDTH,
+      ST_COLOR_ID.kPurple
+    );
+
+    // Iterate every obstacle in the array
+
+    this._m_obstaclesArray.forEach(obstacle => 
+    {
+
+      // Distance to obstacle vector
+
+      distanceToObstacle.set
       (
-        sprite.x - obstacle.x,
-        sprite.y - obstacle.y
-      ).length();
+        obstacle.x - sprite.x,
+        obstacle.y - sprite.y
+      );
 
-      // On obstacle inside avoidance radius
+      // Calculate the projection magnitude.
 
-      if(distance < this._m_avoidanceRadius) {
+      const projMagnitude = distanceToObstacle.dot
+      (
+        avoidanceAheadVector2
+      ) / avoidanceAheadVector2.length();
 
-        desiredVelocity.add(distanceToObstacle.setLength(this._m_forceMagnitude));
+      // Set the collision radius in relation to the display size
+
+      let radius = obstacle.displayHeight > obstacle.displayWidth ?
+      obstacle.displayHeight : obstacle.displayWidth;
+
+      // Collision radius circle
+
+      debugManager.drawCircle(
+        obstacle.x,
+        obstacle.y,
+        radius,
+        DebugManager.FORCE_CIRCLE_WIDTH,
+        ST_COLOR_ID.kSkyBlueNeon
+      );
+
+      // Set the projection vector
+
+      projectionVector.copy(avoidanceAheadVector2).setLength(projMagnitude);
+
+
+      // Get the ahead vector magnitude
+
+      let aheadMag = avoidanceAheadVector2.length();
+
+      // On projection magnitude is in range of the ahead
+
+      if(projMagnitude <= aheadMag + radius && projMagnitude >= -radius)
+      {
+
+        // Distance between projection and obstacle
+        let obstacleToProjection = projectionVector.clone().subtract(distanceToObstacle);
+
+        // On distance to projection is less than radius
+
+        if(obstacleToProjection.length() < radius)
+        {
+
+          // On projection vector more threatening
+          if
+          (
+            spriteToProjection.length() === 0 ||
+            spriteToProjection.length() > projectionVector.length()
+          )
+          {
+
+            // Set threatening vector
+            spriteToProjection.copy(projectionVector);
+
+            // Set the force vector
+            let forceVector = obstacleToProjection.clone().add(avoidanceAheadVector2);
+
+            // projection vector line
+            this._m_debugManager.drawLine
+            (
+              sprite.x + avoidanceAheadVector2.x,
+              sprite.y + avoidanceAheadVector2.y,
+              sprite.x + forceVector.x,
+              sprite.y + forceVector.y,
+              DebugManager.FORCE_LINE_WIDTH,
+              ST_COLOR_ID.kRed
+            );
+
+            desiredVelocity.add(forceVector);
+          }
+        }
       }
     });
 
@@ -225,37 +386,6 @@ implements IForce
     // Truncate the avoidance force if it exceeds the maximum length allowed.
     
     desiredVelocity.limit(this._m_forceMagnitude);
-
-    this._m_debugManager.drawLine
-    (
-      sprite.x,
-      sprite.y,
-      sprite.x + desiredVelocity.x,
-      sprite.y + desiredVelocity.y,
-      DebugManager.FORCE_LINE_WIDTH,
-      ST_COLOR_ID.kOrange
-    );
-
-    // Steering force line
-
-    debugManager.drawLine
-    (
-     this._m_controller.getVelocity().x + sprite.x,
-     this._m_controller.getVelocity().y + sprite.y,
-     desiredVelocity.x + sprite.x,
-     desiredVelocity.y + sprite.y,
-     DebugManager.FORCE_LINE_WIDTH,
-     ST_COLOR_ID.kRed
-   );
-
-    // Avoidance radius circle
-    debugManager.drawCircle(
-      sprite.x,
-      sprite.y,
-      this._m_avoidanceRadius,
-      DebugManager.FORCE_CIRCLE_WIDTH,
-      ST_COLOR_ID.kSkyBlueNeon
-    );
   }
 
   /**
@@ -279,7 +409,7 @@ implements IForce
   onSimulationStop()
   :void
   {
-    this.setInitAvoidanceRadius();
+    this.setInitAvoidanceAhead();
     this.setInitMaxMagnitude();
 
     return;
@@ -332,40 +462,40 @@ implements IForce
 
   }
 
-  setInitAvoidanceRadius()
+  setInitAvoidanceAhead()
   : void
   {
-    this._m_avoidanceRadius = this.getInitAvoidanceRadius();
+    this._m_avoidanceAhead = this.getInitAvoidanceAhead();
 
     return;
   }
 
-  setAvoidanceRadius(_radius: number)
+  setAvoidanceAhead(_distance: number)
   : void
   {
 
     if(this._m_simulationManager.getState() === ST_SIM_SATE.kStopped)
     {
-      this._m_obstacleAvoidanceInitState.m_initAvoidanceRadius = _radius;
+      this._m_obstacleAvoidanceInitState.m_initAvoidanceAhead = _distance;
     }
 
-    this._m_avoidanceRadius = _radius;
+    this._m_avoidanceAhead = _distance;
 
     return;
 
   }
 
-  getInitAvoidanceRadius()
+  getInitAvoidanceAhead()
   : number
   {
-    return this._m_obstacleAvoidanceInitState.m_initAvoidanceRadius;
+    return this._m_obstacleAvoidanceInitState.m_initAvoidanceAhead;
   }
 
-  getAvoidanceRadius()
+  getAvoidanceAhead()
   : number
   {
 
-    return this._m_avoidanceRadius;
+    return this._m_avoidanceAhead;
 
   }
 
@@ -387,6 +517,7 @@ implements IForce
     this._m_controller = null;
     this._m_v2_obstacleAvoidanceForce = null;
     this._m_v2_distanceToObstacle = null;
+    this._m_v2_avoidanceAhead = null;
 
     this._m_debugManager = null;
 
@@ -428,11 +559,10 @@ implements IForce
    */
   private _m_self : Ty_Sprite;
 
-  
   /**
-   * The obstacle avoidance radius.
+   * The ahead avoidance distance.
    */
-  private _m_avoidanceRadius: number;
+  private _m_avoidanceAhead: number;
 
   /**
    * Reference to the obstacles array.
@@ -453,6 +583,17 @@ implements IForce
    * Vector 2 for distance to obstacle.
    */
   private _m_v2_distanceToObstacle : V2;
+
+  /**
+   * Vector 2 for avoidance ahead distance.
+   */
+  private _m_v2_avoidanceAhead : V2;
+
+  /**
+   * Vector 2 for shadow projection.
+   */
+  private _m_v2_shadow: V2;
+  
 
   /**
    * Distance to target.
