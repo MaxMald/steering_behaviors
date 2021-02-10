@@ -411,11 +411,7 @@ implements IForce
   : number
   {
 
-    const seekMag = this._m_seek.getMaxMagnitude();
-
-    const pathMag = this._m_forceToPath.length();
-
-    return (seekMag > pathMag ? seekMag : pathMag);
+    return this._m_seek.getMaxMagnitude();
 
   }
 
